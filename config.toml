@@ -1,5 +1,5 @@
 # URL, для которого будет создан сайт
-base_url = "https://example.com"
+base_url = "https://anix-blog.xyz"
 
 # Отображается в RSS фиде
 title = "AniX блог"
