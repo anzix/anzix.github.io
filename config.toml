@@ -1,0 +1,74 @@
+# URL, для которого будет создан сайт
+base_url = "https://example.com"
+
+# Отображается в RSS фиде
+title = "AniX блог"
+description = "Инструкции и полезные статьи для GNU/Linux и не только"
+author = "AniX"
+default_language = "en"
+
+
+# Следует ли автоматически компилировать все файлы Sass в каталоге sass
+compile_sass = false
+
+# Создавать ли поисковый индекс для последующего использования библиотекой JavaScript
+# Поисковый индекс строится из содержимого страниц и раздела для `default_language`.
+build_search_index = true
+
+# Если установлено значение «true», сгенерированные HTML-файлы минимизируются.
+minify_html = false
+
+# Если установлено значение "true", atom/rss фид генерируется автоматически.
+generate_feed = true
+generate_rss = true
+
+# Имя файла для фида. Также используется как имя файла шаблона.
+# По умолчанию "atom.xml", который имеет встроенный шаблон, отображающий ленту Atom 1.0.
+# Существует также встроенный шаблон "rss.xml", который отображает канал RSS 2.0.
+feed_filename = "rss.xml"
+
+
+# Количество статей для включения в фид rss ленту. Все элементы включены,
+# если это ограничение не установлено (по умолчанию).
+# feed_limit = 20
+
+taxonomies = [
+    {name = "categories", rss = true},
+    {name = "tags", rss = true},
+]
+
+
+[search]
+index_format = "elasticlunr_json"
+
+[markdown]
+# Делать ли подсветку синтаксиса, посмотреть:
+# https://www.getzola.org/documentation/getting-started/configuration/#syntax-highlighting
+# для получения дополнительной информации и тем, встроенных в Zola.
+
+# Тему можно настроить, задав для переменной `highlight_theme` тему, поддерживаемую Zola
+highlight_code = true
+extra_syntaxes_and_themes = ["syntaxes"]
+highlight_theme = "cobalt2"
+
+# Должны ли внешние ссылки открываться в новой вкладке
+# Если это true, `rel="noopener"` всегда будет автоматически добавляться из соображений безопасности
+external_links_target_blank = true
+
+# Нужно ли устанавливать rel="nofollow" для всех внешних ссылок
+external_links_no_follow = true
+
+# Устанавливать ли rel="noreferrer" для всех внешних ссылок
+external_links_no_referrer = true
+
+[extra]
+# Поместите все свои пользовательские переменные здесь
+
+
+# https://mermaid.js.org/
+mermaid_theme = "default"
+mermaid_align = "center"
+
+# Set date format in blog publish metadata
+timeformat = "%Y-%m-%d %H:%M:%S" # e.g. 2021-05-01 09:19:42
+timezone = "UTC"

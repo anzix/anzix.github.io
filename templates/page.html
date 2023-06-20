@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1 class="title">
+  {{ page.title }}
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+{% if page.updated %}
+<p class="subtitle"><strong>Обновлено {{ page.updated }}</strong></p>
+{% else %}
+<p class="subtitle"><strong>{{ page.date }}</strong></p>
+{% endif %}
+{% if page.taxonomies.tags %}
+    {% for tag in page.taxonomies.tags %}
+         <a href="{{ get_taxonomy_url(kind="tags", name=tag) }}">{{ tag }}</a>
+{% endfor %}
+<br>
+{% endif %}
+{% if page.toc %}
+	<aside id="toc-aside" class="toc">
+	    <details>
+			<summary>Оглавление</summary>
+	        <ol>
+	            {% for h2 in page.toc %}<li>
+	                <a href="#{{h2.id | safe}}">{{ h2.title | safe }}</a>
+	                {% if h2.children %}<ol>
+	                    {% for h3 in h2.children %}<li>
+	                        <a href="#{{h3.id | safe}}">{{ h3.title | safe }}</a>
+	                    </li>{% endfor %}
+	                </ol>{% endif %}
+	            </li>{% endfor %}
+	        </ol>
+		</details>
+	</aside>
+{% endif %}
+
+{{ page.content | safe }}
+{% endblock content %}

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="title">
+  {{ section.title }}
+</h1>
+<ul>
+  <!-- Если вы используете нумерацию страниц, section.pages будет пустым. Вам нужно использовать объект paginator -->
+  {% for page in paginator.pages %}
+  <li>{{[ page.date | date(format="%F") ]}}<a href="{{ page.permalink | safe }}"> {{ page.title }}</a></li>
+  {% endfor %}
+</ul>
+<nav class="navigation">
+    {% if paginator.previous %}
+        <a class="navigation-prev" href="{{ paginator.previous }}">‹ Предыдущая</a>
+    {% endif %}
+    {% if paginator.next %}
+        <a class="navigation-next" href="{{ paginator.next }}">Следующая ›</a>
+    {% endif %}
+</nav>
+{% endblock content %}

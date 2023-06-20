@@ -1,0 +1,14 @@
+%YAML 1.2
+---
+file_extensions:
+  - console
+scope: source.console
+
+contexts:
+  main:
+    - match: "^(?:\\$|#|>)( .*)?"
+    #           ^^^^^^^^^  ^^^
+    #           prompt     command 
+      captures:
+        0: keyword.prompt
+        1: variable.command

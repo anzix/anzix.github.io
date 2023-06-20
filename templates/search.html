@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+    <article>
+        <header>
+            <!-- Имя заголовка отражается из содержимого content/pages/search.md -->
+            <h1>{{ page.title }}</h1>
+        </header>
+        <section class="modal-card-body">
+            <div class="field mb-2">
+                <div class="control">
+                    <input class="input" id="search" placeholder="🔎  поиск" type="search" />
+                </div>
+            </div>
+            <!--Вывод выхлопа результата из search.js-->
+            <div class="search-results">
+                <ul class="search-results__items">
+                </ul>
+            </div>
+        </section>
+        <script type="text/javascript" src="{{ get_url(path='elasticlunr.min.js') }}"></script>
+        <script type="text/javascript" src="{{ get_url(path="/js/search.js") }}"></script>
+    </article>
+{% endblock content %}
