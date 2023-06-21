@@ -4,7 +4,7 @@ date = 2023-03-22T01:47:28+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux"]
+tags = ["linux"]
 +++
 
 MPD сокращенно (музыкальный демон), а ncmpcpp это музыкальный плеер

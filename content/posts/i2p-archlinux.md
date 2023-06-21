@@ -4,7 +4,7 @@ date = 2023-03-07T13:21:50+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux"]
+tags = ["linux"]
 +++
 * https://wiki.archlinux.org/title/I2P_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)
 

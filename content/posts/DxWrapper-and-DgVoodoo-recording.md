@@ -4,7 +4,7 @@ date = 2023-03-04T17:04:39+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux Gaming"]
+tags = ["linux-gaming"]
 +++
 
 Таким образом можно снимать видео с obs без проблем, как это всё сделать описано ранее

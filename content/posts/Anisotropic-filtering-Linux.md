@@ -4,7 +4,7 @@ date = 2023-03-04T18:06:02+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux Gaming"]
+tags = ["linux-gaming"]
 +++
 [Сурс](https://www.pcgamingwiki.com/wiki/Glossary:Anisotropic_filtering_(AF)#Mesa3D)
 

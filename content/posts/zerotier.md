@@ -4,7 +4,7 @@ date = 2023-03-01T13:55:09+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux Gaming"]
+tags = ["linux-gaming"]
 +++
 Ориентировался на данные источники
 

@@ -4,7 +4,7 @@ date = 2023-03-04T17:14:24+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux Gaming"]
+tags = ["linux-gaming"]
 +++
 
 - [Полезный видео гайд](https://www.youtube.com/watch?v=XxqvRO2AMyU)

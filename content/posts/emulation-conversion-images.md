@@ -4,7 +4,7 @@ date = 2023-03-02T18:56:44+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux"]
+tags = ["linux"]
 +++
 
 [Видео гайд по chd конвертеру](https://www.youtube.com/watch?v=DGKTCox6SyY)

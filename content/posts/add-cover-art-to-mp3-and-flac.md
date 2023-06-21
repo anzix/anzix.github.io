@@ -4,7 +4,7 @@ date = 2023-03-08T19:43:02+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux"]
+tags = ["linux"]
 +++
 
 - [Источник](https://unix.stackexchange.com/a/320406)

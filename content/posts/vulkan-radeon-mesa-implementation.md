@@ -4,7 +4,7 @@ date = 2023-03-07T13:09:44+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux Gaming"]
+tags = ["linux-gaming"]
 +++
 
 - [Arch Wiki - Vulkan](https://wiki.archlinux.org/title/Vulkan#Verification)

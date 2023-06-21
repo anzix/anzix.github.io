@@ -4,7 +4,7 @@ date = 2023-03-09T19:58:12+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux"]
+tags = ["linux"]
 +++
 
 * https://wiki.archlinux.org/title/General_purpose_mouse

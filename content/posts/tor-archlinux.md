@@ -4,7 +4,7 @@ date = 2023-03-08T00:42:54+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux"]
+tags = ["linux"]
 +++
 
 Источники

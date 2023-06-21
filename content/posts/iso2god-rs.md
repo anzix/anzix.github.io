@@ -4,7 +4,7 @@ date = 2023-03-03T11:00:14+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux"]
+tags = ["linux"]
 +++
 
 Т.к нигде даже в AUR не нашёл подобного софта я покопавшись в github'е наткнулся на форк [iso2god репо написанный на Rust](https://github.com/iliazeus/iso2god-rs) и вместе с [PKGBUILD'ом для Arch Linux](https://github.com/iliazeus/aur/blob/master/iso2god/PKGBUILD) написанный от автора софта

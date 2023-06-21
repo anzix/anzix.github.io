@@ -4,7 +4,7 @@ date = 2023-03-09T00:22:10+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux Gaming"]
+tags = ["linux-gaming"]
 +++
 
 * [Ориентировался по этому видео гайду](https://www.youtube.com/watch?v=nx5ppsALrC8) (мёртвая ссылка)

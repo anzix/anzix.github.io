@@ -4,7 +4,7 @@ date = 2023-03-07T00:59:13+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux"]
+tags = ["linux"]
 +++
 * https://github.com/werman/noise-suppression-for-voice
 * [Видео Гайд для Windows](https://www.youtube.com/watch?v=lrrUXVoNpqg)

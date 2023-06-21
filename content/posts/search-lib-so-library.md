@@ -4,7 +4,7 @@ date = 2023-03-03T12:12:56+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux"]
+tags = ["linux"]
 +++
 Качаем пакет
 ```bash

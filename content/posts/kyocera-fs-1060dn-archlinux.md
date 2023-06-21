@@ -4,7 +4,7 @@ date = 2023-03-06T20:40:11+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux"]
+tags = ["linux"]
 +++
 
 При подключении dmesg выводил

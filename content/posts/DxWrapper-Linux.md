@@ -4,7 +4,7 @@ date = 2023-03-04T00:27:06+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux Gaming"]
+tags = ["linux-gaming"]
 +++
 
 - [DirectDraw to Direct3D9 Conversion](https://github.com/elishacloud/dxwrapper/wiki/DirectDraw-to-Direct3D9-Conversion)

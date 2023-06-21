@@ -3,8 +3,8 @@ title = "MangoHud не работает в Minecraft Java Edition"
 date = 2023-03-17T16:36:42+05:00
 draft = false
 [taxonomies]
-categories = ["Решение проблем"]
-tags = ["Linux Gaming"]
+categories = ["solving-problem"]
+tags = ["linux-gaming"]
 +++
 
 * https://github.com/flightlessmango/MangoHud/issues/274

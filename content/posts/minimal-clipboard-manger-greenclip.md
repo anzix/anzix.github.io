@@ -4,7 +4,7 @@ date = 2023-03-23T22:22:51+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux"]
+tags = ["linux"]
 +++
 
 * https://github.com/erebe/greenclip

@@ -4,7 +4,7 @@ date = 2023-03-02T12:54:49+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux"]
+tags = ["linux"]
 +++
 Восстановление удалённых данных с помощью testdisk
 

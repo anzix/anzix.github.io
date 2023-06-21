@@ -4,7 +4,7 @@ date = 2023-03-22T01:40:27+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux"]
+tags = ["linux"]
 +++
 
 Определяет очень быстро, может опознать ноунейм композиции но не всегда

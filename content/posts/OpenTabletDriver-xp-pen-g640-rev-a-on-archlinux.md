@@ -4,7 +4,7 @@ date = 2023-03-10T17:40:37+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux"]
+tags = ["linux"]
 +++
 
 - [GitHub страница](https://github.com/OpenTabletDriver/OpenTabletDriver)

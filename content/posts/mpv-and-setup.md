@@ -4,7 +4,7 @@ date = 2023-03-21T18:26:51+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux"]
+tags = ["linux"]
 +++
 
 Очень классный и минималистичный, а также кастомизируемый видеоплеер

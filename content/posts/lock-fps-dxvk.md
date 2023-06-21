@@ -4,7 +4,7 @@ date = 2023-03-04T18:10:32+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux Gaming"]
+tags = ["linux-gaming"]
 +++
 
 Если в префиксе установлен dxvk

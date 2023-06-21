@@ -4,7 +4,7 @@ date = 2023-03-09T19:56:14+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux Gaming"]
+tags = ["linux-gaming"]
 +++
 
 ## Через браузер Firefox

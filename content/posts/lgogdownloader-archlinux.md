@@ -4,7 +4,7 @@ date = 2023-03-03T12:23:40+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux Gaming"]
+tags = ["linux-gaming"]
 +++
 * https://github.com/Sude-/lgogdownloader
 

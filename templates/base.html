@@ -4,6 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
 	{% if page.title %}
     <title>{{ page.title }}</title>
 	{% else %}
@@ -17,6 +18,10 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!--TODO: Иконка во вкладке браузера-->
 	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	{% block rss %}
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="{{ get_url(path="rss.xml", trailing_slash=false) }}">
+	{% endblock %}
 	<!--Стилизация сайта-->
 	<link rel="stylesheet" href="/assets/css/style.css">
 	<!--Предзагрузка ассетов для оптимизации сайта-->

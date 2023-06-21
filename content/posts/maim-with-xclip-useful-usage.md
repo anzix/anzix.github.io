@@ -4,7 +4,7 @@ date = 2023-03-22T19:03:32+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux"]
+tags = ["linux"]
 +++
 Если вам не очень понравился flameshot то связка из 2 мелких пакетов может сделать ваш день с Linux лучше
 

@@ -4,7 +4,7 @@ date = 2023-03-22T14:08:01+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux"]
+tags = ["linux"]
 +++
 
 Хук mirrorupgrade будет выполнятся после того как обновится пакет pacman-mirrorlist при обновлении системы

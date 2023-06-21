@@ -4,7 +4,7 @@ date = 2023-03-22T14:11:44+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux"]
+tags = ["linux"]
 +++
 * [Другой похожий гайд на ЛОРе](https://www.linux.org.ru/articles/admin/17146638)
 

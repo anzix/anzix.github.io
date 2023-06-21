@@ -4,7 +4,7 @@ date = 2023-03-08T19:25:28+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux"]
+tags = ["linux"]
 +++
 
 - https://linuxconfig.org/how-to-test-microphone-with-audio-linux-sound-architecture-alsa

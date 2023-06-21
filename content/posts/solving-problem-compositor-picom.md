@@ -3,8 +3,8 @@ title = "Решение проблем с композитором Picom"
 date = 2023-04-15T18:33:12+05:00
 draft = false
 [taxonomies]
-categories = ["Решение проблем"]
-tags = ["Linux"]
+categories = ["solving-problem"]
+tags = ["linux"]
 +++
 
 ## 1.(Решил) Проблема

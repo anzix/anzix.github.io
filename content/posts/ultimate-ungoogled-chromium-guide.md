@@ -4,7 +4,7 @@ date = 2023-03-12T01:07:49+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux"]
+tags = ["linux"]
 +++
 
 Это тот же chromium но с полностью выпиленными гугл сервисами

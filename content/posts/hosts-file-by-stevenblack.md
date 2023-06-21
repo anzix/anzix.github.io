@@ -4,7 +4,7 @@ date = 2023-03-21T18:22:31+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux"]
+tags = ["linux"]
 +++
 Для избавления от рекламы, реферальных ссылок и всяких всплывающих scam сайтов есть обновляемый hosts файл
 

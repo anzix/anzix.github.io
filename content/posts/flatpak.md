@@ -4,7 +4,7 @@ date = 2023-03-06T21:25:07+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux"]
+tags = ["linux"]
 +++
 
 * [Магазин Flathub](https://flathub.org/home)

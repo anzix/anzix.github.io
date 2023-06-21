@@ -4,7 +4,7 @@ date = 2023-03-04T18:13:01+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux Gaming"]
+tags = ["linux-gaming"]
 +++
 # Game Conqueror
 * [Github](https://github.com/scanmem/scanmem/tree/main/gui)

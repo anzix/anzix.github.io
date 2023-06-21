@@ -4,7 +4,7 @@ date = 2023-03-04T22:30:20+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux"]
+tags = ["linux"]
 +++
 
 При подключении сканера:

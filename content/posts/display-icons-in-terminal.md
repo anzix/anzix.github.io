@@ -4,7 +4,7 @@ date = 2023-03-29T23:39:35+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux"]
+tags = ["linux"]
 +++
 Для отображения иконок необходимо юзать шрифты из семейства Nerd. Их очень много, на любой вкус и цвет, и все они имеют поддержку иконок [exa](https://archlinux.org/packages/community/x86_64/exa/)/[lsd](https://archlinux.org/packages/community/x86_64/lsd/)/[colorls](https://aur.archlinux.org/packages/ruby-colorls) а также [powerlevel10k](https://github.com/romkatv/powerlevel10k) для вашего терминала.
 

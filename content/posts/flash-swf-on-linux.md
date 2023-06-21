@@ -4,7 +4,7 @@ date = 2023-03-03T12:16:29+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux Gaming"]
+tags = ["linux-gaming"]
 +++
 
 ![](/images/flash-swf-on-linux/1667684021.png)

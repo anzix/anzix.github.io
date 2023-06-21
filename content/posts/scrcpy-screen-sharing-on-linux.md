@@ -4,7 +4,7 @@ date = 2023-03-09T21:05:33+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux", "Android"]
+tags = ["linux", "anrdoid"]
 +++
 
 * [Видео инструкция](https://www.youtube.com/watch?v=zTYYdPS4SOA)

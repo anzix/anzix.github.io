@@ -4,7 +4,7 @@ date = 2023-03-03T21:12:33+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux Gaming"]
+tags = ["linux-gaming"]
 +++
 Поставляется taskset пакетом [util-linux](https://www.archlinux.org/packages/core/x86_64/util-linux/)
 

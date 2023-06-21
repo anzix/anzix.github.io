@@ -4,7 +4,7 @@ date = 2023-03-26T13:23:43+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux"]
+tags = ["linux"]
 +++
 * https://the.exa.website/
 

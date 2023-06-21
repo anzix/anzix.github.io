@@ -4,7 +4,7 @@ date = 2023-03-10T00:20:38+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux"]
+tags = ["linux"]
 +++
 
 * [Arch Wiki OBS](https://wiki.archlinux.org/title/Open_Broadcaster_Software)

@@ -4,7 +4,7 @@ date = 2023-03-19T23:38:18+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux Gaming"]
+tags = ["linux-gaming"]
 +++
 
 * [Видеоинструкция по настройке (для Windows)](https://www.youtube.com/watch?v=bAFTAaKZf4k)

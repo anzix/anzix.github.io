@@ -4,7 +4,7 @@ date = 2023-03-22T19:43:05+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux Gaming"]
+tags = ["linux-gaming"]
 +++
 Источники:
 * https://steamcommunity.com/sharedfiles/filedetails/?id=249772871

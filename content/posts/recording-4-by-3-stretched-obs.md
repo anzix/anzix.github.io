@@ -4,7 +4,7 @@ date = 2023-03-12T15:51:37+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux Gaming"]
+tags = ["linux-gaming"]
 +++
 
 На данном примере будет игра CS:GO, так можно и с любой игрой

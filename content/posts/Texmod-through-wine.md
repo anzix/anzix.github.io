@@ -4,7 +4,7 @@ date = 2023-03-03T14:38:32+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux Gaming"]
+tags = ["linux-gaming"]
 +++
 На примере NFS Underground 2 High_Vision_1.10
 

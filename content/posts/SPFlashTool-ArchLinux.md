@@ -4,7 +4,7 @@ date = 2023-03-02T19:00:29+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux"]
+tags = ["linux"]
 +++
 
 При подключении телефона с процессором mediatek

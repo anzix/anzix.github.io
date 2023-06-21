@@ -4,7 +4,7 @@ date = 2023-03-10T21:52:44+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux"]
+tags = ["linux"]
 +++
 
 - [Arch Wiki - S.M.A.R.T](https://wiki.archlinux.org/title/S.M.A.R.T.)

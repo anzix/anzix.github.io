@@ -4,7 +4,7 @@ date = 2023-03-09T21:13:41+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux", "Flashrom"]
+tags = ["linux", "flashrom"]
 +++
 
 - [Инструкция от Mental Outlaw](https://www.youtube.com/watch?v=WyItt8FJWIs)

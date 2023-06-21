@@ -4,7 +4,7 @@ date = 2023-03-10T23:37:30+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux"]
+tags = ["linux"]
 +++
 
 ## Qbittorrent файлы из Windows 10 на Linux

@@ -4,7 +4,7 @@ date = 2023-03-18T21:05:49+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Android"]
+tags = ["anrdoid"]
 +++
 
 * [Github issue](https://github.com/iBotPeaches/Apktool/issues/1131)

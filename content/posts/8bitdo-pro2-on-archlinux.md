@@ -1,11 +1,10 @@
 +++
 title = "!Геймпад 8BitDo Pro 2 на Arch Linux"
 date = 2023-03-24T16:46:25+05:00
-updated = 2023-05-16
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux Gaming"]
+tags = ["linux-gaming"]
 +++
 
 Firmware 3.0

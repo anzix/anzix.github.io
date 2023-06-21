@@ -4,7 +4,7 @@ date = 2023-03-23T23:50:37+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux"]
+tags = ["linux"]
 +++
 ## Первый вариант
 Вводим в терминале

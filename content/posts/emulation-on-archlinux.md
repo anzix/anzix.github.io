@@ -4,7 +4,7 @@ date = 2023-03-25T17:17:32+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux Gaming"]
+tags = ["linux-gaming"]
 +++
 
 ## Playstation 1 (Duckstation) На Arch Linux

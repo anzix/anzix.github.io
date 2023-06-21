@@ -4,7 +4,7 @@ date = 2023-03-07T11:15:38+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux Gaming"]
+tags = ["linux-gaming"]
 +++
 
 * https://github.com/DadSchoorse/vkBasalt

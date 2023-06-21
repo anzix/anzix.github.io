@@ -4,7 +4,7 @@ date = 2023-03-08T19:37:24+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux"]
+tags = ["linux"]
 +++
 
 - [Первая инструкция](https://ask.fedoraproject.org/t/how-add-more-space-in-a-btrfs-filesystem-how-add-a-new-partition-how-add-a-new-disk-linux/14817)

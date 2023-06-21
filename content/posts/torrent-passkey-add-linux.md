@@ -4,7 +4,7 @@ date = 2023-03-04T20:29:44+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux"]
+tags = ["linux"]
 +++
 Источники:
 * https://rutracker.org/forum/viewtopic.php?p=69547524#69547524

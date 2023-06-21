@@ -4,7 +4,7 @@ date = 2023-03-02T18:44:55+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux"]
+tags = ["linux"]
 +++
 
 Устанавливаем пакеты

@@ -4,7 +4,7 @@ date = 2023-03-12T17:10:47+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux"]
+tags = ["linux"]
 +++
 
 <span style="color:red">Внимание</span>: Я не рекомендую пользоваться Гугл Хромом на Арче по нескольким причинам:

@@ -1,7 +1,8 @@
 {% extends "index.html" %}
 
 {% block content %}
-  <h3>{{term.name | capitalize }}</h3>
+  {% set rss_path = "categories/" ~ term.name ~ "/rss.xml" %}
+  <h2>{{ term.name }} <a href="{{get_url(path=rss_path, trailing_slash=false)}}"> RSS </a> </h2>
 
   <ul>
     {% for page in term.pages %}

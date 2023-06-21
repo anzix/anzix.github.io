@@ -3,8 +3,8 @@ title = "Иконки контекстного меню не отображаю�
 date = 2023-03-24T14:37:28+05:00
 draft = false
 [taxonomies]
-categories = ["Решение проблем"]
-tags = ["Linux"]
+categories = ["solving-problem"]
+tags = ["linux"]
 +++
 Источник решения:
 * [Arch Wiki](https://wiki.archlinux.org/title/GTK#Button_and_menu_icons)

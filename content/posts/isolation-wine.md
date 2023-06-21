@@ -4,7 +4,7 @@ date = 2023-05-25T21:19:09+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux"]
+tags = ["linux"]
 +++
 
 Полезные статьи о использовании bubblewrap

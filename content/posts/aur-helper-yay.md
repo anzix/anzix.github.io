@@ -4,7 +4,7 @@ date = 2023-04-15T20:54:54+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux"]
+tags = ["linux"]
 +++
 
 Установка yay

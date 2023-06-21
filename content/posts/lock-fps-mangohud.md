@@ -4,7 +4,7 @@ date = 2023-03-04T18:08:54+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux Gaming"]
+tags = ["linux-gaming"]
 +++
 Необходимо для тех у кого в префиксе нету dxvk а используется стандартный WINED3D
 

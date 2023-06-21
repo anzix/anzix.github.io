@@ -4,7 +4,7 @@ date = 2023-03-04T20:44:20+05:00
 draft = false
 [taxonomies]
 categories = []
-tags = ["Linux"]
+tags = ["linux"]
 +++
 
 [Офф гайд](https://wiki.nftables.org/wiki-nftables/index.php/Moving_from_iptables_to_nftables)

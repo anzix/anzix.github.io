@@ -1,26 +1,17 @@
 {% extends "index.html" %}
 
 {% block content %}
-<div id="section-tag">
-  <h2>
-    <span class="tag">
-      {{term.name}}
-    </span>
-  </h2>
+  {% set rss_path = "tags/" ~ term.name ~ "/rss.xml" %}
+  <h2>{{ term.name }} <a href="{{get_url(path=rss_path, trailing_slash=false)}}"> RSS </a> </h2>
 
   <ul>
     {% for page in term.pages %}
       <li>
-        {% if page.components is containing("tasks") %}
-          <span>Task</span>
-        {% elif page.components is containing("languages") %}
-          <span>Language</span>
-        {% endif %}
         <a href="{{page.permalink}}">
           {{page.title}}
         </a>
       </li>
     {% endfor %}
   </ul>
-</div>
+
 {% endblock content %}
