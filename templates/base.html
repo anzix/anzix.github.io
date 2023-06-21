@@ -4,7 +4,15 @@
 <head>
 	<meta charset="utf-8">
 	<!--Это будет видно на вкладке браузера-->
-	<title>Блог AniX</title>
+	{% if page.title %}
+    <title>{{ page.title }}</title>
+	{% else %}
+    {% if section.title %}
+    <title>{{ section.title }}</title>
+	{% else %}
+    <title>Блог AniX</title>
+	{% endif %}
+	{% endif %}
 	<!--Resize текста и постов для смартфонов-->
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!--TODO: Иконка во вкладке браузера-->
@@ -12,10 +20,11 @@
 	<!--Стилизация сайта-->
 	<link rel="stylesheet" href="/assets/css/style.css">
 	<!--Предзагрузка ассетов для оптимизации сайта-->
-	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf" crossorigin="anonymous">
-    <link rel="preload" href="/assets/css/comparison.css" as="style">
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
 	<!--Таблички-->
-    <link rel="stylesheet" href="/assets/css/comparison.css">
+	<link rel="stylesheet" href="/assets/css/comparison.css">
 </head>
 
 <body>
@@ -54,11 +63,10 @@
 							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
 					</div>
 					<!-- TODO: Добавить URL лицензии -->
-					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a
-							href="!TODO!" target="_blank"
-							rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
-					<p>Работает на <a href="https://getzola.org"
-							target="_blank" rel="noopener nofollow noreferrer">zola</a>.</p>
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://getzola.org" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
 				</footer>
 			</div>
 		</div>

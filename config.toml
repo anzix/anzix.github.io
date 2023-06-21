@@ -2,8 +2,8 @@
 base_url = "https://anzix.github.io/"
 
 # Отображается в RSS фиде
-title = "AniX блог"
-description = "Инструкции и полезные статьи для GNU/Linux и не только"
+title = "Блог AniX"
+description = "Инструкции и полезные разные статьи для GNU/Linux"
 author = "AniX"
 default_language = "en"
 
@@ -63,11 +63,6 @@ external_links_no_referrer = true
 
 [extra]
 # Поместите все свои пользовательские переменные здесь
-
-
-# https://mermaid.js.org/
-mermaid_theme = "default"
-mermaid_align = "center"
 
 # Set date format in blog publish metadata
 timeformat = "%Y-%m-%d %H:%M:%S" # e.g. 2021-05-01 09:19:42
