@@ -7,7 +7,7 @@ categories = []
 tags = ["linux"]
 +++
 
-Очень полезная статья с актуальными и полезными советами с инструкциями по wayland sway
+Очень полезная [статья](https://www.fosskers.ca/en/blog/wayland) с актуальными и полезными советами с инструкциями по wayland sway
 
 ```sh
 sudo pacman -S sway waybar wofi mako swaybg wl-clipboard slurp grim
