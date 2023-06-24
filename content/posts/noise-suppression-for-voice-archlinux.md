@@ -6,13 +6,16 @@ draft = false
 categories = []
 tags = ["linux"]
 +++
-* https://github.com/werman/noise-suppression-for-voice
-* [Видео Гайд для Windows](https://www.youtube.com/watch?v=lrrUXVoNpqg)
+
+- https://github.com/werman/noise-suppression-for-voice
+- [Видео Гайд для Windows](https://www.youtube.com/watch?v=lrrUXVoNpqg)
 
 В моём примере всё будет делаться на pipewire
 
 Требование:
+
 1. Ваш микрофон должен иметь поддержку частоту дискретизации в 48000 Hz. Pipewire по умолчанию переводит частоту дискретизации на 48000. Однако на всякий проверить это можно данной командой
+
 ```bash
 cat /proc/asound/card3/stream0
 ```
@@ -36,22 +39,26 @@ Playback:
    Channel map: FL FR
 </pre>
 
-Как видно из  `Momentary freq` мне ничего менять не нужно
+Как видно из `Momentary freq` мне ничего менять не нужно
 
 Качаем плагин
 
 ```bash
 sudo pacman -S noise-suppression-for-voice
 ```
+
 Создаём необходимую папку
+
 ```bash
 mkdir -p ~/.config/pipewire/pipewire.conf.d/
 ```
 
 Вставляем [это всё](https://github.com/werman/noise-suppression-for-voice#:~:text=context.modules%20%3D%20%5B%0A%7B%20%20%20name%20%3D%20libpipewire,Source%0A%20%20%20%20%20%20%20%20%20%20%20%20audio.rate%20%3D%2048000%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%7D%0A%5D) но меняем на то что показано ниже
+
 ```bash
 nvim ~/.config/pipewire/pipewire.conf.d/99-input-denoising.conf
 ```
+
 ```bash
 ...........
 			.........
@@ -69,9 +76,11 @@ nvim ~/.config/pipewire/pipewire.conf.d/99-input-denoising.conf
 ```
 
 Перезагружаем pipewire
+
 ```bash
 systemctl --user restart pipewire
 ```
+
 Открываем obs, и в Mic/Aur жмём на шестерёнку и выбираем "Свойства"
 В выпадающем списке выбираем "Шумодав микро"
 

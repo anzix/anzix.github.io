@@ -12,12 +12,14 @@ tags = ["linux"]
 После этого пробуждает reflector.service который в свою очередь выполняет обновления зеркал основываясь на настройках конфига `/etc/xdg/reflector/reflector.conf`, этот конфиг тоже необходимо отредактировать.
 
 Просто копируем данные команды и вставляем в терминал
+
 ```sh
 sudo sed -i "s/^--protocol.*/--protocol http,https/" /etc/xdg/reflector/reflector.conf
 sudo sed -i "s/# --country.*/--country ru,by/" /etc/xdg/reflector/reflector.conf
 sudo sed -i "s/^--latest.*/--latest 12/" /etc/xdg/reflector/reflector.conf
 sudo sed -i "s/^--sort.*/--sort rate/" /etc/xdg/reflector/reflector.conf
 ```
+
 ```sh
 sudo bash -c 'cat <<EOF > /etc/pacman.d/hooks/mirrorupgrade.hook
 [Trigger]

@@ -10,6 +10,7 @@ tags = ["linux-gaming"]
 ## Оффлайн пиратки
 
 Список доступных:
+
 1. [TL Legacy](https://tlaun.ch/)/[VK](https://vk.link/tl_mc_launcher)/[AUR](https://aur.archlinux.org/packages/tlauncher/): `yay -S tlauncher`
 2. [PollyMC](https://github.com/fn2006/PollyMC) - форк PolyMC с оффлайн аккаунтом/[AUR](https://aur.archlinux.org/packages/pollymc-bin): `yay -S pollymc-bin`
 
@@ -18,10 +19,13 @@ tags = ["linux-gaming"]
 Ручной запуск jar лаунчера майна
 
 Качаем необходимы пакеты
+
 ```sh
 sudo pacman -S jre-openjdk jre-openjdk-headless java-runtime-common
 ```
+
 Далее переходим (через терминал) в папку на скачанный jar файл майна и вводим для запуска
+
 ```sh
 java -jar [имяфайла].jar
 ```

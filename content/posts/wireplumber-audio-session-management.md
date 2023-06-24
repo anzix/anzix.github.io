@@ -7,9 +7,10 @@ categories = []
 tags = ["linux"]
 +++
 
-* [Видео инструкция с объяснениями](https://www.youtube.com/watch?v=Zv1P6-kUn0c)
+- [Видео инструкция с объяснениями](https://www.youtube.com/watch?v=Zv1P6-kUn0c)
 
 Скачиваем данный пакет, pipewire-media-session заменится на wireplumber.
+
 ```bash
 sudo pacman -S wireplumber
 ```
@@ -19,11 +20,13 @@ sudo pacman -S wireplumber
 ## Изменить названия аудиоустройств
 
 В терминале вводим
+
 ```bash
 pw-cli list-objects Node
 ```
 
 В данном примере возьму выход на наушники через jack микрофона Samson C01U Pro. Находим длинное имя для выхода (output) устройства и копируем его
+
 <pre>
 ........
 id 32, type PipeWire:Interface:Node/3
@@ -40,9 +43,10 @@ id 32, type PipeWire:Interface:Node/3
  		media.class = "Audio/Sink"
 </pre>
 
-То есть я копирую **``alsa_output.usb-Samson_Technologies_Samson_C01U_Pro_Mic-00.analog-stereo``**
+То есть я копирую **`alsa_output.usb-Samson_Technologies_Samson_C01U_Pro_Mic-00.analog-stereo`**
 
 И тут же ищем и копируем для входного (input) устройство
+
 <pre>
 ........
 id 52, type PipeWire:Interface:Node/3
@@ -58,23 +62,26 @@ id 52, type PipeWire:Interface:Node/3
 		node.nick = "Samson C01U Pro Mic"
  		media.class = "Audio/Source"
 </pre>
-Здесь также, но я копирую **``alsa_input.usb-Samson_Technologies_Samson_C01U_Pro_Mic-00.mono-fallback``**
+
+Здесь также, но я копирую **`alsa_input.usb-Samson_Technologies_Samson_C01U_Pro_Mic-00.mono-fallback`**
 
 Создаём структуру папки
+
 ```bash
 mkdir -p ~/.config/wireplumber/main.lua.d/
 ```
 
 Создаём внутри **main.lua.d** наш первый конфиг чтобы переименовывать входной и выходное аудиоустройство в более понятном виде.
+
 ```bash
 nvim ~/.config/wireplumber/main.lua.d/51-Samson_C01UPro-rename.lua
 ```
 
 > Пояснение:
 >
-> В **``node.description``** указываем ваше укороченное имя, это название будет применятся на общих для аудиомикшерах программ таких как pavucontrol, pasystray, cli pulsemixer и т.д
+> В **`node.description`** указываем ваше укороченное имя, это название будет применятся на общих для аудиомикшерах программ таких как pavucontrol, pasystray, cli pulsemixer и т.д
 >
-> А **``node.nick``** указываем то же самое но название но оно уже предназначено для применения наименования для профессиональных программ таких как patchbay, qpwgraph, QjackCtl и т.д
+> А **`node.nick`** указываем то же самое но название но оно уже предназначено для применения наименования для профессиональных программ таких как patchbay, qpwgraph, QjackCtl и т.д
 
 ```lua
 rule = {
@@ -106,6 +113,7 @@ table.insert(alsa_monitor.rules, rule)
 ```
 
 Сохраняем и перезагружаем pipewire или ребутимся
+
 ```bash
 systemctl --user restart pipewire
 ```
@@ -113,9 +121,11 @@ systemctl --user restart pipewire
 После перезапуска в pavucontrol и Cli утилита pulsemixer будет показывать ваше укороченное название аудиоустройство которое вы указали
 
 Для вывода из колонок (Speakers) находите тоже в node
+
 ```bash
 pw-cli list-objects Node
 ```
+
 <pre>
 		......
 		node.description = "Встроенное аудио Аналоговый стерео"
@@ -123,10 +133,13 @@ pw-cli list-objects Node
  		node.nick = "ALC662 rev3 Analog"
  		media.class = "Audio/Sink"
 </pre>
-Копирую **``alsa_output.pci-0000_00_1b.0.analog-stereo``**
+
+Копирую **`alsa_output.pci-0000_00_1b.0.analog-stereo`**
+
 ```bash
 nvim ~/.config/wireplumber/main.lua.d/51-Speakers-rename.lua
 ```
+
 ```lua
 rule = {
   matches = {
@@ -149,9 +162,11 @@ table.insert(alsa_monitor.rules, rule)
 ## Отключение ненужного выхода аудио HDMI GPU
 
 В этот раз ищем не в узлах (Node) а в Device
+
 ```bash
 pw-cli list-objects Device
 ```
+
 <pre>
 .............
 id 42, type PipeWire:Interface:Device/3
@@ -165,7 +180,8 @@ id 42, type PipeWire:Interface:Device/3
  		media.class = "Audio/Device"
 ..............
 </pre>
-То есть копируем **``alsa_card.pci-0000_03_00.1``**
+
+То есть копируем **`alsa_card.pci-0000_03_00.1`**
 
 ```bash
 nvim ~/.config/wireplumber/main.lua.d/51-amd-disable.lua
@@ -173,9 +189,9 @@ nvim ~/.config/wireplumber/main.lua.d/51-amd-disable.lua
 
 > Пояснение:
 >
-> Под matches вместо **``node.name``** должно быть **``device.name``**
+> Под matches вместо **`node.name`** должно быть **`device.name`**
 >
-> Под **``apply_properties``** вводите **``["device.disabled"] = true``** это применяет отключение данного аудиоустройства которое вы выставили в matches
+> Под **`apply_properties`** вводите **`["device.disabled"] = true`** это применяет отключение данного аудиоустройства которое вы выставили в matches
 
 ```lua
 rule = {
@@ -195,4 +211,3 @@ table.insert(alsa_monitor.rules, rule)
 После перезагрузки pipewire в pavucontrol больше не будет появлятся ненужное аудио устройство
 ![](/images/wireplumber-audio-session-management/pavucontrol-hdmi-gpu-disable.png)
 ![](/images/wireplumber-audio-session-management/hdmi-audio-gpu-disable-pulsemixer.png)
-

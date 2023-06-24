@@ -7,15 +7,16 @@ categories = []
 tags = ["linux-gaming"]
 +++
 
-* [Ориентировался по этому видео гайду](https://www.youtube.com/watch?v=nx5ppsALrC8) (мёртвая ссылка)
-* [Dolphin-emu Wiki](https://wiki.dolphin-emu.org/index.php?title=DSU_Client#Linux)
-* [Офф инструкция Joycond-cemuhook](https://github.com/joaorb64/joycond-cemuhook/wiki#Dolphin)
+- [Ориентировался по этому видео гайду](https://www.youtube.com/watch?v=nx5ppsALrC8) (мёртвая ссылка)
+- [Dolphin-emu Wiki](https://wiki.dolphin-emu.org/index.php?title=DSU_Client#Linux)
+- [Офф инструкция Joycond-cemuhook](https://github.com/joaorb64/joycond-cemuhook/wiki#Dolphin)
 
 > Примечание: Данный метод работает только по проводу, при соединении по bluetooth [joycond-cemuhook](https://aur.archlinux.org/packages/joycond-cemuhook-git) не видит мой контроллер. Возможно это когда-нибудь исправят.
 
 Тестировал на примере игры Super Mario Galaxy 1/2
 
 Качаем AUR пакеты [joycond](https://aur.archlinux.org/packages/joycond-git) (своего рода Linux альтернатива BetterJoy) + дополнительно [joycond-cemuhook](https://aur.archlinux.org/packages/joycond-cemuhook-git) который позволит запустить dsu клиент (путём udp протокола) для работы гироскопа на эмуляторе.
+
 ```sh
 yay -S joycond-git joycond-cemuhook-git
 ```
@@ -23,6 +24,7 @@ yay -S joycond-git joycond-cemuhook-git
 Конектим по проводу 8BitDo Pro 2 (режим Switch)
 
 Запускаем в консоли данной командой
+
 ```sh
 sudo joycond-cemuhook
 ```
@@ -65,8 +67,7 @@ sudo joycond-cemuhook
 
 ![](/images/gyro-8bitdo-pro2-on-dolphin-wii/stick-calibration.png)
 
-* [C] Правый trigger (курок) - R1 (марио приседает)
-* [Z] Правый shoulders (бампер) - R2 (корректировка камеры)
+- [C] Правый trigger (курок) - R1 (марио приседает)
+- [Z] Правый shoulders (бампер) - R2 (корректировка камеры)
 
 Теперь можно спокойно играть
-

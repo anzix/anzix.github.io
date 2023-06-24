@@ -6,16 +6,19 @@ draft = false
 categories = []
 tags = ["linux"]
 +++
+
 Восстановление удалённых данных с помощью testdisk
 
 [Guide по использованию ENG](https://www.pandorarecovery.com/blog/recover-data-from-sd-card-on-linux/)
 
 Качаем пакет testdisk содержащий в себе 2 инструмента, testdisk и photorec
+
 ```bash
 sudo pacman -S testdisk
 ```
 
 Использование в терминале:
+
 ```bash
 testdisk # или photorec
 ```

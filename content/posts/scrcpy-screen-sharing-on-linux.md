@@ -7,9 +7,10 @@ categories = []
 tags = ["linux", "anrdoid"]
 +++
 
-* [Видео инструкция](https://www.youtube.com/watch?v=zTYYdPS4SOA)
+- [Видео инструкция](https://www.youtube.com/watch?v=zTYYdPS4SOA)
 
 Установка
+
 ```sh
 sudo pacman -S scrcpy
 ```
@@ -17,9 +18,9 @@ sudo pacman -S scrcpy
 В смартфоне необходимо активировать настройки “Для разработчиков” и включить функцию “Отладка по USB”
 
 После чего подключаем по Usb в ПК. И запускаем утилиту в терминале командой
+
 ```sh
 scrcpy
 ```
 
 В телефоне необходимо согласится с подключением и всё
-

@@ -7,15 +7,18 @@ categories = []
 tags = ["linux"]
 +++
 
-* https://github.com/erebe/greenclip
+- https://github.com/erebe/greenclip
 
 Для тех кому не нравится GUI менеджеры буфера обмена
 
 Качаем [AUR пакет](https://aur.archlinux.org/packages/rofi-greenclip)
+
 ```sh
 yay -S rofi-greenclip
 ```
+
 Создаём конфиг
+
 ```sh
 cat << EOF > ~/.config/greenclip.toml
   [greenclip]
@@ -32,28 +35,38 @@ cat << EOF > ~/.config/greenclip.toml
 ]
 EOF
 ```
+
 Прописываем его в .xprofile (для DM) или .xinitrc (запуск с TTY) для автозапуска
+
 ```sh
 greenclip daemon &
 ```
+
 Или используя systemd сервис
+
 ```sh
 systemctl --user enable greenclip.service
 ```
+
 Бинды для sxhkd
+
 ```sh
 # Greenclip clipboard manager [Rofi]
 super + v
     rofi -modi "clipboard:greenclip print" -show clipboard -run-command '{cmd}'
 ```
+
 > Примечание: У меня почему-то dmenu бинд одной командой не выполняется, решил проблему создав bash скрипт, сделав его исполняемым и всё заработало.
+
 ```sh
 cat << EOF > ~/.local/bin/dmenu-greenclip
 #!/bin/bash
 greenclip print | grep . | dmenu -i -l 10 -p clipboard | xargs -r -d'\n' -I '{}' greenclip print '{}'
 EOF
 ```
+
 После чего назначив в sxhkd, dmenu вариант заработал без проблем
+
 ```
 # Greenclip clipboard manager [dmenu]
 super + v
@@ -61,17 +74,21 @@ super + v
 ```
 
 ## Игнор буфера из приложений
+
 К примеру мне не нужно чтобы менеджер буфера отслеживал мои пароли из keepassxc
 
 Запускаем демон
+
 ```sh
 greenclip
 ```
+
 Затем копируем что-либо из keepassxc. Копируем в output'е с кавычками "Qt Selection Owner for keepassxc"
 
 И вставляем в конфиг ~/.config/greenclip.toml и сохраняем
+
 ```sh
 blacklisted_applications = ["Qt Selection Owner for keepassxc"]
 ```
-После чего менеджер не будет копировать любой output из keepassxc
 
+После чего менеджер не будет копировать любой output из keepassxc

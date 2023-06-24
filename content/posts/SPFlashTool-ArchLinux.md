@@ -8,6 +8,7 @@ tags = ["linux"]
 +++
 
 При подключении телефона с процессором mediatek
+
 ```sh
 ...
 [ +13,240631] usb 1-1.1: new high-speed USB device number 10 using ehci-pci
@@ -23,12 +24,13 @@ tags = ["linux"]
 ```
 
 Добавляем своего пользователя в группу uucp, для того чтобы были права на запись в виртуальный COM-порт
+
 ```bash
 sudo usermod -aG uucp $(whoami)
 ```
 
 В новой версии SPFlashTool 6 [spflashtool-bin](https://aur.archlinux.org/packages/spflashtool-bin) не могу найти поле с "Scatter-loading File"
- и "Download-Agent File". Окей, прожал комбинацию клавиш <kbd><kbd>CTRL</kbd>+<kbd>ALT</kbd>+<kbd>v</kbd></kbd> открылись доп-ные поля и появился "Download-Agent File" НО "Scatter-loading File" **нету**
+и "Download-Agent File". Окей, прожал комбинацию клавиш <kbd><kbd>CTRL</kbd>+<kbd>ALT</kbd>+<kbd>v</kbd></kbd> открылись доп-ные поля и появился "Download-Agent File" НО "Scatter-loading File" **нету**
 
 Для скачивания <span style="color:green">НОРМАЛЬНОЙ</span> версии с наличием заливки scatter файла вот что мне пришлось сделать
 
@@ -41,10 +43,10 @@ yay -S qtwebkit-bin
 ```
 
 Далее просто собираем 5 версию бинарника [spflashtool5-bin](https://aur.archlinux.org/packages/spflashtool5-bin) с наличием заливки scatter файла
+
 ```bash
 yay -S spflashtool5-bin
 ```
 
 Вуаля, это заняло мне 5 минут
 ![](/images/SPFlashTool-ArchLinux/1668766134.png)
-

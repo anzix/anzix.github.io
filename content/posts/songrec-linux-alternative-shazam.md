@@ -10,6 +10,7 @@ tags = ["linux"]
 Определяет очень быстро, может опознать ноунейм композиции но не всегда
 
 Установка
+
 ```sh
 sudo pacman -S songrec
 ```
@@ -27,6 +28,7 @@ sudo pacman -S songrec
 ```sh
 songrec recognize -d pipewire | xsel -b -i && notify-send -t 25000 "Song recognized" "xsel -b" -u low
 ```
-Опции:
-* `-d [Аудио вход]`
 
+Опции:
+
+- `-d [Аудио вход]`

@@ -6,9 +6,11 @@ draft = false
 categories = []
 tags = ["linux"]
 +++
+
 Некоторые поддельные карты рекламируют больший размер, чем их фактическая мощность, что может привести к потере данных или другому неожиданному поведению.
 
 Качаем данный инструмент
+
 ```bash
 yay -S f3
 ```
@@ -16,9 +18,11 @@ yay -S f3
 [Документация и использование](https://github.com/AltraMayor/f3/blob/master/doc/usage.rst)
 
 Для проверки вводим
+
 ```bash
 sudo f3probe --destructive --time-ops /dev/sdc
 ```
+
 ```sh
 F3 probe 8.0
 Copyright (C) 2010 Digirati Internet LTDA.
@@ -44,5 +48,3 @@ Operation: total time / count = avg time
 ```
 
 На 120 гб карты памяти сканирование заняло 7 с половиной минут
-
-

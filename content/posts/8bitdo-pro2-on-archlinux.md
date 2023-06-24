@@ -22,60 +22,72 @@ Firmware 3.0
 Использовался wine-tkg 6 rc5
 
 Чтобы вызвать меню конфигурации контроллера
+
 ```sh
 wine control joy.cpl
 ```
 
 Режим Xinput
-* [По проводу] Определяется как XBox 360, всё исправно работает
-* [По Bluetooth] Определяется как XBox One, всё исправно работает
+
+- [По проводу] Определяется как XBox 360, всё исправно работает
+- [По Bluetooth] Определяется как XBox One, всё исправно работает
 
 Режим Switch
-* По проводу и по Bluetooth работают хорошо, триггеры нажимаются как кнопки, только ось круга квадратит
+
+- По проводу и по Bluetooth работают хорошо, триггеры нажимаются как кнопки, только ось круга квадратит
 
 ![](/images/8bitdo-pro2-on-archlinux/8bitdo-pro2-wine.png)
 
 ## Гироскоп в эмуляторах
 
-* https://github.com/joaorb64/joycond-cemuhook/wiki
+- https://github.com/joaorb64/joycond-cemuhook/wiki
 
 В некоторых из эмуляторов таких как dolphin (Wii), cemu (Wii U), citra (3DS), yuzu (Switch) стандартно невозможно использовать гироскоп. [Joycond-Cemuhook](https://github.com/joaorb64/joycond-cemuhook/) решает эту проблему путём использования UDP протокола
 
 > Если у вас версия ядра Linux меньше 5.16 значит устанавливаем дополнительно [hid-nintendo-dkms](https://aur.archlinux.org/packages/hid-nintendo-dkms)
+>
 > ```sh
 > yay -S hid-nintendo-dkms
 > ```
 
 Устанавливаем необходимые AUR пакеты [joycond-git](https://aur.archlinux.org/packages/joycond-git) и [joycond-cemuhook-git](https://aur.archlinux.org/packages/joycond-cemuhook-git)
+
 ```sh
 yay -S joycond-git joycond-cemuhook-git
 ```
+
 Конектим по проводу 8BitDo Pro 2 (режим Switch)
 
 > Ранее в прошлых версиях AUR пакета cemuhook можно было его запускать от пользователя, сайчас же его необходимо запускать от рута (sudo)
 
 Запускаем в консоли данной командой
+
 ```sh
 sudo joycond-cemuhook
 ```
+
 Теперь данные эмуляторы будут подхватывать геймпад вместе с рабочим гироскопом
 
 У меня также [есть отдельный гайд по настройке геймпада для эмулятора dolphin](/posts/gyro-8bitdo-pro2-on-dolphin-wii)
 
-
 ## !Switch режим в Steam
+
 В Steam сейчас пока невозможно использовать драйвер hid-nintendo которое встроили в mainline ядра Linux с версии 5.16 т.к Steam использует свой драйвер. Поэтому мой геймпад при подключении не определяется вообще.
 
 Это известная проблема которую пока не исправили но есть [обходняки расписаные на Arch Wiki](https://wiki.archlinux.org/title/Gamepad#Nintendo_Switch_Pro_Controller_and_Joy-Cons), единственное что мне частично помогло это использовать [joycond](https://github.com/DanielOgorchock/joycond)
 
 Устанавливаем [данный AUR пакет](https://aur.archlinux.org/packages/joycond-git)
+
 ```sh
 yay -S joycond-git
 ```
+
 Включаем и стартуем joycond.service
+
 ```sh
 sudo systemctl enable --now joycond.service
 ```
+
 После чего подключаем геймпад (по bluetooth или по проводу) с предварительно включённым режимом (S)witch
 
 Далее переходим к обходняку который описан в Arch Wiki, чтобы Steam начал распознавать наш геймпад как Switch контроллер необходимо его перевести в виртуальный Pro контроллер (virtual Pro Controller). Без включённого joycond.service у вас не получится его активировать.
@@ -85,6 +97,7 @@ sudo systemctl enable --now joycond.service
 Когда все 4 индикатора начнут мигать жмём обе кнопки `+` и `-` и после на геймпаде начнёт мигать только один индикатор а стим выведет уведомление что были подключены joycon'ы (да, стим будет отображать мой контроллер как joycon'ы)
 
 {{< rawhtml >}}
+
 <!-- Опции controls: autoplay/play/pause -->
 <video width=100% controls play>
     <source src="/8bitdo-pro2-on-archlinux/VID_20230324_173613.mp4" type="video/mp4">

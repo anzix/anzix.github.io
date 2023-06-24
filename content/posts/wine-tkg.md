@@ -6,9 +6,11 @@ draft = false
 categories = []
 tags = ["linux-gaming"]
 +++
-* https://github.com/Frogging-Family/wine-tkg-git
+
+- https://github.com/Frogging-Family/wine-tkg-git
 
 Процесс установки прост
+
 ```bash
 mkdir ~/Repos && cd ~/Repos
 git clone https://github.com/Frogging-Family/wine-tkg-git.git
@@ -20,12 +22,15 @@ cd wine-tkg-git/wine-tkg-git/
 [ARU (Wine-TKG)](https://ventureo.codeberg.page/source/linux-gaming.html#wine-tkg)
 
 Если готовы тогда начинаем компиляцию (в моём случае с правкой **customization.cfg** это заняло больше 1 часа)
+
 ```bash
 makepkg -sric
 ```
 
 На все вопросы просто тыкаете Enter
+
 ## Свежий скомпилированный Wine-tkg
+
 Идёте на [github страницу](https://github.com/Frogging-Family/wine-tkg-git/actions/workflows/wine-arch.yml) и выбираете по дате самый последний с отмеченной зелённой галочкой
 
 ![](/images/wine-tkg/Screenshot_20230117_015558.png)

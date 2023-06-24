@@ -6,16 +6,21 @@ draft = false
 categories = []
 tags = ["linux"]
 +++
+
 > Пояснение: может вызвать некоторые графические глюки в интерфейсе, но лично у меня всё выглядит норм
 
 Для этого качаем AUR пакет
+
 ```sh
 yay -S qt5-styleplugins
 ```
+
 И в .zshrc/.zshenv или .zprofile меняем переменную среду с qt5ct на gtk2
+
 ```sh
 export QT_QPA_PLATFORMTHEME="gtk2"
 ```
+
 В основном выглядит чётко и красиво
 
 ![](/images/gtk-theme-on-qt-applications/gtk-on-qt.png)

@@ -7,10 +7,11 @@ categories = []
 tags = ["linux-gaming"]
 +++
 
-* https://github.com/DadSchoorse/vkBasalt
-* [Полезная информация о vkBasalt](https://linuxreviews.org/VkBasalt)
+- https://github.com/DadSchoorse/vkBasalt
+- [Полезная информация о vkBasalt](https://linuxreviews.org/VkBasalt)
 
 Качаем AUR пакеты (для работы на 32 bit'ных играх необходим lib32-vkbasalt)
+
 ```
 yay -S vkbasalt lib32-vkbasalt reshade-shaders-git
 ```
@@ -18,6 +19,7 @@ yay -S vkbasalt lib32-vkbasalt reshade-shaders-git
 Необходимо создать конфиг файл с данным содержанием
 
 nvim ~/.config/vkBasalt/vkBasalt.conf
+
 ```sh
 #:se ft=sh
 reshadeTexturePath = /opt/reshade/textures
@@ -35,12 +37,12 @@ effects = SMAA:cas
 ```
 
 Вот список интересных фильтров:
-* FilmGrain2 - эффект киноплёнки
-* Curves - увеличение контрастности для новых игр
-* FakeHDR - увеличение контрастности для старых игр (может привести к большому снижению производительности)
-* SMAA - сглаживание текстур (альтернатива FXAA для AMD)
+
+- FilmGrain2 - эффект киноплёнки
+- Curves - увеличение контрастности для новых игр
+- FakeHDR - увеличение контрастности для старых игр (может привести к большому снижению производительности)
+- SMAA - сглаживание текстур (альтернатива FXAA для AMD)
 
 AMD Fidelity FX Sharpness ..% если игра новая тогда ставим 50% если старая тогда ставим 100%
 
 По стандарту стоит 75%
-

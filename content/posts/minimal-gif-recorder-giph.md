@@ -6,23 +6,31 @@ draft = false
 categories = []
 tags = ["linux"]
 +++
+
 Данный инструмент также позволяет записывать в формате WebP и Mp4, но для текущих целей будем юзать как gif рекордер. Можно записывать игровые моменты при помощи опции `-o`
 
 Все опции описаны в `man page giph`
 
 Необходимые пакеты (зависимости):
+
 ```sh
 sudo pacman -S ffmpeg slop xdotool dmenu rofi
 ```
+
 Качаем основной [AUR пакет giph](https://aur.archlinux.org/packages/giph)
+
 ```sh
 yay -S giph
 ```
+
 Создаём каталог для сохранения гифок
+
 ```sh
 mkdir ~/Pictures/Gif
 ```
+
 Биндим используя [sxhkd](https://github.com/baskerville/sxhkd)
+
 ```sh
 # (dmenu) Начать/Остановить запись GIF рекордера
 ctrl + Print

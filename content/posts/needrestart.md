@@ -8,13 +8,17 @@ tags = ["linux"]
 +++
 
 Устанавливаем пакеты
+
 ```bash
 yay -S needrestart iucode-tool
 ```
+
 ```bash
 sudo -e /etc/pacman.d/hooks/99-needrestart-pacman.hook
 ```
+
 Вставляем
+
 ```sh
 [Trigger]
 Operation = Install
@@ -31,4 +35,3 @@ Depends = needrestart
 
 Вот как это выглядит
 ![](/images/needrestart/1669990137.png)
-

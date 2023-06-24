@@ -6,7 +6,8 @@ draft = false
 categories = []
 tags = ["linux"]
 +++
-* https://the.exa.website/
+
+- https://the.exa.website/
 
 Это замена ls команды для zsh который добавляет цвета и иконки. Делая наш терминал более приятным
 
@@ -15,6 +16,7 @@ tags = ["linux"]
 > **Не забывайте** что иконки юзают шрифты Nerd Fonts и для нормального отображения необходимо прописать шрифт в конфиге терминала kitty или alacritty как показано [тут](/posts/display-icons-in-terminal)
 
 Установка exa
+
 ```sh
 sudo pacman -S exa
 ```

@@ -18,12 +18,14 @@ yay -S extract-xiso-git
 ```
 
 Пояснение:
-* mame-tools - Конвертирование .iso / .cue образов PS2 игр в сжатый .chd образ (chdman)
-* ciso - конвертирование из iso в cso для PSP образов
-* makerom-git - уменьшает размер для образов 3DS
-* extract-xiso-git - конвертирует Xbox/Xbox360 iso образы в xiso для xemu эмулятора
+
+- mame-tools - Конвертирование .iso / .cue образов PS2 игр в сжатый .chd образ (chdman)
+- ciso - конвертирование из iso в cso для PSP образов
+- makerom-git - уменьшает размер для образов 3DS
+- extract-xiso-git - конвертирует Xbox/Xbox360 iso образы в xiso для xemu эмулятора
 
 Функции (вставляем в .zshrc):
+
 ```bash
 # Конвертирование образов
 # Использование: convert2chd [файл]

@@ -45,12 +45,17 @@ insert_anchor_links = "left"
 И последнее редактируем `style.css` чтобы придать вид якорю
 
 ```css
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   .anchor {
     text-decoration: none;
     border-bottom-color: transparent;
     cursor: pointer;
-    padding-left:1rem;
+    padding-left: 1rem;
   }
 }
 ```
@@ -85,7 +90,11 @@ copy_code = true
 
 ```html
 ...
-<li>{{[ page.date | date(format="%F") ]}}<a href="{{ page.permalink | safe }}"> {{ page.title }} </a>(last edited:  {{ page.date }})</li>
+<li>
+  {{[ page.date | date(format="%F") ]}}<a href="{{ page.permalink | safe }}">
+    {{ page.title }} </a
+  >(last edited: {{ page.date }})
+</li>
 ...
 ```
 
@@ -131,27 +140,30 @@ nvim site/template/search.html
 ```
 
 ```html
-{% extends "base.html" %}
-{% block content %}
-    <article>
-        <header>
-            <!-- Имя заголовка отражается из содержимого content/pages/search.md -->
-            <h1>{{ page.title }}</h1>
-        </header>
-        <section class="modal-card-body">
-            <div class="field mb-2">
-                <div class="control">
-                    <input class="input" id="search" placeholder="🔎  поиск" type="search" />
-                </div>
-            </div>
-            <!--Вывод выхлопа результата из search.js-->
-            <div class="search-results">
-                <ul class="search-results__items">
-                </ul>
-            </div>
-        </section>
-        <!--Здесь должны быть скрипты, но из-за бага в zola я не могу их вписать-->
-    </article>
+{% extends "base.html" %} {% block content %}
+<article>
+  <header>
+    <!-- Имя заголовка отражается из содержимого content/pages/search.md -->
+    <h1>{{ page.title }}</h1>
+  </header>
+  <section class="modal-card-body">
+    <div class="field mb-2">
+      <div class="control">
+        <input
+          class="input"
+          id="search"
+          placeholder="🔎  поиск"
+          type="search"
+        />
+      </div>
+    </div>
+    <!--Вывод выхлопа результата из search.js-->
+    <div class="search-results">
+      <ul class="search-results__items"></ul>
+    </div>
+  </section>
+  <!--Здесь должны быть скрипты, но из-за бага в zola я не могу их вписать-->
+</article>
 {% endblock content %}
 ```
 
@@ -182,8 +194,7 @@ paginate_by = 30
 В функции **for** вместо **section** меняем на **paginate**. И добавляем навигационный тег **nav**
 
 ```html
-{% for page in paginate.pages %}
-...
+{% for page in paginate.pages %} ...
 <nav class="navigation">
   {% if paginator.previous %}
   <a class="navigation-prev" href="{{ paginator.previous }}">‹ Предыдущая</a>

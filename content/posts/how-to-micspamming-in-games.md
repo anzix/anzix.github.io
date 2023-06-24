@@ -6,11 +6,14 @@ draft = false
 categories = []
 tags = ["linux-gaming"]
 +++
+
 Источники:
-* https://steamcommunity.com/sharedfiles/filedetails/?id=249772871
-* https://steamcommunity.com/sharedfiles/filedetails/?id=2887423350
+
+- https://steamcommunity.com/sharedfiles/filedetails/?id=249772871
+- https://steamcommunity.com/sharedfiles/filedetails/?id=2887423350
 
 Вводите
+
 ```sh
 pactl load-module module-null-sink
 ```
@@ -18,6 +21,7 @@ pactl load-module module-null-sink
 Открываете `pavucontrol` и меняете источник в **Проигрывание** на **null-sink Audio/Sink sink**
 
 Чтобы убрать модуль null-sink
+
 ```sh
 pactl unload-module module-null-sink
 ```

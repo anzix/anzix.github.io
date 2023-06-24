@@ -8,14 +8,16 @@ tags = ["linux"]
 +++
 
 Установка
+
 ```sh
 sudo pacman -S kdenlive breeze
 ```
 
 Дополнительные:
-* `breeze` - необходим чтобы применилась фирменная для Kdenlive тёмная тема
-* `opencv` - для трекера движения
-* `opentimelineio` - для импорта/экспорта таймлайн дорожки
+
+- `breeze` - необходим чтобы применилась фирменная для Kdenlive тёмная тема
+- `opencv` - для трекера движения
+- `opentimelineio` - для импорта/экспорта таймлайн дорожки
 
 В тулбаре "Настройка" - "Цветовые схемы" выбираем "Breeze, тёмный вариант". И в тулбаре "Стиль" - Выбираем "Breeze"
 
@@ -30,13 +32,13 @@ sudo pacman -S kdenlive breeze
 Также есть совет что можно использовать прокси-клипы на временной шкале. Прокси - это копии ваших видеоматериалов, но уменьшенные по размеру и качеству изображения в сравнении с оригинальными клипами что может увеличить производительность. При рендере на выходе У ВАС БУДЕТ ОРИГИНАЛЬНОЕ КАЧЕСТВО, данные действия будут влиять только на монтажный стол предпросмотра видео.
 
 Источники
-* [Мануал по Proxy](https://docs.kdenlive.org/en/importing_and_assets_management/projects_and_files/project_settings.html#proxy-clips-tab)
-* https://www.youtube.com/watch?v=gWvZoDiWsI0
+
+- [Мануал по Proxy](https://docs.kdenlive.org/en/importing_and_assets_management/projects_and_files/project_settings.html#proxy-clips-tab)
+- https://www.youtube.com/watch?v=gWvZoDiWsI0
 
 Жмёте в тулбаре "Настройка" - "Настройка Kdenlive" - выбираете "Прокси-клипы" и включаете
 
-* Включить прокси-клипы
-* Создавать для видеоклипов размером больше - 1000пикселов
+- Включить прокси-клипы
+- Создавать для видеоклипов размером больше - 1000пикселов
 
 ![](/images/kdenlive/proxy.png)
-

@@ -16,6 +16,7 @@ tags = ["linux-gaming"]
 Должен быть открыт steam на фоне
 
 Вводим подобным образом
+
 ```sh
 steam steam://install/877280
 ```

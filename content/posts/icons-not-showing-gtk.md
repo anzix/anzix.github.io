@@ -6,8 +6,10 @@ draft = false
 categories = ["solving-problem"]
 tags = ["linux"]
 +++
+
 Источник решения:
-* [Arch Wiki](https://wiki.archlinux.org/title/GTK#Button_and_menu_icons)
+
+- [Arch Wiki](https://wiki.archlinux.org/title/GTK#Button_and_menu_icons)
 
 Это довольно просто решается
 
@@ -16,9 +18,10 @@ tags = ["linux"]
 Для gtk3 `~/.config/gtk-3.0/settings.ini`
 
 И редактируем эти файлы меняя только значения этих строк с `0` на `1`
+
 ```sh
 gtk-button-images=1
 gtk-menu-images=1
 ```
-Перезапускаем pcmanfm и проблема решена
 
+Перезапускаем pcmanfm и проблема решена

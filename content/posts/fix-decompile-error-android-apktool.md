@@ -7,14 +7,17 @@ categories = []
 tags = ["anrdoid"]
 +++
 
-* [Github issue](https://github.com/iBotPeaches/Apktool/issues/1131)
-* [Источник с фиксом данной проблемы](https://platinmods.com/threads/how-to-fix-apktool-decompile-error-using-mt-manager-app-arscdecoder-error.121708/)
+- [Github issue](https://github.com/iBotPeaches/Apktool/issues/1131)
+- [Источник с фиксом данной проблемы](https://platinmods.com/threads/how-to-fix-apktool-decompile-error-using-mt-manager-app-arscdecoder-error.121708/)
 
 При декомпиляции файла используя `apktool` я столкнулся с данной проблемой которою мог решить только на андроиде
+
 ```sh
 apktool d framework-res.apk
 ```
+
 Вывод с ошибкой
+
 ```
 .....
 I: Loading resource table...
@@ -25,6 +28,7 @@ Exception in thread "main" brut.androlib.AndrolibException: Multiple resources: 
 ```
 
 Вот что мне потребовалось сделать для решения проблемы:
+
 1. Копируем framework-res.apk на телеф
 2. В Файловом менеджере ([MT Manager](https://4pda.to/forum/index.php?showtopic=548542)) открываем apk жмём "Открыть" откроется apk как zip архив
 3. Выберите файл resource.arsc, он спросит, в каком редакторе открыть. Выберите "Редактор Arsc"

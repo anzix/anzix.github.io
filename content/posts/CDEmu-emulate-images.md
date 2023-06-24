@@ -8,31 +8,37 @@ tags = ["linux-gaming"]
 +++
 
 Источники:
-* https://wiki.archlinux.org/title/CDemu
+
+- https://wiki.archlinux.org/title/CDemu
 
 CDEmu может монтировать .nrg .iso .cue и другие форматы
 
 Качаем пакет
+
 ```bash
 sudo pacman -S cdemu-client
 ```
 
-> Примечание: если у вас обычное ядро Linux, устанавливаем ``vhba-module-dkms``
+> Примечание: если у вас обычное ядро Linux, устанавливаем `vhba-module-dkms`
+
 ```bash
 sudo pacman -S vhba-module-dkms
 ```
 
 Для активации демона который будет удобно монтировать наши образы вставляем в .xprofile (для DM) или .xinitrc (запуск с TTY)
+
 ```bash
 cdemu-daemon &
 ```
 
 Для тех кто использует дисплей менеджеры
+
 ```bash
 systemctl --user enable --now cdemu-daemon.service
 ```
 
 ## Монтирование через проводник
+
 В проводнике pcmanfm при нажатии на iso файл правой кнопкой мыши появится действие "Клиент CDEmu", жмём на него и диск смонтирован
 
 ![](/images/CDEmu-emulate-images/1666680474.png)
@@ -44,20 +50,25 @@ systemctl --user enable --now cdemu-daemon.service
 ![](/images/CDEmu-emulate-images/1666677451.png)
 
 Далее уже можно юзать wine для установки игры, в общем всё стандартно
+
 ```bash
 WINEPREFIX="$HOME/.local/share/wineprefixes/TRA" wine /run/media/[username]/Tomb_Raider_AnniVERSARY/setup.exe
 ```
 
 Через терминал можно вызвать status команду какие эмулированные диски смонтированы
+
 ```bash
 cdemu status
 ```
 
 После того как установили игру, смонтированный образ можно удалить командой
+
 ```bash
 cdemu unload 0
 ```
+
 ## Монтирование более 1 эмулируемых образов в CDEmu
+
 Была проблема когда примонтированным дисководом .mds образ содержал в себе ещё .mds образы которые я не смог смонтировать CDEmu. При нажатии "Клиент CDEmu" ничего не происходило, а в терминале при вводе команды возникала ошибка
 
 ```sh
@@ -67,15 +78,18 @@ cdemu load 1 /run/media/[username]/NFS_MF_BE/CD1/NFSMW_DISC1_HKZonda_by_P2PZone.
 
 Проблема была в не актуальной [Arch Wiki CDEmu](https://wiki.archlinux.org/title/CDemu) статье где не было указано о добавлении эмулируемого sr устройство
 Нашёл я на странице мануала необходимую мне опцию
+
 ```bash
 man cdemu
 ```
 
-* ``add-device`` - Создает еще одно виртуальное устройство
-Для добавления доп-го эмулируемого sr устройства выполняем данную команду
+- `add-device` - Создает еще одно виртуальное устройство
+  Для добавления доп-го эмулируемого sr устройства выполняем данную команду
+
 ```bash
 cdemu add-device
 ```
+
 ```sh
 Накопитель добавлен успешно.
 ```
@@ -83,10 +97,11 @@ cdemu add-device
 Теперь наконец-то удалось смонтировать второй образ диска обеими вариантами через терминал (командой cdemu load 1) или нажав на образ в проводнике "Клиент CDEmu"
 
 Если создали ненужное пустое sr устр-во, его можно удалить данной командой
+
 ```bash
 cdemu remove-device
 ```
+
 ```sh
 Накопитель удален успешно.
 ```
-

@@ -8,6 +8,7 @@ tags = ["linux"]
 +++
 
 Консоль для доступа к USB модему
+
 ```bash
 sudo pacman -S minicom
 ```

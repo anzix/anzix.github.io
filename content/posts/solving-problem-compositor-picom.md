@@ -24,6 +24,7 @@ tags = ["linux"]
 <font color="green">Решается</font> это добавлением в исключение blur'а picom
 
 maim вызывает slop поэтому необходимо именно его добавить в исключение
+
 ```
 blur-background-exclude = [
    "class_g = 'slop'",
@@ -61,6 +62,7 @@ wintypes: {
 После применения [оптимизации композитора picom для полноэкранного режима]({{< ref "/content/posts/compositor-picom.md#оптимизация-picom-для-полноэкранного-режима-в-играх" >}}) я столкнулся с проблемой вылета игры Serious Sam Fusion 2017 при переключении рабочего пространства
 
 <font color="green">Решил</font> это добавлением в exclude (исключение) игры или программы используя xprop
+
 ```
 unredir-if-possible-exclude = [
         "class_g = 'looking-glass-client' && !focused",
@@ -69,4 +71,3 @@ unredir-if-possible-exclude = [
         "class_g != 'i3lock'"
 ];
 ```
-
