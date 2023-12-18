@@ -1,5 +1,5 @@
 +++
-title = "!Exa - замена ls команды"
+title = "Eza - замена ls команды"
 date = 2023-03-26T13:23:43+05:00
 draft = false
 [taxonomies]
@@ -7,7 +7,7 @@ categories = []
 tags = ["linux"]
 +++
 
-- https://the.exa.website/
+- [Сайт](https://eza.rocks/)
 
 Это замена ls команды для zsh который добавляет цвета и иконки. Делая наш терминал более приятным
 
@@ -15,29 +15,29 @@ tags = ["linux"]
 >
 > **Не забывайте** что иконки юзают шрифты Nerd Fonts и для нормального отображения необходимо прописать шрифт в конфиге терминала kitty или alacritty как показано [тут](/posts/display-icons-in-terminal)
 
-Установка exa
+Установка eza
 
 ```sh
-sudo pacman -S exa
+sudo pacman -S eza
 ```
 
-![](/images/exa-ls-replacement/exa.png)
+![image](/images/exa-ls-replacement/exa.png)
 
 Для удобства из показанного скрина я сделал alias команды, вводим в `~/.zshrc`
 
 ```sh
-# exa
-if hash exa 2>/dev/null; then
+# eza
+if hash eza 2>/dev/null; then
 	alias \
-	 ls='exa -b --color=always --icons --group-directories-first' `# (-b) Понятные размеры файлов +Цвета +Иконки, Сгруппировано` \
+	 ls='eza -b --color=always --icons --group-directories-first' `# (-b) Понятные размеры файлов +Цвета +Иконки, Сгруппировано` \
 	 ll='ls -l' `# +Подробно +листом вниз` \
 	 la='ls -a' `# +Показ скрытых` \
 	 lla='ls -la' `# +Подробно +Показ скрытых +листом вниз` \
-	 lt="exa -aT --color=always --icons --group-directories-first -h --git-ignore --ignore-glob '.git|.gitignore|.DS_Store|node_modules'" `# Дерево (-h) Добавляет строку заголовка в каждый столбец` \
+	 lt="eza -aT --color=always --icons --group-directories-first -h --git-ignore --ignore-glob '.git|.gitignore|.DS_Store|node_modules'" `# Дерево (-h) Добавляет строку заголовка в каждый столбец` \
 	 lt1="lt -L 1" \
 	 lt2="lt -L 2" \
 	 lt3="lt -L 3" \
-	 l.='exa -d .* --group-directories-first' `# Показать только . (dot)`
+	 l.='eza -d .* --group-directories-first' `# Показать только . (dot)`
 else
 # GNU `ls`
 	alias \

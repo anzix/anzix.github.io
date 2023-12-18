@@ -36,7 +36,7 @@ sudo usermod -aG uucp $(whoami)
 
 Дабы не пришлось собирать [qtwebkit](https://aur.archlinux.org/packages/qtwebkit) (который подтягивает очень много зависимостей для сборки) просто соберите бинарник [qtwebkit-bin](https://aur.archlinux.org/packages/qtwebkit-bin) и ваше время и нервы будут сохранены :)
 
-![](/images/SPFlashTool-ArchLinux/swappy-20221118-151453.png)
+![image](/images/SPFlashTool-ArchLinux/swappy-20221118-151453.png)
 
 ```bash
 yay -S qtwebkit-bin
@@ -49,4 +49,4 @@ yay -S spflashtool5-bin
 ```
 
 Вуаля, это заняло мне 5 минут
-![](/images/SPFlashTool-ArchLinux/1668766134.png)
+![image](/images/SPFlashTool-ArchLinux/1668766134.png)

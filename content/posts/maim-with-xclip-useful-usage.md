@@ -98,7 +98,7 @@ bindsym $mod+shift+P exec --no-startup-id \
 
 ## Делаем из maim сканнер цветовой палитры
 
-![](/images/maim-with-xclip-useful-usage/colorpicker.png)
+![image](/images/maim-with-xclip-useful-usage/colorpicker.png)
 
 Качаем пакет если у вас его нету
 
@@ -142,7 +142,7 @@ sudo pacman -S tesseract tesseract-data-rus tesseract-data-eng tesseract-data-jp
 tesseract -l [язык]+[язык]+[язык]
 ```
 
-![](/images/maim-with-xclip-useful-usage/ocr.png)
+![image](/images/maim-with-xclip-useful-usage/ocr.png)
 
 Не забываем что для доп распознавания необходимо скачать пакет с данным языком иначе результат будет неудовлетворительным
 

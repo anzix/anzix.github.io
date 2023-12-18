@@ -48,4 +48,4 @@ DXVK_HUD=compiler obs-gamecapture gamemoderun mangohud taskset -c 0-3 %command%
 ```
 
 Узнать что taskset работает можно благодаря мониторингу MangoHud
-![](/images/CPU-Affinity/taskset-mangohud.png)
+![image](/images/CPU-Affinity/taskset-mangohud.png)

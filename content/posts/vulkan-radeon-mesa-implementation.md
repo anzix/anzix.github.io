@@ -73,5 +73,5 @@ yay -S amd-vulkan-prefixes
 
 `DXVK_HUD=devinfo` или `DXVK_HUD=full`
 
-![](/images/vulkan-radeon-mesa-implementation/1658667393.png) Worms Armageddon
-![](/images/vulkan-radeon-mesa-implementation/1658744109.png) Titanfall 2
+![image](/images/vulkan-radeon-mesa-implementation/1658667393.png) Worms Armageddon
+![image](/images/vulkan-radeon-mesa-implementation/1658744109.png) Titanfall 2

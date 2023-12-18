@@ -44,7 +44,7 @@ sudo pacman -Sy
 
 > Примечание: Если вы качаете что-либо с Google Drive необходимо добавить URL в "Сайты, которые всегда могут использовать файлы cookie"
 
-![](/images/ultimate-ungoogled-chromium-guide/google-drive-cookie.png)
+![image](/images/ultimate-ungoogled-chromium-guide/google-drive-cookie.png)
 
 <span style="color:green">Описание:</span>: **Не отслеживать наши данные веб сайтам**
 
@@ -70,7 +70,7 @@ sudo pacman -Sy
 
 [Скачиваем](https://github.com/NeverDecaf/chromium-web-store/releases/latest) Chromium.Web.Store.crx вас сразу предложат установить магазин, соглашаемся с установкой
 
-![](/images/ultimate-ungoogled-chromium-guide/chromium-web-store.png)
+![image](/images/ultimate-ungoogled-chromium-guide/chromium-web-store.png)
 
 Теперь можно закачивать расширения из магазина и обновлять их этим расширением
 
@@ -147,7 +147,7 @@ sudo pacman -Sy
    - [voice-over-translation](https://github.com/ilyhalight/voice-over-translation) ([для тех кто юзает violentmonkey](https://raw.githubusercontent.com/ilyhalight/voice-over-translation/master/vot-cloudflare.user.js))
    - (Может не работать) [Google Images direct links 2](https://greasyfork.org/ru/scripts/398802-google-images-direct-links-2) - Быстрое перенаправление на картинку
    - [Back2source](https://github.com/vladgba/Back2source) (или https://github.com/quenhus/uBlock-Origin-dev-filter) - решение по вырезанию машинных переводов из поисковика (stackoverflow и т.д) как на пикче
-     ![](/images/ultimate-ungoogled-chromium-guide/back2source.png)
+     ![image](/images/ultimate-ungoogled-chromium-guide/back2source.png)
    - [Privacy Redirector](https://greasyfork.org/en/scripts/436359-privacy-redirector) - перенаправляет на свободные ресурсы уважающие приватность данных
    - [RU AdList JS Fixes](https://greasyfork.org/ru/scripts/19993-ru-adlist-js-fixes) - (Использовать вместе с uBlock Origin со списком фильтров RU AdList) блокирует рекламу Яндекса, Live Journal и т.д. Вместо этого скрипта можно использовать [RU AdList: Counters](https://easylist-downloads.adblockplus.org/cntblock.txt) и [RU AdList: BitBlock](https://easylist-downloads.adblockplus.org/bitblock.txt) через импорт uBlockOrigin, также и наоборот
 
@@ -168,7 +168,7 @@ sudo pacman -Sy
 
 Остальные удалённые устанавливаем вручную
 
-![](/images/ultimate-ungoogled-chromium-guide/1668285495.png)
+![image](/images/ultimate-ungoogled-chromium-guide/1668285495.png)
 
 ### Добавление поисковой системы и шорткатов
 
@@ -259,4 +259,4 @@ cd chromium-widevine
 
 Для проверки что Widevine работает можно запустить данный html тест (test-widevine.html) внутри репо.
 
-![](/images/ultimate-ungoogled-chromium-guide/widewine-test.png)
+![image](/images/ultimate-ungoogled-chromium-guide/widewine-test.png)

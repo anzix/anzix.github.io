@@ -7,7 +7,7 @@ categories = []
 tags = ["linux-gaming"]
 +++
 
-[Сурс](<https://www.pcgamingwiki.com/wiki/Glossary:Anisotropic_filtering_(AF)#Mesa3D>)
+[Источник](<https://www.pcgamingwiki.com/wiki/Glossary:Anisotropic_filtering_(AF)#Mesa3D>)
 
 Для тех кто [использует RADV реализацию Vulkan драйверов от Mesa](/posts/vulkan-radeon-mesa-implementation/) экспортируем данную переменную изменяя необходимое значение (0, 2, 4, 8, 16)
 

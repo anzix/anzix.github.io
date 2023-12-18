@@ -7,7 +7,7 @@ categories = []
 tags = ["linux"]
 +++
 
-- https://github.com/werman/noise-suppression-for-voice
+- [Github страница проекта](https://github.com/werman/noise-suppression-for-voice)
 - [Видео Гайд для Windows](https://www.youtube.com/watch?v=lrrUXVoNpqg)
 
 В моём примере всё будет делаться на pipewire
@@ -84,8 +84,8 @@ systemctl --user restart pipewire
 Открываем obs, и в Mic/Aur жмём на шестерёнку и выбираем "Свойства"
 В выпадающем списке выбираем "Шумодав микро"
 
-![](/images/noise-suppression-for-voice-archlinux/obs.png)
+![image](/images/noise-suppression-for-voice-archlinux/obs.png)
 
-![](/images/noise-suppression-for-voice-archlinux/obs-noise-suppression-source.png)
+![image](/images/noise-suppression-for-voice-archlinux/obs-noise-suppression-source.png)
 
 Теперь у вас активированный шумодав на вашем микрофоне

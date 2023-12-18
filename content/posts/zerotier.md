@@ -7,11 +7,13 @@ categories = []
 tags = ["linux-gaming"]
 +++
 
+Обновлено: 20.11.23
+
 Ориентировался на данные источники
 
-- https://www.youtube.com/watch?v=RGTzRTC1JxM&t=634s
-- https://www.youtube.com/watch?v=JXB6FHJsqOw
-- https://wiki.archlinux.org/title/ZeroTier
+- [Видео инструкция 1](https://www.youtube.com/watch?v=RGTzRTC1JxM&t=634s)
+- [Видео инструкция 2](https://www.youtube.com/watch?v=JXB6FHJsqOw)
+- [Arch Wiki ZeroTier](https://wiki.archlinux.org/title/ZeroTier)
 
 Плюсы:
 
@@ -29,6 +31,14 @@ sudo pacman -S zerotier-one
 sudo systemctl enable --now zerotier-one.service
 ```
 
+(TODO) необходимо проверить
+
+Чтобы иметь возможность пропустить, используя `sudo`
+
+```sh
+sudo cat /var/lib/zerotier-one/authtoken.secret > ~/.zeroTierOneAuthToken
+```
+
 Чтобы узнать id своего компьютера
 
 ```bash
@@ -44,7 +54,7 @@ sudo zerotier-cli info
 
 В браузере залогинившись и подтвердив почту жмём на странице ZeroTier <span style="color:#9a5500">Create A Network</span> и кликаем на созданную сеть
 
-На ПК коннектимся используя команду
+На ПК коннектимся используя команду\
 (_network_id_ указан в странице ZeroTier в **Basics**)
 
 ```bash
@@ -74,7 +84,7 @@ cd ~/Server_[version]
 java -Xmx6124M -Xms6124M -jar server.jar nogui
 ```
 
-Создастся необходимые файлы и потом попросит принять EULA
+Создастся необходимые файлы и потом попросит принять EULA\
 Редактируем внутри папки сервера `eula.txt`
 
 ```
@@ -91,8 +101,10 @@ motd=Test Arch Linux Anix # Это описание сервера
 ...
 ```
 
-Останавливаем сервер
+Останавливаем сервер\
 <kbd><kbd>CTRL</kbd>+<kbd>c
+
+Или написав `stop` в терминале в котором запущен сервер
 
 И запускаем снова
 
@@ -100,12 +112,8 @@ motd=Test Arch Linux Anix # Это описание сервера
 java -Xmx6124M -Xms6124M -jar server.jar nogui
 ```
 
-Запускаем [tlauncher](https://aur.archlinux.org/packages/tlauncher): ForgeOptifine [version]
-После запуска майна вводим в "Прямое подключение" для проверки сервера
-
-```
-localhost
-```
+Запускаем [tlauncher](https://aur.archlinux.org/packages/tlauncher): ForgeOptifine [version]\
+После запуска майна вводим в "Прямое подключение" `localhost` для проверки сервера
 
 ## Подключение друга на Windows:
 
@@ -115,12 +123,8 @@ localhost
 
 **(Обязательно)** На странице браузера ZeroTier отмечаем галочкой в столбце **Auth?** дабы аутентифицировать ПК друга
 
-В консоли нашего ПК вводим
+В консоли нашего ПК вводим `ifconfig`
 
-```bash
-ifconfig
-```
-
-Видим новое созданное уст-во **ztrta2ogfu**.
-Копируем **inet** ip и даём вашему другу с прописанным портом майна 25565.
+Видим новое созданное уст-во **ztrta2ogfu**.\
+Копируем **inet** ip и даём вашему другу с прописанным портом майна 25565.\
 Он вставляем этот ip в майн, и Готово!

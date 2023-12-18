@@ -157,7 +157,7 @@ table.insert(alsa_monitor.rules, rule)
 ```
 
 При перезагрузке pipewire вот что у меня получилось в pulsemixer
-![](/images/wireplumber-audio-session-management/pulsemixer-rename-audio.png)
+![image](/images/wireplumber-audio-session-management/pulsemixer-rename-audio.png)
 
 ## Отключение ненужного выхода аудио HDMI GPU
 
@@ -209,5 +209,5 @@ table.insert(alsa_monitor.rules, rule)
 ```
 
 После перезагрузки pipewire в pavucontrol больше не будет появлятся ненужное аудио устройство
-![](/images/wireplumber-audio-session-management/pavucontrol-hdmi-gpu-disable.png)
-![](/images/wireplumber-audio-session-management/hdmi-audio-gpu-disable-pulsemixer.png)
+![image](/images/wireplumber-audio-session-management/pavucontrol-hdmi-gpu-disable.png)
+![image](/images/wireplumber-audio-session-management/hdmi-audio-gpu-disable-pulsemixer.png)

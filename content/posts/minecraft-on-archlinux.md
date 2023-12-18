@@ -11,8 +11,9 @@ tags = ["linux-gaming"]
 
 Список доступных:
 
-1. [TL Legacy](https://tlaun.ch/)/[VK](https://vk.link/tl_mc_launcher)/[AUR](https://aur.archlinux.org/packages/tlauncher/): `yay -S tlauncher`
+1. [Legacy Launcher](https://llaun.ch/)/[VK](https://vk.link/tl_mc_launcher)/~~[AUR](https://aur.archlinux.org/packages/legacylauncher/): `yay -S legacylauncher`~~
 2. [PollyMC](https://github.com/fn2006/PollyMC) - форк PolyMC с оффлайн аккаунтом/[AUR](https://aur.archlinux.org/packages/pollymc-bin): `yay -S pollymc-bin`
+3. [Prism Launcher](https://github.com/Octol1ttle/PrismLauncher-elyby) - форк с заменой учёток Mojang на Ely.by
 
 ### Ручной запуск jar лаунчера майна
 

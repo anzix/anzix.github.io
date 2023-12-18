@@ -47,7 +47,7 @@ nano ~/.config/alacritty/alacritty.conf
 
 И самое главное не забыть убрать пробелы (пикрил), иначе у вас попросту не примениться прозрачность
 
-![](/images/terminal-alacritty/transparency.png)
+![image](/images/terminal-alacritty/transparency.png)
 
 ## Тема для Alacritty
 

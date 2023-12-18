@@ -52,7 +52,7 @@ AXIS_DOWN  add volume -3
 
 Показать статистику видео
 
-![](/images/mpv-and-setup/mpv_1.png)
+![image](/images/mpv-and-setup/mpv_1.png)
 
 - Нажмите i чтобы она на секунду появилась
 - Нажмите Shift + i чтобы вкл на постоянку
@@ -105,7 +105,7 @@ sub-auto=fuzzy
 mpv "magnet URL" -audio-file-paths="Путь к скачанной папке с озвучкой" -sub-file-paths="Путь к скачанной папке с субтитрами"
 ```
 
-![](/images/mpv-and-setup/mpv-webtorrent-hook.png)
+![image](/images/mpv-and-setup/mpv-webtorrent-hook.png)
 
 Как видно из этого output’а терминала (+) - значит что аудиодорожка и субтитры были добавлены
 
@@ -115,15 +115,15 @@ mpv "magnet URL" -audio-file-paths="Путь к скачанной папке с
 
 До
 
-![](/images/mpv-and-setup/before.png)
+![image](/images/mpv-and-setup/before.png)
 
 После
 
-![](/images/mpv-and-setup/after.png)
+![image](/images/mpv-and-setup/after.png)
 
 Они обычно вот так поставляются в торрент раздачах
 
-![](/images/mpv-and-setup/fonts.png)
+![image](/images/mpv-and-setup/fonts.png)
 
 Создаёте папку fonts (соблюдая регистр)
 
@@ -180,7 +180,7 @@ mkdir scripts
 osc=no
 ```
 
-![](/images/mpv-and-setup/mpv_thumbnail_warning.png)
+![image](/images/mpv-and-setup/mpv_thumbnail_warning.png)
 
 #### Ускорение процесса
 
@@ -188,13 +188,13 @@ osc=no
 
 Сделайте 2 `mpv_thumbnail_script_server` но с цифрой в конце
 
-![](/images/mpv-and-setup/speedup-process-thumbnails-1.png)
+![image](/images/mpv-and-setup/speedup-process-thumbnails-1.png)
 
 Так мы увеличим скорость обработки миниатюр в видео
 
 Готово!
 
-![](/images/mpv-and-setup/speedup-process-thumbnails-2.png)
+![image](/images/mpv-and-setup/speedup-process-thumbnails-2.png)
 
 ### fuzzydir.lua
 
@@ -270,7 +270,7 @@ download_directory=/media/webtorrentcache
 
 - https://github.com/po5/mpv_sponsorblock/blob/master/sponsorblock.lua
 
-![](/images/mpv-and-setup/sponsorblock-lua.png)
+![image](/images/mpv-and-setup/sponsorblock-lua.png)
 
 Всеми любимое расширение для браузеров по блокировке спонсор блоков теперь в mpv, только вот работает оно только только при новом воспроизведении
 
@@ -303,7 +303,7 @@ SponsorBlock работает как через терминал `mpv <URL>` т�
 
 В данном конфиге я убрал автозагрузку изображений отредактировав скрипт закоментировав данные строки
 
-![](/images/mpv-and-setup/autoload-lua.png)
+![image](/images/mpv-and-setup/autoload-lua.png)
 
 ### playlistmanager.lua
 
@@ -334,4 +334,4 @@ TAB script-binding showplaylist
 
 Всплывает индикатор паузы и воспроизведения по середине, как в ютубе
 
-![](/images/mpv-and-setup/pause-indicator.png)
+![image](/images/mpv-and-setup/pause-indicator.png)

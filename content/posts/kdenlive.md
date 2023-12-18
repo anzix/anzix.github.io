@@ -27,7 +27,7 @@ sudo pacman -S kdenlive breeze
 
 Понизив [Preview Resolution](https://docs.kdenlive.org/en/user_interface/monitors.html#preview-resolution) повысится производительность
 
-![](/images/kdenlive/preview-resolution.png)
+![image](/images/kdenlive/preview-resolution.png)
 
 Также есть совет что можно использовать прокси-клипы на временной шкале. Прокси - это копии ваших видеоматериалов, но уменьшенные по размеру и качеству изображения в сравнении с оригинальными клипами что может увеличить производительность. При рендере на выходе У ВАС БУДЕТ ОРИГИНАЛЬНОЕ КАЧЕСТВО, данные действия будут влиять только на монтажный стол предпросмотра видео.
 
@@ -41,4 +41,4 @@ sudo pacman -S kdenlive breeze
 - Включить прокси-клипы
 - Создавать для видеоклипов размером больше - 1000пикселов
 
-![](/images/kdenlive/proxy.png)
+![image](/images/kdenlive/proxy.png)

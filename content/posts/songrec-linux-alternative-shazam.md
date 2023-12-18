@@ -21,7 +21,7 @@ sudo pacman -S songrec
 
 Для распознавания со внутреннего звука ПК нужно запустить pavucontrol и во вкладке Запись (не забываем включить распознавание в songrec) выставить откуда output звука исходит (в моём случае через мониторный выход jack микрофона samson c10u pro на наушники).
 
-![](/images/songrec-linux-alternative-shazam/songrec-changing-source.png)
+![image](/images/songrec-linux-alternative-shazam/songrec-changing-source.png)
 
 ## Использование с терминала
 

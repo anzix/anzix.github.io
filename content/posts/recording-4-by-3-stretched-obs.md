@@ -1,5 +1,5 @@
 +++
-title = "Запись игр в растянутом разрешении OBS"
+title = "Запись игр в растянутом разрешении OBS [Дубликат в рук-ве Steam]"
 date = 2023-03-12T15:51:37+05:00
 draft = false
 [taxonomies]
@@ -15,10 +15,10 @@ tags = ["linux-gaming"]
 
 Лично я **не советую** этот метод, заметно теряется чёткость изображения на записи (если всматриваться в текст)
 
-![](/images/recording-4-by-3-stretched-obs/1-transform-window.gif)
+![image](/images/recording-4-by-3-stretched-obs/1-transform-window.gif)
 
 2. Добавления фильтра Масштабирование/Соотношение сторон (GIF)
 
 Этот же метод не теряет в чёткости изображения на записи
 
-![](/images/recording-4-by-3-stretched-obs/2-add-scaling-filter.gif)
+![image](/images/recording-4-by-3-stretched-obs/2-add-scaling-filter.gif)

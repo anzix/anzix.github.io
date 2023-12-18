@@ -1,5 +1,5 @@
 +++
-title = "Добавление и замена пасскея (passkey) RuTracker'а в .torrent файл с помощью transmission-cli"
+title = "Добавление и замена пасскея (passkey) RuTracker'а в .torrent файл"
 date = 2023-03-04T20:29:44+05:00
 draft = false
 [taxonomies]
@@ -7,14 +7,12 @@ categories = []
 tags = ["linux"]
 +++
 
-Источники:
-
-- https://rutracker.org/forum/viewtopic.php?p=69547524#69547524
-- https://rutracker.org/forum/viewtopic.php?p=80460785#80460785
+- [Источник_1](https://rutracker.org/forum/viewtopic.php?p=69547524#69547524)
+- [Источник_2](https://rutracker.org/forum/viewtopic.php?p=80460785#80460785)
 
 Данное решение распространяется для всех торрент клиентов (transmission, qbittorrent и другие)
 
-Качаем пакет
+Сделать это можно с помощью `transmission-edit` который поставляется в данном пакете, качаем его
 
 ```bash
 sudo pacman -S transmission-cli

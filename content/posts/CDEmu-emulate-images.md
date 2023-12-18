@@ -9,7 +9,7 @@ tags = ["linux-gaming"]
 
 Источники:
 
-- https://wiki.archlinux.org/title/CDemu
+- [Arch Wiki CDemu](https://wiki.archlinux.org/title/CDemu)
 
 CDEmu может монтировать .nrg .iso .cue и другие форматы
 
@@ -41,13 +41,13 @@ systemctl --user enable --now cdemu-daemon.service
 
 В проводнике pcmanfm при нажатии на iso файл правой кнопкой мыши появится действие "Клиент CDEmu", жмём на него и диск смонтирован
 
-![](/images/CDEmu-emulate-images/1666680474.png)
+![image](/images/CDEmu-emulate-images/1666680474.png)
 
 Появится уведомление что диск был смонтирован и его можно открыть
 
-![](/images/CDEmu-emulate-images/1666681885.png)
+![image](/images/CDEmu-emulate-images/1666681885.png)
 
-![](/images/CDEmu-emulate-images/1666677451.png)
+![image](/images/CDEmu-emulate-images/1666677451.png)
 
 Далее уже можно юзать wine для установки игры, в общем всё стандартно
 

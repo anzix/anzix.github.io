@@ -91,7 +91,7 @@ obs-vkcapture
 
 Теперь после запуска у нас в obs появится "Захват игры" и оставляем "Захватывать любое окно". После можно проверить запись игры или начать тестовую трансляцию.
 
-![](/images/obs-on-archlinux/obs-vkcapture.png)
+![image](/images/obs-on-archlinux/obs-vkcapture.png)
 
 ## !Стриминг и запись OBS плагином кодировщиком GStreamer VAAPI для Arch Linux
 
@@ -129,7 +129,7 @@ flatpak install com.obsproject.Studio.Plugin.Gstreamer org.freedesktop.Platform.
 
 В Encoder Type выбираем VA-API (не x264 т.к он отвечает за вычисления записи на процессоре)
 
-![](/images/obs-on-archlinux/1660824506.png)
+![image](/images/obs-on-archlinux/1660824506.png)
 
 На этом всё, пробуйте и экспериментируйте, вот какой битрейт необходимо выставлять
 

@@ -34,14 +34,14 @@ tags = ["linux"]
 
 Обязательно ставим галочку "Не перемещать" и жмём "Применить"
 
-![](/images/torrent-setup-and-migration/transmission-1.png)
+![image](/images/torrent-setup-and-migration/transmission-1.png)
 
-![](/images/torrent-setup-and-migration/transmission-2.png)
+![image](/images/torrent-setup-and-migration/transmission-2.png)
 
 Далее RMB на торрент и жмём "Проверить локальные данные" и ждём
 После чего можно начать раздавать данный торрент нажав "Запустить"
 
-![](/images/torrent-setup-and-migration/transmisison-3.png)
+![image](/images/torrent-setup-and-migration/transmisison-3.png)
 
 И так с каждым торрентом из списка
 
@@ -49,7 +49,7 @@ tags = ["linux"]
 
 - https://github.com/panter-dsd
 
-![](/images/torrent-setup-and-migration/passkey-changer.png)
+![image](/images/torrent-setup-and-migration/passkey-changer.png)
 
 Данное программное обеспечение написано на qt4, поэтому нам нужно скачать скомпилированный бинарный [пакет qt4 из AUR](https://aur.archlinux.org/packages/qt4-bin)
 
@@ -89,7 +89,7 @@ passkeychanger
 
 На примере QBitTorrent
 
-![](/images/torrent-setup-and-migration/qbittorrent.png)
+![image](/images/torrent-setup-and-migration/qbittorrent.png)
 
 ### С помощью файла hosts
 
@@ -113,11 +113,11 @@ sudo vim /etc/hosts
 
 До
 
-![](/images/torrent-setup-and-migration/before.png)
+![image](/images/torrent-setup-and-migration/before.png)
 
 После
 
-![](/images/torrent-setup-and-migration/after.png)
+![image](/images/torrent-setup-and-migration/after.png)
 
 ### Через iptables
 

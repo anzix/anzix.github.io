@@ -7,7 +7,7 @@ categories = []
 tags = ["linux-gaming"]
 +++
 
-- https://github.com/Frogging-Family/wine-tkg-git
+- [Github страница wine-tkg](https://github.com/Frogging-Family/wine-tkg-git)
 
 Процесс установки прост
 
@@ -33,7 +33,7 @@ makepkg -sric
 
 Идёте на [github страницу](https://github.com/Frogging-Family/wine-tkg-git/actions/workflows/wine-arch.yml) и выбираете по дате самый последний с отмеченной зелённой галочкой
 
-![](/images/wine-tkg/Screenshot_20230117_015558.png)
+![image](/images/wine-tkg/Screenshot_20230117_015558.png)
 
 Опускаетесь вниз до Artifacts и кликаете на "wine-tkg-build" для скачивания
 

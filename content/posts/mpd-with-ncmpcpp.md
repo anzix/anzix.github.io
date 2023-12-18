@@ -146,7 +146,7 @@ startup_slave_screen = "visualizer"
 ncmpcpp -S visualizer
 ```
 
-## Playerctl + mpDris2
+## Playerctl + mpd-mpris
 
 playerctl - это MPRIS Media Player контроллер для Spotify, VLC, BMP, XMMS2 и другие
 
@@ -168,53 +168,33 @@ playerctl next
 output: No players found
 ```
 
-Есть <font color="green">решение</font> ввиде дополнения для playerctl называется [mpDris2](https://github.com/eonpatapon/mpDris2)
-Этот AUR пакет предоставляет:
+Есть <font color="green">решение</font> реализации MPRIS протокола для mpd называется [mpd-mpris](https://github.com/natsukagami/mpd-mpris)\
+На данный момент mpd-mpris предоставляет:
 
-1. Уведомление о проигрываемом треке
+1. Статус о проигрываемом треке (KDE)
 2. Умеет показывать обложки любого трека (если он прописан в тегах)
-3. Общие системные уведомления mpd (остановке, переподключения и т.д)
+3. Управление треков мультимедийными клавишами
 
-![](/images/mpd-with-ncmpcpp/mpDris2_1.png)
+![image](/images/mpd-with-ncmpcpp/mpDris2_1.png)
 
-![](/images/mpd-with-ncmpcpp/mpDris2_2.png)
+![image](/images/mpd-with-ncmpcpp/mpDris2_2.png)
 
-![](/images/mpd-with-ncmpcpp/mpDris2_3.png)
+![image](/images/mpd-with-ncmpcpp/mpDris2_3.png)
 
 Установка
 
 ```sh
-yay -S mpdris2
-sudo pacman -S python-mutagen
+yay -S mpd-mpris
 ```
 
-Второй пакет нужен чтобы показывались обложки
-
-Создаем папку и копируем конфиг в созданную директорию (соблюдая регистр)
+Для автозапуска прописываем в `~/.xprofile` (для DM) или `~/.xinitrc` (запуск с TTY)
 
 ```sh
-mkdir -v ~/.config/mpDris2/
-cp /usr/share/doc/mpdris2/mpDris2.conf ~/.config/mpDris2/
-```
-
-В этом конфиге раскомментируем как показано ниже и меняем только `music_dir` вписывая директорию вашей музыки, как указано в `mpd.conf`
-
-```
-music_dir [папка с музыкой]
-cover_regex
-
-notify = True
-notify_urgency = 1
-```
-
-Для автозапуска прописываем в .xprofile (для DM) или .xinitrc (запуск с TTY)
-
-```sh
-mpDris2 &
+mpd-mpris -no-instance &
 ```
 
 Или включив systemd сервис
 
 ```sh
-systemctl --user enable --now mpDris2
+systemctl --user enable --now mpd-mpris
 ```

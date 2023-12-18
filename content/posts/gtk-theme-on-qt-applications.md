@@ -18,9 +18,11 @@ yay -S qt5-styleplugins
 И в .zshrc/.zshenv или .zprofile меняем переменную среду с qt5ct на gtk2
 
 ```sh
-export QT_QPA_PLATFORMTHEME="gtk2"
+if [ -f "/usr/lib/qt/plugins/platformthemes/libqgtk2.so" ]; then
+  export QT_QPA_PLATFORMTHEME="gtk2"
+fi
 ```
 
 В основном выглядит чётко и красиво
 
-![](/images/gtk-theme-on-qt-applications/gtk-on-qt.png)
+![image](/images/gtk-theme-on-qt-applications/gtk-on-qt.png)

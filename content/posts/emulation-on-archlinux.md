@@ -9,7 +9,7 @@ tags = ["linux-gaming"]
 
 ## Playstation 1 (Duckstation) На Arch Linux
 
-- https://github.com/stenzek/duckstation
+- [Github страница Duckstation](https://github.com/stenzek/duckstation)
 - [Видео гайд по настройке для Linux](https://www.youtube.com/watch?v=qOVhug5-mNM)
 
 Устанавливаем AUR пакет [duckstation-git](https://aur.archlinux.org/packages/duckstation-git/)
@@ -27,7 +27,7 @@ yay -S duckstation-git
 
 ## !Playstation 2 (PCSX2) На Arch Linux
 
-- https://pcsx2.net/
+- [Официальный сайт PCSX2](https://pcsx2.net/)
 - [Видео гайд по настройке для Linux](https://www.youtube.com/watch?v=7Q0gy0s8Mxo)
 
 Установка стабильной версии (проверял на этой версии)
@@ -75,7 +75,7 @@ yay -S citra-qt-git
 
 Гайд был написан с Арчом в окружении KDE Plasma, но я думаю что и на тайлинг подойдёт
 
-![](/images/emulation-on-archlinux/IMG_20220618_211811.jpg)
+![image](/images/emulation-on-archlinux/IMG_20220618_211811.jpg)
 
 - [Инструкция 1](https://community.citra-emu.org/t/guide-dual-monitor-setup-noob-friendly/539526) (для юзеров Windows, но и для Linux идёт)
 - [Инструкция 2](https://community.citra-emu.org/t/displaying-the-two-citra-screens-on-two-different-monitors/11199) (почти тоже самое что и первое)
@@ -83,7 +83,7 @@ yay -S citra-qt-git
 
 При подключении второго дисплея (который будет использоваться как нижний дисплей 3ds) разместил его справа от основного
 
-![](/images/emulation-on-archlinux/citra-monitor-layout.png)
+![image](/images/emulation-on-archlinux/citra-monitor-layout.png)
 
 Закрываем citra и открываем конфиг
 
@@ -99,7 +99,7 @@ nvim ~/.config/citra-emu/qt-config.ini
 
 Пример
 
-```
+```txt
 custom_bottom_bottom\default=false
 custom_bottom_left\default=false
 custom_bottom_right\default=false
@@ -113,13 +113,13 @@ custom_top_top\default=false
 
 [Качаем данный файл](/emulation-on-archlinux/main.htm) и открываем через ваш браузер
 
-![](/images/emulation-on-archlinux/calc-secondary-monitor-for-citra.png)
+![image](/images/emulation-on-archlinux/calc-secondary-monitor-for-citra.png)
 
 Указываем разрешение основного и второго монитора, и данные значения из строк вставляем в `qt-config.ini` и сохраняем
 
 У меня вышло так
 
-![](/images/emulation-on-archlinux/my-layout-for-monitor.png)
+![image](/images/emulation-on-archlinux/my-layout-for-monitor.png)
 
 Запускаем Citra
 

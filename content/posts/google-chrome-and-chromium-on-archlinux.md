@@ -14,7 +14,7 @@ tags = ["linux"]
 
 Поэтому как замену google-chrome <span style="color:green">рекомендуется использовать</span> chromium или ungoogled-chromium
 
-![](/images/google-chrome-and-chromium-on-archlinux/google-chrome-bug.png)
+![image](/images/google-chrome-and-chromium-on-archlinux/google-chrome-bug.png)
 
 Необходимо установить шрифты для корректной работы данных браузеров
 
@@ -71,7 +71,7 @@ sudo pacman -S libva-mesa-driver mesa-vdpau
 
 Включаем любое видео в ютубе, жмём F12 - три точки - More tools - Media. Далее жмём на вкладку Media и видим название видоса в списке, жмём на него и видим всю инфу о декодировании, в данном случае работает VDAVideoDecoder
 
-![](/images/google-chrome-and-chromium-on-archlinux/hardware-encoding-enabled.png)
+![image](/images/google-chrome-and-chromium-on-archlinux/hardware-encoding-enabled.png)
 
 ### Необходимые и полезные флаги
 
@@ -177,7 +177,7 @@ Disabled Features: video_decode/video_encode
 
 Проверить на поддержку Hardware Acceleration, введите `chrome://gpu`
 
-![](/images/google-chrome-and-chromium-on-archlinux/fully-hw-accelerated.png)
+![image](/images/google-chrome-and-chromium-on-archlinux/fully-hw-accelerated.png)
 
 **UPD (11.06.22)**: Следующая ошибка при обновлённом chromium'e/chrome
 
@@ -208,7 +208,7 @@ Disabled Features: webgpu
 
 Самым простым решением будет использовать расширение [SmoothScroll](https://chrome.google.com/webstore/detail/smoothscroll/nbokbjkabcmbfdlbddjidfmibcpneigj)
 
-Есть вариант с использование инструмента [imwheel](https://archlinux.org/packages/community/x86_64/imwheel/) который умеет настраивать ход колеса мыши к любому софту. Однако работает оно с некоторыми раздражающими <span style="color:red">ПРОБЛЕМАМИ</span>.
+Есть вариант с использование инструмента [imwheel](https://archlinux.org/packages/extra/x86_64/imwheel/) который умеет настраивать ход колеса мыши к любому софту. Однако работает оно с некоторыми раздражающими <span style="color:red">ПРОБЛЕМАМИ</span>.
 
 - [imwheel на Arch Wiki](https://wiki.archlinux.org/title/IMWheel)
 - [Видео гайд от DT](https://www.youtube.com/watch?v=NoHfqfRYbk4)

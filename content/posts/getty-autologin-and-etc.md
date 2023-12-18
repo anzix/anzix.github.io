@@ -13,7 +13,7 @@ tags = ["linux"]
 
 Описание:
 
-```
+```txt
 agetty [options] port [baud_rate...] [term]
 ```
 
@@ -43,19 +43,19 @@ ExecStart=-/sbin/agetty -o '-p -- \\u' --noclear %I $TERM
 
 ## !Чтобы был только ввод логина
 
-```
+```txt
 ExecStart=-/sbin/agetty -o $USER %I
 ```
 
 ## !Чтобы не было ввода пароля
 
-```
+```txt
 ExecStart=-/sbin/agetty --autologin $USER --noclear %I $TERM
 ```
 
 ## Чтобы не было output лога при старте и выходе
 
-![](/images/getty-autologin-and-etc/output-log-getty.png)
+![image](/images/getty-autologin-and-etc/output-log-getty.png)
 
 В `.zprofile` в конце startx вводим значение **`>/dev/null 2>&1`** после чего перезагружаемся
 

@@ -19,4 +19,4 @@ yay -S osu-lazer-bin
 - И для работы [настроенного в Linux OpenTabletDriver'а]({{< ref "/content/posts/OpenTabletDriver-xp-pen-g640-rev-a-on-archlinux.md" >}}) выключаем Планшет
 - Последнее это в категории "Устройство ввода" - "Клавиатура и кнопки мыши" очистить M1 M2 чтобы пером не кликать на круги
 
-![](/images/osu-on-archlinux/osu-settings.png)
+![image](/images/osu-on-archlinux/osu-settings.png)

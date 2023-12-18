@@ -7,9 +7,7 @@ categories = []
 tags = ["linux-gaming"]
 +++
 
-Источники:
-
-- https://losst.ru/chastota-protsessora-v-linux
+- [Источник_1](https://losst.ru/chastota-protsessora-v-linux)
 
 Можно не пользоваться GUI раздутым софтом [CoreCtrl](https://docs.google.com/document/d/1c9yqKSz5LkS1Gd422w4TMdf-_76PHySzku4PsHbxZok/edit#heading=h.qqdpy2yl5x)
 

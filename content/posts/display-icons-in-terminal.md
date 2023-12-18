@@ -7,7 +7,7 @@ categories = []
 tags = ["linux"]
 +++
 
-Для отображения иконок необходимо юзать шрифты из семейства Nerd. Их очень много, на любой вкус и цвет, и все они имеют поддержку иконок [exa](https://archlinux.org/packages/community/x86_64/exa/)/[lsd](https://archlinux.org/packages/community/x86_64/lsd/)/[colorls](https://aur.archlinux.org/packages/ruby-colorls) а также [powerlevel10k](https://github.com/romkatv/powerlevel10k) для вашего терминала.
+Для отображения иконок необходимо юзать шрифты из семейства Nerd. Их очень много, на любой вкус и цвет, и все они имеют поддержку иконок [eza](https://archlinux.org/packages/extra/x86_64/eza/)/[lsd](https://archlinux.org/packages/community/x86_64/lsd/)/[colorls](https://aur.archlinux.org/packages/ruby-colorls) а также [powerlevel10k](https://github.com/romkatv/powerlevel10k) для вашего терминала.
 
 Примеры шрифтов:
 

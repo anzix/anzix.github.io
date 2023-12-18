@@ -3,7 +3,7 @@ title = "Иконки контекстного меню не отображаю�
 date = 2023-03-24T14:37:28+05:00
 draft = false
 [taxonomies]
-categories = ["solving-problem"]
+categories = ["troubleshooting"]
 tags = ["linux"]
 +++
 

@@ -7,7 +7,7 @@ categories = []
 tags = ["linux-gaming"]
 +++
 
-# Game Conqueror
+## Game Conqueror
 
 - [Github](https://github.com/scanmem/scanmem/tree/main/gui)
 - [Видео инструкция по использованию](https://www.youtube.com/watch?v=xBGCjtdfaq0)
@@ -40,15 +40,15 @@ sudo pacman -S gameconqueror
 
 Я получил 2 адреса с данным значением, добавляем оба и чек-лист нажав по ним два раза
 
-![](/images/linux-alternative-cheat-engine/1671552591.png)
-![](/images/linux-alternative-cheat-engine/1671552562.png)
+![image](/images/linux-alternative-cheat-engine/1671552591.png)
+![image](/images/linux-alternative-cheat-engine/1671552562.png)
 
 Чтобы узнать какой из них отвечает за денежный баланс в игре пробуйте на обеих адреса добавить значение 50000
 
 После добавления в адрес 154d53d4 в Sims 2 я продаю предмет и значения увеличились на то которое я выставлял
-![](/images/linux-alternative-cheat-engine/changed-value.png)
+![image](/images/linux-alternative-cheat-engine/changed-value.png)
 
-# PINCE
+## PINCE
 
 - [Github](https://github.com/korcankaraokcu/PINCE)
 - [Обзор и использование PINCE](https://www.youtube.com/watch?v=hUPvk2ejYTk)
@@ -78,10 +78,10 @@ sh PINCE.sh
 Далее выбираем "Decimal" и вводим денежный баланс в игре и жмём First Scan
 Затем в игре уменьшаем или увеличиваем денежный баланс, в окне адресов показано красным что значение изменилось.
 
-![](/images/linux-alternative-cheat-engine/1671555558.png)
+![image](/images/linux-alternative-cheat-engine/1671555558.png)
 
 Жмём по адресу дважды для добавления в таблицу адресов и уже в нём меняем значение какое пожелаете, я выбрал 900000
 
 В игре после этого надо обновить денежный счётчик и тогда денежный баланс обновится на тот который вы указали в выбранном адресе
 
-![](/images/linux-alternative-cheat-engine/1671556150.png)
+![image](/images/linux-alternative-cheat-engine/1671556150.png)

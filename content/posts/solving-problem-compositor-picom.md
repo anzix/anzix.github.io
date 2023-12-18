@@ -3,7 +3,7 @@ title = "Решение проблем с композитором Picom"
 date = 2023-04-15T18:33:12+05:00
 draft = false
 [taxonomies]
-categories = ["solving-problem"]
+categories = ["troubleshooting"]
 tags = ["linux"]
 +++
 
@@ -11,7 +11,7 @@ tags = ["linux"]
 
 Столкнулся с графическим глюком при переходе в полноэкранный (win+f) на любом терминале, но когда двигаешь мышкой или нажав клавишу - пропадает
 
-![](/images/solving-problem-compositor-picom/blur-bug.jpg)
+![image](/images/solving-problem-compositor-picom/blur-bug.jpg)
 
 <font color="green">Решается</font> это отключением fading (затухание)
 

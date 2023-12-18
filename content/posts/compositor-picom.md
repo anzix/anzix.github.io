@@ -37,7 +37,7 @@ picom -b --experimental-backends &
 
 Чтобы убрать вот в firefox (пикрил) и других подобных программ
 
-![](/images/compositor-picom/shadow-before.png)
+![image](/images/compositor-picom/shadow-before.png)
 
 За это отвечает параметр shadow, который в конфиге picom стоит в положении **true**
 
@@ -49,19 +49,19 @@ nano ~/.config/picom.conf
 
 Ставим значение false
 
-```
+```conf
 shadow = false;
 ```
 
 Таким образом мы избавили firefox и другие программы от теней
 
-![](/images/compositor-picom/shadow-after.png)
+![image](/images/compositor-picom/shadow-after.png)
 
 ## Как убрать полупрозрачную полосу в MPV?
 
-- https://bbs.archlinux.org/viewtopic.php?id=261232
+- [Arch Linux форум](https://bbs.archlinux.org/viewtopic.php?id=261232)
 
-![](/images/compositor-picom/white-line-on-mpv.png)
+![image](/images/compositor-picom/white-line-on-mpv.png)
 
 Решение
 
@@ -77,13 +77,13 @@ PROFIT!!
 
 Заходите в конфиг picom, опускаетесь в самый низ и комментируете эти две строки как показано на пикче
 
-![](/images/compositor-picom/disable-transparency-dropdown-menu.png)
+![image](/images/compositor-picom/disable-transparency-dropdown-menu.png)
 
 Если не нужна прозрачность на определенных окнах и всяких всплывающих списках то вот пример как это сделать
 
 Если же хотите вообще отключить прозрачность на любых окнах, то просто выше закомментируйте строчку
 
-```
+```conf
 inactive-opacity = 0.8;
 ```
 
@@ -95,13 +95,13 @@ nano ~/.config/picom/picom.conf
 
 В категории **"Fading"** либо комментируем либо ставим значение **false**
 
-```
+```conf
 #fading = true;
 ```
 
 ## Оптимизация Picom для полноэкранного режима в играх
 
-- https://www.youtube.com/watch?v=K8kF-SfkaHE
+- [Видео инструкция](https://www.youtube.com/watch?v=K8kF-SfkaHE)
 
 При full-screen окна отключается композитор, увеличивая производительность
 
@@ -113,7 +113,7 @@ nvim ~/.config/picom/picom.conf
 
 Вставляем данные строки как показано ниже, сохраняем и всё
 
-```
+```conf
 unredir-if-possible = true;
 unredir-if-possible-exclude = [
         "class_g = 'looking-glass-client' && !focused"
@@ -128,19 +128,19 @@ unredir-if-possible-exclude = [
 
 Установка происходит через AUR пакет, стандартный пакет picom будет удалён
 
-```
+```sh
 yay -S picom-git
 ```
 
-После скачивания переходим в конфиг picom
+После скачивания открываем конфиг picom
 
-```
-nano ~/.config/picom/picom.conf
+```sh
+nvim ~/.config/picom/picom.conf
 ```
 
 И рядом добавляем эти строки
 
-```sh
+```conf
 blur-method = "dual_kawase";
 blur-strength = 3;
 ```
@@ -149,16 +149,16 @@ blur-strength = 3;
 
 Чтобы после ребута все изменения сохранились необходимо править .xprofile (для DM) или .xinitrc (запуск с TTY)
 
-```
+```sh
 nvim ~/.xinitrc
 ```
 
 Меняем автозапуск на показанный ниже
 
-```
+```conf
 picom -b --experimental-backends &
 ```
 
 Вот как выглядит на значение 3
 
-![](/images/compositor-picom/blur-picom.png)
+![image](/images/compositor-picom/blur-picom.png)

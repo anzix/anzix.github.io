@@ -1,6 +1,6 @@
 +++
 title = "!Motion control гироскопом с геймпада 8BitDo Pro 2 для эмулятора Dolphin (Wii)"
-date = 2023-03-09T00:22:10+05:00
+date = 2023-03-15T00:22:10+05:00
 draft = false
 [taxonomies]
 categories = []
@@ -31,13 +31,13 @@ sudo joycond-cemuhook
 
 Если видите такой выхлоп значит 8BitDo Pro 2 определился и запустил сервис
 
-![](/images/gyro-8bitdo-pro2-on-dolphin-wii/Screenshot_20230315_170415.png)
+![image](/images/gyro-8bitdo-pro2-on-dolphin-wii/Screenshot_20230315_170415.png)
 
 Оставляем терминал открытым, либо запустите как команду как процесс `sudo joycond-cemuhook &`
 
 Заходим в эмуль dolphin - Опции - Настройки управления. В окне категории Общее ставим галочку на "Ввод в фоне" (без этого у меня не работали кнопки управления и motion control) и следом жмём на "Другие источники ввода". Включаем клиент DSU потом жмём "Добавить" и в "Описание" можно любое (например название нашего геймпада)
 
-![](/images/gyro-8bitdo-pro2-on-dolphin-wii/Gyro-Motion-Control-Dolphin-Wii-Mario-Galaxy-2.png)
+![image](/images/gyro-8bitdo-pro2-on-dolphin-wii/Gyro-Motion-Control-Dolphin-Wii-Mario-Galaxy-2.png)
 
 После добавления мы можем убедится что Motion control работает жмём на "Настройка" рядом с `Wii Remote 1 [Эмулируемый Wii Remote]`
 
@@ -49,7 +49,7 @@ sudo joycond-cemuhook
 
 В этой категории убеждаемся что всё дефолтно работает (при движении и вращении геймпада оба кружка должны двигаться)
 
-![](/images/gyro-8bitdo-pro2-on-dolphin-wii/Gyro-Motion-Control-Dolphin-Wii-Mario-Galaxy.gif)
+![image](/images/gyro-8bitdo-pro2-on-dolphin-wii/Gyro-Motion-Control-Dolphin-Wii-Mario-Galaxy.gif)
 
 [Центровка] Правое нажатие на стик - R3 (Центровка motion курсора)
 
@@ -57,7 +57,7 @@ sudo joycond-cemuhook
 
 Необходимо чтобы кнопки отображались при нажатии, как на гифке
 
-![](/images/gyro-8bitdo-pro2-on-dolphin-wii/Gyro-Motion-Control-Dolphin-Wii-Mario-Galaxy-1.gif)
+![image](/images/gyro-8bitdo-pro2-on-dolphin-wii/Gyro-Motion-Control-Dolphin-Wii-Mario-Galaxy-1.gif)
 
 Также не рекомендуется включать Вибрацию с включенным Motion управлением, курсор при геймплее будет постоянно трястись и будет сильно мешать при геймплее
 
@@ -65,7 +65,7 @@ sudo joycond-cemuhook
 
 Обязательно откалибруйте стик
 
-![](/images/gyro-8bitdo-pro2-on-dolphin-wii/stick-calibration.png)
+![image](/images/gyro-8bitdo-pro2-on-dolphin-wii/stick-calibration.png)
 
 - [C] Правый trigger (курок) - R1 (марио приседает)
 - [Z] Правый shoulders (бампер) - R2 (корректировка камеры)

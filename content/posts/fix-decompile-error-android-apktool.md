@@ -39,4 +39,4 @@ Exception in thread "main" brut.androlib.AndrolibException: Multiple resources: 
 
 Наглядная инструкция ввиде гифки на Android'е
 
-![](/images/fix-decompile-error-android-apktool/fix-for-decompile-apktool.gif)
+![image](/images/fix-decompile-error-android-apktool/fix-for-decompile-apktool.gif)

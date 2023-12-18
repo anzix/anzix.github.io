@@ -17,15 +17,15 @@ sudo pacman -S flashrom
 
 В данном примере у меня модифицированный ch341a чтобы он работал на безопасные для чипа выходной вольтаж 3.3v. На стандартных 5 вольтах **!может!** привести к выгоранию платы, всё из-за чипа для которого операции для чтения и записи выполняются с конкретным диапазоном (например в даташит чипа Macronix MX25L8005 работа с 2.7 до 3.6 v)
 
-![](/images/flashrom-and-ch341a-on-archlinux/1660771428.png)
+![image](/images/flashrom-and-ch341a-on-archlinux/1660771428.png)
 
 **<span style="color:red">!</span>Этот мод НЕ обязательно делать, это лишь моя рекомендация. Если у вас прямые руки и вы знаете что вы делаете<span style="color:red">!</span>**
 
 Всё что нужно сделать так это отодвинуть вверх 28 пин на программаторе и припаять дорожку (у меня это отрезанный провод от пк спикера подогнанный под размер) к 3.3 вольт регулятору к ножке посередине
 
-![](/images/flashrom-and-ch341a-on-archlinux/IMG_20220825_153247.jpg)
-![](/images/flashrom-and-ch341a-on-archlinux/IMG_20220807_001408.jpg)
-![](/images/flashrom-and-ch341a-on-archlinux/CH341a-mod.jpg)
+![image](/images/flashrom-and-ch341a-on-archlinux/IMG_20220825_153247.jpg)
+![image](/images/flashrom-and-ch341a-on-archlinux/IMG_20220807_001408.jpg)
+![image](/images/flashrom-and-ch341a-on-archlinux/CH341a-mod.jpg)
 
 Кому интересно я оставлю ссылки на инструкции по моду ch341a
 
@@ -58,19 +58,19 @@ Bus 001 Device 003: ID 1a86:5512 QinHeng Electronics CH341 in EPP/MEM/I2C mode, 
 
 Это вынимаемый bios чип из материнской платы ASrock G41M-S rev 1.02.
 
-![](/images/flashrom-and-ch341a-on-archlinux/1660812885.png)
+![image](/images/flashrom-and-ch341a-on-archlinux/1660812885.png)
 
 На чипе прошивка версии 1.50 мы её прошьём до версии 1.00 программой flashrom
 
-![](/images/flashrom-and-ch341a-on-archlinux/v1_50.jpg)
+![image](/images/flashrom-and-ch341a-on-archlinux/v1_50.jpg)
 
 Проверяем поддержку данного чипа на [вики flashrom](https://www.flashrom.org/Supported_hardware), как видим всё ОК
 
-![](/images/flashrom-and-ch341a-on-archlinux/1660749562.png)
+![image](/images/flashrom-and-ch341a-on-archlinux/1660749562.png)
 
 Вставляем чип в программатор 25 серия чтобы выемка (ключ) смотрела в сторону рукоятки. После чего подключаем в ПК
 
-![](/images/flashrom-and-ch341a-on-archlinux/image_2022-08-18_14-02-36.png)
+![image](/images/flashrom-and-ch341a-on-archlinux/image_2022-08-18_14-02-36.png)
 
 Проверяем чип на чтение, flashrom сам определяет название чипа но если при чтении выдаёт ошибки вставьте доп флаг `-c <chipname>`
 
@@ -101,7 +101,7 @@ cksum [файл] # например mx25l8005.bin
 
 Сравнил таким образом контрольные суммы сдампленным AsProgrammer 1.4.1 из Windows 10 и могу с уверенностью сказать что суммы абсолютно идентичные
 
-Чтобы просмотреть код сдампленный с flashrom необходим [hexedit](https://archlinux.org/packages/community/x86_64/hexedit/)
+Чтобы просмотреть код сдампленный с flashrom необходим [hexedit](https://archlinux.org/packages/extra/x86_64/hexedit/)
 
 ```sh
 sudo pacman -S hexedit
@@ -126,7 +126,7 @@ hexedit --color mx25l8005.bin
 - PageDown/PageUp - быстро скроллить список
 - Ctrl+c - выйти без сохранения
 
-![](/images/flashrom-and-ch341a-on-archlinux/1660752136.png)
+![image](/images/flashrom-and-ch341a-on-archlinux/1660752136.png)
 
 Начинаем записывать прошивку 1.00 в чип, flashrom сама стерёт информацию с нашего чипа и запишет выбранный нами файл затем проверит на схожесть
 
@@ -200,4 +200,4 @@ cksum read1.bin
 
 Как мы видим всё совпадает, теперь вынимаем из программатора вставляем обратно в мать и проверяем на работоспособность, как видно ниже всё прошло удачно версия биоса понижена (дата фото запоздалое)
 
-![](/images/flashrom-and-ch341a-on-archlinux/v1_00.jpg)
+![image](/images/flashrom-and-ch341a-on-archlinux/v1_00.jpg)

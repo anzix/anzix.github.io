@@ -12,7 +12,7 @@ tags = ["linux", "pinecil"]
 - [Офф инструкция установки RalimOS (Linux)](https://ralim.github.io/IronOS/Flashing/Pinecil%20V1/) Ориентировался по ней
 - [Сурс по установке через dfu-util](https://gist.github.com/Dids/2aa950d075bcf58fca98eb975a42d72b)
 
-![](/images/flash-pinecil-on-archlinux/old-firmware.png)
+![image](/images/flash-pinecil-on-archlinux/old-firmware.png)
 
 Скачиваем dfu-util
 
@@ -97,13 +97,13 @@ Done parsing DfuSe file
 
 После завершения отключаем от ПК и подключаем в банку проверяя работоспособность
 
-![](/images/flash-pinecil-on-archlinux/new-firmware.png)
+![image](/images/flash-pinecil-on-archlinux/new-firmware.png)
 
 Как видим прошивка обновилась до 2.19 и работает замечательно
 
 ## (Не проверял) Альтернативный процесс установки/обновления прошивки через [старую версию PINE64 Updater](https://aur.archlinux.org/packages/pinecil-firmware-updater-git)
 
-![](/images/flash-pinecil-on-archlinux/Old-PINE64-Updater.png)
+![image](/images/flash-pinecil-on-archlinux/Old-PINE64-Updater.png)
 
 Это старая QT версия ранее разработанная для Linux
 

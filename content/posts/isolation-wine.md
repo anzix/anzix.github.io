@@ -151,3 +151,7 @@ exec bwrap \
  wine "$@"
  #pcmanfm
 ```
+
+Вместо wine я на скриншоте смог запустить pcmanfm
+
+![image](/images/isolation-wine/Screenshot_20230519_162447.png)

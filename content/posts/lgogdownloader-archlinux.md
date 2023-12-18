@@ -98,7 +98,7 @@ chmod +x [установочный shell скрипт]
 ```
 
 Запускаем
-![](/images/lgogdownloader-archlinux/1667058827.png)
+![image](/images/lgogdownloader-archlinux/1667058827.png)
 
 Чтобы скачать Windows установщик (для дальнейшего использования с wine'ом) убираем параметр `--platform=linux`
 
@@ -115,7 +115,7 @@ lgogdownloader --download --game absolute_drift
 
 Когда пытаешься скачать установщик к примеру the_witcher, lgogdownloader зачем-то скачивает и второй Ведьмак (the_witcher_2) который я даже не указывал. Это сильно раздражает
 
-![](/images/lgogdownloader-archlinux/swappy-20221030-004734.png)
+![image](/images/lgogdownloader-archlinux/swappy-20221030-004734.png)
 <span style="color:green">Исправить</span> это я нашёл только благодаря созданию псевдонимам (alias) и их использованию
 
 Копируем и вставляем мои созданные псевдонимы в .zshrc или .bashrc
@@ -140,4 +140,4 @@ lgogu() { local IFS=| lgogdownloader --retries=7 --download --exclude=extras --p
 ```
 
 Теперь если юзать данные псевдонимы, lgogdownloader будет нормально воспринимать названия игры и будет выдавать то что вы написали, ничего лишнего
-![](/images/lgogdownloader-fix.png)
+![image](/images/lgogdownloader-fix.png)

@@ -7,7 +7,7 @@ categories = []
 tags = ["linux-gaming"]
 +++
 
-- https://steamcommunity.com/sharedfiles/filedetails/?id=873543244
+- [Steam Guides источник](https://steamcommunity.com/sharedfiles/filedetails/?id=873543244)
 
 Запускаем в терминале steam с опцией -console
 

@@ -7,7 +7,7 @@ categories = []
 tags = ["linux-gaming"]
 +++
 
-- https://github.com/DadSchoorse/vkBasalt
+- [Github страница](https://github.com/DadSchoorse/vkBasalt)
 - [Полезная информация о vkBasalt](https://linuxreviews.org/VkBasalt)
 
 Качаем AUR пакеты (для работы на 32 bit'ных играх необходим lib32-vkbasalt)

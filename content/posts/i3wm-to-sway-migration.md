@@ -7,6 +7,8 @@ categories = []
 tags = ["linux"]
 +++
 
+Обновление: 19.11.23
+
 Очень полезная [статья](https://www.fosskers.ca/en/blog/wayland) с актуальными и полезными советами с инструкциями по wayland sway
 
 ```sh
@@ -74,24 +76,22 @@ input "1133:49284:Logitech_G102_Prodigy_Gaming_Mouse" {
 }
 ```
 
-## Обои статично
+## Дисплей и Обои
+
+Качаем пакет
 
 ```sh
 sudo pacman -S swaybg
 ```
 
-```conf
-output "*" bg "/media/Media/Галерея/Обои на раб.стол/Ramen.jpg" fill
-```
-
-## Включение 144hz
-
-```sh
-swaymsg -t get_outputs
-```
+Указываем наш дисплей из команды `swaymsg -t get_outputs`, режим, герцовку и VRR на усмотрение\
+Также рядом ставим обои
 
 ```conf
-output DP-1 mode 1920x1080@144Hz
+output DP-2 {
+	mode 1920x1080@144Hz
+	bg "/media/Media/Галарея/Обои на раб.стол/Ramen.jpg" fill
+}
 ```
 
 `adaptive_sync on` - включает VRR (Variable Refresh Rate) Переменную частоту кадров
@@ -268,7 +268,7 @@ lon=[ваше значение широты]
 
 ## Clipboard Manager для sway - cliphist (Ввиде Rofi)
 
-![](/images/i3wm-to-sway-migration/cliphist.png)
+![image](/images/i3wm-to-sway-migration/cliphist.png)
 
 - [GitHub страница](https://github.com/sentriz/cliphist)
 
@@ -630,3 +630,16 @@ force_xwayland = true
 У меня установлен pipewire wireplumber
 
 Проблема решается если в терминале ввести `wireplumber`
+
+- Проблема: Sway не экспортирует переменные из ``~/.config/environment.d/*.conf``
+
+Если я правильно понимаю это из-за того что ни sway ни shell оболочка не запущен от systemd в пользовательском экземпляре\
+Об этом расписано [здесь вместе с решением](https://github.com/systemd/systemd/issues/17180) который является просто добавлением экспорта этой команды в `zshrc`
+
+```txt
+export $(/usr/lib/systemd/user-environment-generators/30-systemd-environment-d-generator)
+```
+
+Или [выполнить действия в Sway Wiki](https://github.com/swaywm/sway/wiki/Systemd-integration#running-sway-itself-as-a---user-service) однако это официально не поддерживается
+
+UPD: ещё [есть вариант запуска sway через systemd](https://github.com/alebastr/sway-systemd)

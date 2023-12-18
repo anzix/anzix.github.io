@@ -103,6 +103,12 @@ flatpak list --columns=application --app > flatpaks.txt
 xargs flatpak install -y < flatpaks.txt
 ```
 
+Очистить осиротевшие Flatpak runtimes
+
+```sh
+flatpak uninstall --unused --noninteractive
+```
+
 [11.06.2023] Во flatpak скоро будет своя собственная реализация синхронизации пакетов т.е импорт и экспорт называется [flatsync](https://gitlab.gnome.org/Cogitri/flatsync). [Новость в The Linux Experiment](https://youtu.be/n3gMicC8gU0?t=276)
 
 ## Полезные опции

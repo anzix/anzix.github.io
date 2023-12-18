@@ -57,7 +57,7 @@ git commit -am "Creating dotfiles"
 
 > В настройках репо gitlab "Repository" - "Protected branches" необходимо поставить Allowed to force push
 
-![](/images/GnuStow-guide/gitlab.png)
+![image](/images/GnuStow-guide/gitlab.png)
 
 В терминале добавляем созданный url к локальному репо
 

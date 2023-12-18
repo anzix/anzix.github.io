@@ -26,7 +26,7 @@ sudo systemctl status tor
 
 Видим что застряло на 5%, т.к провайдер блокирует тор
 
-![](/images/tor-archlinux/tor-status.png)
+![image](/images/tor-archlinux/tor-status.png)
 
 ```sh
 sudo mkdir -p /etc/torrc.d/
@@ -92,13 +92,13 @@ sudo systemctl restart tor
 ```
 
 Вы должны увидеть в статусе загрузку (bootstrapped) до 100%. Это значит что узел тор запущен
-![](/images/tor-archlinux/tor-works.png)
+![image](/images/tor-archlinux/tor-works.png)
 
 ## Работа Tor вместе с Обход блокировок Рунета проксировать домены .onion
 
 Если данное расширение у вас уже установлено, необходимо только активировать чекбокс "**Использовать СВОЙ локальный Tor**" также (<span style="color:green">РЕКОМЕНДУЕТСЯ для безопасности</span>) во вкладке "Модификаторы" поставить чекбокс "**Проксировать только HTTPS-сайты**"
 
-![](/images/tor-archlinux/anticensority.png)
+![image](/images/tor-archlinux/anticensority.png)
 
 ## Proxy SwitchyOmega + Tor
 
@@ -116,13 +116,13 @@ sudo systemctl start tor
 - Server - 127.0.0.1
 - Port - 9050
 
-![](/images/tor-archlinux/switchyomega-tor.png)
+![image](/images/tor-archlinux/switchyomega-tor.png)
 
 После чего применяем изменения и пробуем протестировать на https://check.torproject.org/
 
 В быстром меню расширения жмём на уже настроенный прокси и теперь браузер перенаправляет на трафик тор
 
-![](/images/tor-archlinux/switchyomega-menu.png)
+![image](/images/tor-archlinux/switchyomega-menu.png)
 
 Можно использовать вместе с Torrent Search
 
@@ -135,7 +135,7 @@ sudo systemctl start tor
 
 Жмём Create
 
-![](/images/tor-archlinux/creating-new-profile.png)
+![image](/images/tor-archlinux/creating-new-profile.png)
 
 И указываем как показано
 
@@ -145,11 +145,11 @@ sudo systemctl start tor
 
 Жмём Apply Changes
 
-![](/images/tor-archlinux/switchyomega-rules-tor.png)
+![image](/images/tor-archlinux/switchyomega-rules-tor.png)
 
 В иконке расширения выбираем наш созданный Switch Profile - onion и всё
 
-![](/images/tor-archlinux/switchyomega-menu-onion.png)
+![image](/images/tor-archlinux/switchyomega-menu-onion.png)
 
 Теперь прокси сами будут включатся когда будут обрабатывать запросы на .onion сайты
 
@@ -173,10 +173,10 @@ sudo systemctl start tor
 - Тип - Wildcard
 - HTTP/s - all (Для большей безопасности <span style="color:green">РЕКОМЕНДУЕТСЯ</span> проксировать только HTTPS запросы, HTTP сайты <span style="color:red">могут читаться и изменяться конечными участниками сети Tor!</span>)
 
-![](/images/tor-archlinux/foxyproxy-https.png)
+![image](/images/tor-archlinux/foxyproxy-https.png)
 
 Жмём на иконку расширения и выбираем "Использовать прокси по шаблону и прядку"
 
-![](/images/tor-archlinux/foxyproxy-setup.png)
+![image](/images/tor-archlinux/foxyproxy-setup.png)
 
 Теперь это расширение будет в обычном режиме обрабатывать обычные запросы (без прокси), а когда вы будете открывать сайты .onion расширение автоматически будет включать данные прокси Tor

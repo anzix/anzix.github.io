@@ -7,7 +7,7 @@ categories = []
 tags = ["linux"]
 +++
 
-- https://linuxconfig.org/how-to-test-microphone-with-audio-linux-sound-architecture-alsa
+- [Источник_1](https://linuxconfig.org/how-to-test-microphone-with-audio-linux-sound-architecture-alsa)
 
 Необходимо скачать данный пакет для доступа к `arecord` и `aplay`
 

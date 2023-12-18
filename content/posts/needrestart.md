@@ -34,4 +34,4 @@ Depends = needrestart
 ```
 
 Вот как это выглядит
-![](/images/needrestart/1669990137.png)
+![image](/images/needrestart/1669990137.png)

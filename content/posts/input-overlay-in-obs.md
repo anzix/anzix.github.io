@@ -28,7 +28,7 @@ yay -S obs-plugin-input-overlay
 
 Открываем Obs и добавляем Источник "Входной оверлей"
 
-![](/images/input-overlay-in-obs/Screenshot_20230320_005346.png)
+![image](/images/input-overlay-in-obs/Screenshot_20230320_005346.png)
 
 Я буду тестировать на геймпаде 8BitDo Pro 2 в Bluetooth (Xinput) режиме
 
@@ -37,8 +37,8 @@ yay -S obs-plugin-input-overlay
 1. **[Наложение файла изображения]** Указываем путь до папки пресеты `/usr/share/obs/obs-plugins/input-overlay/presets` далее выбираем устройства, например **gamepad** и выбираем **game-pad.png** (не _-preview.png). Интересно то что макет для геймпада не имеет значения т.е можно выбрать \*\*dualsense_ и геймпад всё-равно будет работать
 2. **[Файл конфигурации .ini]** При открытии вам уже укажут каталог в котором будет находится .json файл (не обращайте внимание на другой тип файла, оно всё-равно будет работать). Выбираете его или если файлов два значит выбираем на выбор
 
-![](/images/input-overlay-in-obs/1679260464.gif)
-![](/images/input-overlay-in-obs/1679260735.gif)
+![image](/images/input-overlay-in-obs/1679260464.gif)
+![image](/images/input-overlay-in-obs/1679260735.gif)
 
 > Для клавиатур в каталоге **wasd-extented-numeric** макет клавиш другой, именно поэтому выставляем правильный макет который находится по странному пути `/usr/share/obs/obs-plugins/input-overlay/presets/mouse/alternative/FAT9L/wasdwithblankpink.png`
 

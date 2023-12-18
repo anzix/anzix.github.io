@@ -23,7 +23,7 @@ sudo systemctl start i2pd
 
 Переходим на `http://127.0.0.1:7070/`
 
-![](/images/i2p-archlinux/Screenshot_20230307_212912.png)
+![image](/images/i2p-archlinux/Screenshot_20230307_212912.png)
 
 - [Из статьи](https://habr.com/ru/post/550072/)
 
@@ -43,9 +43,9 @@ sudo systemctl start i2pd
 
 Затем переименовываем (из [гайда по SwitchyOmega + Tor](/posts/tor-archlinux/#proxy-switchyomega--tor)) созданный SwitchProfile под названием onion и редактируем его в "onion + i2p"
 
-![](/images/i2p-archlinux/switchy-omega.png)
+![image](/images/i2p-archlinux/switchy-omega.png)
 
 Всё осталось только активировать его и зайти на какой-нибудь i2p сайт, я для примера смог зайти на [ArchLinux i2p](http://archlinux.i2p/)
 
-![](/images/i2p-archlinux/switchy-omega-1.png)
-![](/images/i2p-archlinux/Screenshot_20220628_192053.png)
+![image](/images/i2p-archlinux/switchy-omega-1.png)
+![image](/images/i2p-archlinux/Screenshot_20220628_192053.png)

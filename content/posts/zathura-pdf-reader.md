@@ -7,7 +7,7 @@ categories = []
 tags = ["linux"]
 +++
 
-- https://wiki.archlinux.org/title/Zathura
+- [Arch Wiki Zathura](https://wiki.archlinux.org/title/Zathura)
 
 Качаем данные пакеты (zathura-cb позволяет просматривать через zathura архивированные .cbz аниме мангу, хентай и т.д)
 

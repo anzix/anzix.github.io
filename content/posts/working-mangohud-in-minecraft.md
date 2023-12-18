@@ -3,11 +3,11 @@ title = "MangoHud не работает в Minecraft Java Edition"
 date = 2023-03-17T16:36:42+05:00
 draft = false
 [taxonomies]
-categories = ["solving-problem"]
+categories = ["troubleshooting"]
 tags = ["linux-gaming"]
 +++
 
-- https://github.com/flightlessmango/MangoHud/issues/274
+- [Github проблема](https://github.com/flightlessmango/MangoHud/issues/274)
 
 Как бы я ни старался способом прописывания опции `mangohud --dlsym` и `MANGOHUD_DLSYM=1` и даже через lutris, всё это никак не могло заставить работать mangohud в майнкрафте.
 

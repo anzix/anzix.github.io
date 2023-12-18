@@ -17,8 +17,8 @@ mangohud obs-gamecapture WINEPREFIX=$HOME/.local/share/wineprefixes/NFSU2 wine $
 
 Если вы ранее до Linux имели дело с Texmod на Винде, то с wine процесс будет похожим
 
-![](/images/Texmod-through-wine/texmod-1.png)
-![](/images/Texmod-through-wine/texmod-2.png)
+![image](/images/Texmod-through-wine/texmod-1.png)
+![image](/images/Texmod-through-wine/texmod-2.png)
 
 Из списка выбираем модификацию и нажимаем Run
 

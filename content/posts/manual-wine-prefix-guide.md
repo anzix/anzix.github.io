@@ -9,7 +9,7 @@ tags = ["linux-gaming"]
 
 Руководствовался по этому гайду
 
-- https://www.youtube.com/watch?v=tbbXoqDfkY0
+- [Видео инструкция](https://www.youtube.com/watch?v=tbbXoqDfkY0)
 
 В данном примере будет игра [TMNT Mutants in Manhattan](https://www.pcgamingwiki.com/wiki/Teenage_Mutant_Ninja_Turtles:_Mutants_in_Manhattan)
 
@@ -44,16 +44,22 @@ WINEPREFIX="$HOME/.local/share/wineprefixes/TMNTMiM" wine setup.exe
 
 Путь установленной игры у меня это ~/Games т.е в установщике это диск Z:\home\[username]\Games\
 
-После завершения установки скачиваем из AUR [бинарный пакет dxvk](https://aur.archlinux.org/packages/dxvk-bin)
+После завершения уставщика переходим на этап установке dxvk
+
+## Установка DXVK
+
+> Вопрос: Чем его накатывать AUR пакетом [dxvk-bin](https://aur.archlinux.org/packages/dxvk-bin) или используя `winetricks dxvk`?
+>
+> Вероятнее всего я бы предпочёл бы через winetricks т.к это более надёжный метод.
+> Однако для тех кто юзает DXVK совместно с DgVoodoo или DxWrapper для старых игр для меня это рандом.
+>
+> Накатив DXVK из winetricks и используя DxWrapper я столкнулся в игре Freedom Fighters с багнутыми моделями персонажей стоящих в T-позе и с глючными текстурами (конфиг настроек dxwrapper.ini особо не менял только vsync включил)
+> С DgVoodoo такого нет из накатанного [dxvk-bin](https://aur.archlinux.org/packages/dxvk-bin) и `winetricks dxvk`
+
+Добавляю dxvk в префикс TMNTMiM
 
 ```bash
-yay -S dxvk-bin
-```
-
-Далее добавляю dxvk в префикс TMNTMiM
-
-```bash
-WINEPREFIX="$HOME/.local/share/wineprefixes/TMNTMiM" setup_dxvk install
+WINEPREFIX="$HOME/.local/share/wineprefixes/TMNTMiM" winetricks -q dxvk
 ```
 
 После добавления можно запустить игру по созданному ярлыку

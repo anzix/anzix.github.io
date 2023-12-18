@@ -9,8 +9,8 @@ tags = ["linux-gaming"]
 
 Источники:
 
-- https://steamcommunity.com/sharedfiles/filedetails/?id=249772871
-- https://steamcommunity.com/sharedfiles/filedetails/?id=2887423350
+- [Steam guides источник 1](https://steamcommunity.com/sharedfiles/filedetails/?id=249772871)
+- [Steam guides источник 2](https://steamcommunity.com/sharedfiles/filedetails/?id=2887423350)
 
 Вводите
 

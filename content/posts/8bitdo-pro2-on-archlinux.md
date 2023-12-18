@@ -11,7 +11,7 @@ Firmware 3.0
 
 Чтобы геймпад появился в списке Blueman, Bluedevil (KDE) или `bluetoothctl` необходимо перевести в режим сопряжения на секунду удерживать эту кнопку. 4 индикатора должны мигать по очереди, и после этого геймпад должен появится в списке подключения к нему можно соединится.
 
-![](/images/8bitdo-pro2-on-archlinux/button-8bitdo-pro2.jpg)
+![image](/images/8bitdo-pro2-on-archlinux/button-8bitdo-pro2.jpg)
 
 Если вы уже ранее подключались и не можете снова подключится, попробуйте удалить из списка Blueman или Bluedevil геймпад и тогда он в списке должен появится и подключится номрмально.
 
@@ -36,11 +36,12 @@ wine control joy.cpl
 
 - По проводу и по Bluetooth работают хорошо, триггеры нажимаются как кнопки, только ось круга квадратит
 
-![](/images/8bitdo-pro2-on-archlinux/8bitdo-pro2-wine.png)
+![image](/images/8bitdo-pro2-on-archlinux/8bitdo-pro2-wine.png)
 
 ## Гироскоп в эмуляторах
 
-- https://github.com/joaorb64/joycond-cemuhook/wiki
+- [Joycond-Cemuhook Wiki](https://github.com/joaorb64/joycond-cemuhook/wiki)
+- [Видео инструкция](https://www.youtube.com/watch?v=aOAKbAoxP9w)
 
 В некоторых из эмуляторов таких как dolphin (Wii), cemu (Wii U), citra (3DS), yuzu (Switch) стандартно невозможно использовать гироскоп. [Joycond-Cemuhook](https://github.com/joaorb64/joycond-cemuhook/) решает эту проблему путём использования UDP протокола
 
@@ -105,9 +106,9 @@ sudo systemctl enable --now joycond.service
 </video>
 {{< /rawhtml >}}
 
-![](/images/8bitdo-pro2-on-archlinux/Screenshot_20230319_012023.png)
+![image](/images/8bitdo-pro2-on-archlinux/Screenshot_20230319_012023.png)
 
-![](/images/8bitdo-pro2-on-archlinux/Screenshot_20230319_001215.png)
+![image](/images/8bitdo-pro2-on-archlinux/Screenshot_20230319_001215.png)
 
 Так же в статусе joycond.service будет добавлена информация что включён виртуальный Pro контроллер
 

@@ -68,8 +68,8 @@ sudo pacman -S system-config-printer
 1. В меню вызова приложений: Параметры печати (Параметры печати)
 2. В терминале вводим: `system-config-printer`
 
-![](/images/kyocera-fs-1060dn-archlinux/1667994357.png)
-![](/images/kyocera-fs-1060dn-archlinux/1667995429.png)
+![image](/images/kyocera-fs-1060dn-archlinux/1667994357.png)
+![image](/images/kyocera-fs-1060dn-archlinux/1667995429.png)
 
 После успешного добавления принтера пробую распечатать 1 пробную страницу
 

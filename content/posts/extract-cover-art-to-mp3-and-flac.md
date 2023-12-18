@@ -7,10 +7,8 @@ categories = []
 tags = ["linux"]
 +++
 
-Источники
-
-- https://unix.stackexchange.com/a/159571
-- https://dalvikplanet.blogspot.com/2018/05/how-to-add-both-front-cover-and-back.html
+- [Источник_1](https://unix.stackexchange.com/a/159571)
+- [Источник_2](https://dalvikplanet.blogspot.com/2018/05/how-to-add-both-front-cover-and-back.html)
 
 Используя ffmpeg
 
