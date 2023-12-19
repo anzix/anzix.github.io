@@ -7,7 +7,7 @@ categories = []
 tags = ["linux"]
 +++
 
-Обновлено: 15.12.23
+Обновлено: 20.12.23
 
 Видео гайды:
 [Первый](https://www.youtube.com/watch?v=Xynotc9BKe8&t=927s)
@@ -29,7 +29,7 @@ tags = ["linux"]
 Однако в текущем руководстве я буду использовать те что указаны в данной команде
 
 ```bash
-yay -S snapper snap-pac grub-btrfs snp btrfs-assistant
+yay -S snapper snap-pac grub-btrfs snp
 ```
 
 Входим в root оболочку
@@ -80,10 +80,9 @@ chown -R -v :wheel /.snapshots
 
 ## Настройка snapper для снимков /
 
-Позволяю группе wheel использовать snapper ls non-root пользователям и устанавливаю лимит снимков
+Устанавливаю лимит снимков
 
 ```bash
-sed -i "s|^ALLOW_GROUPS=.*|ALLOW_GROUPS=\"wheel\"|g" /etc/snapper/configs/root
 sed -i "s|^TIMELINE_LIMIT_HOURLY=.*|TIMELINE_LIMIT_HOURLY=\"5\"|g" /etc/snapper/configs/root
 sed -i "s|^TIMELINE_LIMIT_DAILY=.*|TIMELINE_LIMIT_DAILY=\"7\"|g" /etc/snapper/configs/root
 sed -i "s|^TIMELINE_LIMIT_WEEKLY=.*|TIMELINE_LIMIT_WEEKLY=\"0\"|g" /etc/snapper/configs/root
@@ -110,23 +109,21 @@ snapper -c root create --description "Backup"
 sudo grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
-Configure initramfs to boot into snapshots using overlayfs (read-only mode)\
-[Сурс](https://github.com/Antynea/grub-btrfs/blob/master/initramfs/readme.md)
+Plocate не показывает индексы найденых файлов если используется файловая система Btrfs
 
-```bash
-sed -i "s|keymap)|keymap grub-btrfs-overlayfs)|g" /etc/mkinitcpio.conf
+- [Источник](https://devctrl.blog/posts/plocate-not-a-drop-in-replacement-if-you-re-using-btfrs/)
+
+Данная правка конфига исправляет это
+
+```sh
+sed -i 's/PRUNE_BIND_MOUNTS =.*/PRUNE_BIND_MOUNTS = "no"/' /etc/updatedb.conf
 ```
 
-Пересоздаём initramfs
+Предотвращение индексирования снимков программой "updatedb"\
+Что замедляло бы работу системы при использовании locate/plocate
 
 ```bash
-mkinitcpio -P
-```
-
-Пропускать снапшоты для locate (Предотвращает замедление моментальных снимков)
-
-```bash
-sed -i '/^PRUNENAMES/s/"\(.*\)"/"\1 .snapshots"/' /etc/updatedb.conf
+sed -i '/PRUNEPATHS/s/"$/ \/\btrfsroot \/\.snapshots"/' /etc/updatedb.conf
 ```
 
 Готово, всё настроено и можно выходить из root оболочки
@@ -439,11 +436,10 @@ chown -vR :wheel /home/.snapshots
 ```
 
 Настройка Snapper
-Позволять группе wheel использовать команду `snapper` non-root пользователю\
-И не создавать timeline-снимки для ``/home``
+
+Не создавать timeline-снимки для ``/home``
 
 ```sh
-sed -i "s|^ALLOW_GROUPS=.*|ALLOW_GROUPS=\"wheel\"|g" /etc/snapper/configs/home
 sed -i "s|^TIMELINE_CREATE=.*|TIMELINE_CREATE=\"no\"|g" /etc/snapper/configs/home
 ```
 

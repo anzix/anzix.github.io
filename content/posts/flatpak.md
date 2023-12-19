@@ -7,6 +7,8 @@ categories = []
 tags = ["linux"]
 +++
 
+Обновлено: 20.12.23
+
 - [Магазин Flathub](https://flathub.org/home)
 - [5 лучших способов управления flatpak](https://www.youtube.com/watch?v=6EWK5qLCv5c)
 
@@ -110,6 +112,19 @@ flatpak uninstall --unused --noninteractive
 ```
 
 [11.06.2023] Во flatpak скоро будет своя собственная реализация синхронизации пакетов т.е импорт и экспорт называется [flatsync](https://gitlab.gnome.org/Cogitri/flatsync). [Новость в The Linux Experiment](https://youtu.be/n3gMicC8gU0?t=276)
+
+## Как вернуться к предыдущей коммиту Flatpak
+
+```sh
+# Список доступных коммитов
+flatpak remote-info --log flathub org.godotengine.Godot
+
+# Откатить до специфичной версии
+sudo flatpak update --commit=${HASH} org.godotengine.Godot
+
+# Закрепить версию
+flatpak mask org.godotengine.Godot
+```
 
 ## Полезные опции
 
