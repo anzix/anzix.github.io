@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>Минималистичный Gif рекордер с выделением (Giph)</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  Минималистичный Gif рекордер с выделением (Giph)
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-03-23T21:45:25+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux/">linux</a>
+
+<br>
+
+
+
+<p>Данный инструмент также позволяет записывать в формате WebP и Mp4, но для текущих целей будем юзать как gif рекордер. Можно записывать игровые моменты при помощи опции <code>-o</code></p>
+<p>Все опции описаны в <code>man page giph</code></p>
+<p>Необходимые пакеты (зависимости):</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> ffmpeg slop xdotool dmenu rofi
+</span></code></pre>
+<p>Качаем основной <a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/giph">AUR пакет giph</a></p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">yay -S</span><span style="color:#ffee80;"> giph
+</span></code></pre>
+<p>Создаём каталог для сохранения гифок</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">mkdir </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/Pictures/Gif
+</span></code></pre>
+<p>Биндим используя <a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/baskerville/sxhkd">sxhkd</a></p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> (dmenu) Начать/Остановить запись GIF рекордера
+</span><span style="color:#f9f9f9;">ctrl</span><span style="color:#ffee80;"> + Print
+</span><span style="color:#f9f9f9;">    { giph -f $(</span><span style="color:#ffb054;">echo </span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">Кол-во кадров в секунду</span><span style="color:#f9f9f9;">&quot; </span><span style="color:#ff9d00;">| </span><span style="color:#f9f9f9;">dmenu) -s -o -y \
+</span><span style="color:#ffee80;">    </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/Pictures/Gif/</span><span style="color:#f9f9f9;">$(date</span><span style="color:#ffee80;"> +</span><span style="color:#f9f9f9;">%s)</span><span style="color:#ffee80;">.gif, dunstify </span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">Запись остановлена</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#ff9d00;">; </span><span style="color:#f9f9f9;">giph --stop }
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> (dmenu) Запись с выбором кол-во кадров и продолжительности записи
+</span><span style="color:#f9f9f9;">ctrl</span><span style="color:#ffee80;"> + shift + Print
+</span><span style="color:#f9f9f9;">    giph -f $(</span><span style="color:#ffb054;">echo </span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">Кол-во кадров в секунду</span><span style="color:#f9f9f9;">&quot; </span><span style="color:#ff9d00;">| </span><span style="color:#f9f9f9;">dmenu) -s -o -y \
+</span><span style="color:#f9f9f9;">    -t $(</span><span style="color:#ffb054;">echo </span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">Сколько секунд записать?</span><span style="color:#f9f9f9;">&quot; </span><span style="color:#ff9d00;">| </span><span style="color:#f9f9f9;">dmenu) \
+</span><span style="color:#ffee80;">    </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/Pictures/Gif/</span><span style="color:#f9f9f9;">$(date</span><span style="color:#ffee80;"> +</span><span style="color:#f9f9f9;">%s)</span><span style="color:#ffee80;">.gif
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> (rofi) Запись с выбором кол-во кадров и продолжительности записи
+</span><span style="color:#f9f9f9;">ctrl</span><span style="color:#ffee80;"> + shift + Print
+</span><span style="color:#f9f9f9;">    giph -f $(</span><span style="color:#ffb054;">echo </span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">Кол-во кадров в секунду</span><span style="color:#f9f9f9;">&quot; </span><span style="color:#ff9d00;">| </span><span style="color:#f9f9f9;">rofi -dmenu) -s -o -y \
+</span><span style="color:#f9f9f9;">    -t $(</span><span style="color:#ffb054;">echo </span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">Сколько секунд записать?</span><span style="color:#f9f9f9;">&quot; </span><span style="color:#ff9d00;">| </span><span style="color:#f9f9f9;">rofi -dmenu) \
+</span><span style="color:#ffee80;">    </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/Pictures/Gif/</span><span style="color:#f9f9f9;">$(date</span><span style="color:#ffee80;"> +</span><span style="color:#f9f9f9;">%s)</span><span style="color:#ffee80;">.gif
+</span></code></pre>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

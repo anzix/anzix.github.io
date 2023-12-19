@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>Дисплей менеджеры которые читают пользовательские настройки</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  Дисплей менеджеры которые читают пользовательские настройки
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-10-20T14:50:00+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux/">linux</a>
+
+<br>
+
+
+	<aside id="toc-aside" class="toc">
+	    <details>
+			<summary>Оглавление</summary>
+	        <ol>
+	            <li>
+	                <a href="#xorg-x11">!Xorg X11</a>
+	                
+	            </li><li>
+	                <a href="#wayland">!Wayland</a>
+	                
+	            </li>
+	        </ol>
+		</details>
+	</aside>
+
+
+<p>Обновление: 30.11.23</p>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.freedesktop.org/software/systemd/man/environment.d.html">Пользовательский конфиг файл для переменных</a></li>
+</ul>
+<p>Wayland и Xorg доп-но экспортирует пользовательские переменные в <code>~/.config/environment.d/*.conf</code> независимо от $SHELL или дисплей менеджеров</p>
+<p>Пример:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">mkdir </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.config/environment.d
+</span><span style="color:#f9f9f9;">nvim </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.config/environment.d/envvars.conf
+</span></code></pre>
+<h2 id="xorg-x11"><a class="anchor" href="#xorg-x11">#</a>&nbsp;
+!Xorg X11</h2>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://wiki.archlinux.org/title/Environment_variables#Per_user">Arch WIki Environment variables - Per user</a></li>
+</ul>
+<p><strong>Ручной запуск из TTY</strong> - Подхватывает настройки от выбранного <strong>$SHELL</strong></p>
+<p>TTY не читает <code>~/.profile</code> если выбрана оболочка zsh а не bash</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">ln -svi</span><span style="color:#ffee80;"> /home/</span><span style="color:#f9f9f9;">$USER</span><span style="color:#ffee80;">/dotfiles/base/zsh/.config/zsh/profile.zsh </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.zprofile
+</span></code></pre>
+<p>xinitrc подхватывается переменной <strong>$XINITRC</strong> прописанной в <code>~/.zprofile</code> и может находится где угодно</p>
+<p><strong>LightDM</strong> - подхватывает настройки независимо от <strong>$SHELL</strong>, но необходимо наличие <code>~/.xprofile</code></p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">ln -svi</span><span style="color:#ffee80;"> /home/</span><span style="color:#f9f9f9;">$USER</span><span style="color:#ffee80;">/dotfiles/base/zsh/.config/zsh/profile.zsh </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.profile
+</span><span style="color:#f9f9f9;">ln -svi</span><span style="color:#ffee80;"> /home/</span><span style="color:#f9f9f9;">$USER</span><span style="color:#ffee80;">/dotfiles/base/x/.config/X11/xinitrc </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.xprofile
+</span></code></pre>
+<p><strong>SDDM</strong> - Подхватывает настройки от выбранного <strong>$SHELL</strong>, но необходимо наличие <code>~/.xprofile</code>
+sddm - не читает <code>~/.profile</code> если выбрана оболочка zsh а не bash</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">ln -svi</span><span style="color:#ffee80;"> /home/</span><span style="color:#f9f9f9;">$USER</span><span style="color:#ffee80;">/dotfiles/base/zsh/.config/zsh/profile.zsh </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.zprofile
+</span><span style="color:#f9f9f9;">ln -svi</span><span style="color:#ffee80;"> /home/</span><span style="color:#f9f9f9;">$USER</span><span style="color:#ffee80;">/dotfiles/base/x/.config/X11/xinitrc </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.xprofile
+</span></code></pre>
+<p><strong>LXDM</strong> - подхватывает настройки независимо от <strong>$SHELL</strong> как LightDM, но необходимо наличие <code>~/.xprofile</code></p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">ln -svi</span><span style="color:#ffee80;"> /home/</span><span style="color:#f9f9f9;">$USER</span><span style="color:#ffee80;">/dotfiles/base/zsh/.config/zsh/profile.zsh </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.profile
+</span><span style="color:#f9f9f9;">ln -svi</span><span style="color:#ffee80;"> /home/</span><span style="color:#f9f9f9;">$USER</span><span style="color:#ffee80;">/dotfiles/base/x/.config/X11/xinitrc </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.xprofile
+</span></code></pre>
+<p><strong>GDM</strong> - Подхватывает настройки от выбранного <strong>$SHELL</strong></p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">ln -svi</span><span style="color:#ffee80;"> /home/</span><span style="color:#f9f9f9;">$USER</span><span style="color:#ffee80;">/dotfiles/base/zsh/.config/zsh/profile.zsh </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.profile
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Только при запуске Xorg сессии выполняется ~/.xprofile при его наличии
+</span><span style="color:#f9f9f9;">ln -svi</span><span style="color:#ffee80;"> /home/</span><span style="color:#f9f9f9;">$USER</span><span style="color:#ffee80;">/dotfiles/base/x/.config/X11/xinitrc </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.xprofile
+</span></code></pre>
+<p><strong><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/fairyglade/ly">Ly</a></strong> - Глючное шо капец</p>
+<p>Подхватывает настройки от выбранного <strong>$SHELL</strong></p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">ln -svi</span><span style="color:#ffee80;"> /home/</span><span style="color:#f9f9f9;">$USER</span><span style="color:#ffee80;">/dotfiles/base/zsh/.config/zsh/profile.zsh </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.zprofile
+</span></code></pre>
+<p>Запуск Xinitrc можно указать где угодно (не проверено)</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">nvim</span><span style="color:#ffee80;"> /etc/ly/config.ini
+</span></code></pre>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">...
+</span><span style="color:#f9f9f9;"># xinitrc
+</span><span style="color:#f9f9f9;">#xinitrc = ~/.xinitrc
+</span><span style="color:#f9f9f9;">...
+</span></code></pre>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> sed</span><span style="color:#f9f9f9;"> -i &#39;</span><span style="color:#9eff80;">s/^#xinitrc.*/xinitrc = $XINITRC/</span><span style="color:#f9f9f9;">&#39;</span><span style="color:#ffee80;"> /etc/ly/config.ini  </span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Имеет графические проблемы
+</span><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> sed</span><span style="color:#f9f9f9;"> -i &#39;</span><span style="color:#9eff80;">s/^#lang.*/lang = ru/</span><span style="color:#f9f9f9;">&#39;</span><span style="color:#ffee80;"> /etc/ly/config.ini
+</span></code></pre>
+<h2 id="wayland"><a class="anchor" href="#wayland">#</a>&nbsp;
+!Wayland</h2>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://wiki.archlinux.org/title/Environment_variables#Per_Wayland_session">Arch Wiki Environment variable - Wayland</a></li>
+</ul>
+<p><strong>Ручной запуск из TTY</strong> - Подхватывает настройки от выбранного <strong>$SHELL</strong></p>
+<p>TTY не читает <code>~/.bash_profile</code> если выбрана оболочка zsh</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">ln -svi</span><span style="color:#ffee80;"> /home/</span><span style="color:#f9f9f9;">$USER</span><span style="color:#ffee80;">/dotfiles/base/zsh/.config/zsh/profile.zsh </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.zprofile
+</span></code></pre>
+<p><strong>LightDM</strong> - Подхватывает настройки от выбранного <strong>$SHELL</strong></p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">ln -svi</span><span style="color:#ffee80;"> /home/</span><span style="color:#f9f9f9;">$USER</span><span style="color:#ffee80;">/dotfiles/base/zsh/.config/zsh/profile.zsh </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.zprofile
+</span></code></pre>
+<p><strong>GDM</strong> - Подхватывает настройки от выбранного <strong>$SHELL</strong> как LightDM</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">ln -svi</span><span style="color:#ffee80;"> /home/</span><span style="color:#f9f9f9;">$USER</span><span style="color:#ffee80;">/dotfiles/base/zsh/.config/zsh/profile.zsh </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.zprofile
+</span></code></pre>
+<p><strong>SDDM</strong> - Подхватывает настройки от выбранного <strong>$SHELL</strong></p>
+<p>sddm - не читает <code>~/.profile</code> если выбрана оболочка zsh а не bash</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">ln -svi</span><span style="color:#ffee80;"> /home/</span><span style="color:#f9f9f9;">$USER</span><span style="color:#ffee80;">/dotfiles/base/zsh/.config/zsh/profile.zsh </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.zprofile
+</span></code></pre>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

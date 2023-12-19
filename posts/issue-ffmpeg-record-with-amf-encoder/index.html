@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>Проблема с записью FFmpeg в связке с AMF кодировщиком</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  Проблема с записью FFmpeg в связке с AMF кодировщиком
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-10-08T23:22:00+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux/">linux</a>
+
+<br>
+
+
+
+<p>При вызове команды</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">ffmpeg -vaapi_device</span><span style="color:#ffee80;"> /dev/dri/renderD128</span><span style="color:#f9f9f9;"> -f</span><span style="color:#ffee80;"> x11grab</span><span style="color:#f9f9f9;"> -video_size</span><span style="color:#ffee80;"> 1920x1080</span><span style="color:#f9f9f9;"> -framerate</span><span style="color:#ffee80;"> 60</span><span style="color:#f9f9f9;"> -i</span><span style="color:#ffee80;"> :0</span><span style="color:#f9f9f9;"> -c</span><span style="color:#ffee80;">:v h264_amf output.mp4
+</span></code></pre>
+<p>Выхлоп команды такой</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">zsh: segmentation fault (core dumped)  ffmpeg -vaapi_device /dev/dri/renderD128 -f x11grab -video_size 1920x1080  60
+</span></code></pre>
+<p>Решением было экспортировать переменную проприетарных драйверов AMDGPU-PRO командой vk_pro (из AUR пакета <a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/amd-vulkan-prefixes/">amd-vulkan-prefixes</a>)</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">vk_pro</span><span style="color:#ffee80;"> ffmpeg</span><span style="color:#f9f9f9;"> -vaapi_device</span><span style="color:#ffee80;"> /dev/dri/renderD128</span><span style="color:#f9f9f9;"> -f</span><span style="color:#ffee80;"> x11grab</span><span style="color:#f9f9f9;"> -video_size</span><span style="color:#ffee80;"> 1920x1080</span><span style="color:#f9f9f9;"> -framerate</span><span style="color:#ffee80;"> 60</span><span style="color:#f9f9f9;"> -i</span><span style="color:#ffee80;"> :0</span><span style="color:#f9f9f9;"> -c</span><span style="color:#ffee80;">:v h264_amf output.mp4
+</span></code></pre>
+<p>Или просто экспортировать переменные напрямую из проприетарных дров AMDGPU-PRO</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">VK_ICD_FILENAMES</span><span style="color:#ff9d00;">=</span><span style="color:#3ad900;">/opt/amdgpu-pro/etc/vulkan/icd.d/amd_icd64.json:/opt/amdgpu-pro/etc/vulkan/icd.d/amd_icd32.json </span><span style="color:#f9f9f9;">ffmpeg -vaapi_device</span><span style="color:#ffee80;"> /dev/dri/renderD128</span><span style="color:#f9f9f9;"> -f</span><span style="color:#ffee80;"> x11grab</span><span style="color:#f9f9f9;"> -video_size</span><span style="color:#ffee80;"> 1920x1080</span><span style="color:#f9f9f9;"> -framerate</span><span style="color:#ffee80;"> 60</span><span style="color:#f9f9f9;"> -i</span><span style="color:#ffee80;"> :0</span><span style="color:#f9f9f9;"> -c</span><span style="color:#ffee80;">:v h264_amf output.mp4
+</span></code></pre>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

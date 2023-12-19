@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>Настройка yay, разное полезное</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  Настройка yay, разное полезное
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-04-15T20:54:54+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux/">linux</a>
+
+<br>
+
+
+	<aside id="toc-aside" class="toc">
+	    <details>
+			<summary>Оглавление</summary>
+	        <ol>
+	            <li>
+	                <a href="#poleznye-optsii-yay">!Полезные опции yay</a>
+	                
+	            </li><li>
+	                <a href="#poleznoe-dlia-pacman-i-yay">Полезное для pacman и yay</a>
+	                
+	            </li><li>
+	                <a href="#tui-magaziny-prilozhenii-s-pomoshch-iu-fzf">TUI магазины приложений с помощью fzf</a>
+	                
+	            </li><li>
+	                <a href="#eksport-import-paketov-pacman-i-aur">Экспорт & импорт пакетов pacman и AUR</a>
+	                
+	            </li>
+	        </ol>
+		</details>
+	</aside>
+
+
+<p>Установка yay</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">git</span><span style="color:#ffee80;"> clone https://aur.archlinux.org/yay-bin.git
+</span><span style="color:#ffb054;">cd</span><span style="color:#ffee80;"> yay-bin </span><span style="color:#ff9d00;">&amp;&amp; </span><span style="color:#f9f9f9;">makepkg -si --noconfirm
+</span><span style="color:#ffb054;">cd </span><span style="color:#ff80e1;">~ </span><span style="color:#ff9d00;">&amp;&amp; </span><span style="color:#f9f9f9;">rm -rf</span><span style="color:#ffee80;"> yay-bin
+</span></code></pre>
+<p>Пояснение:</p>
+<ul>
+<li><code>--nodiffmenu</code> - Не спрашивать об показе изменений (diff)</li>
+<li><code>--nocleanmenu</code> - Не спрашивать о пакетах для которых требуется очистить кэш сборки</li>
+<li><code>--removemake</code> - Всегда удалять зависимости для сборки (make) после установки</li>
+<li><code>--batchinstall</code> - Ставит каждый собранный пакеты в очередь для установки (легче мониторить что происходит)</li>
+</ul>
+<p>Просто вставляем в терминал и yay настроен к работе</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">yay --save --nodiffmenu --nocleanmenu --removemake --batchinstall
+</span></code></pre>
+<h2 id="poleznye-optsii-yay"><a class="anchor" href="#poleznye-optsii-yay">#</a>&nbsp;
+!Полезные опции yay</h2>
+<p>Позволяет отредактировать PKGBUILD пакета перед установкой</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">yay -S --editmenu </span><span style="color:#ff9d00;">[</span><span style="color:#ffee80;">AUR пакет</span><span style="color:#ff9d00;">]
+</span></code></pre>
+<p>Создать базу данных dev пакетов *-git, которые были установлены без yay. Эта команда должна быть запущена только один раз.</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">yay -Y --gendb
+</span></code></pre>
+<p>Позволяет искать обновления *-git пакетов до последнего коммита</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">yay --devel
+</span></code></pre>
+<h2 id="poleznoe-dlia-pacman-i-yay"><a class="anchor" href="#poleznoe-dlia-pacman-i-yay">#</a>&nbsp;
+Полезное для pacman и yay</h2>
+<p>Обновление всей системы (самого ядра, окружения рабочего стола, программ из pacman и из AUR) производится одной командой:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">yay -Syyu
+</span></code></pre>
+<p>Использовать в первую очередь если очень долго не обновлялись</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -Sy</span><span style="color:#ffee80;"> archlinux-keyring </span><span style="color:#ff9d00;">&amp;&amp; </span><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -Syyu
+</span></code></pre>
+<h2 id="tui-magaziny-prilozhenii-s-pomoshch-iu-fzf"><a class="anchor" href="#tui-magaziny-prilozhenii-s-pomoshch-iu-fzf">#</a>&nbsp;
+TUI магазины приложений с помощью fzf</h2>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> fzf
+</span></code></pre>
+<p>Pacstore</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">pacman -Slq </span><span style="color:#ff9d00;">| </span><span style="color:#f9f9f9;">fzf -m --preview &#39;</span><span style="color:#9eff80;">cat &lt;(pacman -Si {1}) &lt;(pacman -Fl {1} | awk \&quot;{print \$2}\&quot;)</span><span style="color:#f9f9f9;">&#39; </span><span style="color:#ff9d00;">| </span><span style="color:#f9f9f9;">xargs -ro</span><span style="color:#ffee80;"> sudo pacman</span><span style="color:#f9f9f9;"> -S
+</span></code></pre>
+<p>Aurstore</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -F </span><span style="color:#ff9d00;">| </span><span style="color:#f9f9f9;">yay -Slq </span><span style="color:#ff9d00;">| </span><span style="color:#f9f9f9;">fzf -m --preview &#39;</span><span style="color:#9eff80;">cat &lt;(yay -Si {1}) &lt;(yay -Fl {1} | awk \&quot;{print \$2}\&quot;)</span><span style="color:#f9f9f9;">&#39; </span><span style="color:#ff9d00;">| </span><span style="color:#f9f9f9;">xargs -ro</span><span style="color:#ffee80;"> yay</span><span style="color:#f9f9f9;"> -S
+</span></code></pre>
+<h2 id="eksport-import-paketov-pacman-i-aur"><a class="anchor" href="#eksport-import-paketov-pacman-i-aur">#</a>&nbsp;
+Экспорт &amp; импорт пакетов pacman и AUR</h2>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://wiki.archlinux.org/title/Pacman/Tips_and_tricks#Install_packages_from_a_list">Источник</a></li>
+</ul>
+<p>Экспорт пакетов pacman</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">pacman -Qqen </span><span style="color:#ff9d00;">&gt; </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/dotfiles/pacman-pkglist.txt
+</span></code></pre>
+<p>Экспорт пакетов aur</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">pacman -Qqem </span><span style="color:#ff9d00;">&gt; </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/dotfiles/AUR-pkglist.txt
+</span></code></pre>
+<p>Экспорт pacman+aur</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">pacman -Qqe </span><span style="color:#ff9d00;">&gt; </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/dotfiles/pkglist.txt
+</span></code></pre>
+<p>Импорт пакетов pacman</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S --needed</span><span style="color:#ffee80;"> - </span><span style="color:#ff9d00;">&lt;</span><span style="color:#ffee80;"> pacman-pkglist.txt
+</span></code></pre>
+<p>Импорт пакетов AUR используя yay</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">yay -S --needed</span><span style="color:#ffee80;"> - </span><span style="color:#ff9d00;">&lt;</span><span style="color:#ffee80;"> AUR-pkglist.txt
+</span></code></pre>
+<p>Импорт всех пакетов</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">yay -S --needed</span><span style="color:#ffee80;"> - </span><span style="color:#ff9d00;">&lt;</span><span style="color:#ffee80;"> pkglist.txt
+</span></code></pre>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>OpenTabletDriver для XP-Pen G640 [Rev A] на Arch Linux</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  OpenTabletDriver для XP-Pen G640 [Rev A] на Arch Linux
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-03-10T17:40:37+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux/">linux</a>
+
+<br>
+
+
+	<aside id="toc-aside" class="toc">
+	    <details>
+			<summary>Оглавление</summary>
+	        <ol>
+	            <li>
+	                <a href="#vozvrashchaem-rezhim-risovaniia-s-funktsiei-davleniia-na-pero">Возвращаем режим рисования с функцией давления на перо</a>
+	                
+	            </li><li>
+	                <a href="#pri-nazhatii-na-knopki-kursor-pera-drozhit-i-net-sglazhivaniia-kursora">При нажатии на кнопки курсор пера дрожит и нет сглаживания курсора</a>
+	                
+	            </li>
+	        </ol>
+		</details>
+	</aside>
+
+
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/OpenTabletDriver/OpenTabletDriver">GitHub страница</a></li>
+</ul>
+<p>Скачиваем <a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/opentabletdriver">AUR пакет</a> (обычная версия, не git) и пакет xorg-xinput чтобы курсор граф. планшета двигался</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">yay -S</span><span style="color:#ffee80;"> xorg-xinput opentabletdriver
+</span></code></pre>
+<p>После установки пакета всплывёт понятная инструкция, следуем ей или за моей инструкцией</p>
+<p>Для автозапуска прописываем в файл <code>~/.xprofile</code> (Для DM) или <code>~/.xinitrc</code> (запуск с TTY)</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">otd </span><span style="color:#ff9d00;">&amp;
+</span></code></pre>
+<p>Для тех кто использует Дисплей менеджеры</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">systemctl --user</span><span style="color:#ffee80;"> enable opentabletdriver.service
+</span></code></pre>
+<p>Запустите GUI opentabletdriver</p>
+<p>Во вкладке Console у меня не определялся G640 т.к была ошибка <span style="color:red">Another tablet driver found: UC Logic</span> <span style="color:green">решением</span> было удалить встроенный модуль драйвера в ядре Linux <a rel="noopener nofollow noreferrer" target="_blank" href="https://www.opennet.ru/man.shtml?topic=rmmod&amp;category=8&amp;russian=2">командой rmmod</a> и добавив его в blacklist modprobe чтобы больше не запускался.</p>
+<p>Выхлоп консоли otd</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">[Detect:Warning] Another tablet driver found: UC Logic
+</span><span style="color:#f9f9f9;">[Detect:Warning] Detection for UC Logic tablets might be impaired
+</span></code></pre>
+<p>Вводим эти команды для <span style="color:green">решения</span> проблемы</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#ffb054;">echo </span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">blacklist hid_uclogic</span><span style="color:#f9f9f9;">&quot; </span><span style="color:#ff9d00;">| </span><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> tee</span><span style="color:#f9f9f9;"> -a</span><span style="color:#ffee80;"> /etc/modprobe.d/blacklist.conf </span><span style="color:#ff9d00;">&gt;</span><span style="color:#ffee80;">/dev/null
+</span><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> rmmod hid_uclogic
+</span><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> mkinitcpio</span><span style="color:#f9f9f9;"> -P
+</span></code></pre>
+<p>Перезапускаем ПК</p>
+<p>OpenTabletDriver быстро определит граф. планшет и начнёт работать</p>
+<p>Теперь в консоли у меня только info output. Никаких ошибок и планшет работает как надо</p>
+<p><img src="/images/OpenTabletDriver-xp-pen-g640-rev-a-on-archlinux/2022-03-18-22-19.png" alt="image" /></p>
+<h2 id="vozvrashchaem-rezhim-risovaniia-s-funktsiei-davleniia-na-pero"><a class="anchor" href="#vozvrashchaem-rezhim-risovaniia-s-funktsiei-davleniia-na-pero">#</a>&nbsp;
+Возвращаем режим рисования с функцией давления на перо</h2>
+<p>Открыв OpenTabletDriver меняем Absolute Mode на Artist Mode</p>
+<h2 id="pri-nazhatii-na-knopki-kursor-pera-drozhit-i-net-sglazhivaniia-kursora"><a class="anchor" href="#pri-nazhatii-na-knopki-kursor-pera-drozhit-i-net-sglazhivaniia-kursora">#</a>&nbsp;
+При нажатии на кнопки курсор пера дрожит и нет сглаживания курсора</h2>
+<p>Для этого нам поможет фильтр <strong>Devocub Antichatter</strong>. Идём <strong>Filters</strong> жмём <strong>Open Plugin Manager</strong>, из списка выбираем <strong>DevocubFilters</strong> и жмём <strong>Install</strong></p>
+<p>После установки переходим в Filters и видим что наш фильтр установлен. Для устранения проблем просто ставим чекбокс Enable Devocub Antichatter и жмем Apply</p>
+<p>Проблема решена!</p>
+<blockquote>
+<p>Хочу подчеркнуть то что включённый Antichatter начинает отжирать больше процессорных ресурсов, в htop один любой из потоков под 100% нагрузкой. Включайте его при необходимости а не на постоянку</p>
+<p>UPD [20.07.22] С обновлением OpenTabletDriver v0.6.0.4 Antichatter теперь отжирание процессорных ресурсов ресурсов CPU составляет 1%</p>
+</blockquote>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

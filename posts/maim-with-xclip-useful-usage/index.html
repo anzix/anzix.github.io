@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>Минималистичный скриншотер (связка) maim+xclip</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  Минималистичный скриншотер (связка) maim+xclip
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-03-22T19:03:32+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux/">linux</a>
+
+<br>
+
+
+	<aside id="toc-aside" class="toc">
+	    <details>
+			<summary>Оглавление</summary>
+	        <ol>
+	            <li>
+	                <a href="#delaem-iz-maim-skanner-tsvetovoi-palitry">Делаем из maim сканнер цветовой палитры</a>
+	                
+	            </li><li>
+	                <a href="#delaem-iz-maim-ocr-skaner-s-pomoshch-iu-tesseract-skripta">!Делаем из maim OCR сканер с помощью Tesseract + скрипта</a>
+	                
+	            </li><li>
+	                <a href="#delaem-iz-maim-skaner-qr-kodov-zbar-xclip">Делаем из maim сканер QR кодов ZBar + Xclip</a>
+	                
+	            </li><li>
+	                <a href="#delaem-iz-maim-perevodchik-teksta-s-pomoshch-iu-tesseract-translate-shell-xclip">!Делаем из maim переводчик текста с помощью Tesseract + Translate-Shell + Xclip</a>
+	                
+	            </li>
+	        </ol>
+		</details>
+	</aside>
+
+
+<p>Если вам не очень понравился flameshot то связка из 2 мелких пакетов может сделать ваш день с Linux лучше</p>
+<p>Можно скринить игры при помощи опции <code>-o</code></p>
+<p>Все опции описаны в <code>man page maim</code></p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> xclip maim
+</span></code></pre>
+<p><strong>Цвет выделения</strong></p>
+<p><font color="red">Не рекомендуется</font> вместе с юзать с опцией <code>-o</code> (Disable graphics acceleration), да и вообще если делаете скрин игры</p>
+<p>Светло синее</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">maim -lc</span><span style="color:#ffee80;"> 0.3,0.4,0.6,0.4
+</span></code></pre>
+<p>Фиолетовое</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">maim -lc</span><span style="color:#ffee80;"> 0.3,0,0.5,0.3
+</span></code></pre>
+<p>Светло белое</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">maim -lc</span><span style="color:#ffee80;"> 1,1,1,0.3
+</span></code></pre>
+<p>И добавляем в бинды <a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/baskerville/sxhkd">sxhkd</a> ниже описанное</p>
+<blockquote>
+<p>Если сохраняете скриншоты в HDD NTFS диск, тогда советую не ставить date по типу $(date +%F-%T).png (Имя файла будет 2022-04-15-22:56:12.png) т.к файловая система ntfs не позволяет создавать файлы в которых содержат ” * / : &lt; &gt; ? \ | а на шинде вы не сможете просмотреть эти скрины</p>
+<p>Ставьте $(date +%s) и тогда проблем с файловой системой ntfs не возникнут</p>
+</blockquote>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Скрин всего экрана, без clipboard
+</span><span style="color:#f9f9f9;">Print
+</span><span style="color:#f9f9f9;">    IMG</span><span style="color:#ff9d00;">=</span><span style="color:#ff80e1;">~</span><span style="color:#3ad900;">/Pictures/Screenshots/</span><span style="color:#f9f9f9;">$(</span><span style="color:#edef7d;">date</span><span style="color:#ffee80;"> +</span><span style="color:#f9f9f9;">%</span><span style="color:#edef7d;">s</span><span style="color:#f9f9f9;">)</span><span style="color:#3ad900;">.png </span><span style="color:#f9f9f9;">\
+</span><span style="color:#f9f9f9;">    </span><span style="color:#ff9d00;">&amp;&amp; </span><span style="color:#f9f9f9;">maim $IMG \
+</span><span style="color:#f9f9f9;">    </span><span style="color:#ff9d00;">&amp;&amp; </span><span style="color:#f9f9f9;">notify-send -i $IMG \
+</span><span style="color:#ffee80;">    </span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">Скриншот сохранён</span><span style="color:#f9f9f9;">&quot; &quot;</span><span style="color:#9eff80;">Место: </span><span style="color:#f9f9f9;">$</span><span style="color:#edef7d;">IMG</span><span style="color:#f9f9f9;">&quot; </span><span style="color:#ff9d00;">|| </span><span style="color:#f9f9f9;">notify-send &quot;</span><span style="color:#9eff80;">Failed to take screenshot</span><span style="color:#f9f9f9;">&quot;
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Скрин с выделением или нажатием на выбранное окно
+</span><span style="color:#f9f9f9;">super</span><span style="color:#ffee80;"> + shift + s
+</span><span style="color:#f9f9f9;">    PIC</span><span style="color:#ff9d00;">=</span><span style="color:#ff80e1;">~</span><span style="color:#3ad900;">/Pictures/Screenshots/</span><span style="color:#f9f9f9;">$(</span><span style="color:#edef7d;">date</span><span style="color:#ffee80;"> +</span><span style="color:#f9f9f9;">%</span><span style="color:#edef7d;">s</span><span style="color:#f9f9f9;">)</span><span style="color:#3ad900;">.png </span><span style="color:#f9f9f9;">\
+</span><span style="color:#f9f9f9;">    </span><span style="color:#ff9d00;">&amp;&amp; </span><span style="color:#f9f9f9;">maim -suof</span><span style="color:#ffee80;"> png </span><span style="color:#f9f9f9;">$PIC \
+</span><span style="color:#f9f9f9;">    </span><span style="color:#ff9d00;">&amp;&amp; </span><span style="color:#f9f9f9;">cat $PIC </span><span style="color:#ff9d00;">| </span><span style="color:#f9f9f9;">xclip -selection</span><span style="color:#ffee80;"> clipboard</span><span style="color:#f9f9f9;"> -t</span><span style="color:#ffee80;"> image/png </span><span style="color:#f9f9f9;">\
+</span><span style="color:#f9f9f9;">    </span><span style="color:#ff9d00;">&amp;&amp; </span><span style="color:#f9f9f9;">notify-send -i $PIC \
+</span><span style="color:#ffee80;">    </span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">Обрезанный скриншот сохранён в буфер обмена</span><span style="color:#f9f9f9;">&quot; &quot;</span><span style="color:#9eff80;">Место: </span><span style="color:#f9f9f9;">$</span><span style="color:#edef7d;">PIC</span><span style="color:#f9f9f9;">&quot; </span><span style="color:#ff9d00;">|| </span><span style="color:#f9f9f9;">notify-send &quot;</span><span style="color:#9eff80;">Failed to take screenshot</span><span style="color:#f9f9f9;">&quot;
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Скрин окна который в фокусе (для тех у кого нету мышки)
+</span><span style="color:#f9f9f9;">super</span><span style="color:#ffee80;"> + shift + P maim </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/Pictures/Screenshots/</span><span style="color:#f9f9f9;">$(date</span><span style="color:#ffee80;"> +</span><span style="color:#f9f9f9;">%s)</span><span style="color:#ffee80;">.png</span><span style="color:#f9f9f9;"> -ui \
+</span><span style="color:#ffee80;">    </span><span style="color:#f9f9f9;">$(xdotool</span><span style="color:#ffee80;"> getactivewindow</span><span style="color:#f9f9f9;">) \
+</span><span style="color:#f9f9f9;">    </span><span style="color:#ff9d00;">&amp;&amp; </span><span style="color:#f9f9f9;">notify-send -i </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/Pictures/Screenshots/</span><span style="color:#f9f9f9;">$(date</span><span style="color:#ffee80;"> +</span><span style="color:#f9f9f9;">%s)</span><span style="color:#ffee80;">.png </span><span style="color:#f9f9f9;">\
+</span><span style="color:#ffee80;">    </span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">Фокус скриншота сохранён</span><span style="color:#f9f9f9;">&quot; &quot;</span><span style="color:#9eff80;">Место: ~/Pictures/Screenshots \nИмя: </span><span style="color:#f9f9f9;">$(</span><span style="color:#edef7d;">date</span><span style="color:#ffee80;"> +</span><span style="color:#f9f9f9;">%</span><span style="color:#edef7d;">s</span><span style="color:#f9f9f9;">)</span><span style="color:#9eff80;">.png</span><span style="color:#f9f9f9;">&quot; </span><span style="color:#ff9d00;">|| </span><span style="color:#f9f9f9;">notify-send &quot;</span><span style="color:#9eff80;">Failed to take screenshot</span><span style="color:#f9f9f9;">&quot;
+</span></code></pre>
+<p>Или через i3 конфиг файл</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Скрин всего экрана, без clipboard
+</span><span style="color:#f9f9f9;">bindsym</span><span style="color:#ffee80;"> Print exec</span><span style="color:#f9f9f9;"> --no-startup-id \
+</span><span style="color:#ffee80;"> IMG=</span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/Pictures/Screenshots/</span><span style="color:#f9f9f9;">$(date</span><span style="color:#ffee80;"> +</span><span style="color:#f9f9f9;">%s)</span><span style="color:#ffee80;">.png </span><span style="color:#f9f9f9;">\
+</span><span style="color:#f9f9f9;"> </span><span style="color:#ff9d00;">&amp;&amp; </span><span style="color:#f9f9f9;">maim $IMG \
+</span><span style="color:#f9f9f9;"> </span><span style="color:#ff9d00;">&amp;&amp; </span><span style="color:#f9f9f9;">notify-send -i $IMG \
+</span><span style="color:#ffee80;"> </span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">Скриншот сохранён</span><span style="color:#f9f9f9;">&quot; &quot;</span><span style="color:#9eff80;">Место: </span><span style="color:#f9f9f9;">$</span><span style="color:#edef7d;">IMG</span><span style="color:#f9f9f9;">&quot; </span><span style="color:#ff9d00;">|| </span><span style="color:#f9f9f9;">notify-send &quot;</span><span style="color:#9eff80;">Failed to take screenshot</span><span style="color:#f9f9f9;">&quot;
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Скрин с выделением области или клик на выбранное окно
+</span><span style="color:#f9f9f9;">bindsym $mod</span><span style="color:#ffee80;">+shift+s exec</span><span style="color:#f9f9f9;"> --no-startup-id \
+</span><span style="color:#ffee80;"> PIC=</span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/Pictures/Screenshots/</span><span style="color:#f9f9f9;">$(date</span><span style="color:#ffee80;"> +</span><span style="color:#f9f9f9;">%s)</span><span style="color:#ffee80;">.png </span><span style="color:#f9f9f9;">\
+</span><span style="color:#f9f9f9;"> </span><span style="color:#ff9d00;">&amp;&amp; </span><span style="color:#f9f9f9;">maim -suof</span><span style="color:#ffee80;"> png </span><span style="color:#f9f9f9;">$PIC \
+</span><span style="color:#f9f9f9;"> </span><span style="color:#ff9d00;">&amp;&amp; </span><span style="color:#f9f9f9;">cat $PIC </span><span style="color:#ff9d00;">| </span><span style="color:#f9f9f9;">xclip -selection</span><span style="color:#ffee80;"> clipboard</span><span style="color:#f9f9f9;"> -t</span><span style="color:#ffee80;"> image/png </span><span style="color:#f9f9f9;">\
+</span><span style="color:#f9f9f9;"> </span><span style="color:#ff9d00;">&amp;&amp; </span><span style="color:#f9f9f9;">notify-send -i $PIC \
+</span><span style="color:#ffee80;"> </span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">Обрезанный скриншот сохранён в буфер обмена</span><span style="color:#f9f9f9;">&quot; &quot;</span><span style="color:#9eff80;">Место: </span><span style="color:#f9f9f9;">$</span><span style="color:#edef7d;">PIC</span><span style="color:#f9f9f9;">&quot; </span><span style="color:#ff9d00;">|| </span><span style="color:#f9f9f9;">notify-send &quot;</span><span style="color:#9eff80;">Failed to take screenshot</span><span style="color:#f9f9f9;">&quot;
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Скрин окна который в фокусе (для тех у кого нету мышки)
+</span><span style="color:#f9f9f9;">bindsym $mod</span><span style="color:#ffee80;">+shift+P exec</span><span style="color:#f9f9f9;"> --no-startup-id \
+</span><span style="color:#ffee80;"> maim </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/Pictures/Screenshots/</span><span style="color:#f9f9f9;">$(date</span><span style="color:#ffee80;"> +</span><span style="color:#f9f9f9;">%s)</span><span style="color:#ffee80;">.png</span><span style="color:#f9f9f9;"> -ui \
+</span><span style="color:#ffee80;"> </span><span style="color:#f9f9f9;">$(xdotool</span><span style="color:#ffee80;"> getactivewindow</span><span style="color:#f9f9f9;">) \
+</span><span style="color:#f9f9f9;"> </span><span style="color:#ff9d00;">&amp;&amp; </span><span style="color:#f9f9f9;">notify-send -i </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/Pictures/Screenshots/</span><span style="color:#f9f9f9;">$(date</span><span style="color:#ffee80;"> +</span><span style="color:#f9f9f9;">%s)</span><span style="color:#ffee80;">.png </span><span style="color:#f9f9f9;">\
+</span><span style="color:#ffee80;"> </span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">Фокус скриншота сохранён</span><span style="color:#f9f9f9;">&quot; &quot;</span><span style="color:#9eff80;">Место: ~/Picturesg/Screenshots \nИмя: </span><span style="color:#f9f9f9;">$(</span><span style="color:#edef7d;">date</span><span style="color:#ffee80;"> +</span><span style="color:#f9f9f9;">%</span><span style="color:#edef7d;">s</span><span style="color:#f9f9f9;">)</span><span style="color:#9eff80;">.png</span><span style="color:#f9f9f9;">&quot; </span><span style="color:#ff9d00;">|| </span><span style="color:#f9f9f9;">notify-send &quot;</span><span style="color:#9eff80;">Failed to take screenshot</span><span style="color:#f9f9f9;">&quot;
+</span></code></pre>
+<h2 id="delaem-iz-maim-skanner-tsvetovoi-palitry"><a class="anchor" href="#delaem-iz-maim-skanner-tsvetovoi-palitry">#</a>&nbsp;
+Делаем из maim сканнер цветовой палитры</h2>
+<p><img src="/images/maim-with-xclip-useful-usage/colorpicker.png" alt="image" /></p>
+<p>Качаем пакет если у вас его нету</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> slop
+</span></code></pre>
+<p>И добавляем в бинды <a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/baskerville/sxhkd">sxhkd</a> ниже описанное</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Определение цветовой палитры
+</span><span style="color:#f9f9f9;">super</span><span style="color:#ffee80;"> + shift + d
+</span><span style="color:#f9f9f9;">    notify-send &quot;</span><span style="color:#9eff80;">Color Picker</span><span style="color:#f9f9f9;">&quot; &quot;</span><span style="color:#9eff80;">Выберите цвет</span><span style="color:#f9f9f9;">&quot; </span><span style="color:#ff9d00;">&amp;&amp; </span><span style="color:#f9f9f9;">\
+</span><span style="color:#f9f9f9;">    maim</span><span style="color:#ffee80;"> /tmp/color-picker.png</span><span style="color:#f9f9f9;"> -ug $(slop -t</span><span style="color:#ffee80;"> 0</span><span style="color:#f9f9f9;">) </span><span style="color:#ff9d00;">&amp;&amp; </span><span style="color:#f9f9f9;">\
+</span><span style="color:#f9f9f9;">    convert -size</span><span style="color:#ffee80;"> 100x100 xc:</span><span style="color:#f9f9f9;">&quot;$(</span><span style="color:#edef7d;">convert</span><span style="color:#ffee80;"> /tmp/color-picker.png</span><span style="color:#f9f9f9;"> -</span><span style="color:#edef7d;">format </span><span style="color:#f9f9f9;">&#39;</span><span style="color:#9eff80;">#%[hex:s]\n</span><span style="color:#f9f9f9;">&#39;</span><span style="color:#ffee80;"> info:</span><span style="color:#f9f9f9;">)&quot;</span><span style="color:#ffee80;"> /tmp/color-picker.png </span><span style="color:#ff9d00;">&amp;&amp; </span><span style="color:#f9f9f9;">\
+</span><span style="color:#f9f9f9;">    notify-send -i</span><span style="color:#ffee80;"> /tmp/color-picker.png </span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">Палитра скопирована в буфер обмена</span><span style="color:#f9f9f9;">&quot; $(convert</span><span style="color:#ffee80;"> /tmp/color-picker.png</span><span style="color:#f9f9f9;"> -format &quot;</span><span style="color:#9eff80;">#%[hex:s]\n</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#ffee80;"> info:</span><span style="color:#f9f9f9;">) </span><span style="color:#ff9d00;">&amp;&amp; </span><span style="color:#f9f9f9;">\
+</span><span style="color:#f9f9f9;">    convert</span><span style="color:#ffee80;"> /tmp/color-picker.png</span><span style="color:#f9f9f9;"> -format &quot;</span><span style="color:#9eff80;">#%[hex:s]\n</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#ffee80;"> info: </span><span style="color:#ff9d00;">| </span><span style="color:#f9f9f9;">xclip -sel</span><span style="color:#ffee80;"> c
+</span></code></pre>
+<p>Или через i3 конфиг файл</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">bindsym $mod</span><span style="color:#ffee80;">+shift+d exec notify-send </span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">Color Picker</span><span style="color:#f9f9f9;">&quot; &quot;</span><span style="color:#9eff80;">Выберите цвет</span><span style="color:#f9f9f9;">&quot; </span><span style="color:#ff9d00;">&amp;&amp; </span><span style="color:#f9f9f9;">maim</span><span style="color:#ffee80;"> /tmp/color-picker.png</span><span style="color:#f9f9f9;"> -ug $(slop -t</span><span style="color:#ffee80;"> 0</span><span style="color:#f9f9f9;">) </span><span style="color:#ff9d00;">&amp;&amp; </span><span style="color:#f9f9f9;">convert -size</span><span style="color:#ffee80;"> 100x100 xc:</span><span style="color:#f9f9f9;">&quot;$(</span><span style="color:#edef7d;">convert</span><span style="color:#ffee80;"> /tmp/color-picker.png</span><span style="color:#f9f9f9;"> -</span><span style="color:#edef7d;">format </span><span style="color:#f9f9f9;">&#39;</span><span style="color:#9eff80;">#%[hex:s]\n</span><span style="color:#f9f9f9;">&#39;</span><span style="color:#ffee80;"> info:</span><span style="color:#f9f9f9;">)&quot;</span><span style="color:#ffee80;"> /tmp/color-picker.png </span><span style="color:#ff9d00;">&amp;&amp; </span><span style="color:#f9f9f9;">notify-send -i</span><span style="color:#ffee80;"> /tmp/color-picker.png </span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">Палитра скопирована в буфер обмена</span><span style="color:#f9f9f9;">&quot; $(convert</span><span style="color:#ffee80;"> /tmp/color-picker.png</span><span style="color:#f9f9f9;"> -format &quot;</span><span style="color:#9eff80;">#%[hex:s]\n</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#ffee80;"> info:</span><span style="color:#f9f9f9;">) </span><span style="color:#ff9d00;">&amp;&amp; </span><span style="color:#f9f9f9;">convert</span><span style="color:#ffee80;"> /tmp/color-picker.png</span><span style="color:#f9f9f9;"> -format &quot;</span><span style="color:#9eff80;">#%[hex:s]\n</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#ffee80;"> info: </span><span style="color:#ff9d00;">| </span><span style="color:#f9f9f9;">xclip -sel</span><span style="color:#ffee80;"> c
+</span></code></pre>
+<h2 id="delaem-iz-maim-ocr-skaner-s-pomoshch-iu-tesseract-skripta"><a class="anchor" href="#delaem-iz-maim-ocr-skaner-s-pomoshch-iu-tesseract-skripta">#</a>&nbsp;
+!Делаем из maim OCR сканер с помощью Tesseract + скрипта</h2>
+<p>Устанавливаем пакеты</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> tesseract tesseract-data-rus tesseract-data-eng tesseract-data-jpn
+</span></code></pre>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/demo2k20/dots/blob/c391251f9f00fc2ce3414508c485c3af309dc6fb/.local/bin/ocr">Скачиваем скрипт</a> делаем его исполняемым (<code>chmod +x ocr</code>) и закидываем его в $PATH переменную (т.е в <code>~/.local/bin</code>)</p>
+<p>В скрипте <strong>необходимо</strong> выставить доп язык для более <font color="green">лучшего распознавания</font>. OCR сканер Tesseract умеет работать с нескольколькими языками, 3 языка вместе работают хорошо, поэтому дерзайте.</p>
+<p>Редактируя скрипт в 13 строке, плюсуем любой из скачанных языковых пакетов tesseract-data-[язык]</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">tesseract -l </span><span style="color:#ff9d00;">[</span><span style="color:#ffee80;">язык</span><span style="color:#ff9d00;">]</span><span style="color:#ffee80;">+</span><span style="color:#ff9d00;">[</span><span style="color:#ffee80;">язык</span><span style="color:#ff9d00;">]</span><span style="color:#ffee80;">+</span><span style="color:#ff9d00;">[</span><span style="color:#ffee80;">язык</span><span style="color:#ff9d00;">]
+</span></code></pre>
+<p><img src="/images/maim-with-xclip-useful-usage/ocr.png" alt="image" /></p>
+<p>Не забываем что для доп распознавания необходимо скачать пакет с данным языком иначе результат будет неудовлетворительным</p>
+<p>Список доступных языков Tesseract</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">tesseract --list-langs
+</span></code></pre>
+<p>Далее теперь можно забиндить скрипт на любую клавишу</p>
+<p>Через <a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/baskerville/sxhkd">sxhkd</a></p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> OCR сканер maim + tesseract + xclip
+</span><span style="color:#f9f9f9;">super</span><span style="color:#ffee80;"> + shift + f
+</span><span style="color:#f9f9f9;">    ocr
+</span></code></pre>
+<p>Через i3/config</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">bindsym $mod</span><span style="color:#ffee80;">+shift+f exec ocr
+</span></code></pre>
+<h2 id="delaem-iz-maim-skaner-qr-kodov-zbar-xclip"><a class="anchor" href="#delaem-iz-maim-skaner-qr-kodov-zbar-xclip">#</a>&nbsp;
+Делаем из maim сканер QR кодов ZBar + Xclip</h2>
+<p>Исходник скрипта:</p>
+<ul>
+<li>https://github.com/jayden-chan/dotfiles/blob/5b6d5b6ad820be4d491779cfdba4c68d90699882/scripts/screenshot.sh</li>
+</ul>
+<p>Для сканирования необходим пакет zbar</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> zbar
+</span></code></pre>
+<p>Сохраняем мой модифицированный скрипт в $PATH переменную (т.е в <code>~/.local/bin</code>) для удобного запуска</p>
+<p>И биндим на любую удобную клавишу</p>
+<p>Через <a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/baskerville/sxhkd">sxhkd</a></p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> QR сканер maim + zbar + xclip
+</span><span style="color:#f9f9f9;">super</span><span style="color:#ffee80;"> + shift + Print
+</span><span style="color:#f9f9f9;">    qr-scan
+</span></code></pre>
+<h2 id="delaem-iz-maim-perevodchik-teksta-s-pomoshch-iu-tesseract-translate-shell-xclip"><a class="anchor" href="#delaem-iz-maim-perevodchik-teksta-s-pomoshch-iu-tesseract-translate-shell-xclip">#</a>&nbsp;
+!Делаем из maim переводчик текста с помощью Tesseract + Translate-Shell + Xclip</h2>
+<p>Источник скрипта:</p>
+<ul>
+<li>https://github.com/jkovacevic/dotfiles/blob/master/shared/bash/ocr.sh</li>
+</ul>
+<p>При выделении Японского или Английского текста translate-shell переведёт его на Русский скопирует в буфер обмена и выведет уведомление переведённого</p>
+<p>Можете отредактировать данный скрипт и добавить другие языки которые вы хотите перевести</p>
+<p>Для работы необходимо установить пакет translate-shell и база данных языков для tesseract</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> translate-shell tesseract-data-eng tesseract-data-jpn
+</span></code></pre>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://gitlab.com/anzix/dotfiles/-/raw/master/local/.local/bin/scripts/ocr-translate">Сохраняем мой модифицированный скрипт</a> в $PATH переменную (т.е в <code>~/.local/bin</code>) для удобного запуска</p>
+<p>И биндим на любую удобную клавишу</p>
+<p>Через <a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/baskerville/sxhkd">sxhkd</a></p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Быстрый перевод на Русский (tesseract + translate-shell + xclip)
+</span><span style="color:#f9f9f9;">alt</span><span style="color:#ffee80;"> + r
+</span><span style="color:#f9f9f9;"> 	ocr-translate
+</span></code></pre>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

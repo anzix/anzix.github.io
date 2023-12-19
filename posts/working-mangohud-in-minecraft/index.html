@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>MangoHud не работает в Minecraft Java Edition</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  MangoHud не работает в Minecraft Java Edition
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-03-17T16:36:42+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux-gaming/">linux-gaming</a>
+
+<br>
+
+
+
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/flightlessmango/MangoHud/issues/274">Github проблема</a></li>
+</ul>
+<p>Как бы я ни старался способом прописывания опции <code>mangohud --dlsym</code> и <code>MANGOHUD_DLSYM=1</code> и даже через lutris, всё это никак не могло заставить работать mangohud в майнкрафте.</p>
+<p>Помогло мне предзагрузка библиотек переменной LD_PRELOAD которая принудительно позволяет запустить mangohud в minecraft.</p>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://blog.fpmurphy.com/2012/09/all-about-ld_preload.html">Что такое <code>LD_PRELOAD</code>?</a></p>
+<p>Вот 2 способа применения этой переменной</p>
+<ol>
+<li>TL Legacy</li>
+</ol>
+<p>На <a rel="noopener nofollow noreferrer" target="_blank" href="https://vk.link/tl_mc_launcher">TL</a> лаунчере скачанный <a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/tlauncher">AUR пакетом</a> запускаем данную команду в терминале, активируя mangohud с gamemoderun</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">LD_PRELOAD</span><span style="color:#ff9d00;">=</span><span style="color:#3ad900;">/usr/lib/mangohud/libMangoHud_dlsym.so:/usr/lib/mangohud/libMangoHud.so </span><span style="color:#f9f9f9;">gamemoderun</span><span style="color:#ffee80;"> /usr/bin/tlauncher
+</span></code></pre>
+<p>Для автоматизации <span style="color:green">рекомендуется</span> отредактировать ярлык TLauncher'а и добавить env с данными переменными</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo -e</span><span style="color:#ffee80;"> /usr/share/applications/tlauncher.desktop
+</span></code></pre>
+<pre style="background-color:#2b303b;color:#ffffff;"><code><span style="color:#f9f9f9;">[Desktop Entry]
+</span><span style="color:#f9f9f9;">......
+</span><span style="color:#f9f9f9;">Exec=env LD_PRELOAD=/usr/lib/mangohud/libMangoHud_dlsym.so:/usr/lib/mangohud/libMangoHud.so gamemoderun /usr/bin/tlauncher
+</span><span style="color:#f9f9f9;">.....
+</span></code></pre>
+<ol start="2">
+<li>Пиратка с rutracker'а</li>
+</ol>
+<p>Просто вводим</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">LD_PRELOAD</span><span style="color:#ff9d00;">=</span><span style="color:#3ad900;">/usr/lib/mangohud/libMangoHud_dlsym.so:/usr/lib/mangohud/libMangoHud.so </span><span style="color:#f9f9f9;">gamemoderun </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/Downloads/Minecraft_Linux/Minecraft_1.19.2/start.sh
+</span></code></pre>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

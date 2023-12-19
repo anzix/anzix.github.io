@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>!Миграция с X11 i3wm на Wayland Sway</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  !Миграция с X11 i3wm на Wayland Sway
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-06-21T15:50:00+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux/">linux</a>
+
+<br>
+
+
+	<aside id="toc-aside" class="toc">
+	    <details>
+			<summary>Оглавление</summary>
+	        <ol>
+	            <li>
+	                <a href="#zastavliat-iuzat-dlia-prilozhenii-i-igr-xwayland">Заставлять юзать для приложений и игр xwayland</a>
+	                
+	            </li><li>
+	                <a href="#nastroika-klaviatury">Настройка клавиатуры</a>
+	                
+	            </li><li>
+	                <a href="#otkliuchenie-akseleratsii-na-myshke">Отключение акселерации на мышке</a>
+	                
+	            </li><li>
+	                <a href="#displei-i-oboi">Дисплей и Обои</a>
+	                
+	            </li><li>
+	                <a href="#wofi-zapusk-programm-podobno-rofi">Wofi - запуск программ подобно rofi</a>
+	                
+	            </li><li>
+	                <a href="#waybar-kak-polybar-no-dlia-sway">waybar - как polybar но для sway</a>
+	                
+	            </li><li>
+	                <a href="#zapusk-programm-i-skriptov-podobno-i3wm">Запуск программ и скриптов, подобно i3wm</a>
+	                
+	            </li><li>
+	                <a href="#fix-gtk3-temy">FIX GTK3 Темы</a>
+	                
+	            </li><li>
+	                <a href="#vkliuchaem-sharing-screen-obs-na-sway">Включаем Sharing Screen OBS на Sway</a>
+	                
+	            </li><li>
+	                <a href="#fork-redshift-dlia-wayland-gammastep">Форк redshift для wayland - gammastep</a>
+	                
+	            </li><li>
+	                <a href="#clipboard-manager-dlia-sway-cliphist-vvide-rofi">Clipboard Manager для sway - cliphist (Ввиде Rofi)</a>
+	                
+	            </li><li>
+	                <a href="#skrinshon-ekrana-na-sway">Скриншон экрана на Sway</a>
+	                
+	            </li><li>
+	                <a href="#skrinshot-s-vozmozhnost-iu-na-letu-bystro-redaktirovat-ispol-zuia-swappy">Скриншот с возможностью на лету быстро редактировать используя swappy</a>
+	                
+	            </li><li>
+	                <a href="#mako-wayland-al-ternativa-dunst">Mako - wayland альтернатива dunst</a>
+	                
+	            </li><li>
+	                <a href="#trei-pasystray-dlia-sway-wayland-ne-proboval">!Трей pasystray для sway (wayland) Не пробовал</a>
+	                
+	            </li><li>
+	                <a href="#zapuskat-vsio-programmy-cherez-prosloiku-xwayland">!Запускать всё программы через прослойку xwayland</a>
+	                
+	            </li><li>
+	                <a href="#pravka-chromium-flagov-dlia-wayland">!Правка Chromium флагов для wayland</a>
+	                
+	            </li><li>
+	                <a href="#pokaz-klavish-al-ternativa-screenkey-na-wayland-wshowkeys">Показ клавиш альтернатива Screenkey на wayland - wshowkeys</a>
+	                
+	            </li><li>
+	                <a href="#al-ternativa-xprop-dlia-sway-i-kak-eto-ispol-zovat">!!Альтернатива xprop для sway и как это использовать</a>
+	                
+	            </li><li>
+	                <a href="#zapusk-sway">Запуск sway</a>
+	                
+	            </li><li>
+	                <a href="#reshenie-problem-sway">Решение проблем sway</a>
+	                
+	            </li>
+	        </ol>
+		</details>
+	</aside>
+
+
+<p>Обновление: 19.11.23</p>
+<p>Очень полезная <a rel="noopener nofollow noreferrer" target="_blank" href="https://www.fosskers.ca/en/blog/wayland">статья</a> с актуальными и полезными советами с инструкциями по wayland sway</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> sway waybar wofi mako swaybg wl-clipboard slurp grim
+</span></code></pre>
+<ul>
+<li><code>sway</code> - эквивалентно i3</li>
+<li><code>waybar</code> - эквивалентно polybar</li>
+<li><code>wofi</code> - эквивалентно rofi</li>
+<li><code>wl-clipboard</code> - чтобы копировать (yank) текст с nvim и вставлять его, эквивалентно xclip</li>
+<li><code>slurp</code> - эквивалентно maim</li>
+<li><code>grim</code> - скриншот утилита для wayland</li>
+<li><code>otf-font-awesome</code> - шрифты для waybar и swappy</li>
+</ul>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">mkdir </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.config/sway
+</span><span style="color:#f9f9f9;">cp </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.config/i3/config </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.config/sway/
+</span></code></pre>
+<blockquote>
+<p>Примечание: действия связанные с данным конфигом применяться только сочетанием клавиш <strong>win+shift+c</strong> и смене раб. стола</p>
+</blockquote>
+<p>Редактируем конфиг файл</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">nvim </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.config/sway/config
+</span></code></pre>
+<h2 id="zastavliat-iuzat-dlia-prilozhenii-i-igr-xwayland"><a class="anchor" href="#zastavliat-iuzat-dlia-prilozhenii-i-igr-xwayland">#</a>&nbsp;
+Заставлять юзать для приложений и игр xwayland</h2>
+<pre data-lang="config" style="background-color:#2b303b;color:#ffffff;" class="language-config "><code class="language-config" data-lang="config"><span style="color:#f9f9f9;">xwayland force
+</span><span style="color:#f9f9f9;">
+</span><span style="font-style:italic;color:#0088ff;"># Убрать title bar
+</span><span style="color:#f9f9f9;">default_border pixel </span><span style="color:#ff628c;">2
+</span><span style="color:#f9f9f9;">default_floating_border pixel </span><span style="color:#ff628c;">2
+</span></code></pre>
+<h2 id="nastroika-klaviatury"><a class="anchor" href="#nastroika-klaviatury">#</a>&nbsp;
+Настройка клавиатуры</h2>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">swaymsg -t</span><span style="color:#ffee80;"> get_inputs
+</span></code></pre>
+<pre data-lang="conf" style="background-color:#2b303b;color:#ffffff;" class="language-conf "><code class="language-conf" data-lang="conf"><span style="color:#f9f9f9;">input </span><span style="color:#9eff80;">&quot;type:keyboard&quot;</span><span style="color:#f9f9f9;"> {
+</span><span style="color:#f9f9f9;">    </span><span style="font-style:italic;color:#0088ff;"># Смена раскладки
+</span><span style="color:#f9f9f9;">    xkb_layout us</span><span style="color:#ff9d00;">,</span><span style="color:#f9f9f9;">ru
+</span><span style="color:#f9f9f9;">    xkb_options grp</span><span style="color:#ff9d00;">:</span><span style="color:#f9f9f9;">caps_toggle</span><span style="color:#ff9d00;">,</span><span style="color:#f9f9f9;">grp_led</span><span style="color:#ff9d00;">:</span><span style="color:#f9f9f9;">caps</span><span style="color:#ff9d00;">,</span><span style="color:#f9f9f9;">grp</span><span style="color:#ff9d00;">:</span><span style="color:#f9f9f9;">switch
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">    </span><span style="font-style:italic;color:#0088ff;"># Ускорение печатания
+</span><span style="color:#f9f9f9;">    repeat_delay </span><span style="color:#ff628c;">210
+</span><span style="color:#f9f9f9;">    repeat_rate </span><span style="color:#ff628c;">40
+</span><span style="color:#f9f9f9;">}
+</span></code></pre>
+<h2 id="otkliuchenie-akseleratsii-na-myshke"><a class="anchor" href="#otkliuchenie-akseleratsii-na-myshke">#</a>&nbsp;
+Отключение акселерации на мышке</h2>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">swaymsg -t</span><span style="color:#ffee80;"> get_inputs
+</span></code></pre>
+<pre data-lang="conf" style="background-color:#2b303b;color:#ffffff;" class="language-conf "><code class="language-conf" data-lang="conf"><span style="color:#f9f9f9;">input </span><span style="color:#9eff80;">&quot;1133:49284:Logitech_G102_Prodigy_Gaming_Mouse&quot;</span><span style="color:#f9f9f9;"> {
+</span><span style="color:#f9f9f9;">	accel_profile </span><span style="color:#9eff80;">&quot;flat&quot;
+</span><span style="color:#f9f9f9;">}
+</span></code></pre>
+<h2 id="displei-i-oboi"><a class="anchor" href="#displei-i-oboi">#</a>&nbsp;
+Дисплей и Обои</h2>
+<p>Качаем пакет</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> swaybg
+</span></code></pre>
+<p>Указываем наш дисплей из команды <code>swaymsg -t get_outputs</code>, режим, герцовку и VRR на усмотрение<br />
+Также рядом ставим обои</p>
+<pre data-lang="conf" style="background-color:#2b303b;color:#ffffff;" class="language-conf "><code class="language-conf" data-lang="conf"><span style="color:#f9f9f9;">output </span><span style="color:#eb939a;">DP</span><span style="color:#ff9d00;">-</span><span style="color:#ff628c;">2</span><span style="color:#f9f9f9;"> {
+</span><span style="color:#f9f9f9;">	mode 1920x1080</span><span style="color:#ffc600;">@144Hz
+</span><span style="color:#f9f9f9;">	bg </span><span style="color:#9eff80;">&quot;/media/Media/Галарея/Обои на раб.стол/Ramen.jpg&quot;</span><span style="color:#f9f9f9;"> fill
+</span><span style="color:#f9f9f9;">}
+</span></code></pre>
+<p><code>adaptive_sync on</code> - включает VRR (Variable Refresh Rate) Переменную частоту кадров
+При включении лично у меня возникали мерцания при движении мышки, поэтому я убрал VRR</p>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/swaywm/sway/issues/5076">Сурс проблемы</a></p>
+<h2 id="wofi-zapusk-programm-podobno-rofi"><a class="anchor" href="#wofi-zapusk-programm-podobno-rofi">#</a>&nbsp;
+Wofi - запуск программ подобно rofi</h2>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> wofi
+</span></code></pre>
+<pre data-lang="conf" style="background-color:#2b303b;color:#ffffff;" class="language-conf "><code class="language-conf" data-lang="conf"><span style="color:#f9f9f9;">bindsym </span><span style="color:#ffc600;">$mod</span><span style="color:#ff9d00;">+</span><span style="color:#f9f9f9;">d exec wofi </span><span style="color:#ff9d00;">--</span><span style="color:#f9f9f9;">show drun </span><span style="color:#ff9d00;">--</span><span style="color:#f9f9f9;">allow</span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">images
+</span></code></pre>
+<h2 id="waybar-kak-polybar-no-dlia-sway"><a class="anchor" href="#waybar-kak-polybar-no-dlia-sway">#</a>&nbsp;
+waybar - как polybar но для sway</h2>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> waybar
+</span></code></pre>
+<pre data-lang="conf" style="background-color:#2b303b;color:#ffffff;" class="language-conf "><code class="language-conf" data-lang="conf"><span style="color:#f9f9f9;">bar swaybar_command waybar
+</span></code></pre>
+<h2 id="zapusk-programm-i-skriptov-podobno-i3wm"><a class="anchor" href="#zapusk-programm-i-skriptov-podobno-i3wm">#</a>&nbsp;
+Запуск программ и скриптов, подобно i3wm</h2>
+<p>Прописываем в конфиг файл</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#ffb054;">exec </span><span style="color:#f9f9f9;">{
+</span><span style="color:#ffee80;">	autotiling
+</span><span style="color:#ffee80;">	/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+</span><span style="color:#ffee80;">	mako
+</span><span style="color:#ffee80;">	mpd
+</span><span style="color:#ffee80;">	mpDris2
+</span><span style="color:#ffee80;">	udiskie -t
+</span><span style="color:#ffee80;">	corectrl
+</span><span style="color:#ffee80;">	steam -silent
+</span><span style="color:#ffee80;">	gammastep-indicator
+</span><span style="color:#ffee80;">	otd
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Запускает xwayland игры на основной монитор (если несколько мониторов), также исправляет работу мыши на играх wine
+</span><span style="color:#ffee80;">	xrandr --output XWAYLAND0 --primary
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Фикс GTK3 Темы
+</span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.config/sway/import-gsettings
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Load Xrdb
+</span><span style="color:#ffee80;">xrdb -merge </span><span style="color:#f9f9f9;">$HOME</span><span style="color:#ffee80;">/.config/X11/Xresources
+</span><span style="color:#f9f9f9;">}
+</span></code></pre>
+<p>Добавил</p>
+<pre data-lang="conf" style="background-color:#2b303b;color:#ffffff;" class="language-conf "><code class="language-conf" data-lang="conf"><span style="color:#ff9d00;">include /</span><span style="color:#f9f9f9;">etc</span><span style="color:#ff9d00;">/</span><span style="color:#f9f9f9;">sway</span><span style="color:#ff9d00;">/</span><span style="color:#f9f9f9;">config</span><span style="color:#ff9d00;">.</span><span style="color:#f9f9f9;">d</span><span style="font-style:italic;color:#0088ff;">/*
+</span></code></pre>
+<p>Убрал т.к в sway перезапускать конфиг только win+shift+c</p>
+<pre data-lang="conf" style="background-color:#2b303b;color:#ffffff;" class="language-conf "><code class="language-conf" data-lang="conf"><span style="color:#f9f9f9;">bindsym </span><span style="color:#ffc600;">$mod</span><span style="color:#ff9d00;">+</span><span style="color:#f9f9f9;">Shift</span><span style="color:#ff9d00;">+</span><span style="color:#f9f9f9;">r </span><span style="color:#ff9d00;">restart
+</span></code></pre>
+<h2 id="fix-gtk3-temy"><a class="anchor" href="#fix-gtk3-temy">#</a>&nbsp;
+FIX GTK3 Темы</h2>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/swaywm/sway/wiki/GTK-3-settings-on-Wayland">Источник</a></li>
+</ul>
+<p>Создаём файл <code>~/.config/sway/import-gsettings</code>, и вставляем</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;">!/bin/sh
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Взято: https://github.com/swaywm/sway/wiki/GTK-3-settings-on-Wayland
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> usage: import-gsettings
+</span><span style="color:#f9f9f9;">config</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">&quot;${</span><span style="color:#edef7d;">XDG_CONFIG_HOME</span><span style="color:#ff9d00;">:-</span><span style="color:#f9f9f9;">$</span><span style="color:#edef7d;">HOME</span><span style="color:#9eff80;">/.config</span><span style="color:#f9f9f9;">}</span><span style="color:#9eff80;">/gtk-3.0/settings.ini</span><span style="color:#f9f9f9;">&quot;
+</span><span style="color:#ff9d00;">if </span><span style="color:#ffb054;">[ </span><span style="color:#ff9d00;">! </span><span style="color:#f9f9f9;">-f &quot;$</span><span style="color:#edef7d;">config</span><span style="color:#f9f9f9;">&quot; </span><span style="color:#ffb054;">]</span><span style="color:#ff9d00;">; then </span><span style="color:#ffb054;">exit</span><span style="color:#ffee80;"> 1</span><span style="color:#ff9d00;">; fi
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">gnome_schema</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">org.gnome.desktop.interface</span><span style="color:#f9f9f9;">&quot;
+</span><span style="color:#f9f9f9;">gtk_theme</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">&quot;$(</span><span style="color:#edef7d;">grep </span><span style="color:#f9f9f9;">&#39;</span><span style="color:#9eff80;">gtk-theme-name</span><span style="color:#f9f9f9;">&#39; &quot;$</span><span style="color:#edef7d;">config</span><span style="color:#f9f9f9;">&quot; </span><span style="color:#ff9d00;">| </span><span style="color:#edef7d;">sed </span><span style="color:#f9f9f9;">&#39;</span><span style="color:#9eff80;">s/.*\s*=\s*//</span><span style="color:#f9f9f9;">&#39;)&quot;
+</span><span style="color:#f9f9f9;">icon_theme</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">&quot;$(</span><span style="color:#edef7d;">grep </span><span style="color:#f9f9f9;">&#39;</span><span style="color:#9eff80;">gtk-icon-theme-name</span><span style="color:#f9f9f9;">&#39; &quot;$</span><span style="color:#edef7d;">config</span><span style="color:#f9f9f9;">&quot; </span><span style="color:#ff9d00;">| </span><span style="color:#edef7d;">sed </span><span style="color:#f9f9f9;">&#39;</span><span style="color:#9eff80;">s/.*\s*=\s*//</span><span style="color:#f9f9f9;">&#39;)&quot;
+</span><span style="color:#f9f9f9;">cursor_theme</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">&quot;$(</span><span style="color:#edef7d;">grep </span><span style="color:#f9f9f9;">&#39;</span><span style="color:#9eff80;">gtk-cursor-theme-name</span><span style="color:#f9f9f9;">&#39; &quot;$</span><span style="color:#edef7d;">config</span><span style="color:#f9f9f9;">&quot; </span><span style="color:#ff9d00;">| </span><span style="color:#edef7d;">sed </span><span style="color:#f9f9f9;">&#39;</span><span style="color:#9eff80;">s/.*\s*=\s*//</span><span style="color:#f9f9f9;">&#39;)&quot;
+</span><span style="color:#f9f9f9;">font_name</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">&quot;$(</span><span style="color:#edef7d;">grep </span><span style="color:#f9f9f9;">&#39;</span><span style="color:#9eff80;">gtk-font-name</span><span style="color:#f9f9f9;">&#39; &quot;$</span><span style="color:#edef7d;">config</span><span style="color:#f9f9f9;">&quot; </span><span style="color:#ff9d00;">| </span><span style="color:#edef7d;">sed </span><span style="color:#f9f9f9;">&#39;</span><span style="color:#9eff80;">s/.*\s*=\s*//</span><span style="color:#f9f9f9;">&#39;)&quot;
+</span><span style="color:#f9f9f9;">cursor_size</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">&quot;$(</span><span style="color:#edef7d;">grep </span><span style="color:#f9f9f9;">&#39;</span><span style="color:#9eff80;">gtk-cursor-theme-size</span><span style="color:#f9f9f9;">&#39; &quot;$</span><span style="color:#edef7d;">config</span><span style="color:#f9f9f9;">&quot; </span><span style="color:#ff9d00;">| </span><span style="color:#edef7d;">sed </span><span style="color:#f9f9f9;">&#39;</span><span style="color:#9eff80;">s/.*\s*=\s*//</span><span style="color:#f9f9f9;">&#39;)&quot;
+</span><span style="color:#f9f9f9;">gsettings</span><span style="color:#ffee80;"> set </span><span style="color:#f9f9f9;">&quot;$</span><span style="color:#edef7d;">gnome_schema</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#ffee80;"> gtk-theme </span><span style="color:#f9f9f9;">&quot;$</span><span style="color:#edef7d;">gtk_theme</span><span style="color:#f9f9f9;">&quot;
+</span><span style="color:#f9f9f9;">gsettings</span><span style="color:#ffee80;"> set </span><span style="color:#f9f9f9;">&quot;$</span><span style="color:#edef7d;">gnome_schema</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#ffee80;"> icon-theme </span><span style="color:#f9f9f9;">&quot;$</span><span style="color:#edef7d;">icon_theme</span><span style="color:#f9f9f9;">&quot;
+</span><span style="color:#f9f9f9;">gsettings</span><span style="color:#ffee80;"> set </span><span style="color:#f9f9f9;">&quot;$</span><span style="color:#edef7d;">gnome_schema</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#ffee80;"> cursor-theme </span><span style="color:#f9f9f9;">&quot;$</span><span style="color:#edef7d;">cursor_theme</span><span style="color:#f9f9f9;">&quot;
+</span><span style="color:#f9f9f9;">gsettings</span><span style="color:#ffee80;"> set </span><span style="color:#f9f9f9;">&quot;$</span><span style="color:#edef7d;">gnome_schema</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#ffee80;"> font-name </span><span style="color:#f9f9f9;">&quot;$</span><span style="color:#edef7d;">font_name</span><span style="color:#f9f9f9;">&quot;
+</span><span style="color:#f9f9f9;">gsettings</span><span style="color:#ffee80;"> set </span><span style="color:#f9f9f9;">&quot;$</span><span style="color:#edef7d;">gnome_schema</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#ffee80;"> cursor-size </span><span style="color:#f9f9f9;">&quot;$</span><span style="color:#edef7d;">cursor_size</span><span style="color:#f9f9f9;">&quot;
+</span><span style="color:#f9f9f9;">gsettings</span><span style="color:#ffee80;"> set </span><span style="color:#f9f9f9;">&quot;$</span><span style="color:#edef7d;">gnome_schema</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#ffee80;"> color-scheme prefer-dark
+</span></code></pre>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">chmod</span><span style="color:#ffee80;"> +x import-gsettings
+</span></code></pre>
+<p>И добавляем в <code>~/.config/sway/config</code></p>
+<pre data-lang="conf" style="background-color:#2b303b;color:#ffffff;" class="language-conf "><code class="language-conf" data-lang="conf"><span style="color:#ffc600;">exec_always </span><span style="color:#f9f9f9;">{
+</span><span style="color:#f9f9f9;">	</span><span style="color:#ff9d00;">...
+</span><span style="color:#f9f9f9;">	</span><span style="font-style:italic;color:#0088ff;"># Фикс GTK3 Темы
+</span><span style="color:#f9f9f9;">    </span><span style="color:#ff9d00;">~/.</span><span style="color:#f9f9f9;">config</span><span style="color:#ff9d00;">/</span><span style="color:#f9f9f9;">sway</span><span style="color:#ff9d00;">/</span><span style="color:#f9f9f9;">import</span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">gsettings
+</span><span style="color:#f9f9f9;">	</span><span style="color:#ff9d00;">...
+</span><span style="color:#f9f9f9;">}
+</span></code></pre>
+<p>Ребутимся и после всё иконки, темы и курсор применились</p>
+<p>Тема курсора не применилась до конца, решается это данной настройкой</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> seatd
+</span></code></pre>
+<p>И добавляем в <code>~/.config/sway/config</code></p>
+<pre data-lang="conf" style="background-color:#2b303b;color:#ffffff;" class="language-conf "><code class="language-conf" data-lang="conf"><span style="color:#f9f9f9;">seat </span><span style="color:#ff9d00;">*</span><span style="color:#f9f9f9;"> xcursor_theme capitaine</span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">cursors </span><span style="color:#ff628c;">16
+</span></code></pre>
+<p>Перезагружаем конфиг используя <code>win+shift+c</code></p>
+<p>Убирать простаивающий курсор через 3 сек</p>
+<pre data-lang="conf" style="background-color:#2b303b;color:#ffffff;" class="language-conf "><code class="language-conf" data-lang="conf"><span style="color:#f9f9f9;">seat </span><span style="color:#ff9d00;">*</span><span style="color:#f9f9f9;"> hide_cursor </span><span style="color:#ff628c;">3000
+</span></code></pre>
+<p>Можно отключить тайлинг drag mouse</p>
+<pre data-lang="conf" style="background-color:#2b303b;color:#ffffff;" class="language-conf "><code class="language-conf" data-lang="conf"><span style="font-style:italic;color:#0088ff;"># Disable dragging of tiles with a mouse.
+</span><span style="color:#f9f9f9;">tiling_drag disable
+</span></code></pre>
+<h2 id="vkliuchaem-sharing-screen-obs-na-sway"><a class="anchor" href="#vkliuchaem-sharing-screen-obs-na-sway">#</a>&nbsp;
+Включаем Sharing Screen OBS на Sway</h2>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.youtube.com/watch?v=mo8GV7QIWDc">Инструкция</a></li>
+</ul>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> pipewire xdg-desktop-portal-wlr qt5-wayland slurp wofi
+</span></code></pre>
+<p>После того как добавили захват записи перед вами откроется wofi с выбором дисплея, если у вас установлен <code>slurp</code> тогда у вас появится курсор ввиде перекрестье в котором достаточно кликнуть на дисплей для захвата</p>
+<h2 id="fork-redshift-dlia-wayland-gammastep"><a class="anchor" href="#fork-redshift-dlia-wayland-gammastep">#</a>&nbsp;
+Форк redshift для wayland - gammastep</h2>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://gitlab.com/chinstrap/gammastep">GitLab Page</a></li>
+</ul>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> gammastep
+</span><span style="color:#f9f9f9;">mkdir </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.config/gammastep
+</span></code></pre>
+<p>Вставляем данные <code>~/.config/gammastep/config.ini</code></p>
+<pre data-lang="conf" style="background-color:#2b303b;color:#ffffff;" class="language-conf "><code class="language-conf" data-lang="conf"><span style="color:#ffc600;">[general]
+</span><span style="color:#f9f9f9;">location-provider</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">manual
+</span><span style="color:#f9f9f9;">adjustment-method</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">wayland
+</span><span style="color:#ffc600;">[manual]
+</span><span style="color:#f9f9f9;">lat</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">[ваше значение долготы]
+</span><span style="color:#f9f9f9;">lon</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">[ваше значение широты]
+</span></code></pre>
+<p>Запуск <code>gammastep-indicator &amp;</code></p>
+<p>Сайты с нахождением координат широты и долготы</p>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="http://www.geonames.org/">Первый</a> предложенный Arch Wiki</li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.latlong.net/">Второй</a> более удобный</li>
+</ul>
+<h2 id="clipboard-manager-dlia-sway-cliphist-vvide-rofi"><a class="anchor" href="#clipboard-manager-dlia-sway-cliphist-vvide-rofi">#</a>&nbsp;
+Clipboard Manager для sway - cliphist (Ввиде Rofi)</h2>
+<p><img src="/images/i3wm-to-sway-migration/cliphist.png" alt="image" /></p>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/sentriz/cliphist">GitHub страница</a></li>
+</ul>
+<p>Имеет возможность хранить картинки в буфере, но нету (или ещё не добавили) возможность игнорировать буфер Менеджеров паролей keepassxc</p>
+<p>Также может работать как и с <code>dmenu</code> так и с <code>wofi</code>, правда работа в dmenu отображается горизонтально</p>
+<p>Качаем <a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/cliphist">Aur пакет</a></p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">yay -S</span><span style="color:#ffee80;"> cliphist
+</span></code></pre>
+<p>Пакет не смог собраться</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">==&gt; Проверка файлов source с использованием sha256sums...
+</span><span style="color:#f9f9f9;">    cliphist-0.3.1.tar.gz ... СБОЙ
+</span><span style="color:#f9f9f9;">==&gt; ОШИБКА: Исходные файлы не прошли проверку целостности!
+</span><span style="color:#f9f9f9;"> -&gt; ошибка сборки: cliphist
+</span></code></pre>
+<p>Пришлось качать <a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/cliphist-bin">бинарный файл cliphist</a> который установился успешно</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">yay -S</span><span style="color:#ffee80;"> cliphist-bin
+</span></code></pre>
+<p>Вставляем в конфиг <code>~/.config/gammastep/config.ini</code> для бинд клавиш и автозапуска</p>
+<pre data-lang="ini" style="background-color:#2b303b;color:#ffffff;" class="language-ini "><code class="language-ini" data-lang="ini"><span style="color:#ffc600;">exec </span><span style="color:#f9f9f9;">{
+</span><span style="color:#f9f9f9;">    </span><span style="color:#ff9d00;">...
+</span><span style="color:#f9f9f9;">    </span><span style="font-style:italic;color:#0088ff;"># Запуск менеджер буфера обмена
+</span><span style="color:#f9f9f9;">    exec wl</span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">paste </span><span style="color:#ff9d00;">--</span><span style="color:#f9f9f9;">watch cliphist store
+</span><span style="color:#f9f9f9;">    </span><span style="color:#ff9d00;">...
+</span><span style="color:#f9f9f9;">}
+</span><span style="color:#f9f9f9;">
+</span><span style="font-style:italic;color:#0088ff;"># Показать clipboard (для копирования)
+</span><span style="color:#f9f9f9;">bindsym </span><span style="color:#ffc600;">$mod</span><span style="color:#ff9d00;">+</span><span style="color:#f9f9f9;">v exec cliphist list </span><span style="color:#ff9d00;">\
+</span><span style="color:#f9f9f9;">  </span><span style="color:#ff9d00;">|</span><span style="color:#f9f9f9;"> wofi </span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">d </span><span style="color:#ff9d00;">\
+</span><span style="color:#f9f9f9;">  </span><span style="color:#ff9d00;">|</span><span style="color:#f9f9f9;"> cliphist decode </span><span style="color:#ff9d00;">\
+</span><span style="color:#f9f9f9;">  </span><span style="color:#ff9d00;">|</span><span style="color:#f9f9f9;"> wl</span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">copy
+</span><span style="color:#f9f9f9;">
+</span><span style="font-style:italic;color:#0088ff;"># Показать clipboard (для удаления)
+</span><span style="color:#f9f9f9;">bindsym </span><span style="color:#ffc600;">$mod</span><span style="color:#ff9d00;">+</span><span style="color:#f9f9f9;">Alt</span><span style="color:#ff9d00;">+</span><span style="color:#f9f9f9;">Bar exec cliphist list </span><span style="color:#ff9d00;">\
+</span><span style="color:#f9f9f9;">   </span><span style="color:#ff9d00;">|</span><span style="color:#f9f9f9;"> wofi </span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">d </span><span style="color:#ff9d00;">\
+</span><span style="color:#f9f9f9;">   </span><span style="color:#ff9d00;">|</span><span style="color:#f9f9f9;"> cliphist delete
+</span></code></pre>
+<h2 id="skrinshon-ekrana-na-sway"><a class="anchor" href="#skrinshon-ekrana-na-sway">#</a>&nbsp;
+Скриншон экрана на Sway</h2>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">mkdir </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/Pictures/Screenshots/
+</span><span style="color:#f9f9f9;">nvim </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.config/sway/config/
+</span></code></pre>
+<pre data-lang="conf" style="background-color:#2b303b;color:#ffffff;" class="language-conf "><code class="language-conf" data-lang="conf"><span style="font-style:italic;color:#0088ff;"># --- Screenshots --- #
+</span><span style="font-style:italic;color:#0088ff;"># Requres: slurp grim swappy wl-copy
+</span><span style="color:#f9f9f9;">set </span><span style="color:#ffc600;">$scr</span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">dir </span><span style="color:#ff9d00;">~/</span><span style="color:#f9f9f9;">Pictures</span><span style="color:#ff9d00;">/</span><span style="color:#f9f9f9;">Screenshots
+</span><span style="color:#f9f9f9;">
+</span><span style="font-style:italic;color:#0088ff;"># Full Screenshot, без буфера обмена
+</span><span style="color:#f9f9f9;">bindsym Print exec </span><span style="color:#ff9d00;">--</span><span style="color:#f9f9f9;">no</span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">startup</span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">id </span><span style="color:#ff9d00;">\
+</span><span style="color:#f9f9f9;">  IMG</span><span style="color:#ff9d00;">=</span><span style="color:#ffc600;">$scr</span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">dir</span><span style="color:#ff9d00;">/</span><span style="color:#f9f9f9;">$(date </span><span style="color:#ff9d00;">+</span><span style="color:#ffc600;">%s</span><span style="color:#f9f9f9;">)</span><span style="color:#ff9d00;">.</span><span style="color:#f9f9f9;">png </span><span style="color:#ff9d00;">\
+</span><span style="color:#f9f9f9;">  &amp;&amp; grim </span><span style="color:#ffc600;">$scr</span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">dir</span><span style="color:#ff9d00;">/</span><span style="color:#f9f9f9;">$(date </span><span style="color:#ff9d00;">+</span><span style="color:#ffc600;">%s</span><span style="color:#f9f9f9;">)</span><span style="color:#ff9d00;">.</span><span style="color:#f9f9f9;">png </span><span style="color:#ff9d00;">\
+</span><span style="color:#f9f9f9;">  &amp;&amp; notify</span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">send </span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">i </span><span style="color:#ffc600;">$IMG </span><span style="color:#ff9d00;">\
+</span><span style="color:#f9f9f9;">  </span><span style="color:#9eff80;">&quot;Скриншот сохранён&quot; &quot;Место: $IMG&quot; </span><span style="color:#ff9d00;">||</span><span style="color:#f9f9f9;"> notify</span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">send </span><span style="color:#9eff80;">&quot;Failed to take screenshot&quot;
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">
+</span><span style="font-style:italic;color:#0088ff;"># Скрин с выделением области или клик на окно в фокусе + буфер обмена
+</span><span style="font-style:italic;color:#0088ff;"># Если вам не нужен буфер обмена уберите строку с wl-copy
+</span><span style="color:#f9f9f9;">bindsym </span><span style="color:#ffc600;">$mod</span><span style="color:#ff9d00;">+</span><span style="color:#f9f9f9;">Shift</span><span style="color:#ff9d00;">+</span><span style="color:#f9f9f9;">s exec </span><span style="color:#ff9d00;">--</span><span style="color:#f9f9f9;">no</span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">startup</span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">id </span><span style="color:#ff9d00;">\
+</span><span style="color:#f9f9f9;">  IMG</span><span style="color:#ff9d00;">=</span><span style="color:#ffc600;">$scr</span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">dir</span><span style="color:#ff9d00;">/</span><span style="color:#f9f9f9;">$(date </span><span style="color:#ff9d00;">+</span><span style="color:#ffc600;">%s</span><span style="color:#f9f9f9;">)</span><span style="color:#ff9d00;">.</span><span style="color:#f9f9f9;">png </span><span style="color:#ff9d00;">\
+</span><span style="color:#f9f9f9;">  &amp;&amp; swaymsg </span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">t get_tree </span><span style="color:#ff9d00;">\
+</span><span style="color:#f9f9f9;">	</span><span style="color:#ff9d00;">|</span><span style="color:#f9f9f9;"> jq </span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">r </span><span style="color:#9eff80;">&#39;.. | select(.pid? and .visible?) | .rect | &quot;\(.x),\(.y) \(.width)x\(.height)&quot;&#39; </span><span style="color:#ff9d00;">\
+</span><span style="color:#f9f9f9;">	</span><span style="color:#ff9d00;">|</span><span style="color:#f9f9f9;"> slurp </span><span style="color:#ff9d00;">\
+</span><span style="color:#f9f9f9;">	</span><span style="color:#ff9d00;">|</span><span style="color:#f9f9f9;"> grim </span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">t png </span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">g </span><span style="color:#ff9d00;">- </span><span style="color:#9eff80;">&quot;$IMG&quot; </span><span style="color:#ff9d00;">\
+</span><span style="color:#f9f9f9;">  &amp;&amp; wl</span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">copy </span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">t </span><span style="color:#80ffbb;">image/png </span><span style="color:#ff9d00;">&lt; </span><span style="color:#ffc600;">$IMG </span><span style="color:#ff9d00;">\
+</span><span style="color:#f9f9f9;">  &amp;&amp; notify</span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">send </span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">i </span><span style="color:#ffc600;">$IMG </span><span style="color:#9eff80;">&quot;Обрезанный скриншот сохранён в буфер обмена&quot; &quot;Место: $IMG&quot; </span><span style="color:#ff9d00;">||</span><span style="color:#f9f9f9;"> notify</span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">send </span><span style="color:#9eff80;">&quot;Failed to take screenshot&quot;
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">
+</span><span style="font-style:italic;color:#0088ff;"># Сканер палитры (color picker)
+</span><span style="font-style:italic;color:#0088ff;"># https://github.com/swaywm/sway/wiki/Tricks#html-color-picker
+</span><span style="font-style:italic;color:#0088ff;"># bindsym $mod+Shift+d exec grim -g &quot;$(slurp -p)&quot; -t ppm - | convert - -format &#39;%[pixel:p{0,0}]&#39; txt:- | tail -n 1 | cut -d &#39; &#39; -f 4 | wl-copy
+</span><span style="color:#f9f9f9;">bindsym </span><span style="color:#ffc600;">$mod</span><span style="color:#ff9d00;">+</span><span style="color:#f9f9f9;">Shift</span><span style="color:#ff9d00;">+</span><span style="color:#f9f9f9;">p exec </span><span style="color:#ff9d00;">--</span><span style="color:#f9f9f9;">no</span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">startup</span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">id </span><span style="color:#ff9d00;">\
+</span><span style="color:#f9f9f9;">	notify-send </span><span style="color:#9eff80;">&quot;Color Picker&quot; &quot;Выберите цвет&quot;</span><span style="color:#f9f9f9;"> &amp;&amp; </span><span style="color:#ff9d00;">\
+</span><span style="color:#f9f9f9;">    grim </span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">g </span><span style="color:#9eff80;">&quot;$(slurp -p)&quot; </span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">t ppm </span><span style="color:#ff9d00;">/</span><span style="color:#f9f9f9;">tmp</span><span style="color:#ff9d00;">/</span><span style="color:#f9f9f9;">color</span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">picker</span><span style="color:#ff9d00;">.</span><span style="color:#f9f9f9;">png &amp;&amp; </span><span style="color:#ff9d00;">\
+</span><span style="color:#f9f9f9;">    convert </span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">size 100x100 xc</span><span style="color:#ff9d00;">:</span><span style="color:#9eff80;">&quot;$(convert /tmp/color-picker.png -format &#39;#%[hex:s]\n&#39; info:)&quot; </span><span style="color:#ff9d00;">/</span><span style="color:#f9f9f9;">tmp</span><span style="color:#ff9d00;">/</span><span style="color:#f9f9f9;">color</span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">picker</span><span style="color:#ff9d00;">.</span><span style="color:#f9f9f9;">png &amp;&amp; </span><span style="color:#ff9d00;">\
+</span><span style="color:#f9f9f9;">    notify-send </span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">i </span><span style="color:#ff9d00;">/</span><span style="color:#f9f9f9;">tmp</span><span style="color:#ff9d00;">/</span><span style="color:#f9f9f9;">color</span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">picker</span><span style="color:#ff9d00;">.</span><span style="color:#f9f9f9;">png </span><span style="color:#9eff80;">&quot;Палитра скопирована в буфер обмена&quot;</span><span style="color:#f9f9f9;"> $(convert </span><span style="color:#ff9d00;">/</span><span style="color:#f9f9f9;">tmp</span><span style="color:#ff9d00;">/</span><span style="color:#f9f9f9;">color</span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">picker</span><span style="color:#ff9d00;">.</span><span style="color:#f9f9f9;">png </span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">format </span><span style="color:#9eff80;">&quot;#%[hex:s]\n&quot;</span><span style="color:#f9f9f9;"> info</span><span style="color:#ff9d00;">:</span><span style="color:#f9f9f9;">) &amp;&amp; </span><span style="color:#ff9d00;">\
+</span><span style="color:#f9f9f9;">    convert </span><span style="color:#ff9d00;">/</span><span style="color:#f9f9f9;">tmp</span><span style="color:#ff9d00;">/</span><span style="color:#f9f9f9;">color</span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">picker</span><span style="color:#ff9d00;">.</span><span style="color:#f9f9f9;">png </span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">format </span><span style="color:#9eff80;">&quot;#%[hex:s]\n&quot;</span><span style="color:#f9f9f9;"> info</span><span style="color:#ff9d00;">: |</span><span style="color:#f9f9f9;"> wl</span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">copy </span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">n
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">
+</span><span style="font-style:italic;color:#0088ff;"># OCR сканер
+</span><span style="font-style:italic;color:#0088ff;"># Требуется: tesseract tesseract-data-rus tesseract-data-eng tesseract-data-jpn wl-copy slurp
+</span><span style="color:#f9f9f9;">bindsym </span><span style="color:#ffc600;">$mod</span><span style="color:#ff9d00;">+</span><span style="color:#f9f9f9;">Shift</span><span style="color:#ff9d00;">+</span><span style="color:#f9f9f9;">f exec </span><span style="color:#ff9d00;">--</span><span style="color:#f9f9f9;">no</span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">startup</span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">id slurp </span><span style="color:#ff9d00;">\
+</span><span style="color:#f9f9f9;">  </span><span style="color:#ff9d00;">|</span><span style="color:#f9f9f9;"> xargs </span><span style="color:#ff9d00;">-</span><span style="color:#eb939a;">I</span><span style="color:#f9f9f9;"> {} grim </span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">s </span><span style="color:#ff628c;">2 </span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">t png </span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">g {} </span><span style="color:#ff9d00;">- \
+</span><span style="color:#f9f9f9;">  </span><span style="color:#ff9d00;">|</span><span style="color:#f9f9f9;"> tesseract </span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">l rus</span><span style="color:#ff9d00;">+</span><span style="color:#f9f9f9;">eng</span><span style="color:#ff9d00;">+</span><span style="color:#f9f9f9;">jpn </span><span style="color:#ff9d00;">- - \
+</span><span style="color:#f9f9f9;">  </span><span style="color:#ff9d00;">|</span><span style="color:#f9f9f9;"> wl</span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">copy </span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">n
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">
+</span><span style="font-style:italic;color:#0088ff;"># QR код сканер
+</span><span style="font-style:italic;color:#0088ff;"># Требуется: slurp grim zbar wl-copy
+</span><span style="font-style:italic;color:#0088ff;"># bindsym Shift+Print exec grim -g &quot;$(slurp -d)&quot; - | zbarimg -q --raw PNG:- | wl-copy
+</span><span style="color:#f9f9f9;">bindsym Shift</span><span style="color:#ff9d00;">+</span><span style="color:#f9f9f9;">Print exec </span><span style="color:#ff9d00;">\
+</span><span style="color:#f9f9f9;">	wl-copy $(slurp </span><span style="color:#ff9d00;">|</span><span style="color:#f9f9f9;"> grim </span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">g </span><span style="color:#ff9d00;">- - |</span><span style="color:#f9f9f9;"> zbarimg </span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">q </span><span style="color:#ff9d00;">--</span><span style="color:#f9f9f9;">raw </span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">) </span><span style="color:#ff9d00;">\
+</span><span style="color:#f9f9f9;">	&amp;&amp; qr</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">$(wl</span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">paste) </span><span style="color:#ff9d00;">\
+</span><span style="color:#f9f9f9;">	&amp;&amp; notify</span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">send </span><span style="color:#9eff80;">&quot;QR-code&quot; &quot;QR-code successfully read and copied to clipboard: &lt;i&gt;$qr&lt;/i&gt;&quot; </span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">t </span><span style="color:#ff628c;">6000
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">
+</span><span style="font-style:italic;color:#0088ff;"># Быстрый перевод на Русский
+</span><span style="font-style:italic;color:#0088ff;"># Требуется: tesseract tesseract-data-rus tesseract-data-eng tesseract-data-jpn translate-shell slurp grim wl-copy
+</span><span style="color:#f9f9f9;">bindsym alt</span><span style="color:#ff9d00;">+</span><span style="color:#f9f9f9;">t exec </span><span style="color:#ff9d00;">--</span><span style="color:#f9f9f9;">no</span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">startup</span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">id </span><span style="color:#ff9d00;">\
+</span><span style="color:#f9f9f9;">	ocr-translate-sway
+</span></code></pre>
+<p>Загрузить скриншот в pastebin 0x0.st и скопировать ссылку в буфер обмена</p>
+<p>Вставляем содержимое в скрипт файл <code>~/.local/bin/ocr-translate-sway</code></p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;">!/bin/bash
+</span><span style="color:#f9f9f9;">IMAGE_NAME</span><span style="color:#ff9d00;">=</span><span style="color:#3ad900;">/tmp/_.png
+</span><span style="color:#f9f9f9;">FILE_NAME</span><span style="color:#ff9d00;">=</span><span style="color:#3ad900;">/tmp/_.txt
+</span><span style="color:#f9f9f9;">FILE_TMP</span><span style="color:#ff9d00;">=</span><span style="color:#3ad900;">/tmp/__.txt
+</span><span style="color:#f9f9f9;">x</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">$</span><span style="color:#edef7d;">IMAGE_NAME </span><span style="color:#ff9d00;">&amp;&amp; </span><span style="color:#f9f9f9;">touch &quot;$</span><span style="color:#edef7d;">x</span><span style="color:#f9f9f9;">&quot; </span><span style="color:#ff9d00;">&amp;&amp; </span><span style="color:#f9f9f9;">slurp </span><span style="color:#ff9d00;">| </span><span style="color:#f9f9f9;">grim -g- &quot;$</span><span style="color:#edef7d;">x</span><span style="color:#f9f9f9;">&quot;
+</span><span style="color:#f9f9f9;">tesseract -l</span><span style="color:#ffee80;"> eng+jpn</span><span style="color:#f9f9f9;"> --dpi</span><span style="color:#ffee80;"> 200 </span><span style="color:#f9f9f9;">$IMAGE_NAME $(</span><span style="color:#ffb054;">echo </span><span style="color:#f9f9f9;">$FILE_NAME </span><span style="color:#ff9d00;">| </span><span style="color:#f9f9f9;">awk &#39;</span><span style="color:#9eff80;">{split($0, a, &quot;.&quot;); print a[1]}</span><span style="color:#f9f9f9;">&#39;)
+</span><span style="color:#f9f9f9;">sed &#39;</span><span style="color:#9eff80;">/^[[:space:]]*$/d</span><span style="color:#f9f9f9;">&#39; $FILE_NAME </span><span style="color:#ff9d00;">&gt; </span><span style="color:#f9f9f9;">$FILE_TMP
+</span><span style="color:#f9f9f9;">cat $FILE_TMP #</span><span style="font-style:italic;color:#0088ff;"> | wl-copy -n # Для доступа к оригинальному скопированному тексту
+</span><span style="color:#f9f9f9;">translation</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">$(</span><span style="color:#edef7d;">trans</span><span style="color:#f9f9f9;"> -</span><span style="color:#edef7d;">b </span><span style="color:#f9f9f9;">&quot;$(</span><span style="color:#edef7d;">cat </span><span style="color:#f9f9f9;">$</span><span style="color:#edef7d;">FILE_TMP</span><span style="color:#f9f9f9;">)&quot;)
+</span><span style="color:#ffb054;">echo </span><span style="color:#f9f9f9;">-n $translation </span><span style="color:#ff9d00;">| </span><span style="color:#f9f9f9;">wl-copy -n #</span><span style="font-style:italic;color:#0088ff;"> Для доступа к переведённому тексту
+</span><span style="color:#f9f9f9;">notify-send &quot;$</span><span style="color:#edef7d;">translation</span><span style="color:#f9f9f9;">&quot;
+</span><span style="color:#f9f9f9;">rm $IMAGE_NAME $FILE_NAME $FILE_TMP
+</span></code></pre>
+<p>Для бинда вставляем в конфиг <code>~/.config/gammastep/config.ini</code></p>
+<pre data-lang="conf" style="background-color:#2b303b;color:#ffffff;" class="language-conf "><code class="language-conf" data-lang="conf"><span style="font-style:italic;color:#0088ff;"># Upload screenshot and copy url to clipboard
+</span><span style="color:#f9f9f9;">bindsym </span><span style="color:#ffc600;">$mod</span><span style="color:#ff9d00;">+</span><span style="color:#f9f9f9;">Shift</span><span style="color:#ff9d00;">+</span><span style="color:#f9f9f9;">Print exec slurp </span><span style="color:#ff9d00;">|</span><span style="color:#f9f9f9;"> grim </span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">g </span><span style="color:#ff9d00;">- - |</span><span style="color:#f9f9f9;"> curl </span><span style="color:#ff9d00;">--</span><span style="color:#f9f9f9;">form </span><span style="color:#9eff80;">&#39;file=@-&#39; </span><span style="color:#ff628c;">http://0x0.st </span><span style="color:#ff9d00;">|</span><span style="color:#f9f9f9;"> wl</span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">copy &amp;&amp; swaynag </span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">m </span><span style="color:#9eff80;">&quot;screenshot uploaded &amp; url copied to clipboard
+</span></code></pre>
+<h2 id="skrinshot-s-vozmozhnost-iu-na-letu-bystro-redaktirovat-ispol-zuia-swappy"><a class="anchor" href="#skrinshot-s-vozmozhnost-iu-na-letu-bystro-redaktirovat-ispol-zuia-swappy">#</a>&nbsp;
+Скриншот с возможностью на лету быстро редактировать используя swappy</h2>
+<p>Устанавливаем необходимые пакеты</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> slurp grim swappy wl-copy
+</span></code></pre>
+<p>Использование</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">grim -g &quot;$(</span><span style="color:#edef7d;">slurp</span><span style="color:#f9f9f9;">)&quot;</span><span style="color:#ffee80;"> - </span><span style="color:#ff9d00;">| </span><span style="color:#f9f9f9;">swappy -f</span><span style="color:#ffee80;"> -
+</span></code></pre>
+<p>По дефолту swappy сохраняет в $HOME/Desktop, чтобы изменить хранение создаём папку swappy и config внутри неё с добавлением содержимого</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">mkdir </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.config/swappy/config
+</span><span style="color:#f9f9f9;">nvim </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.config/swappy/config
+</span></code></pre>
+<pre data-lang="conf" style="background-color:#2b303b;color:#ffffff;" class="language-conf "><code class="language-conf" data-lang="conf"><span style="color:#ffc600;">[Default]
+</span><span style="color:#f9f9f9;">save_dir</span><span style="color:#ff9d00;">=</span><span style="color:#ffc600;">$HOME</span><span style="color:#ff9d00;">/</span><span style="color:#f9f9f9;">Pictures</span><span style="color:#ff9d00;">/</span><span style="color:#f9f9f9;">Screenshots
+</span><span style="color:#f9f9f9;">save_filename_format</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">swappy</span><span style="color:#ff9d00;">-</span><span style="color:#ffc600;">%Y%</span><span style="color:#f9f9f9;">m</span><span style="color:#ffc600;">%d</span><span style="color:#ff9d00;">-</span><span style="color:#ffc600;">%H%</span><span style="color:#eb939a;">M</span><span style="color:#ffc600;">%S</span><span style="color:#ff9d00;">.</span><span style="color:#f9f9f9;">png
+</span><span style="color:#f9f9f9;">show_panel</span><span style="color:#ff9d00;">=</span><span style="color:#ff628c;">false
+</span><span style="color:#f9f9f9;">line_size</span><span style="color:#ff9d00;">=</span><span style="color:#ff628c;">5
+</span><span style="color:#f9f9f9;">text_size</span><span style="color:#ff9d00;">=</span><span style="color:#ff628c;">20
+</span><span style="color:#f9f9f9;">text_font</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">sans</span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">serif
+</span></code></pre>
+<h2 id="mako-wayland-al-ternativa-dunst"><a class="anchor" href="#mako-wayland-al-ternativa-dunst">#</a>&nbsp;
+Mako - wayland альтернатива dunst</h2>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> mako libnotify
+</span><span style="color:#f9f9f9;">mkdir </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.config/mako/config
+</span></code></pre>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/emersion/mako/wiki/Example-configuration">Пример конфига</a></p>
+<p>Все опции: <code>man 5 mako</code></p>
+<p>Вставляем в конфиг файл <code>nvim ~/.config/mako/config</code></p>
+<pre data-lang="conf" style="background-color:#2b303b;color:#ffffff;" class="language-conf "><code class="language-conf" data-lang="conf"><span style="color:#f9f9f9;">sort</span><span style="color:#ff9d00;">=-</span><span style="color:#f9f9f9;">time
+</span><span style="color:#f9f9f9;">layer</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">overlay
+</span><span style="color:#f9f9f9;">background-color</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">#</span><span style="color:#ff628c;">11121D
+</span><span style="color:#f9f9f9;">width</span><span style="color:#ff9d00;">=</span><span style="color:#ff628c;">500
+</span><span style="color:#f9f9f9;">height</span><span style="color:#ff9d00;">=</span><span style="color:#ff628c;">110
+</span><span style="color:#f9f9f9;">border-size</span><span style="color:#ff9d00;">=</span><span style="color:#ff628c;">2
+</span><span style="color:#f9f9f9;">border-color</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">#88c0d0
+</span><span style="color:#f9f9f9;">icons</span><span style="color:#ff9d00;">=</span><span style="color:#ff628c;">1
+</span><span style="color:#f9f9f9;">max-icon-size</span><span style="color:#ff9d00;">=</span><span style="color:#ff628c;">70
+</span><span style="color:#f9f9f9;">default-timeout</span><span style="color:#ff9d00;">=</span><span style="color:#ff628c;">5000
+</span><span style="color:#f9f9f9;">ignore-timeout</span><span style="color:#ff9d00;">=</span><span style="color:#ff628c;">1
+</span><span style="color:#f9f9f9;">font</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">JetBrains Mono Nerd Font Medium </span><span style="color:#ff628c;">10
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#ffc600;">[urgency=low]
+</span><span style="color:#f9f9f9;">border-color</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">#d08770
+</span><span style="color:#f9f9f9;">text-color</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">#</span><span style="color:#eb939a;">A0A8CD
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#ffc600;">[urgency=normal]
+</span><span style="color:#f9f9f9;">border-color</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">#d08770
+</span><span style="color:#f9f9f9;">text-color</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">#</span><span style="color:#eb939a;">A0A8CD
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#ffc600;">[urgency=high]
+</span><span style="color:#f9f9f9;">border-color</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">#</span><span style="color:#eb939a;">EE6D85
+</span><span style="color:#f9f9f9;">text-color</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">#</span><span style="color:#eb939a;">EE6D85
+</span><span style="color:#f9f9f9;">default-timeout</span><span style="color:#ff9d00;">=</span><span style="color:#ff628c;">0
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#ffc600;">[category=mpd]
+</span><span style="color:#f9f9f9;">default-timeout</span><span style="color:#ff9d00;">=</span><span style="color:#ff628c;">2000
+</span><span style="color:#f9f9f9;">group-by</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">category
+</span></code></pre>
+<p>Вставляем для автозапуска в конфиг sway <code>~/.config/sway/config</code></p>
+<pre data-lang="conf" style="background-color:#2b303b;color:#ffffff;" class="language-conf "><code class="language-conf" data-lang="conf"><span style="color:#ffc600;">exec </span><span style="color:#f9f9f9;">{
+</span><span style="color:#f9f9f9;">	</span><span style="color:#ff9d00;">....
+</span><span style="color:#ffc600;">	mako
+</span><span style="color:#f9f9f9;">	</span><span style="color:#ff9d00;">....
+</span><span style="color:#f9f9f9;">}
+</span><span style="color:#f9f9f9;">
+</span><span style="font-style:italic;color:#0088ff;"># История уведомлений Mako win+`
+</span><span style="color:#f9f9f9;">bindsym </span><span style="color:#ffc600;">$mod</span><span style="color:#ff9d00;">+</span><span style="color:#f9f9f9;">grave exec makoctl restore
+</span></code></pre>
+<p>Перезапуск mako после применения изменений конфига</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">makoctl</span><span style="color:#ffee80;"> reload
+</span></code></pre>
+<p>Тестирование (также работает и с dunstify)</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">notify-send -u</span><span style="color:#ffee80;"> low </span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">lol</span><span style="color:#f9f9f9;">&quot; &quot;</span><span style="color:#9eff80;">kek</span><span style="color:#f9f9f9;">&quot;
+</span><span style="color:#f9f9f9;">notify-send -u</span><span style="color:#ffee80;"> normal </span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">lol</span><span style="color:#f9f9f9;">&quot; &quot;</span><span style="color:#9eff80;">kek</span><span style="color:#f9f9f9;">&quot;
+</span><span style="color:#f9f9f9;">notify-send -u</span><span style="color:#ffee80;"> critical </span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">lol</span><span style="color:#f9f9f9;">&quot; &quot;</span><span style="color:#9eff80;">kek</span><span style="color:#f9f9f9;">&quot;
+</span></code></pre>
+<h2 id="trei-pasystray-dlia-sway-wayland-ne-proboval"><a class="anchor" href="#trei-pasystray-dlia-sway-wayland-ne-proboval">#</a>&nbsp;
+!Трей pasystray для sway (wayland) Не пробовал</h2>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">yay -S</span><span style="color:#ffee80;"> pasystray-wayland
+</span></code></pre>
+<h2 id="zapuskat-vsio-programmy-cherez-prosloiku-xwayland"><a class="anchor" href="#zapuskat-vsio-programmy-cherez-prosloiku-xwayland">#</a>&nbsp;
+!Запускать всё программы через прослойку xwayland</h2>
+<p>Это исправляет проблемы steam с DISPLAY</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> xorg-xwayland
+</span></code></pre>
+<h2 id="pravka-chromium-flagov-dlia-wayland"><a class="anchor" href="#pravka-chromium-flagov-dlia-wayland">#</a>&nbsp;
+!Правка Chromium флагов для wayland</h2>
+<p>Редактируем конфиг файл <code>~/.config/chromium-flags.conf</code></p>
+<pre data-lang="conf" style="background-color:#2b303b;color:#ffffff;" class="language-conf "><code class="language-conf" data-lang="conf"><span style="font-style:italic;color:#0088ff;"># Исправляет дерганный скролл
+</span><span style="color:#ff9d00;">--</span><span style="color:#f9f9f9;">ozone</span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">platform</span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">hint</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">auto
+</span><span style="color:#f9f9f9;">
+</span><span style="font-style:italic;color:#0088ff;"># Позволяет делится экраном (для zoom и discord)
+</span><span style="color:#ff9d00;">--</span><span style="color:#f9f9f9;">enable</span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">features</span><span style="color:#ff9d00;">=...</span><span style="color:#f9f9f9;">WebRTCPipeWireCapturer</span><span style="color:#ff9d00;">...
+</span></code></pre>
+<p>Непонятно для чего этот пакет, вроде необходим для sharing screen</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> libpipewire02
+</span></code></pre>
+<h2 id="pokaz-klavish-al-ternativa-screenkey-na-wayland-wshowkeys"><a class="anchor" href="#pokaz-klavish-al-ternativa-screenkey-na-wayland-wshowkeys">#</a>&nbsp;
+Показ клавиш альтернатива Screenkey на wayland - wshowkeys</h2>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/ammgws/wshowkeys">GitHub страница</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.youtube.com/watch?v=DGTN_vHAEIE">Обзор от Brodie Robertson</a></li>
+</ul>
+<p>Качаем <a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/wshowkeys-git">AUR пакет</a></p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">yay -S</span><span style="color:#ffee80;"> wshowkeys-git
+</span></code></pre>
+<p>И вставляем в sway конфиг <code>~/.config/sway/config</code></p>
+<pre data-lang="conf" style="background-color:#2b303b;color:#ffffff;" class="language-conf "><code class="language-conf" data-lang="conf"><span style="font-style:italic;color:#0088ff;"># Вкл/Выкл режим показа клавиш снизу посередине
+</span><span style="color:#f9f9f9;">bindsym </span><span style="color:#ffc600;">$mod</span><span style="color:#ff9d00;">+</span><span style="color:#f9f9f9;">p exec </span><span style="color:#9eff80;">&quot;killall wshowkeys || wshowkeys -a bottom -t 1&quot;
+</span></code></pre>
+<h2 id="al-ternativa-xprop-dlia-sway-i-kak-eto-ispol-zovat"><a class="anchor" href="#al-ternativa-xprop-dlia-sway-i-kak-eto-ispol-zovat">#</a>&nbsp;
+!!Альтернатива xprop для sway и как это использовать</h2>
+<p>Самый неочевидный способ</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">swaymsg -t</span><span style="color:#ffee80;"> get_tree </span><span style="color:#ff9d00;">| </span><span style="color:#f9f9f9;">less
+</span></code></pre>
+<p>И через / искать app_id и вставлять в for_window</p>
+<p>Метод чуть по проще</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">swaymsg -t</span><span style="color:#ffee80;"> get_tree </span><span style="color:#ff9d00;">| </span><span style="color:#f9f9f9;">jq &#39;</span><span style="color:#9eff80;">.</span><span style="color:#f9f9f9;">&#39; </span><span style="color:#ff9d00;">| </span><span style="color:#f9f9f9;">grep</span><span style="color:#ffee80;"> app_id
+</span></code></pre>
+<h2 id="zapusk-sway"><a class="anchor" href="#zapusk-sway">#</a>&nbsp;
+Запуск sway</h2>
+<p>Изменил параметры автозапуска sway в <code>.zprofile</code> чтобы при каждом открытии терминала не вылезал ещё один sway поверх sway'я. Для начало экспортируя необходиммые переменные для работы wayland</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">nvim </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.zprofile
+</span></code></pre>
+<pre data-lang="conf" style="background-color:#2b303b;color:#ffffff;" class="language-conf "><code class="language-conf" data-lang="conf"><span style="font-style:italic;color:#0088ff;"># Необходимые переменные wayland
+</span><span style="color:#ffc600;">set_wayland_env</span><span style="color:#f9f9f9;">(){
+</span><span style="color:#f9f9f9;">	export </span><span style="color:#eb939a;">MOZ_ENABLE_WAYLAND</span><span style="color:#ff9d00;">=</span><span style="color:#ff628c;">1
+</span><span style="color:#f9f9f9;">    export </span><span style="color:#eb939a;">XDG_SESSION_TYPE</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">wayland
+</span><span style="color:#f9f9f9;">    export </span><span style="color:#eb939a;">XDG_CURRENT_DESKTOP</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">sway
+</span><span style="color:#f9f9f9;">	export </span><span style="color:#eb939a;">QT_WAYLAND_DISABLE_WINDOWDECORATION</span><span style="color:#ff9d00;">=</span><span style="color:#ff628c;">1 </span><span style="font-style:italic;color:#0088ff;"># hide window decoratins in older versions of QT
+</span><span style="color:#f9f9f9;">	export </span><span style="color:#eb939a;">NO_AT_BRIDGE</span><span style="color:#ff9d00;">=</span><span style="color:#ff628c;">1 </span><span style="font-style:italic;color:#0088ff;"># Подавляет предупреждение о accessibility bus в GTK
+</span><span style="color:#f9f9f9;">	export </span><span style="color:#eb939a;">SDL_VIDEODRIVER</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">wayland </span><span style="font-style:italic;color:#0088ff;"># Позволяет запускать SDL2 игры на wayland
+</span><span style="color:#f9f9f9;">	export </span><span style="color:#eb939a;">QT_QPA_PLATFORM</span><span style="color:#ff9d00;">=</span><span style="color:#9eff80;">&quot;wayland;xcb&quot; </span><span style="font-style:italic;color:#0088ff;"># Позволяет запускать QT приложения на wayland
+</span><span style="color:#f9f9f9;">	export </span><span style="color:#eb939a;">_JAVA_AWT_WM_NONREPARENTING</span><span style="color:#ff9d00;">=</span><span style="color:#ff628c;">1 </span><span style="font-style:italic;color:#0088ff;"># Исправляет ошибки отрисовки приложений Java jre8
+</span><span style="color:#f9f9f9;">	export </span><span style="color:#eb939a;">MOZ_WEBRENDER</span><span style="color:#ff9d00;">=</span><span style="color:#ff628c;">1 </span><span style="font-style:italic;color:#0088ff;"># Enable WebRender for Firefox
+</span><span style="color:#f9f9f9;">}
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">
+</span><span style="font-style:italic;color:#0088ff;"># Запуск sway
+</span><span style="color:#f9f9f9;">[ </span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">z </span><span style="color:#ffc600;">$DISPLAY</span><span style="color:#f9f9f9;"> ] &amp;&amp; [ </span><span style="color:#ffc600;">$(tty) </span><span style="color:#ff9d00;">= /</span><span style="color:#f9f9f9;">dev</span><span style="color:#ff9d00;">/</span><span style="color:#f9f9f9;">tty1 ] &amp;&amp; set_wayland_env &amp;&amp; exec sway </span><span style="font-style:italic;color:#0088ff;"># --verbose &gt;&gt; ~/.sway.log
+</span></code></pre>
+<h2 id="reshenie-problem-sway"><a class="anchor" href="#reshenie-problem-sway">#</a>&nbsp;
+Решение проблем sway</h2>
+<ul>
+<li>Проблема: Уведомление Dunst при игре застрял курсор мышки</li>
+</ul>
+<p>Решил это отредактировав конфиг dunst принудительно работать dunst на xwayland</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">nvim </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.config/dunst/dunstrc
+</span></code></pre>
+<p>Меняем c <strong>false</strong> на <strong>true</strong></p>
+<pre data-lang="conf" style="background-color:#2b303b;color:#ffffff;" class="language-conf "><code class="language-conf" data-lang="conf"><span style="color:#f9f9f9;">force_xwayland </span><span style="color:#ff9d00;">= </span><span style="color:#ff628c;">true
+</span></code></pre>
+<ul>
+<li>Проблема: При запуске любого видео из браузера или через mpv звук не появляется и браузер застревает но если открыть pavucontrol тогда звук появится</li>
+</ul>
+<p>У меня установлен pipewire wireplumber</p>
+<p>Проблема решается если в терминале ввести <code>wireplumber</code></p>
+<ul>
+<li>Проблема: Sway не экспортирует переменные из <code>~/.config/environment.d/*.conf</code></li>
+</ul>
+<p>Если я правильно понимаю это из-за того что ни sway ни shell оболочка не запущен от systemd в пользовательском экземпляре<br />
+Об этом расписано <a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/systemd/systemd/issues/17180">здесь вместе с решением</a> который является просто добавлением экспорта этой команды в <code>zshrc</code></p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">export $(/usr/lib/systemd/user-environment-generators/30-systemd-environment-d-generator)
+</span></code></pre>
+<p>Или <a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/swaywm/sway/wiki/Systemd-integration#running-sway-itself-as-a---user-service">выполнить действия в Sway Wiki</a> однако это официально не поддерживается</p>
+<p>UPD: ещё <a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/alebastr/sway-systemd">есть вариант запуска sway через systemd</a></p>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

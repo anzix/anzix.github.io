@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>Решение проблем с Wine&#x2F;Proton</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  Решение проблем с Wine&#x2F;Proton
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-12-11T17:30:00+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux-gaming/">linux-gaming</a>
+
+<br>
+
+
+	<aside id="toc-aside" class="toc">
+	    <details>
+			<summary>Оглавление</summary>
+	        <ol>
+	            <li>
+	                <a href="#ukazannyi-fail-ne-byl-naiden-wine">Указанный файл не был найден (wine)</a>
+	                
+	            </li><li>
+	                <a href="#nekotorye-starye-igry-ne-zapuskaiutsia-ot-exe-faila">Некоторые старые игры не запускаются от .exe файла</a>
+	                
+	            </li><li>
+	                <a href="#artefakty-ispol-zuia-wine-v-staroi-igre">Артефакты используя Wine в старой игре</a>
+	                
+	            </li><li>
+	                <a href="#warcraft-3-the-frozen-throne-32bit-net-zvuka-pipewire">Warcraft 3 The Frozen Throne 32bit нет звука (Pipewire)</a>
+	                
+	            </li><li>
+	                <a href="#warcraft-3-the-frozen-throne-ne-zapuskaetsia">Warcraft 3 The Frozen Throne не запускается</a>
+	                
+	            </li><li>
+	                <a href="#oshibka-ustanovshchika-repaka-mechanics-ispol-zuia-wine-unarc-dll-error-5-not-enough-memory">Ошибка установщика репака Mechanics используя wine: unarc.dll error -5: not enough memory</a>
+	                
+	            </li><li>
+	                <a href="#ne-rabotaet-geimpad-v-starykh-igrykh">!Не работает геймпад в старых игрых!</a>
+	                
+	            </li><li>
+	                <a href="#nekorrektnoe-otobrazhenie-shriftov-v-wine">Некорректное отображение шрифтов в Wine</a>
+	                
+	            </li>
+	        </ol>
+		</details>
+	</aside>
+
+
+<h2 id="ukazannyi-fail-ne-byl-naiden-wine"><a class="anchor" href="#ukazannyi-fail-ne-byl-naiden-wine">#</a>&nbsp;
+Указанный файл не был найден (wine)</h2>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://forum.winehq.org/viewtopic.php?t=15267">Источник</a></li>
+</ul>
+<p><img src="/images/wine-solving-problem/error.png" alt="image" /></p>
+<p>Повторный запуск с указанием полного пути autorun.exe решило проблему</p>
+<p>В итоге неправильно это</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">/run/media/anix/worms2</span><span style="color:#ffee80;"> ❯ WINEPREFIX=</span><span style="color:#f9f9f9;">&quot;$</span><span style="color:#edef7d;">HOME</span><span style="color:#9eff80;">/.local/share/wineprefixes/Worms</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#ffee80;"> wine autorun.exe
+</span></code></pre>
+<p>Правильно</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">WINEPREFIX</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">&quot;$</span><span style="color:#edef7d;">HOME</span><span style="color:#9eff80;">/.local/share/wineprefixes/Worms</span><span style="color:#f9f9f9;">&quot; wine</span><span style="color:#ffee80;"> /run/media/anix/worms2/autorun.exe
+</span></code></pre>
+<h2 id="nekotorye-starye-igry-ne-zapuskaiutsia-ot-exe-faila"><a class="anchor" href="#nekotorye-starye-igry-ne-zapuskaiutsia-ot-exe-faila">#</a>&nbsp;
+Некоторые старые игры не запускаются от .exe файла</h2>
+<p>При запуске .exe файла разрешение экрана меняется на 640x480 и игра вылетает</p>
+<p>Мне помог данный <a rel="noopener nofollow noreferrer" target="_blank" href="https://youtu.be/J_L9LB3o5SQ?t=672">видео гайд на отметке 11:12</a></p>
+<p>На примере Battle Engine Aquila репак от Механиков<br />
+Необходимо было переустановить игру и в установщике отметить создание ярлыка игры на раб столе</p>
+<p>Решение:<br />
+Нужно было запускать .lnk (Win) файл (находящийся внутри префикса игры <code>&lt;префикс_игры&gt;/drive_c/users/Public/Desktop/&lt;ярлык_игры&gt;.lnk</code> а не .exe внутри установленной игры и тогда игра запуститься</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">WINEPREFIX</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">&quot;$</span><span style="color:#edef7d;">HOME</span><span style="color:#9eff80;">/.local/share/wineprefixes/BEAquila</span><span style="color:#f9f9f9;">&quot; wine $HOME</span><span style="color:#ffee80;">/Desktop/Battle</span><span style="color:#ff628c;">\ </span><span style="color:#ffee80;">Engine</span><span style="color:#ff628c;">\ </span><span style="color:#ffee80;">Aquila.lnk
+</span></code></pre>
+<h2 id="artefakty-ispol-zuia-wine-v-staroi-igre"><a class="anchor" href="#artefakty-ispol-zuia-wine-v-staroi-igre">#</a>&nbsp;
+Артефакты используя Wine в старой игре</h2>
+<p>При переключении раб. стола в оконном менеджере i3wm в запущенным ОБЫЧНОМ wine'ом игре Freedom Fighters появляются артефакты</p>
+<p><img src="/images/wine-solving-problem/normal-texture.png" alt="image" /></p>
+<p><img src="/images/wine-solving-problem/artifacts.png" alt="image" /></p>
+<p>Полноценное решение - это использовать связку DgVoodoo+DXVK</p>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="http://dege.freeweb.hu/dgVoodoo2/dgVoodoo2/">Скачать последнюю версию DgVoodoo</a> и при распаковки закинуть все dll'ки из <strong>/dgVoodoo2_79_3/MS/x86/</strong> в папку с игрой</p>
+<p>Что бы DgVoodoo заработал необходим DXVK, качаем AUR пакет dxvk-bin</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">yay -S</span><span style="color:#ffee80;"> dxvk-bin
+</span></code></pre>
+<p>После установки накатываем dxvk в префикс (Freedom Fighters)</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">WINEPREFIX</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">&quot;$</span><span style="color:#edef7d;">HOME</span><span style="color:#9eff80;">/.local/share/wineprefixes/FF</span><span style="color:#f9f9f9;">&quot; setup_dxvk</span><span style="color:#ffee80;"> install
+</span></code></pre>
+<p>Готово! Теперь запускаем игру, я для запуска использую терминал</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">DXVK_FRAME_RATE</span><span style="color:#ff9d00;">=</span><span style="color:#3ad900;">60 </span><span style="color:#f9f9f9;">obs-gamecapture</span><span style="color:#ffee80;"> mangohud gamemoderun WINEDLLOVERRIDES=</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">d3d8=n,b;d3d9=n,b;d3dimm=n,b;ddraw=n,b</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#ffee80;"> WINEPREFIX=</span><span style="color:#f9f9f9;">&quot;$</span><span style="color:#edef7d;">HOME</span><span style="color:#9eff80;">/.local/share/wineprefixes/FF</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#ffee80;"> wine </span><span style="color:#f9f9f9;">$HOME</span><span style="color:#ffee80;">/.local/share/wineprefixes/FF/drive_c/users/Public/Desktop/Freedom</span><span style="color:#ff628c;">\ </span><span style="color:#ffee80;">Fighters.lnk
+</span></code></pre>
+<h2 id="warcraft-3-the-frozen-throne-32bit-net-zvuka-pipewire"><a class="anchor" href="#warcraft-3-the-frozen-throne-32bit-net-zvuka-pipewire">#</a>&nbsp;
+Warcraft 3 The Frozen Throne 32bit нет звука (Pipewire)</h2>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.reddit.com/r/archlinux/comments/p9itwq/audio_issues_with_pipewire_on_older_game/">Источник</a></li>
+</ul>
+<p>Вот логи Wine</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">ALSA lib dlmisc.c:337:(snd_dlobj_cache_get0) Cannot open shared library libasound_module_pcm_pipewire.so (/usr/lib32/alsa-lib/libasound_module_pcm_pipewire.so: невозможно открыть разделяемый объектный файл: Нет такого файла или каталога)
+</span><span style="color:#f9f9f9;">ALSA lib dlmisc.c:337:(snd_dlobj_cache_get0) Cannot open shared library libasound_module_pcm_pipewire.so (/usr/lib32/alsa-lib/libasound_module_pcm_pipewire.so: невозможно открыть разделяемый объектный файл: Нет такого файла или каталога)
+</span></code></pre>
+<p>Решением было установить</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> lib32-pipewire
+</span></code></pre>
+<h2 id="warcraft-3-the-frozen-throne-ne-zapuskaetsia"><a class="anchor" href="#warcraft-3-the-frozen-throne-ne-zapuskaetsia">#</a>&nbsp;
+Warcraft 3 The Frozen Throne не запускается</h2>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://forum.winehq.org/viewtopic.php?p=137743#p137743">Источник_1</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://forum.winehq.org/viewtopic.php?p=130430#p130430">Источник_2</a></li>
+</ul>
+<p>При запуске сразу же закрывалась с выводом данной ошибки</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">(wine:529528): GStreamer-CRITICAL **: 17:46:55.114: gst_object_unref: assertion &#39;object != NULL&#39; failed
+</span><span style="color:#f9f9f9;">winegstreamer error: decodebin1: В вашей установке GStreamer отсутствует модуль.
+</span><span style="color:#f9f9f9;">winegstreamer error: decodebin1: ../gstreamer/subprojects/gst-plugins-base/gst/playback/gstdecodebin2.c(4701): gst_decode_bin_expose (): /GstBin:bin2/GstDecodeBin:decodebin1:
+</span><span style="color:#f9f9f9;">no suitable plugins found:
+</span><span style="color:#f9f9f9;">Missing decoder: Audio Video Interleave (AVI) (video/x-msvideo)
+</span></code></pre>
+<p>Помогло решить проблему установка данного пакета (выбрал репозиторий multilib: lib32-pipewire-jack)</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> lib32-gst-plugins-good
+</span></code></pre>
+<p>Доп-но установятся данные пакеты</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">lib32-libsamplerate (0.2.2-1)
+</span><span style="color:#f9f9f9;">lib32-jack2 (1.9.21-1)
+</span><span style="color:#f9f9f9;">lib32-libnghttp2 (1.50.0-1)
+</span><span style="color:#f9f9f9;">lib32-libsoup3 (3.2.1-1)
+</span><span style="color:#f9f9f9;">lib32-wavpack (5.5.0-2)
+</span><span style="color:#f9f9f9;">lib32-gpm (1.20.7-2)
+</span><span style="color:#f9f9f9;">lib32-aalib (1.4rc5-3)
+</span><span style="color:#f9f9f9;">lib32-taglib (1.13-1)
+</span><span style="color:#f9f9f9;">lib32-popt (1.18-1)
+</span><span style="color:#f9f9f9;">lib32-libdv (1.0.0-6)
+</span><span style="color:#f9f9f9;">lib32-speex (1.2.1-1)
+</span><span style="color:#f9f9f9;">lib32-libshout (2.4.6-1)
+</span><span style="color:#f9f9f9;">lib32-libvpx (1.12.0-1)
+</span><span style="color:#f9f9f9;">lib32-imlib2 (1.9.1-1)
+</span><span style="color:#f9f9f9;">lib32-libcaca (0.99.beta20-1)
+</span><span style="color:#f9f9f9;">lib32-libraw1394 (2.1.2-3)
+</span><span style="color:#f9f9f9;">lib32-libavc1394 (0.5.4-3)
+</span><span style="color:#f9f9f9;">lib32-libiec61883 (1.2.0-3)
+</span><span style="color:#f9f9f9;">lib32-libgudev (237-2)
+</span><span style="color:#f9f9f9;">lib32-twolame (0.4.0-2)
+</span><span style="color:#f9f9f9;">lib32-gst-plugins-good (1.20.4-1)
+</span></code></pre>
+<h2 id="oshibka-ustanovshchika-repaka-mechanics-ispol-zuia-wine-unarc-dll-error-5-not-enough-memory"><a class="anchor" href="#oshibka-ustanovshchika-repaka-mechanics-ispol-zuia-wine-unarc-dll-error-5-not-enough-memory">#</a>&nbsp;
+Ошибка установщика репака Mechanics используя wine: unarc.dll error -5: not enough memory</h2>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/DarkReaperBoy/darkreaperboy.github.io/blob/main/draft/gamingonlinux/Repackers.md">Источник</a></li>
+</ul>
+<p><img src="/images/wine-solving-problem/unarc_error.png" alt="image" /></p>
+<p>Решение <a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/Frogging-Family/wine-tkg-git">собрать wine-tkg</a> (заменится wine-staging) и использовать его<br />
+Или использовать <a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/Kron4ek/Wine-Builds/releases">wine-7.18-staging-tkg-amd64</a> от <a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/Kron4ek">Kron4ek</a> в из репо <a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/Kron4ek/Wine-Builds">Wine-Builds</a></p>
+<p>Необходимо распаковать архив и добавить в запуск бинарника wine по такому пути</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">WINEPREFIX</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">&quot;$</span><span style="color:#edef7d;">HOME</span><span style="color:#9eff80;">/.local/share/wineprefixes/BEAquila</span><span style="color:#f9f9f9;">&quot; </span><span style="color:#ff80e1;">~</span><span style="color:#f9f9f9;">/Downloads/wine-7.18-staging-tkg-amd64/bin/wine</span><span style="color:#ffee80;"> /media/Distrib/Игры/OLD</span><span style="color:#ff628c;">\ </span><span style="color:#ffee80;">GAMES/</span><span style="color:#ff628c;">\[</span><span style="color:#ffee80;">R.G.</span><span style="color:#ff628c;">\ </span><span style="color:#ffee80;">Mechanics</span><span style="color:#ff628c;">\]\ </span><span style="color:#ffee80;">Battle</span><span style="color:#ff628c;">\ </span><span style="color:#ffee80;">Engine</span><span style="color:#ff628c;">\ </span><span style="color:#ffee80;">Aquila/setup.exe
+</span></code></pre>
+<p>Установка репака от Механиков игры Battle Engine Aquila прошла успешно</p>
+<h2 id="ne-rabotaet-geimpad-v-starykh-igrykh"><a class="anchor" href="#ne-rabotaet-geimpad-v-starykh-igrykh">#</a>&nbsp;
+!Не работает геймпад в старых игрых!</h2>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://kubuntu.ru/node/14630">Источник_1</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://blog.psy-q.ch/blog/2017/12/26/using-xbox-360-compatible-controllers-properly-inside-wine/">Источник_2</a></li>
+</ul>
+<p>На игре <a rel="noopener nofollow noreferrer" target="_blank" href="https://www.pcgamingwiki.com/wiki/Teenage_Mutant_Ninja_Turtles_2:_Battle_Nexus">TMNT 2: Battle Nexus</a>, <a rel="noopener nofollow noreferrer" target="_blank" href="https://www.pcgamingwiki.com/wiki/Teenage_Mutant_Ninja_Turtles:_Mutant_Melee">TMNT: Melee</a>, <a rel="noopener nofollow noreferrer" target="_blank" href="https://www.pcgamingwiki.com/wiki/Teenage_Mutant_Ninja_Turtles_(2003)">TMNT 2003</a> PC - не работает управление с геймпада</p>
+<h2 id="nekorrektnoe-otobrazhenie-shriftov-v-wine"><a class="anchor" href="#nekorrektnoe-otobrazhenie-shriftov-v-wine">#</a>&nbsp;
+Некорректное отображение шрифтов в Wine</h2>
+<p><img src="/images/wine-solving-problem/incorrect-fonts.png" alt="image" /></p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#ffb054;">cd </span><span style="color:#f9f9f9;">${WINEPREFIX</span><span style="color:#ff9d00;">:-</span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.local/share/wineprefixes/hexedit</span><span style="color:#f9f9f9;">}</span><span style="color:#ffee80;">/drive_c/windows/Fonts </span><span style="color:#ff9d00;">&amp;&amp; for</span><span style="color:#f9f9f9;"> i </span><span style="color:#ff9d00;">in</span><span style="color:#f9f9f9;"> /usr/share/fonts/</span><span style="color:#ff9d00;">**</span><span style="color:#f9f9f9;">/</span><span style="color:#ff9d00;">*</span><span style="color:#f9f9f9;">.{ttf,otf}</span><span style="color:#ff9d00;">; do </span><span style="color:#f9f9f9;">ln -s &quot;$</span><span style="color:#edef7d;">i</span><span style="color:#f9f9f9;">&quot; </span><span style="color:#ff9d00;">; done
+</span></code></pre>
+<p>Данный метод описанный <a rel="noopener nofollow noreferrer" target="_blank" href="https://wiki.archlinux.org/title/Wine#Fonts">первым в Arch Wiki</a> не работает, видимо нужно скачать шрифты винды</p>
+<p>Решил благодаря данной переменной</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">FREETYPE_PROPERTIES</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">truetype:interpreter-version=35</span><span style="color:#f9f9f9;">&quot;
+</span></code></pre>
+<p>Запуск:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">FREETYPE_PROPERTIES</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">truetype:interpreter-version=35</span><span style="color:#f9f9f9;">&quot; WINEPREFIX</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">$</span><span style="color:#edef7d;">HOME</span><span style="color:#3ad900;">/.local/share/wineprefixes/hexedit </span><span style="color:#f9f9f9;">wine $HOME</span><span style="color:#ffee80;">/.local/share/wineprefixes/hexedit/drive_c/Program</span><span style="color:#ff628c;">\ </span><span style="color:#ffee80;">Files</span><span style="color:#ff628c;">\ \(</span><span style="color:#ffee80;">x86</span><span style="color:#ff628c;">\)</span><span style="color:#ffee80;">/Plexer</span><span style="color:#ff628c;">\ </span><span style="color:#ffee80;">Code/ResHex/ResHex.exe
+</span></code></pre>
+<p><img src="/images/wine-solving-problem/correct-fonts.png" alt="image" /></p>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

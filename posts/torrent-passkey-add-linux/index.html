@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>Добавление и замена пасскея (passkey) RuTracker&#x27;а в .torrent файл</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  Добавление и замена пасскея (passkey) RuTracker&#x27;а в .torrent файл
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-03-04T20:29:44+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux/">linux</a>
+
+<br>
+
+
+	<aside id="toc-aside" class="toc">
+	    <details>
+			<summary>Оглавление</summary>
+	        <ol>
+	            <li>
+	                <a href="#ispol-zovanie-dlia-odnogo-torrent-faila">Использование для одного .torrent файла:</a>
+	                
+	            </li><li>
+	                <a href="#zagruzhennyi-cherez-manget">Загруженный через manget</a>
+	                
+	            </li>
+	        </ol>
+		</details>
+	</aside>
+
+
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://rutracker.org/forum/viewtopic.php?p=69547524#69547524">Источник_1</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://rutracker.org/forum/viewtopic.php?p=80460785#80460785">Источник_2</a></li>
+</ul>
+<p>Данное решение распространяется для всех торрент клиентов (transmission, qbittorrent и другие)</p>
+<p>Сделать это можно с помощью <code>transmission-edit</code> который поставляется в данном пакете, качаем его</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> transmission-cli
+</span></code></pre>
+<blockquote>
+<p><strong>Внимание</strong>: Не забывайте про бэкапы .torrent файлов!</p>
+</blockquote>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">tar -cvzf</span><span style="color:#ffee80;"> torrents-transmission.tar.gz </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.config/transmission/torrents/
+</span></code></pre>
+<h2 id="ispol-zovanie-dlia-odnogo-torrent-faila"><a class="anchor" href="#ispol-zovanie-dlia-odnogo-torrent-faila">#</a>&nbsp;
+Использование для одного .torrent файла:</h2>
+<p>Загружен зарегистрированным но без passkey'я внутри</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">transmission-edit --replace</span><span style="color:#ffee80;"> t-ru.org/ann t-ru.org/ann</span><span style="color:#ff9d00;">?</span><span style="color:#ffee80;">pk=</span><span style="color:#ff9d00;">[</span><span style="color:#ffee80;">ваш пасскей</span><span style="color:#ff9d00;">] [</span><span style="color:#ffee80;">.torrent файл</span><span style="color:#ff9d00;">]
+</span></code></pre>
+<p>Использование если .torrent файлов внутри папке много, то в цикле вводим</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#ff9d00;">for</span><span style="color:#f9f9f9;"> f </span><span style="color:#ff9d00;">in</span><span style="color:#f9f9f9;"> ./</span><span style="color:#ff9d00;">* ; do </span><span style="color:#f9f9f9;">transmission-edit --replace</span><span style="color:#ffee80;"> t-ru.org/ann t-ru.org/ann</span><span style="color:#ff9d00;">?</span><span style="color:#ffee80;">pk=</span><span style="color:#ff9d00;">[</span><span style="color:#ffee80;">ваш пасскей</span><span style="color:#ff9d00;">] </span><span style="color:#f9f9f9;">&quot;$</span><span style="color:#edef7d;">f</span><span style="color:#f9f9f9;">&quot; </span><span style="color:#ff9d00;">; done
+</span></code></pre>
+<h2 id="zagruzhennyi-cherez-manget"><a class="anchor" href="#zagruzhennyi-cherez-manget">#</a>&nbsp;
+Загруженный через manget</h2>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">transmission-edit --replace</span><span style="color:#ffee80;"> t-ru.org/ann</span><span style="color:#ff9d00;">?</span><span style="color:#ffee80;">magnet t-ru.org/ann</span><span style="color:#ff9d00;">?</span><span style="color:#ffee80;">pk=</span><span style="color:#ff9d00;">[</span><span style="color:#ffee80;">ваш пасскей</span><span style="color:#ff9d00;">] [</span><span style="color:#ffee80;">.torrent файл</span><span style="color:#ff9d00;">]
+</span></code></pre>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

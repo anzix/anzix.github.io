@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>!DxWrapper OpenSource альтернатива DgVoodoo (установка ручным способом)</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  !DxWrapper OpenSource альтернатива DgVoodoo (установка ручным способом)
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-03-04T00:27:06+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux-gaming/">linux-gaming</a>
+
+<br>
+
+
+
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/elishacloud/dxwrapper/wiki/DirectDraw-to-Direct3D9-Conversion">DirectDraw to Direct3D9 Conversion</a></li>
+</ul>
+<p>Отличается он тем что даёт чуть больше fps но при этом иногда утилизирует GPU на 80-100% тогда как в DgVoodoo так GPU не юзает для старых игр. На Wayland'е правда лучше не юзать DxWrapper, окно игры не сворачивается и замерзает намертво, либо это как-то фиксится</p>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/elishacloud/dxwrapper/releases">Качаем .zip архив</a></p>
+<p>Копируем в папку игры</p>
+<ul>
+<li>dxwrapper.ini</li>
+<li>dxwrapper.dll</li>
+<li>d3d9.dll</li>
+<li>d3d8.dll</li>
+<li>ddraw.dll</li>
+</ul>
+<p>Открываем dxwrapper.ini и если игра на directx8 меняем значение</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">[Compatibility]
+</span><span style="color:#f9f9f9;">....
+</span><span style="color:#f9f9f9;">D3d8to9                    = 1
+</span></code></pre>
+<p>Если же игра на directx7 меняем значение</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">[Compatibility]
+</span><span style="color:#f9f9f9;">....
+</span><span style="color:#f9f9f9;">Dd7to9                     = 1
+</span></code></pre>
+<p>Если игра на DirectDraw выставляем значение</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">[Compatibility]
+</span><span style="color:#f9f9f9;">....
+</span><span style="color:#f9f9f9;">DDrawCompat                = 1
+</span></code></pre>
+<p>Вообще я <span style="color:green">рекомендую</span> указать все три типа совместимости D3d8to9, Dd7to9 и DDrawCompat изменив на 1 дабы всё сразу работало</p>
+<p>Также можно включить vsync (лочит значение фпс до вашего обновления экрана т.е refresh rate)</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">[d3d9]
+</span><span style="color:#f9f9f9;">...
+</span><span style="color:#f9f9f9;">EnableVSync                = 1
+</span></code></pre>
+<p>Если VSync не работает включите полноэкранный оконный режим (обычно это мне помогло в Bloodrayne)</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">[d3d9]
+</span><span style="color:#f9f9f9;">...
+</span><span style="color:#f9f9f9;">FullscreenWindowMode       = 1
+</span></code></pre>
+<p>В префикс игры обязательно добавляем DXVK</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">WINEPREFIX</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">ПУТЬ/ПРЕФИКСА/ИГРЫ</span><span style="color:#f9f9f9;">&quot; setup_dxvk</span><span style="color:#ffee80;"> install
+</span></code></pre>
+<blockquote>
+<p>Если в игре пропадают или глючат текстуры или модели npc попробуйте создать новый префикс и накатить dxvk используя winetricks
+И добавляем переменную переопределения dll в ярлык игры</p>
+</blockquote>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">WINEDLLOVERRIDES</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">d3d8,d3d9,d3dimm,ddraw=n,b</span><span style="color:#f9f9f9;">&quot;
+</span></code></pre>
+<p>Если при запуске игры в Mangohud указан DXVK значит DxWrapper работает</p>
+<p>В папке игры также можно посмотреть лог файл dxwrapper-game.log</p>
+<blockquote>
+<p>Проверено на: <a rel="noopener nofollow noreferrer" target="_blank" href="https://www.pcgamingwiki.com/wiki/BloodRayne">BloodRayne</a></p>
+</blockquote>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

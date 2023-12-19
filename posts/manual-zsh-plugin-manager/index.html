@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>!Минималистичный менеджер плагинов zsh своими руками</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  !Минималистичный менеджер плагинов zsh своими руками
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-03-29T22:57:48+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux/">linux</a>
+
+<br>
+
+
+
+<ul>
+<li>Вопрос: Есть oh-my-zsh, чем он не устраивает?</li>
+<li>Ответ: Потому-что всё то что делает omz можно добится 4-мя функциями. И это без навязывания обновлений и рекламой их мерча.</li>
+</ul>
+<p>Создаём zsh конфиг файл и вставляем данные функции</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">nvim</span><span style="color:#ffee80;"> functions.zsh
+</span></code></pre>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Функция чтобы выполнять содержимое файла
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> в текущей оболочке, если они существуют
+</span><span style="color:#ffc600;">function file</span><span style="color:#f9f9f9;">() {
+</span><span style="color:#f9f9f9;">    </span><span style="color:#ffb054;">[ </span><span style="color:#f9f9f9;">-f &quot;$</span><span style="color:#edef7d;">ZDOTDIR</span><span style="color:#9eff80;">/</span><span style="color:#f9f9f9;">$</span><span style="color:#edef7d;">1</span><span style="color:#f9f9f9;">&quot; </span><span style="color:#ffb054;">] </span><span style="color:#ff9d00;">&amp;&amp; </span><span style="color:#ffb054;">source </span><span style="color:#f9f9f9;">&quot;$</span><span style="color:#edef7d;">ZDOTDIR</span><span style="color:#9eff80;">/</span><span style="color:#f9f9f9;">$</span><span style="color:#edef7d;">1</span><span style="color:#f9f9f9;">&quot;
+</span><span style="color:#f9f9f9;">}
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Функция для выполнения sparse clone вытягивания плагинов oh-my-zsh
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> https://stackoverflow.com/a/13738951
+</span><span style="color:#ffc600;">function git_omz_plugins</span><span style="color:#f9f9f9;">() (
+</span><span style="color:#f9f9f9;">  rurl</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">&quot;$</span><span style="color:#edef7d;">1</span><span style="color:#f9f9f9;">&quot; tmpdir</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">&quot;$</span><span style="color:#edef7d;">ZDOTDIR</span><span style="color:#9eff80;">/tmp</span><span style="color:#f9f9f9;">&quot; </span><span style="color:#ff9d00;">&amp;&amp; </span><span style="color:#ffb054;">shift </span><span style="color:#f9f9f9;">&quot;$</span><span style="color:#edef7d;">4</span><span style="color:#f9f9f9;">&quot; #</span><span style="font-style:italic;color:#0088ff;"> Для предотвращения &quot;shift:1: shift count must be &lt;= $#&quot;
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">  mkdir -p &quot;$</span><span style="color:#edef7d;">tmpdir</span><span style="color:#f9f9f9;">&quot;
+</span><span style="color:#f9f9f9;">  </span><span style="color:#ffb054;">cd </span><span style="color:#f9f9f9;">&quot;$</span><span style="color:#edef7d;">tmpdir</span><span style="color:#f9f9f9;">&quot;
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">  git</span><span style="color:#ffee80;"> init </span><span style="color:#ff9d00;">&gt;</span><span style="color:#ffee80;"> /dev/null </span><span style="color:#ff628c;">2</span><span style="color:#ff9d00;">&gt;&amp;</span><span style="color:#ff628c;">1
+</span><span style="color:#f9f9f9;">  git</span><span style="color:#ffee80;"> remote add</span><span style="color:#f9f9f9;"> -f</span><span style="color:#ffee80;"> origin </span><span style="color:#f9f9f9;">&quot;$</span><span style="color:#edef7d;">rurl</span><span style="color:#f9f9f9;">&quot; </span><span style="color:#ff9d00;">&gt;</span><span style="color:#ffee80;"> /dev/null </span><span style="color:#ff628c;">2</span><span style="color:#ff9d00;">&gt;&amp;</span><span style="color:#ff628c;">1
+</span><span style="color:#f9f9f9;">  git</span><span style="color:#ffee80;"> config core.sparseCheckout true
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">  #</span><span style="font-style:italic;color:#0088ff;"> Loops over remaining args
+</span><span style="color:#f9f9f9;">  </span><span style="color:#ff9d00;">for</span><span style="color:#f9f9f9;"> i</span><span style="color:#ff9d00;">; do
+</span><span style="color:#f9f9f9;">    </span><span style="color:#ffb054;">echo </span><span style="color:#f9f9f9;">&quot;$</span><span style="color:#edef7d;">i</span><span style="color:#f9f9f9;">&quot; </span><span style="color:#ff9d00;">&gt;&gt;</span><span style="color:#ffee80;"> .git/info/sparse-checkout
+</span><span style="color:#f9f9f9;">  </span><span style="color:#ff9d00;">done
+</span><span style="color:#f9f9f9;">  git</span><span style="color:#ffee80;"> pull origin master </span><span style="color:#ff9d00;">&gt;</span><span style="color:#ffee80;"> /dev/null </span><span style="color:#ff628c;">2</span><span style="color:#ff9d00;">&gt;&amp;</span><span style="color:#ff628c;">1
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">  </span><span style="color:#ffb054;">echo </span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">Удаляю .git</span><span style="color:#f9f9f9;">&quot;
+</span><span style="color:#f9f9f9;">  rm -rf</span><span style="color:#ffee80;"> .git/
+</span><span style="color:#f9f9f9;">  </span><span style="color:#ffb054;">echo </span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">Перемещаю плагин в </span><span style="color:#f9f9f9;">$</span><span style="color:#edef7d;">ZDOTDIR</span><span style="color:#9eff80;">/plugins/</span><span style="color:#f9f9f9;">&quot;
+</span><span style="color:#f9f9f9;">  mv</span><span style="color:#ffee80;"> plugins/</span><span style="color:#ff9d00;">* </span><span style="color:#f9f9f9;">$ZDOTDIR</span><span style="color:#ffee80;">/plugins/
+</span><span style="color:#f9f9f9;">  </span><span style="color:#ffb054;">echo </span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">Удаляю </span><span style="color:#f9f9f9;">$</span><span style="color:#edef7d;">tmpdir</span><span style="color:#f9f9f9;">&quot;
+</span><span style="color:#f9f9f9;">  rm -rf $tmpdir
+</span><span style="color:#f9f9f9;">  </span><span style="color:#ffb054;">echo </span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">Функция git_omz_plugins завершена</span><span style="color:#f9f9f9;">&quot;
+</span><span style="color:#f9f9f9;">)
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Вытягивает плагин из репо omz
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins
+</span><span style="color:#ffc600;">function omz_plug</span><span style="color:#f9f9f9;">() {
+</span><span style="color:#f9f9f9;">    PLUGIN_NAME</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">$(</span><span style="color:#ffb054;">echo </span><span style="color:#f9f9f9;">$</span><span style="color:#edef7d;">1 </span><span style="color:#f9f9f9;">)
+</span><span style="color:#f9f9f9;">    </span><span style="color:#ff9d00;">if </span><span style="color:#ffb054;">[ </span><span style="color:#f9f9f9;">-d &quot;$</span><span style="color:#edef7d;">ZDOTDIR</span><span style="color:#9eff80;">/plugins/</span><span style="color:#f9f9f9;">$</span><span style="color:#edef7d;">PLUGIN_NAME</span><span style="color:#f9f9f9;">&quot; </span><span style="color:#ffb054;">]</span><span style="color:#ff9d00;">; then
+</span><span style="color:#f9f9f9;">        #</span><span style="font-style:italic;color:#0088ff;"> For plugins
+</span><span style="color:#f9f9f9;">        file &quot;</span><span style="color:#9eff80;">plugins/</span><span style="color:#f9f9f9;">$</span><span style="color:#edef7d;">PLUGIN_NAME</span><span style="color:#9eff80;">/</span><span style="color:#f9f9f9;">$</span><span style="color:#edef7d;">PLUGIN_NAME</span><span style="color:#9eff80;">.plugin.zsh</span><span style="color:#f9f9f9;">&quot; </span><span style="color:#ff9d00;">|| </span><span style="color:#f9f9f9;">\
+</span><span style="color:#f9f9f9;">        file &quot;</span><span style="color:#9eff80;">plugins/</span><span style="color:#f9f9f9;">$</span><span style="color:#edef7d;">PLUGIN_NAME</span><span style="color:#9eff80;">/</span><span style="color:#f9f9f9;">$</span><span style="color:#edef7d;">PLUGIN_NAME</span><span style="color:#9eff80;">.zsh</span><span style="color:#f9f9f9;">&quot;
+</span><span style="color:#f9f9f9;">    </span><span style="color:#ff9d00;">else
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">        </span><span style="color:#ff9d00;">if </span><span style="color:#ffb054;">read</span><span style="color:#ffee80;"> -q </span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">choice?Установить плагин </span><span style="color:#f9f9f9;">$</span><span style="color:#edef7d;">PLUGIN_NAME</span><span style="color:#9eff80;"> ?: </span><span style="color:#f9f9f9;">&quot;</span><span style="color:#ff9d00;">; then
+</span><span style="color:#f9f9f9;">            </span><span style="color:#ffb054;">echo
+</span><span style="color:#f9f9f9;">            </span><span style="color:#ffb054;">echo </span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">Добавляю плагин </span><span style="color:#f9f9f9;">$</span><span style="color:#edef7d;">PLUGIN_NAME</span><span style="color:#f9f9f9;">&quot;
+</span><span style="color:#f9f9f9;">            git_omz_plugins &quot;</span><span style="color:#9eff80;">http://github.com/ohmyzsh/ohmyzsh/</span><span style="color:#f9f9f9;">&quot; &quot;</span><span style="color:#9eff80;">plugins/</span><span style="color:#f9f9f9;">$</span><span style="color:#edef7d;">PLUGIN_NAME</span><span style="color:#f9f9f9;">&quot;
+</span><span style="color:#f9f9f9;">        </span><span style="color:#ff9d00;">else
+</span><span style="color:#f9f9f9;">            </span><span style="color:#ffb054;">echo
+</span><span style="color:#f9f9f9;">            </span><span style="color:#ffb054;">echo </span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">Пропускаю...</span><span style="color:#f9f9f9;">&quot;
+</span><span style="color:#f9f9f9;">        </span><span style="color:#ff9d00;">fi
+</span><span style="color:#f9f9f9;">    </span><span style="color:#ff9d00;">fi
+</span><span style="color:#f9f9f9;">}
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Вытягивает плагин из репо unixorn
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> https://github.com/unixorn/awesome-zsh-plugins#plugins
+</span><span style="color:#ffc600;">function plug</span><span style="color:#f9f9f9;">() {
+</span><span style="color:#f9f9f9;">    PLUGIN_NAME</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">$(</span><span style="color:#ffb054;">echo </span><span style="color:#f9f9f9;">$</span><span style="color:#edef7d;">1 </span><span style="color:#ff9d00;">| </span><span style="color:#edef7d;">cut</span><span style="color:#f9f9f9;"> -</span><span style="color:#edef7d;">d </span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">/</span><span style="color:#f9f9f9;">&quot; -</span><span style="color:#edef7d;">f</span><span style="color:#ffee80;"> 2</span><span style="color:#f9f9f9;">)
+</span><span style="color:#f9f9f9;">    </span><span style="color:#ff9d00;">if </span><span style="color:#ffb054;">[ </span><span style="color:#f9f9f9;">-d &quot;$</span><span style="color:#edef7d;">ZDOTDIR</span><span style="color:#9eff80;">/plugins/</span><span style="color:#f9f9f9;">$</span><span style="color:#edef7d;">PLUGIN_NAME</span><span style="color:#f9f9f9;">&quot; </span><span style="color:#ffb054;">]</span><span style="color:#ff9d00;">; then
+</span><span style="color:#f9f9f9;">        #</span><span style="font-style:italic;color:#0088ff;"> For plugins
+</span><span style="color:#f9f9f9;">        file &quot;</span><span style="color:#9eff80;">plugins/</span><span style="color:#f9f9f9;">$</span><span style="color:#edef7d;">PLUGIN_NAME</span><span style="color:#9eff80;">/</span><span style="color:#f9f9f9;">$</span><span style="color:#edef7d;">PLUGIN_NAME</span><span style="color:#9eff80;">.plugin.zsh</span><span style="color:#f9f9f9;">&quot; </span><span style="color:#ff9d00;">|| </span><span style="color:#f9f9f9;">\
+</span><span style="color:#f9f9f9;">        file &quot;</span><span style="color:#9eff80;">plugins/</span><span style="color:#f9f9f9;">$</span><span style="color:#edef7d;">PLUGIN_NAME</span><span style="color:#9eff80;">/</span><span style="color:#f9f9f9;">$</span><span style="color:#edef7d;">PLUGIN_NAME</span><span style="color:#9eff80;">.zsh</span><span style="color:#f9f9f9;">&quot;
+</span><span style="color:#f9f9f9;">    </span><span style="color:#ff9d00;">else
+</span><span style="color:#f9f9f9;">        git</span><span style="color:#ffee80;"> clone </span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">https://github.com/</span><span style="color:#f9f9f9;">$</span><span style="color:#edef7d;">1</span><span style="color:#9eff80;">.git</span><span style="color:#f9f9f9;">&quot; &quot;$</span><span style="color:#edef7d;">ZDOTDIR</span><span style="color:#9eff80;">/plugins/</span><span style="color:#f9f9f9;">$</span><span style="color:#edef7d;">PLUGIN_NAME</span><span style="color:#f9f9f9;">&quot;
+</span><span style="color:#f9f9f9;">    </span><span style="color:#ff9d00;">fi
+</span><span style="color:#f9f9f9;">}
+</span></code></pre>
+<p>Вставляем в <code>.zprofile</code></p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#ffc600;">export </span><span style="color:#f9f9f9;">XDG_CONFIG_HOME</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">&quot;$</span><span style="color:#edef7d;">HOME</span><span style="color:#9eff80;">/.config</span><span style="color:#f9f9f9;">&quot;
+</span><span style="color:#ffc600;">export </span><span style="color:#f9f9f9;">ZDOTDIR</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">&quot;${</span><span style="color:#edef7d;">XDG_CONFIG_HOME</span><span style="color:#ff9d00;">:-</span><span style="color:#f9f9f9;">$</span><span style="color:#edef7d;">HOME</span><span style="color:#9eff80;">/.config</span><span style="color:#f9f9f9;">}</span><span style="color:#9eff80;">/zsh</span><span style="color:#f9f9f9;">&quot; #</span><span style="font-style:italic;color:#0088ff;"> Папка zsh
+</span><span style="color:#ffc600;">export </span><span style="color:#f9f9f9;">ZPLUGDIR</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">&quot;$</span><span style="color:#edef7d;">ZDOTDIR</span><span style="color:#9eff80;">/plugins</span><span style="color:#f9f9f9;">&quot; #</span><span style="font-style:italic;color:#0088ff;"> Папка zsh плагинов
+</span></code></pre>
+<p>Вставляем в <code>.zshrc</code></p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#ffb054;">source </span><span style="color:#f9f9f9;">&quot;$</span><span style="color:#edef7d;">ZDOTDIR</span><span style="color:#9eff80;">/functions.zsh</span><span style="color:#f9f9f9;">&quot;
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Плагины (Автозагрузка, если отсутствуют)
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> (plug) Для большего выбора плагинов: https://github.com/unixorn/awesome-zsh-plugins#plugins
+</span><span style="color:#f9f9f9;">plug &quot;</span><span style="color:#9eff80;">zsh-users/zsh-autosuggestions</span><span style="color:#f9f9f9;">&quot; #</span><span style="font-style:italic;color:#0088ff;"> Автозаполнение
+</span><span style="color:#f9f9f9;">plug &quot;</span><span style="color:#9eff80;">zsh-users/zsh-syntax-highlighting</span><span style="color:#f9f9f9;">&quot; #</span><span style="font-style:italic;color:#0088ff;"> Подсветка синтаксиса
+</span><span style="color:#f9f9f9;">plug &quot;</span><span style="color:#9eff80;">zsh-users/zsh-history-substring-search</span><span style="color:#f9f9f9;">&quot;
+</span><span style="color:#f9f9f9;">plug &quot;</span><span style="color:#9eff80;">MichaelAquilina/zsh-you-should-use</span><span style="color:#f9f9f9;">&quot; #</span><span style="font-style:italic;color:#0088ff;"> Напоминалка о использовании aliases
+</span><span style="color:#f9f9f9;">plug &quot;</span><span style="color:#9eff80;">MichaelAquilina/zsh-auto-notify</span><span style="color:#f9f9f9;">&quot; #</span><span style="font-style:italic;color:#0088ff;"> Уведомления shell
+</span><span style="color:#f9f9f9;">plug &quot;</span><span style="color:#9eff80;">hlissner/zsh-autopair</span><span style="color:#f9f9f9;">&quot; #</span><span style="font-style:italic;color:#0088ff;"> Полезно для работы с кавычками
+</span><span style="color:#f9f9f9;">plug &quot;</span><span style="color:#9eff80;">romkatv/powerlevel10k</span><span style="color:#f9f9f9;">&quot; #</span><span style="font-style:italic;color:#0088ff;"> Prompt
+</span><span style="color:#f9f9f9;">plug &quot;</span><span style="color:#9eff80;">junegunn/fzf</span><span style="color:#f9f9f9;">&quot; #</span><span style="font-style:italic;color:#0088ff;"> Fuzzy finder (fzf_install функция находится в functions.zsh)
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> plug &quot;Aloxaf/fzf-tab&quot; # TAB fzf функционал
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> (omz_plug) Плагины из репо oh-my-zsh: https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins
+</span><span style="color:#f9f9f9;">omz_plug &quot;</span><span style="color:#9eff80;">command-not-found</span><span style="color:#f9f9f9;">&quot; </span><span style="color:#ff9d00;">; </span><span style="color:#ffb054;">[[ </span><span style="color:#ff9d00;">! </span><span style="color:#f9f9f9;">-f</span><span style="color:#ffee80;"> /bin/pkgfile </span><span style="color:#ffb054;">]] </span><span style="color:#ff9d00;">&amp;&amp; </span><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> pkgfile</span><span style="color:#f9f9f9;"> --noconfirm </span><span style="color:#ff9d00;">&amp;&amp; </span><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pkgfile</span><span style="color:#f9f9f9;"> -u #</span><span style="font-style:italic;color:#0088ff;"> Находит пакет если команда не найдена
+</span><span style="color:#f9f9f9;">omz_plug &quot;</span><span style="color:#9eff80;">dirhistory</span><span style="color:#f9f9f9;">&quot; #</span><span style="font-style:italic;color:#0088ff;"> Быстрое перемещение по каталогам зажать alt+[стрелки]
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#ffb054;">source </span><span style="color:#f9f9f9;">$ZPLUGDIR</span><span style="color:#ffee80;">/zsh-you-should-use/you-should-use.plugin.zsh
+</span><span style="color:#ffb054;">source </span><span style="color:#f9f9f9;">$ZPLUGDIR</span><span style="color:#ffee80;">/zsh-auto-notify/auto-notify.plugin.zsh
+</span><span style="color:#ffb054;">source </span><span style="color:#f9f9f9;">$ZPLUGDIR</span><span style="color:#ffee80;">/powerlevel10k/powerlevel10k.zsh-theme
+</span></code></pre>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>Minecraft на Arch Linux</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  Minecraft на Arch Linux
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-03-16T11:28:14+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux-gaming/">linux-gaming</a>
+
+<br>
+
+
+	<aside id="toc-aside" class="toc">
+	    <details>
+			<summary>Оглавление</summary>
+	        <ol>
+	            <li>
+	                <a href="#offlain-piratki">Оффлайн пиратки</a>
+	                <ol>
+	                    <li>
+	                        <a href="#ruchnoi-zapusk-jar-launchera-maina">Ручной запуск jar лаунчера майна</a>
+	                    </li>
+	                </ol>
+	            </li><li>
+	                <a href="#litsenzionnye-akkaunty">Лицензионные аккаунты</a>
+	                
+	            </li>
+	        </ol>
+		</details>
+	</aside>
+
+
+<h2 id="offlain-piratki"><a class="anchor" href="#offlain-piratki">#</a>&nbsp;
+Оффлайн пиратки</h2>
+<p>Список доступных:</p>
+<ol>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://llaun.ch/">Legacy Launcher</a>/<a rel="noopener nofollow noreferrer" target="_blank" href="https://vk.link/tl_mc_launcher">VK</a>/<del><a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/legacylauncher/">AUR</a>: <code>yay -S legacylauncher</code></del></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/fn2006/PollyMC">PollyMC</a> - форк PolyMC с оффлайн аккаунтом/<a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/pollymc-bin">AUR</a>: <code>yay -S pollymc-bin</code></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/Octol1ttle/PrismLauncher-elyby">Prism Launcher</a> - форк с заменой учёток Mojang на Ely.by</li>
+</ol>
+<h3 id="ruchnoi-zapusk-jar-launchera-maina"><a class="anchor" href="#ruchnoi-zapusk-jar-launchera-maina">#</a>&nbsp;
+Ручной запуск jar лаунчера майна</h3>
+<p>Ручной запуск jar лаунчера майна</p>
+<p>Качаем необходимы пакеты</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> jre-openjdk jre-openjdk-headless java-runtime-common
+</span></code></pre>
+<p>Далее переходим (через терминал) в папку на скачанный jar файл майна и вводим для запуска</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">java -jar </span><span style="color:#ff9d00;">[</span><span style="color:#ffee80;">имяфайла</span><span style="color:#ff9d00;">]</span><span style="color:#ffee80;">.jar
+</span></code></pre>
+<h2 id="litsenzionnye-akkaunty"><a class="anchor" href="#litsenzionnye-akkaunty">#</a>&nbsp;
+Лицензионные аккаунты</h2>
+<p>Некоторые из них обладают возможностью скачиванию и обновлением модов прямо в клиенте</p>
+<ol>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://prismlauncher.org/">Prism Launcher</a>/<a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/prismlauncher-bin">AUR</a>: <code>yay -S prismlauncher-bin</code></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://polymc.org/">PolyMC</a>/<a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/polymc-bin">AUR</a>: <code>yay -S polymc-bin</code></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/MultiMC/Launcher">MultiMC</a>/<a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/multimc-bin">AUR</a>: <code>yay -S multimc-bin</code></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://atlauncher.com/">ATLauncher</a>/<a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/atlauncher-bin">AUR</a>: <code>yay -S atlauncher-bin</code></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://gdevs.io/">GDLauncher</a>/<a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/gdlauncher-bin">AUR</a>: <code>yay -S gdlauncher-bin</code></li>
+</ol>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

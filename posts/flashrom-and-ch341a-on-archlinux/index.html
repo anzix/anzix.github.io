@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>!Прошивальщик Flashrom+hexedit для ch341a на Arch Linux</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  !Прошивальщик Flashrom+hexedit для ch341a на Arch Linux
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-03-09T21:13:41+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux/">linux</a>
+
+         <a href="https://anzix.github.io/tags/flashrom/">flashrom</a>
+
+<br>
+
+
+	<aside id="toc-aside" class="toc">
+	    <details>
+			<summary>Оглавление</summary>
+	        <ol>
+	            <li>
+	                <a href="#protsedura-proshivaniia-chipa-na-primere-mx25l8005">Процедура прошивания чипа на примере MX25L8005</a>
+	                
+	            </li>
+	        </ol>
+		</details>
+	</aside>
+
+
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.youtube.com/watch?v=WyItt8FJWIs">Инструкция от Mental Outlaw</a></li>
+</ul>
+<p>Скачиваем через pacman пакет flashrom</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> flashrom
+</span></code></pre>
+<p>В данном примере у меня модифицированный ch341a чтобы он работал на безопасные для чипа выходной вольтаж 3.3v. На стандартных 5 вольтах <strong>!может!</strong> привести к выгоранию платы, всё из-за чипа для которого операции для чтения и записи выполняются с конкретным диапазоном (например в даташит чипа Macronix MX25L8005 работа с 2.7 до 3.6 v)</p>
+<p><img src="/images/flashrom-and-ch341a-on-archlinux/1660771428.png" alt="image" /></p>
+<p><strong><span style="color:red">!</span>Этот мод НЕ обязательно делать, это лишь моя рекомендация. Если у вас прямые руки и вы знаете что вы делаете<span style="color:red">!</span></strong></p>
+<p>Всё что нужно сделать так это отодвинуть вверх 28 пин на программаторе и припаять дорожку (у меня это отрезанный провод от пк спикера подогнанный под размер) к 3.3 вольт регулятору к ножке посередине</p>
+<p><img src="/images/flashrom-and-ch341a-on-archlinux/IMG_20220825_153247.jpg" alt="image" />
+<img src="/images/flashrom-and-ch341a-on-archlinux/IMG_20220807_001408.jpg" alt="image" />
+<img src="/images/flashrom-and-ch341a-on-archlinux/CH341a-mod.jpg" alt="image" /></p>
+<p>Кому интересно я оставлю ссылки на инструкции по моду ch341a</p>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://4pda.to/forum/index.php?showtopic=884713&amp;view=findpost&amp;p=79548366">Текст инструкция 4PDA</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.youtube.com/watch?v=HwnzzF645hA">Видеоинструкция 1</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.youtube.com/watch?v=-ln3VIZKKaE">Видеоинструкция 2</a></li>
+</ul>
+<p>Посмотреть что программатор подключен командой</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">lsusb
+</span></code></pre>
+<p>Вот так он у меня определился</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">Bus 001 Device 003: ID 1a86:5512 QinHeng Electronics CH341 in EPP/MEM/I2C mode, EPP/I2C adapter
+</span></code></pre>
+<p>Опции flashrom:</p>
+<ul>
+<li><code>-p</code> программатор [название]</li>
+<li><code>-r</code> читать</li>
+<li><code>-w</code> записать (автоматический очищает информацию с чипа)</li>
+</ul>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://linux.die.net/man/8/flashrom">Мануал по flashrom</a> (или просто ввести в терминале: <code>man flashrom</code>)
+<a rel="noopener nofollow noreferrer" target="_blank" href="https://flashrom.org/Supported_hardware">Список поддерживаемых чипов программой flashrom</a></p>
+<h2 id="protsedura-proshivaniia-chipa-na-primere-mx25l8005"><a class="anchor" href="#protsedura-proshivaniia-chipa-na-primere-mx25l8005">#</a>&nbsp;
+Процедура прошивания чипа на примере MX25L8005</h2>
+<p>Это вынимаемый bios чип из материнской платы ASrock G41M-S rev 1.02.</p>
+<p><img src="/images/flashrom-and-ch341a-on-archlinux/1660812885.png" alt="image" /></p>
+<p>На чипе прошивка версии 1.50 мы её прошьём до версии 1.00 программой flashrom</p>
+<p><img src="/images/flashrom-and-ch341a-on-archlinux/v1_50.jpg" alt="image" /></p>
+<p>Проверяем поддержку данного чипа на <a rel="noopener nofollow noreferrer" target="_blank" href="https://www.flashrom.org/Supported_hardware">вики flashrom</a>, как видим всё ОК</p>
+<p><img src="/images/flashrom-and-ch341a-on-archlinux/1660749562.png" alt="image" /></p>
+<p>Вставляем чип в программатор 25 серия чтобы выемка (ключ) смотрела в сторону рукоятки. После чего подключаем в ПК</p>
+<p><img src="/images/flashrom-and-ch341a-on-archlinux/image_2022-08-18_14-02-36.png" alt="image" /></p>
+<p>Проверяем чип на чтение, flashrom сам определяет название чипа но если при чтении выдаёт ошибки вставьте доп флаг <code>-c &lt;chipname&gt;</code></p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> flashrom</span><span style="color:#f9f9f9;"> -p</span><span style="color:#ffee80;"> ch341a_spi</span><span style="color:#f9f9f9;"> -r</span><span style="color:#ffee80;"> mx25l8005.bin
+</span></code></pre>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">flashrom v1.2 on Linux 5.19.1-zen1-1-zen (x86_64)
+</span><span style="color:#f9f9f9;">flashrom is free software, get the source code at https://flashrom.org
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">Using clock_gettime for delay loops (clk_id: 1, resolution: 1ns).
+</span><span style="color:#f9f9f9;">Found Macronix flash chip &quot;MX25L8005/MX25L8006E/MX25L8008E/MX25V8005&quot; (1024 kB, SPI) on ch341a_spi.
+</span><span style="color:#f9f9f9;">Reading flash... done.
+</span></code></pre>
+<p>Как видим всё прошло удачно</p>
+<p>Чтобы проверить контрольные суммы CRC32 дампа биоса вводим</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">cksum </span><span style="color:#ff9d00;">[</span><span style="color:#ffee80;">файл</span><span style="color:#ff9d00;">] </span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> например mx25l8005.bin
+</span></code></pre>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">3866296167 1048576 mx25l8005.bin
+</span></code></pre>
+<p>Сравнил таким образом контрольные суммы сдампленным AsProgrammer 1.4.1 из Windows 10 и могу с уверенностью сказать что суммы абсолютно идентичные</p>
+<p>Чтобы просмотреть код сдампленный с flashrom необходим <a rel="noopener nofollow noreferrer" target="_blank" href="https://archlinux.org/packages/extra/x86_64/hexedit/">hexedit</a></p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> hexedit
+</span></code></pre>
+<p>У утилиты нет Gui, всё будет показываться длинным списком в терминале</p>
+<blockquote>
+<p>Если хотите HEX редактор с интерфейсом:</p>
+</blockquote>
+<ul>
+<li>Gnone: <code>ghex</code></li>
+<li>KDE: <code>okteta</code></li>
+</ul>
+<p>Вводим в терминале с флагом добавлением цветов в выбираем наш дамп файл</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">hexedit --color</span><span style="color:#ffee80;"> mx25l8005.bin
+</span></code></pre>
+<p>Навигация:</p>
+<ul>
+<li>F1 - для вызова помощи, открывает man страницу</li>
+<li>PageDown/PageUp - быстро скроллить список</li>
+<li>Ctrl+c - выйти без сохранения</li>
+</ul>
+<p><img src="/images/flashrom-and-ch341a-on-archlinux/1660752136.png" alt="image" /></p>
+<p>Начинаем записывать прошивку 1.00 в чип, flashrom сама стерёт информацию с нашего чипа и запишет выбранный нами файл затем проверит на схожесть</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> flashrom</span><span style="color:#f9f9f9;"> -p</span><span style="color:#ffee80;"> ch341a_spi</span><span style="color:#f9f9f9;"> -w</span><span style="color:#ffee80;"> asrock</span><span style="color:#ff628c;">\ </span><span style="color:#ffee80;">g41m-s.BIN
+</span></code></pre>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">flashrom v1.2 on Linux 5.19.1-zen1-1-zen (x86_64)
+</span><span style="color:#f9f9f9;">flashrom is free software, get the source code at https://flashrom.org
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">Using clock_gettime for delay loops (clk_id: 1, resolution: 1ns).
+</span><span style="color:#f9f9f9;">Found Macronix flash chip &quot;MX25L8005/MX25L8006E/MX25L8008E/MX25V8005&quot; (1024 kB, SPI) on ch341a_spi.
+</span><span style="color:#f9f9f9;">Reading old flash chip contents... done.
+</span><span style="color:#f9f9f9;">Erasing and writing flash chip... Erase/write done.
+</span><span style="color:#f9f9f9;">Verifying flash... VERIFIED.
+</span></code></pre>
+<p>Если написано <strong>VERIFIED</strong> значит прошилось успешно</p>
+<p>Считываем дамп для проверки</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> flashrom</span><span style="color:#f9f9f9;"> -p</span><span style="color:#ffee80;"> ch341a_spi</span><span style="color:#f9f9f9;"> -r</span><span style="color:#ffee80;"> read1.bin
+</span></code></pre>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">flashrom v1.2 on Linux 5.19.1-zen1-1-zen (x86_64)
+</span><span style="color:#f9f9f9;">flashrom is free software, get the source code at https://flashrom.org
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">Using clock_gettime for delay loops (clk_id: 1, resolution: 1ns).
+</span><span style="color:#f9f9f9;">Found Macronix flash chip &quot;MX25L8005/MX25L8006E/MX25L8008E/MX25V8005&quot; (1024 kB, SPI) on ch341a_spi.
+</span><span style="color:#f9f9f9;">Reading flash... done.
+</span></code></pre>
+<p>Можно проверить запись данных через hexedit</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">hexedit --color</span><span style="color:#ffee80;"> read1.bin
+</span></code></pre>
+<p>Считайте дамп 3 раза</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> flashrom</span><span style="color:#f9f9f9;"> -p</span><span style="color:#ffee80;"> ch341a_spi</span><span style="color:#f9f9f9;"> -r</span><span style="color:#ffee80;"> read1.rom
+</span><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> flashrom</span><span style="color:#f9f9f9;"> -p</span><span style="color:#ffee80;"> ch341a_spi</span><span style="color:#f9f9f9;"> -r</span><span style="color:#ffee80;"> read2.rom
+</span><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> flashrom</span><span style="color:#f9f9f9;"> -p</span><span style="color:#ffee80;"> ch341a_spi</span><span style="color:#f9f9f9;"> -r</span><span style="color:#ffee80;"> read3.rom
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> И проверяем суммы CRC32 или md5sum
+</span><span style="color:#f9f9f9;">md5sum</span><span style="color:#ffee80;"> read1.rom read2.rom read3.rom
+</span></code></pre>
+<p>Скачанный из remont-aud.net дамп биоса</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">cksum</span><span style="color:#ffee80;"> asrock</span><span style="color:#ff628c;">\ </span><span style="color:#ffee80;">g41m-s.BIN
+</span></code></pre>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">2873525561 1048576 asrock g41m-s.BIN
+</span></code></pre>
+<p>Наш записанный прошивкой файл</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">cksum</span><span style="color:#ffee80;"> read1.bin
+</span></code></pre>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">2873525561 1048576 read1.bin
+</span></code></pre>
+<p>Как мы видим всё совпадает, теперь вынимаем из программатора вставляем обратно в мать и проверяем на работоспособность, как видно ниже всё прошло удачно версия биоса понижена (дата фото запоздалое)</p>
+<p><img src="/images/flashrom-and-ch341a-on-archlinux/v1_00.jpg" alt="image" /></p>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

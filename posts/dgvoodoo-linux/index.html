@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>!DgVoodoo и как его использовать вместе с DXVK для старых игр (ручной способ)</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  !DgVoodoo и как его использовать вместе с DXVK для старых игр (ручной способ)
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-03-04T17:14:24+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux-gaming/">linux-gaming</a>
+
+<br>
+
+
+
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.youtube.com/watch?v=XxqvRO2AMyU">Полезный видео гайд</a></li>
+</ul>
+<blockquote>
+<p>Как это происходит?</p>
+</blockquote>
+<p>Старая игра на DirectD3D 1-8 преобразовывается DgVoodoo в более современный DirectD3D 9/10/11 и DXVK в свою очередь переводит данные api в Vulkan</p>
+<blockquote>
+<p>Как узнать на какой версии DirectX игра?</p>
+</blockquote>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.pcgamingwiki.com/wiki/Home">pcgamingwiki</a></p>
+<p>Плюсы использования связки DgVoodoo+DXVK:</p>
+<ul>
+<li>Стабильно играть в старые игры</li>
+<li>Можно использовать разные переменные DXVK (такие как DXVK_FRAME_RATE и т.д)</li>
+<li>Никаких вылетов, даже используя Alt+Tab</li>
+<li>Mangohud появляется, и не пропадает (необходим <a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/lib32-mangohud">lib32-mangohud</a>)</li>
+<li>Запись и захват игры с помощью Obs происходит без каких-либо проблем</li>
+<li>В WM (Оконных менеджерах) нету никаких проблем, особенно с использованием композитора picom и переключении рабочих столов (тестировалось на i3wm)</li>
+<li>Отлично работает в Wayland сессии</li>
+</ul>
+<p>Работает на стандартном wine-staging</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -Sy</span><span style="color:#ffee80;"> wine-staging
+</span></code></pre>
+<p>Тестировалось на примере игры <a rel="noopener nofollow noreferrer" target="_blank" href="https://www.pcgamingwiki.com/wiki/Freedom_Fighters">Freedom Fighters</a></p>
+<p>Прописываем путь до своего префикса (слепок windows) и устанавливаем игру прописывая путь к setup.exe</p>
+<blockquote>
+<p>В процессе установки не забываем устанавливать игру в Z:\home\username\Games</p>
+</blockquote>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">WINEPREFIX</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">&quot;$</span><span style="color:#edef7d;">HOME</span><span style="color:#9eff80;">/.local/share/wineprefixes/FF</span><span style="color:#f9f9f9;">&quot; wine</span><span style="color:#ffee80;"> путь_к_setup.exe
+</span></code></pre>
+<p>Накатываем dxvk в префикс wine</p>
+<p><strong>Способ 1</strong> - при помощи AUR пакета <a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/dxvk-bin">dxvk-bin</a></p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">WINEPREFIX</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">&quot;$</span><span style="color:#edef7d;">HOME</span><span style="color:#9eff80;">/.local/share/wineprefixes/FF</span><span style="color:#f9f9f9;">&quot; setup_dxvk</span><span style="color:#ffee80;"> install
+</span></code></pre>
+<p><strong>Способ 2</strong> - используя winetricks</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">WINEPREFIX</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">&quot;$</span><span style="color:#edef7d;">HOME</span><span style="color:#9eff80;">/.local/share/wineprefixes/FF</span><span style="color:#f9f9f9;">&quot; winetricks -q</span><span style="color:#ffee80;"> dxvk
+</span></code></pre>
+<p>Затем накатываем dgVoodoo</p>
+<p>Для этого копируем 4 dll'ки внутри из <a rel="noopener nofollow noreferrer" target="_blank" href="http://dege.freeweb.hu/dgVoodoo2/dgVoodoo2/">скачанного dgvoodoo</a> <strong>/dgVoodoo2_79_3/MS/x86/</strong> в папку с игрой</p>
+<p>Пояснение по данным dll файлам:</p>
+<ul>
+<li>ddraw - Содержит все реализации DirectDraw до версии 7</li>
+<li>d3dimm.dll - Содержит все реализации Direct3D до версии 7.</li>
+<li>d3d8.dll - Содержит реализацию Direct3D 8.1.</li>
+<li>d3d9.dll - Содержит реализацию Direct3D 9.0c.</li>
+</ul>
+<blockquote>
+<p><strong>(Опционально)</strong> Также можно править вручную параметры в конфиге <strong>dgVoodoo2.conf</strong>.
+Или можно (используя default префикс) открыв через wine (не указывая префикс) файл dgVoodooCpl.exe и изменять там нужные для вас параметры и потом после сделанных изменений (нажав <strong>Apply</strong>) копируете модифицируемый <strong>dgVoodoo2.conf</strong> в папку игры</p>
+</blockquote>
+<p>Перед запуском игры необходимо дать указание wine использовать нативные dll'ки (т.е которые используются от dgvoodoo внутри игры) указав данную переменную.</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">WINEDLLOVERRIDES</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">d3d8,d3d9,d3dimm,ddraw=n,b</span><span style="color:#f9f9f9;">&quot;
+</span></code></pre>
+<p>Полный запуск с терминала:</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">DXVK_HUD</span><span style="color:#ff9d00;">=</span><span style="color:#3ad900;">compiler </span><span style="color:#f9f9f9;">DXVK_FRAME_RATE</span><span style="color:#ff9d00;">=</span><span style="color:#3ad900;">60 </span><span style="color:#f9f9f9;">obs-gamecapture</span><span style="color:#ffee80;"> mangohud gamemoderun WINEDLLOVERRIDES=</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">d3d8,d3d9,d3dimm,ddraw=n,b</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#ffee80;"> WINEPREFIX=</span><span style="color:#f9f9f9;">&quot;$</span><span style="color:#edef7d;">HOME</span><span style="color:#9eff80;">/.local/share/wineprefixes/FF</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#ffee80;"> wine </span><span style="color:#f9f9f9;">$HOME</span><span style="color:#ffee80;">/.local/share/wineprefixes/FF/drive_c/users/Public/Desktop/Freedom</span><span style="color:#ff628c;">\ </span><span style="color:#ffee80;">Fighters.lnk
+</span></code></pre>
+<p>Для созданного .desktop ярлыка:</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">....
+</span><span style="color:#f9f9f9;">Exec</span><span style="color:#ff9d00;">=</span><span style="color:#3ad900;">env </span><span style="color:#f9f9f9;">DXVK_HUD</span><span style="color:#ff9d00;">=</span><span style="color:#3ad900;">compiler </span><span style="color:#f9f9f9;">DXVK_FRAME_RATE</span><span style="color:#ff9d00;">=</span><span style="color:#3ad900;">60 </span><span style="color:#f9f9f9;">obs-gamecapture</span><span style="color:#ffee80;"> mangohud gamemoderun WINEDLLOVERRIDES=</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">d3d8,d3d9,d3dimm,ddraw=n,b</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#ffee80;"> WINEPREFIX=</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">/home/anix/.local/share/wineprefixes/FF</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#ffee80;"> wine C:</span><span style="color:#ff628c;">\\\\</span><span style="color:#ffee80;">users</span><span style="color:#ff628c;">\\\\</span><span style="color:#ffee80;">Public</span><span style="color:#ff628c;">\\\\</span><span style="color:#ffee80;">Desktop</span><span style="color:#ff628c;">\\\\</span><span style="color:#ffee80;">Freedom</span><span style="color:#ff628c;">\\</span><span style="color:#ffee80;"> Fighters.lnk
+</span><span style="color:#f9f9f9;">.....
+</span></code></pre>
+<p>ГОТОВО!</p>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

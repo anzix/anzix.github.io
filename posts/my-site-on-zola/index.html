@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>!Мои заметки при создании сайта используя zola</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  !Мои заметки при создании сайта используя zola
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-06-13T20:34:00+05:00</strong></p>
+
+
+
+	<aside id="toc-aside" class="toc">
+	    <details>
+			<summary>Оглавление</summary>
+	        <ol>
+	            <li>
+	                <a href="#etapy-sozdaniia-saita-github">Этапы создания сайта Github</a>
+	                
+	            </li><li>
+	                <a href="#kak-ispol-zovat-svoiu-sobstvennuiu-temu-dlia-sintaksisa-koda">Как использовать свою собственную тему для синтаксиса кода?</a>
+	                
+	            </li><li>
+	                <a href="#kak-dobavit-iakor-anchor-v-zola">Как добавить якорь (anchor) в zola?</a>
+	                
+	            </li><li>
+	                <a href="#kak-ispol-zovat-peremennye-dlia-rasshireniia-funktsionala-stranitsy-ispol-zuia-js">!Как использовать переменные для расширения функционала страницы используя js? (???)</a>
+	                
+	            </li><li>
+	                <a href="#kak-ukazat-poslednee-izmenenie-stat-i-i-spiske-postov">!Как указать последнее изменение статьи и списке постов?</a>
+	                
+	            </li><li>
+	                <a href="#kak-dobavit-poisk-na-veb-stranitse-v-zola-rabotaet">!Как добавить поиск на веб странице в zola? (Работает)</a>
+	                
+	            </li><li>
+	                <a href="#kak-dobavit-numeratsiiu-stranits">Как добавить нумерацию страниц?</a>
+	                
+	            </li><li>
+	                <a href="#kak-dobavit-v-stranitsu-page-html-pokazatel-tegov">Как добавить в страницу (page.html) показатель тегов?</a>
+	                
+	            </li><li>
+	                <a href="#pri-padding-e-v-bloke-code-na-pervoi-strochke-poiavliaetsia-pustoi-probel">При padding'е в блоке code на первой строчке появляется пустой пробел</a>
+	                
+	            </li>
+	        </ol>
+		</details>
+	</aside>
+
+
+<p>zola - это генератор статического сайта написанный на Rust</p>
+<h2 id="etapy-sozdaniia-saita-github"><a class="anchor" href="#etapy-sozdaniia-saita-github">#</a>&nbsp;
+Этапы создания сайта Github</h2>
+<p>Перед этим импортируем конфиги git</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">stow -vt </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;"> git
+</span></code></pre>
+<ol>
+<li>Создать пустое репо github <code>git init</code></li>
+<li>Вводим команды для добавления удалённого репозитория</li>
+</ol>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">git</span><span style="color:#ffee80;"> remote add origin </span><span style="color:#ff9d00;">[</span><span style="color:#ffee80;">url</span><span style="color:#ff9d00;">]
+</span><span style="color:#f9f9f9;">git</span><span style="color:#ffee80;"> branch</span><span style="color:#f9f9f9;"> -M</span><span style="color:#ffee80;"> main
+</span><span style="color:#f9f9f9;">git</span><span style="color:#ffee80;"> push</span><span style="color:#f9f9f9;"> -u</span><span style="color:#ffee80;"> origin main
+</span></code></pre>
+<ol start="3">
+<li>Создание токена<br />
+Переходим по <a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/settings/tokens/new?scopes=public_repo">ссылке для создания токена</a><br />
+После создания копируем его</li>
+</ol>
+<p>Заходим в настройки репозитория <strong>Settings</strong> - <strong>Secrets and variables</strong> - <strong>Actions</strong> - жмём на <strong>New repository secret</strong><br />
+И вставляем скопированный токен</p>
+<ol start="4">
+<li>На главной странице репозитория сайта жмём на <strong>Action</strong> - и на &quot;<strong>set up a workflow yourself</strong>&quot;</li>
+</ol>
+<p>Вставляем то что предлагает zola в документации по <a rel="noopener nofollow noreferrer" target="_blank" href="https://www.getzola.org/documentation/deployment/github-pages/">ссылке</a> и стартуем</p>
+<blockquote>
+<p>Если ветка не <strong>main</strong> а <strong>master</strong> тогда редактируем этот параметр в yml файле (не проверено)</p>
+</blockquote>
+<p>Финальный шаг: После в репо <strong>website</strong> в <strong>Settings</strong> - <strong>Pages</strong> - выставляем ветку вместо <strong>main</strong> на <strong>gh-pages</strong>, и сайт готов.</p>
+<h2 id="kak-ispol-zovat-svoiu-sobstvennuiu-temu-dlia-sintaksisa-koda"><a class="anchor" href="#kak-ispol-zovat-svoiu-sobstvennuiu-temu-dlia-sintaksisa-koda">#</a>&nbsp;
+Как использовать свою собственную тему для синтаксиса кода?</h2>
+<p>Создаём папку</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">mkdir</span><span style="color:#ffee80;"> site/syntaxes
+</span></code></pre>
+<p>Вставляем в эту папку свою темку, например <code>cobalt2.tmTheme</code></p>
+<p>Чтобы применить тему открываем <code>config.toml</code> и вставляем</p>
+<pre data-lang="toml" style="background-color:#2b303b;color:#ffffff;" class="language-toml "><code class="language-toml" data-lang="toml"><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Чтобы подхватить кастомную тему синтаксиса
+</span><span style="color:#9effff;">extra_syntaxes_and_themes </span><span style="color:#f9f9f9;">= [&quot;</span><span style="color:#9eff80;">syntaxes</span><span style="color:#f9f9f9;">&quot;]
+</span><span style="color:#9effff;">highlight_theme </span><span style="color:#f9f9f9;">= &quot;</span><span style="color:#9eff80;">cobalt2</span><span style="color:#f9f9f9;">&quot;
+</span></code></pre>
+<h2 id="kak-dobavit-iakor-anchor-v-zola"><a class="anchor" href="#kak-dobavit-iakor-anchor-v-zola">#</a>&nbsp;
+Как добавить якорь (anchor) в zola?</h2>
+<p>Создаём <code>site/templates/anchor-link.html</code> с данным содержанием</p>
+<pre data-lang="html" style="background-color:#2b303b;color:#ffffff;" class="language-html "><code class="language-html" data-lang="html"><span style="color:#f9f9f9;">&lt;!--</span><span style="font-style:italic;color:#0088ff;"> # &lt;- можно поменять на что угодно </span><span style="color:#f9f9f9;">--&gt;
+</span><span style="color:#f9f9f9;">&lt;</span><span style="color:#9effff;">a </span><span style="font-style:italic;color:#ffc600;">class</span><span style="color:#f9f9f9;">=&quot;</span><span style="color:#9eff80;">anchor</span><span style="color:#f9f9f9;">&quot; </span><span style="font-style:italic;color:#ffc600;">href</span><span style="color:#f9f9f9;">=&quot;</span><span style="color:#9eff80;">#{{ id }}</span><span style="color:#f9f9f9;">&quot;&gt;#&lt;/</span><span style="color:#9effff;">a</span><span style="color:#f9f9f9;">&gt;&amp;</span><span style="color:#ff628c;">nbsp</span><span style="color:#f9f9f9;">;
+</span></code></pre>
+<p>В <code>_index.md</code> самый конец вставляем содержимое</p>
+<pre data-lang="md" style="background-color:#2b303b;color:#ffffff;" class="language-md "><code class="language-md" data-lang="md"><span style="color:#f9f9f9;">+++
+</span><span style="color:#f9f9f9;">insert_anchor_links = &quot;left&quot;
+</span><span style="color:#f9f9f9;">+++
+</span></code></pre>
+<p>И последнее редактируем <code>style.css</code> чтобы придать вид якорю</p>
+<pre data-lang="css" style="background-color:#2b303b;color:#ffffff;" class="language-css "><code class="language-css" data-lang="css"><span style="color:#9effff;">h1</span><span style="color:#f9f9f9;">,
+</span><span style="color:#9effff;">h2</span><span style="color:#f9f9f9;">,
+</span><span style="color:#9effff;">h3</span><span style="color:#f9f9f9;">,
+</span><span style="color:#9effff;">h4</span><span style="color:#f9f9f9;">,
+</span><span style="color:#9effff;">h5</span><span style="color:#f9f9f9;">,
+</span><span style="color:#9effff;">h6 </span><span style="color:#f9f9f9;">{
+</span><span style="color:#f9f9f9;">  .anchor {
+</span><span style="color:#f9f9f9;">    </span><span style="color:#9df39f;">text-decoration</span><span style="color:#ffc600;">: </span><span style="color:#f6f080;">none</span><span style="color:#f9f9f9;">;
+</span><span style="color:#f9f9f9;">    </span><span style="color:#9df39f;">border-bottom-color</span><span style="color:#ffc600;">: </span><span style="color:#eb939a;">transparent</span><span style="color:#f9f9f9;">;
+</span><span style="color:#f9f9f9;">    </span><span style="color:#9df39f;">cursor</span><span style="color:#ffc600;">: </span><span style="color:#f6f080;">pointer</span><span style="color:#f9f9f9;">;
+</span><span style="color:#f9f9f9;">    </span><span style="color:#9df39f;">padding-left</span><span style="color:#ffc600;">: </span><span style="color:#edf080;">1</span><span style="color:#ff9d00;">rem</span><span style="color:#f9f9f9;">;
+</span><span style="color:#f9f9f9;">  }
+</span><span style="color:#f9f9f9;">}
+</span></code></pre>
+<h2 id="kak-ispol-zovat-peremennye-dlia-rasshireniia-funktsionala-stranitsy-ispol-zuia-js"><a class="anchor" href="#kak-ispol-zovat-peremennye-dlia-rasshireniia-funktsionala-stranitsy-ispol-zuia-js">#</a>&nbsp;
+!Как использовать переменные для расширения функционала страницы используя js? (???)</h2>
+<p>Например добавить возможность копировать код одной кнопкой</p>
+<p>Добавляем if (если) statement (утверждение) в <code>base.html</code></p>
+<pre data-lang="html" style="background-color:#2b303b;color:#ffffff;" class="language-html "><code class="language-html" data-lang="html"><span style="color:#f9f9f9;">{% if page.extra.copy_code %}
+</span><span style="color:#f9f9f9;">&lt;</span><span style="color:#9effff;">script </span><span style="font-style:italic;color:#ffc600;">src</span><span style="color:#f9f9f9;">=&quot;</span><span style="color:#9eff80;">/assets/js/copy.js</span><span style="color:#f9f9f9;">&quot;&gt;&lt;/</span><span style="color:#9effff;">script</span><span style="color:#f9f9f9;">&gt;
+</span><span style="color:#f9f9f9;">{% else %} {% if section.extra.copy_code %}
+</span><span style="color:#f9f9f9;">&lt;</span><span style="color:#9effff;">script </span><span style="font-style:italic;color:#ffc600;">src</span><span style="color:#f9f9f9;">=&quot;</span><span style="color:#9eff80;">/assets/js/copy.js</span><span style="color:#f9f9f9;">&quot;&gt;&lt;/</span><span style="color:#9effff;">script</span><span style="color:#f9f9f9;">&gt;
+</span><span style="color:#f9f9f9;">{% endif %} {% endif %}
+</span></code></pre>
+<blockquote>
+<p>Пояснение: Т.е если на какой-либо страничке <code>page.html</code> (<code>*.md</code>)
+или в секции <code>section.html</code> присутствует блок [extra]
+с данными аргументом переведённым в состояние <strong>true</strong>
+тогда будет выполнятся javascript файл</p>
+</blockquote>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">[extra]
+</span><span style="color:#f9f9f9;">copy_code = true
+</span></code></pre>
+<h2 id="kak-ukazat-poslednee-izmenenie-stat-i-i-spiske-postov"><a class="anchor" href="#kak-ukazat-poslednee-izmenenie-stat-i-i-spiske-postov">#</a>&nbsp;
+!Как указать последнее изменение статьи и списке постов?</h2>
+<p>Добавляем в <code>page.html</code></p>
+<pre data-lang="html" style="background-color:#2b303b;color:#ffffff;" class="language-html "><code class="language-html" data-lang="html"><span style="color:#f9f9f9;">...
+</span><span style="color:#f9f9f9;">&lt;</span><span style="color:#9effff;">li</span><span style="color:#f9f9f9;">&gt;
+</span><span style="color:#f9f9f9;">  {{[ page.date | date(format=&quot;%F&quot;) ]}}&lt;</span><span style="color:#9effff;">a </span><span style="font-style:italic;color:#ffc600;">href</span><span style="color:#f9f9f9;">=&quot;</span><span style="color:#9eff80;">{{ page.permalink | safe }}</span><span style="color:#f9f9f9;">&quot;&gt;
+</span><span style="color:#f9f9f9;">    {{ page.title }} &lt;/</span><span style="color:#9effff;">a
+</span><span style="color:#9effff;">  </span><span style="color:#f9f9f9;">&gt;(last edited: {{ page.date }})
+</span><span style="color:#f9f9f9;">&lt;/</span><span style="color:#9effff;">li</span><span style="color:#f9f9f9;">&gt;
+</span><span style="color:#f9f9f9;">...
+</span></code></pre>
+<h2 id="kak-dobavit-poisk-na-veb-stranitse-v-zola-rabotaet"><a class="anchor" href="#kak-dobavit-poisk-na-veb-stranitse-v-zola-rabotaet">#</a>&nbsp;
+!Как добавить поиск на веб странице в zola? (Работает)</h2>
+<p>Редактируем <code>config.toml</code> и меняем язык на <code>en</code> т.к я пока не знаю как сделать разделение на два языка, и чтобы это всё работало</p>
+<pre data-lang="toml" style="background-color:#2b303b;color:#ffffff;" class="language-toml "><code class="language-toml" data-lang="toml"><span style="color:#9effff;">defualt_language </span><span style="color:#f9f9f9;">= &quot;</span><span style="color:#9eff80;">en</span><span style="color:#f9f9f9;">&quot;
+</span></code></pre>
+<p>Там же добавляем данные опции чтобы генерировать индексацию поиска</p>
+<pre data-lang="toml" style="background-color:#2b303b;color:#ffffff;" class="language-toml "><code class="language-toml" data-lang="toml"><span style="color:#f9f9f9;">[</span><span style="color:#9effff;">search</span><span style="color:#f9f9f9;">]
+</span><span style="color:#9effff;">index_format </span><span style="color:#f9f9f9;">= &quot;</span><span style="color:#9eff80;">elasticlunr_json</span><span style="color:#f9f9f9;">&quot;
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Если установлено значение &quot;true&quot;, поисковый индекс строится из содержимого страниц
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> и раздела для `default_language`.
+</span><span style="color:#9effff;">build_search_index </span><span style="color:#f9f9f9;">= </span><span style="color:#ff628c;">true
+</span></code></pre>
+<p>Создаём папку (в url это будет отображаться так <code>http://127.0.0.1:1111/pages/search/</code>)</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">mkdir</span><span style="color:#ffee80;"> site/content/pages/
+</span><span style="color:#f9f9f9;">nvim</span><span style="color:#ffee80;"> site/content/pages/search.md
+</span></code></pre>
+<p>И в <code>search.md</code> вставляем шаблон страницы поиска</p>
+<pre data-lang="md" style="background-color:#2b303b;color:#ffffff;" class="language-md "><code class="language-md" data-lang="md"><span style="color:#f9f9f9;">+++
+</span><span style="color:#f9f9f9;">title = &quot;Поиск&quot;
+</span><span style="color:#f9f9f9;">template = &quot;search.html&quot;
+</span><span style="color:#f9f9f9;">+++
+</span></code></pre>
+<p>Затем создаём необходимый html шаблон поиска в template который мы указали в <code>search.md</code></p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">nvim</span><span style="color:#ffee80;"> site/template/search.html
+</span></code></pre>
+<pre data-lang="html" style="background-color:#2b303b;color:#ffffff;" class="language-html "><code class="language-html" data-lang="html"><span style="color:#f9f9f9;">{% extends &quot;base.html&quot; %} {% block content %}
+</span><span style="color:#f9f9f9;">&lt;</span><span style="color:#9effff;">article</span><span style="color:#f9f9f9;">&gt;
+</span><span style="color:#f9f9f9;">  &lt;</span><span style="color:#9effff;">header</span><span style="color:#f9f9f9;">&gt;
+</span><span style="color:#f9f9f9;">    &lt;!--</span><span style="font-style:italic;color:#0088ff;"> Имя заголовка отражается из содержимого content/pages/search.md </span><span style="color:#f9f9f9;">--&gt;
+</span><span style="color:#f9f9f9;">    &lt;</span><span style="color:#9effff;">h1</span><span style="color:#f9f9f9;">&gt;{{ page.title }}&lt;/</span><span style="color:#9effff;">h1</span><span style="color:#f9f9f9;">&gt;
+</span><span style="color:#f9f9f9;">  &lt;/</span><span style="color:#9effff;">header</span><span style="color:#f9f9f9;">&gt;
+</span><span style="color:#f9f9f9;">  &lt;</span><span style="color:#9effff;">section </span><span style="font-style:italic;color:#ffc600;">class</span><span style="color:#f9f9f9;">=&quot;</span><span style="color:#9eff80;">modal-card-body</span><span style="color:#f9f9f9;">&quot;&gt;
+</span><span style="color:#f9f9f9;">    &lt;</span><span style="color:#9effff;">div </span><span style="font-style:italic;color:#ffc600;">class</span><span style="color:#f9f9f9;">=&quot;</span><span style="color:#9eff80;">field mb-2</span><span style="color:#f9f9f9;">&quot;&gt;
+</span><span style="color:#f9f9f9;">      &lt;</span><span style="color:#9effff;">div </span><span style="font-style:italic;color:#ffc600;">class</span><span style="color:#f9f9f9;">=&quot;</span><span style="color:#9eff80;">control</span><span style="color:#f9f9f9;">&quot;&gt;
+</span><span style="color:#f9f9f9;">        &lt;</span><span style="color:#9effff;">input
+</span><span style="color:#9effff;">          </span><span style="font-style:italic;color:#ffc600;">class</span><span style="color:#f9f9f9;">=&quot;</span><span style="color:#9eff80;">input</span><span style="color:#f9f9f9;">&quot;
+</span><span style="color:#9effff;">          </span><span style="font-style:italic;color:#ffc600;">id</span><span style="color:#f9f9f9;">=&quot;</span><span style="color:#9eff80;">search</span><span style="color:#f9f9f9;">&quot;
+</span><span style="color:#9effff;">          </span><span style="font-style:italic;color:#ffc600;">placeholder</span><span style="color:#f9f9f9;">=&quot;</span><span style="color:#9eff80;">🔎  поиск</span><span style="color:#f9f9f9;">&quot;
+</span><span style="color:#9effff;">          </span><span style="font-style:italic;color:#ffc600;">type</span><span style="color:#f9f9f9;">=&quot;</span><span style="color:#9eff80;">search</span><span style="color:#f9f9f9;">&quot;
+</span><span style="color:#9effff;">        </span><span style="color:#f9f9f9;">/&gt;
+</span><span style="color:#f9f9f9;">      &lt;/</span><span style="color:#9effff;">div</span><span style="color:#f9f9f9;">&gt;
+</span><span style="color:#f9f9f9;">    &lt;/</span><span style="color:#9effff;">div</span><span style="color:#f9f9f9;">&gt;
+</span><span style="color:#f9f9f9;">    &lt;!--</span><span style="font-style:italic;color:#0088ff;">Вывод выхлопа результата из search.js</span><span style="color:#f9f9f9;">--&gt;
+</span><span style="color:#f9f9f9;">    &lt;</span><span style="color:#9effff;">div </span><span style="font-style:italic;color:#ffc600;">class</span><span style="color:#f9f9f9;">=&quot;</span><span style="color:#9eff80;">search-results</span><span style="color:#f9f9f9;">&quot;&gt;
+</span><span style="color:#f9f9f9;">      &lt;</span><span style="color:#9effff;">ul </span><span style="font-style:italic;color:#ffc600;">class</span><span style="color:#f9f9f9;">=&quot;</span><span style="color:#9eff80;">search-results__items</span><span style="color:#f9f9f9;">&quot;&gt;&lt;/</span><span style="color:#9effff;">ul</span><span style="color:#f9f9f9;">&gt;
+</span><span style="color:#f9f9f9;">    &lt;/</span><span style="color:#9effff;">div</span><span style="color:#f9f9f9;">&gt;
+</span><span style="color:#f9f9f9;">  &lt;/</span><span style="color:#9effff;">section</span><span style="color:#f9f9f9;">&gt;
+</span><span style="color:#f9f9f9;">  &lt;!--</span><span style="font-style:italic;color:#0088ff;">Здесь должны быть скрипты, но из-за бага в zola я не могу их вписать</span><span style="color:#f9f9f9;">--&gt;
+</span><span style="color:#f9f9f9;">&lt;/</span><span style="color:#9effff;">article</span><span style="color:#f9f9f9;">&gt;
+</span><span style="color:#f9f9f9;">{% endblock content %}
+</span></code></pre>
+<p>Скрипт <code>search.js</code> я взял из <a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/getzola/zola/blob/master/docs/static/search.js">исходников документации zola</a>,
+кладём его по пути <code>site/js/search.js</code></p>
+<p>Также в <code>style.css</code> я добавил отступ списка</p>
+<pre data-lang="css" style="background-color:#2b303b;color:#ffffff;" class="language-css "><code class="language-css" data-lang="css"><span style="color:#f9f9f9;">.</span><span style="color:#5fe461;">search-results__item </span><span style="color:#f9f9f9;">{
+</span><span style="color:#f9f9f9;">  </span><span style="color:#9df39f;">margin-bottom</span><span style="color:#ffc600;">: </span><span style="color:#edf080;">9</span><span style="color:#ff9d00;">px</span><span style="color:#f9f9f9;">;
+</span><span style="color:#f9f9f9;">}
+</span></code></pre>
+<p>Поиск готов!</p>
+<h2 id="kak-dobavit-numeratsiiu-stranits"><a class="anchor" href="#kak-dobavit-numeratsiiu-stranits">#</a>&nbsp;
+Как добавить нумерацию страниц?</h2>
+<p>Указываем в <code>_index.md</code> число страниц которые будут появляться в нумерации, без этого у нас будет просто пустой список страниц</p>
+<pre data-lang="md" style="background-color:#2b303b;color:#ffffff;" class="language-md "><code class="language-md" data-lang="md"><span style="color:#f9f9f9;">...
+</span><span style="color:#f9f9f9;">paginate_by = 30
+</span></code></pre>
+<p>Далее редактируем <code>posts.html</code> (или <code>blogs.html</code>) добавляя саму нумерацию</p>
+<p>В функции <strong>for</strong> вместо <strong>section</strong> меняем на <strong>paginate</strong>. И добавляем навигационный тег <strong>nav</strong></p>
+<pre data-lang="html" style="background-color:#2b303b;color:#ffffff;" class="language-html "><code class="language-html" data-lang="html"><span style="color:#f9f9f9;">{% for page in paginate.pages %} ...
+</span><span style="color:#f9f9f9;">&lt;</span><span style="color:#9effff;">nav </span><span style="font-style:italic;color:#ffc600;">class</span><span style="color:#f9f9f9;">=&quot;</span><span style="color:#9eff80;">navigation</span><span style="color:#f9f9f9;">&quot;&gt;
+</span><span style="color:#f9f9f9;">  {% if paginator.previous %}
+</span><span style="color:#f9f9f9;">  &lt;</span><span style="color:#9effff;">a </span><span style="font-style:italic;color:#ffc600;">class</span><span style="color:#f9f9f9;">=&quot;</span><span style="color:#9eff80;">navigation-prev</span><span style="color:#f9f9f9;">&quot; </span><span style="font-style:italic;color:#ffc600;">href</span><span style="color:#f9f9f9;">=&quot;</span><span style="color:#9eff80;">{{ paginator.previous }}</span><span style="color:#f9f9f9;">&quot;&gt;‹ Предыдущая&lt;/</span><span style="color:#9effff;">a</span><span style="color:#f9f9f9;">&gt;
+</span><span style="color:#f9f9f9;">  {% endif %} {% if paginator.next %}
+</span><span style="color:#f9f9f9;">  &lt;</span><span style="color:#9effff;">a </span><span style="font-style:italic;color:#ffc600;">class</span><span style="color:#f9f9f9;">=&quot;</span><span style="color:#9eff80;">navigation-next</span><span style="color:#f9f9f9;">&quot; </span><span style="font-style:italic;color:#ffc600;">href</span><span style="color:#f9f9f9;">=&quot;</span><span style="color:#9eff80;">{{ paginator.next }}</span><span style="color:#f9f9f9;">&quot;&gt;Следующая ›&lt;/</span><span style="color:#9effff;">a</span><span style="color:#f9f9f9;">&gt;
+</span><span style="color:#f9f9f9;">  {% endif %}
+</span><span style="color:#f9f9f9;">&lt;/</span><span style="color:#9effff;">nav</span><span style="color:#f9f9f9;">&gt;
+</span></code></pre>
+<h2 id="kak-dobavit-v-stranitsu-page-html-pokazatel-tegov"><a class="anchor" href="#kak-dobavit-v-stranitsu-page-html-pokazatel-tegov">#</a>&nbsp;
+Как добавить в страницу (page.html) показатель тегов?</h2>
+<p>Добавляем функцию в <code>page.html</code></p>
+<pre data-lang="html" style="background-color:#2b303b;color:#ffffff;" class="language-html "><code class="language-html" data-lang="html"><span style="color:#f9f9f9;">...
+</span><span style="color:#f9f9f9;">{% if page.taxonomies.tags %}
+</span><span style="color:#f9f9f9;">    {% for tag in page.taxonomies.tags %}
+</span><span style="color:#f9f9f9;">         &lt;</span><span style="color:#9effff;">a </span><span style="font-style:italic;color:#ffc600;">href</span><span style="color:#f9f9f9;">=&quot;</span><span style="color:#9eff80;">{{ get_taxonomy_url(kind=</span><span style="color:#f9f9f9;">&quot;</span><span style="font-style:italic;color:#ffc600;">tags</span><span style="background-color:#800f00;font-style:italic;color:#f8f8f8;">&quot;</span><span style="font-style:italic;color:#ffc600;">, name</span><span style="color:#f9f9f9;">=</span><span style="color:#3ad900;">tag) </span><span style="font-style:italic;color:#ffc600;">}}</span><span style="background-color:#800f00;font-style:italic;color:#f8f8f8;">&quot;</span><span style="color:#f9f9f9;">&gt;#{{ tag }}&lt;/</span><span style="color:#9effff;">a</span><span style="color:#f9f9f9;">&gt;
+</span><span style="color:#f9f9f9;">{% endfor %}
+</span><span style="color:#f9f9f9;">&lt;</span><span style="color:#9effff;">br</span><span style="color:#f9f9f9;">&gt;
+</span><span style="color:#f9f9f9;">&lt;</span><span style="color:#9effff;">br</span><span style="color:#f9f9f9;">&gt;
+</span><span style="color:#f9f9f9;">...
+</span></code></pre>
+<h2 id="pri-padding-e-v-bloke-code-na-pervoi-strochke-poiavliaetsia-pustoi-probel"><a class="anchor" href="#pri-padding-e-v-bloke-code-na-pervoi-strochke-poiavliaetsia-pustoi-probel">#</a>&nbsp;
+При padding'е в блоке code на первой строчке появляется пустой пробел</h2>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://stackoverflow.com/questions/35999212/css-padding-left-value-of-code-is-applied-for-only-the-first-line">Источник</a></li>
+</ul>
+<p><img src="/images/my-site-on-zola/Screenshot_20230612_135739.png" alt="image" /></p>
+<p>РЕШЕНИЕ: Необходимо было добавить <code>display: inline-block;</code></p>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>Lgogdownloader - закачка оффлайн установщиков игр из GOG</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  Lgogdownloader - закачка оффлайн установщиков игр из GOG
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-03-03T12:23:40+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux-gaming/">linux-gaming</a>
+
+<br>
+
+
+	<aside id="toc-aside" class="toc">
+	    <details>
+			<summary>Оглавление</summary>
+	        <ol>
+	            <li>
+	                <a href="#ispravlenie-baga-lgogdownloader-pri-skachivanii-odnoi-igry">Исправление бага lgogdownloader при скачивании одной игры</a>
+	                
+	            </li>
+	        </ol>
+		</details>
+	</aside>
+
+
+<ul>
+<li>https://github.com/Sude-/lgogdownloader</li>
+</ul>
+<p>Качаем <a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/lgogdownloader">aur пакет</a></p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">yay -S</span><span style="color:#ffee80;"> lgogdownloader
+</span></code></pre>
+<p>И логинимся</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">lgogdownloader --login
+</span></code></pre>
+<p>Почему-то вылезла ошибка логина, хотя все реквизиты ввёл правильно</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">Login</span><span style="color:#ffee80;"> form contains reCAPTCHA (https://www.google.com/recaptcha/</span><span style="color:#f9f9f9;">)
+</span><span style="color:#f9f9f9;">Try</span><span style="color:#ffee80;"> to login later or compile LGOGDownloader with</span><span style="color:#f9f9f9;"> -DUSE_QT_GUI</span><span style="color:#ff9d00;">=</span><span style="color:#ffee80;">ON
+</span><span style="color:#f9f9f9;">HTTP:</span><span style="color:#ffee80;"> Login failed
+</span></code></pre>
+<p>Решил скачать <a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/lgogdownloader-qt5">qt5 версию</a></p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">yay -S</span><span style="color:#ffee80;"> lgogdownloader-qt5
+</span></code></pre>
+<p>Логинимся (при вводе пароля вылезает gog'овское окно логина)</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">lgogdownloader --enable-login-gui
+</span></code></pre>
+<p>И после него всё прошло успешно</p>
+<p>Просмотреть список всех игр из библиотеки</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">lgogdownloader --list
+</span></code></pre>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#ff80e1;">~</span><span style="color:#ffee80;"> ❯ lgogdownloader</span><span style="color:#f9f9f9;"> --list
+</span><span style="color:#f9f9f9;">Getting</span><span style="color:#ffee80;"> game names (2/2</span><span style="color:#f9f9f9;">) 66</span><span style="color:#ffee80;"> / 66
+</span><span style="color:#f9f9f9;">a_plague_tale_requiem_digital_goodie_pack
+</span><span style="color:#f9f9f9;">ad_2044
+</span><span style="color:#f9f9f9;">absolute_drift </span><span style="color:#ff9d00;">[</span><span style="color:#ffee80;">1</span><span style="color:#ff9d00;">]
+</span><span style="color:#f9f9f9;">akalabeth_world_of_doom </span><span style="color:#ff9d00;">[</span><span style="color:#ffee80;">1</span><span style="color:#ff9d00;">]
+</span><span style="color:#f9f9f9;">alders_blood_prologue </span><span style="color:#ff9d00;">[</span><span style="color:#ffee80;">1</span><span style="color:#ff9d00;">]
+</span><span style="color:#f9f9f9;">arma_cold_war_assault
+</span><span style="color:#f9f9f9;">ascendant
+</span><span style="color:#f9f9f9;">beautiful_desolation_game
+</span><span style="color:#f9f9f9;">beneath_a_steel_sky </span><span style="color:#ff9d00;">[</span><span style="color:#ffee80;">1</span><span style="color:#ff9d00;">]
+</span><span style="color:#f9f9f9;">bio_menace </span><span style="color:#ff9d00;">[</span><span style="color:#ffee80;">1</span><span style="color:#ff9d00;">]
+</span><span style="color:#f9f9f9;">brigador </span><span style="color:#ff9d00;">[</span><span style="color:#ffee80;">1</span><span style="color:#ff9d00;">]
+</span><span style="color:#f9f9f9;">builders_of_egypt_prologue
+</span><span style="color:#f9f9f9;">butcher
+</span><span style="color:#f9f9f9;">carmageddon_tdr_2000
+</span><span style="color:#f9f9f9;">cayne
+</span><span style="color:#f9f9f9;">....
+</span></code></pre>
+<p><span style="color:gray">Серые</span> названия игр обозначают наличием только Windows порта.
+<span style="color:green">Зелёные</span> с цифрой <span style="color:green">[1]</span> - это значит что у данной игры есть нативный порт под Linux т.е будет скачан установочный shell скрипт</p>
+<p>Чтобы скачать Linux порт вводим (название игры должно быть таким-же)</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">lgogdownloader --platform</span><span style="color:#ff9d00;">=</span><span style="color:#ffee80;">linux</span><span style="color:#f9f9f9;"> --download --game</span><span style="color:#ffee80;"> absolute_drift
+</span></code></pre>
+<p>Пояснение по основным опциям:</p>
+<ul>
+<li><code>--platform=linux</code> - установщик игры будет под Linux</li>
+<li><code>--exclude=extras</code> - исключает extra контент (мануалы, обои, саундтреки) из закачки</li>
+<li><code>--download</code> - команда скачать</li>
+<li><code>--game [название_игры]</code> - объяснению не нуждается</li>
+</ul>
+<p><strong>Важно</strong>: Место установщика который вы будете скачивать будет зависеть от того в каком каталоге вы находитесь, задать это можно вручную добавив опцию <code>--directory</code></p>
+<p>Пример: <code>--directory=/home/[user_name]/Games/Gog_installers</code></p>
+<p>После скачивания появится установочный shell скрипт <code>absolute_drift_4e17697_55731.sh</code>
+Только перед запуском его необходимо изменить права доступа на исполнение через проводник или командной строкой</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">chmod</span><span style="color:#ffee80;"> +x </span><span style="color:#ff9d00;">[</span><span style="color:#ffee80;">установочный shell скрипт</span><span style="color:#ff9d00;">]
+</span></code></pre>
+<p>Запускаем
+<img src="/images/lgogdownloader-archlinux/1667058827.png" alt="image" /></p>
+<p>Чтобы скачать Windows установщик (для дальнейшего использования с wine'ом) убираем параметр <code>--platform=linux</code></p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">lgogdownloader --download --game</span><span style="color:#ffee80;"> absolute_drift
+</span></code></pre>
+<p>После скачивания wine'ом указывая префикс и следом путь к exe установщику, всё как обычно</p>
+<h2 id="ispravlenie-baga-lgogdownloader-pri-skachivanii-odnoi-igry"><a class="anchor" href="#ispravlenie-baga-lgogdownloader-pri-skachivanii-odnoi-igry">#</a>&nbsp;
+Исправление бага lgogdownloader при скачивании одной игры</h2>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/ssokolow/profile/blob/0e1bb67e1c83b58e2c49d89b06b1fd3928273614/home/.common_sh_init/aliases#L120-L137">Сурс откуда я брал псевдонимы</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://gitlab.com/anzix/dotfiles/-/blob/master/base/zsh/.config/zsh/aliases.zsh#L125-140">Сурс на мои подправленные псевдонимы Gitlab</a></li>
+</ul>
+<p>Когда пытаешься скачать установщик к примеру the_witcher, lgogdownloader зачем-то скачивает и второй Ведьмак (the_witcher_2) который я даже не указывал. Это сильно раздражает</p>
+<p><img src="/images/lgogdownloader-archlinux/swappy-20221030-004734.png" alt="image" />
+<span style="color:green">Исправить</span> это я нашёл только благодаря созданию псевдонимам (alias) и их использованию</p>
+<p>Копируем и вставляем мои созданные псевдонимы в .zshrc или .bashrc</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> lgogdownloader обвёртка
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Псевдонимы для более удобного синтаксиса argv загрузчика GOG
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Source: https://github.com/ssokolow/profile/blob/master/home/.common_sh_init/aliases
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#ffb054;">alias </span><span style="color:#f9f9f9;">\
+</span><span style="color:#ffee80;"> </span><span style="color:#ffc600;">gog</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">lgogdownloader</span><span style="color:#f9f9f9;">&quot; \
+</span><span style="color:#ffee80;"> </span><span style="color:#f9f9f9;">gogl</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">lgogdownloader --list</span><span style="color:#f9f9f9;">&quot;
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Win установщик с бонусами
+</span><span style="color:#ffc600;">gogd</span><span style="color:#f9f9f9;">() { </span><span style="color:#ffc600;">local </span><span style="color:#f9f9f9;">IFS</span><span style="color:#ff9d00;">=| </span><span style="color:#f9f9f9;">lgogdownloader --retries</span><span style="color:#ff9d00;">=</span><span style="color:#ffee80;">7</span><span style="color:#f9f9f9;"> --download --game &quot;</span><span style="color:#9eff80;">^(</span><span style="color:#f9f9f9;">$</span><span style="color:#ff80e1;">*</span><span style="color:#9eff80;">)</span><span style="color:#80ff82;">\$</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#ff9d00;">;</span><span style="color:#f9f9f9;">}
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Win установщик без бонусов
+</span><span style="color:#ffc600;">gogu</span><span style="color:#f9f9f9;">() { </span><span style="color:#ffc600;">local </span><span style="color:#f9f9f9;">IFS</span><span style="color:#ff9d00;">=| </span><span style="color:#f9f9f9;">lgogdownloader --retries</span><span style="color:#ff9d00;">=</span><span style="color:#ffee80;">7</span><span style="color:#f9f9f9;"> --download --exclude</span><span style="color:#ff9d00;">=</span><span style="color:#ffee80;">extras</span><span style="color:#f9f9f9;"> --game &quot;</span><span style="color:#9eff80;">^(</span><span style="color:#f9f9f9;">$</span><span style="color:#ff80e1;">*</span><span style="color:#9eff80;">)</span><span style="color:#80ff82;">\$</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#ff9d00;">;</span><span style="color:#f9f9f9;">}
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Linux установщик с бонусами
+</span><span style="color:#ffc600;">lgogd</span><span style="color:#f9f9f9;">() { </span><span style="color:#ffc600;">local </span><span style="color:#f9f9f9;">IFS</span><span style="color:#ff9d00;">=| </span><span style="color:#f9f9f9;">lgogdownloader --retries</span><span style="color:#ff9d00;">=</span><span style="color:#ffee80;">7</span><span style="color:#f9f9f9;"> --download --platform</span><span style="color:#ff9d00;">=</span><span style="color:#ffee80;">linux</span><span style="color:#f9f9f9;"> --game &quot;</span><span style="color:#9eff80;">^(</span><span style="color:#f9f9f9;">$</span><span style="color:#ff80e1;">*</span><span style="color:#9eff80;">)</span><span style="color:#80ff82;">\$</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#ff9d00;">;</span><span style="color:#f9f9f9;">}
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Linux установщик без бонусов
+</span><span style="color:#ffc600;">lgogu</span><span style="color:#f9f9f9;">() { </span><span style="color:#ffc600;">local </span><span style="color:#f9f9f9;">IFS</span><span style="color:#ff9d00;">=| </span><span style="color:#f9f9f9;">lgogdownloader --retries</span><span style="color:#ff9d00;">=</span><span style="color:#ffee80;">7</span><span style="color:#f9f9f9;"> --download --exclude</span><span style="color:#ff9d00;">=</span><span style="color:#ffee80;">extras</span><span style="color:#f9f9f9;"> --platform</span><span style="color:#ff9d00;">=</span><span style="color:#ffee80;">linux</span><span style="color:#f9f9f9;"> --game &quot;</span><span style="color:#9eff80;">^(</span><span style="color:#f9f9f9;">$</span><span style="color:#ff80e1;">*</span><span style="color:#9eff80;">)</span><span style="color:#80ff82;">\$</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#ff9d00;">;</span><span style="color:#f9f9f9;">}
+</span></code></pre>
+<p>Теперь если юзать данные псевдонимы, lgogdownloader будет нормально воспринимать названия игры и будет выдавать то что вы написали, ничего лишнего
+<img src="/images/lgogdownloader-fix.png" alt="image" /></p>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
