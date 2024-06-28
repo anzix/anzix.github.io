@@ -309,6 +309,10 @@ sudo chmod 775 /var/lib/AccountsService/
 sudo chmod 1770 /var/lib/gdm/
 ```
 
+## TODO: Для пользователей systemd-boot
+
+- [Github страница](https://github.com/lepz0r/snapper-systemd-boot.sh)
+
 ## Итоги и проблемы
 
 > После проделанных операций, окружением гном и его дисплей менеджер gdm позволяет загрузится в снимок\
