@@ -38,6 +38,13 @@ sudo flatpak override --filesystem=xdg-config/gtk-3.0:ro
 sudo flatpak override --filesystem=xdg-config/gtk-4.0:ro
 ```
 
+Включите курсоры и значки мыши в Flatpak (таким образом курсор мыши будет отображаться правильно).
+
+```bash
+flatpak --user override --filesystem=/home/$USER/.icons/:ro
+flatpak --user override --filesystem=/usr/share/icons/:ro
+```
+
 Установка программ с Flathub
 
 ```bash
