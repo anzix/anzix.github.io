@@ -16,7 +16,7 @@ tags = ["linux"]
 Для глобальной внешности QT 5/6 качаем все эти пакеты
 
 ```sh
-yay -S qt5ct qt6ct kvantum kvantum-theme-libadwaita-git qadwaitadecorations-qt6
+yay -S qt5ct qt6ct kvantum kvantum-theme-libadwaita-git qadwaitadecorations-qt6 qadwaitadecorations-qt5
 ```
 
 Пояснение по пакетам:
@@ -37,7 +37,7 @@ echo 'theme=KvLibadwaitaDark' > ~/.config/Kvantum/kvantum.kvconfig
 Выбираем kvantum или kvantum-dark в качестве стиля темы.\
 Применяем изменения.
 
-И выставляем переменные в ``~/.config/environment.d/*`` или ``/etc/environment``
+И выставляем переменные в ``~/.config/environment.d/50-gnome.conf`` или ``/etc/environment``
 
 ```conf
 # Для последовательного стиля приложений Qt
@@ -106,6 +106,7 @@ gsettings list-recursively | grep [опция]
 - [middleclickclose](https://github.com/p91paul/middleclickclose)
 - [Угол показа обзора вниз](https://github.com/jdoda/hotedge): [AUR](https://aur.archlinux.org/packages/gnome-shell-extension-hot-edge-git)
 - [gnome-shell-extension-disable-unredirect](https://github.com/kazysmaster/gnome-shell-extension-disable-unredirect) - без него во многих играх в полноэкранном режиме не показывается курсор
+- [Тряска курсора для его нахождения как в MacOS](https://github.com/jeffchannell/jiggle)
 
 ## GTK Пакеты для GNOME (Flatpak)
 
