@@ -7,6 +7,34 @@ categories = []
 tags = ["linux-gaming"]
 +++
 
+## Авто процесс создания архивированных резервных копий файлов сохранений игры
+
+Например я хочу упростить или сделать автоматическим процесс создания\
+архивированных резервных копий файлов сохранений одиночной игры.\
+Я бы хотел, чтобы у них была временная метка, чтобы они не перезаписывали друг друга.
+
+Вероятно, лучше всего запустить процесс архивации после завершения вашей игры. Напр.
+
+Скачиваем пакет `zip`
+
+```sh
+sudo pacman -S zip
+```
+
+Архивируем сейвы игры когда игра закрывается, zip архив будет находится в $HOME
+
+```sh
+wine thegame.exe && zip -r "saves-$(date +%s).zip" /путь_до_saves/
+```
+
+Вариант для `.desktop` ярлыка lutris, на примере игры Lego Harry Potter: Years 1-4
+
+```txt
+...
+Exec=env LUTRIS_SKIP_INIT=1 lutris lutris:rungameid/1 && zip -r "saves-$(date +%s).zip" "/home/user/Games/gog/lego-harry-potter-years-1-4/drive_c/users/anix/AppData/Roaming/WB Games/LEGO® Harry Potter™/SavedGames"
+...
+```
+
 ## (X11 Xorg) Ручное восстановление гаммы при выходе из игры wine
 
 - [Источник_1](https://steamcommunity.com/app/253980/discussions/0/2741975115063956992/)
@@ -24,7 +52,7 @@ sudo pacman -S xorg-xgamma
 xgamma -gamma 1
 ```
 
-## Wine. Запуск bat-файлов («батников») 2 варианта.
+## Wine. Запуск bat-файлов («батников») 2 варианта
 
 Их запуск отличается от запуска exe-файлов.
 
@@ -80,6 +108,10 @@ WINEDEBUG=+loaddll WINEPREFIX="/home/$USER/.wine" wine notepad &> wine-dll-log.t
 ```sh
 WINEPREFIX="prefix_name" winetricks win10
 ```
+
+## Как удалить библиотеки которые были установлены через winetricks?
+
+В `winecfg` разделе библиотеки те что `*` удаляем и всё востановлено
 
 ## Интересное применение переопределений для wine
 
