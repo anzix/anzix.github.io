@@ -19,13 +19,12 @@ build_search_index = true
 minify_html = false
 
 # Если установлено значение "true", atom/rss фид генерируется автоматически.
-generate_feed = true
-generate_rss = true
+generate_feeds = true
 
 # Имя файла для фида. Также используется как имя файла шаблона.
 # По умолчанию "atom.xml", который имеет встроенный шаблон, отображающий ленту Atom 1.0.
 # Существует также встроенный шаблон "rss.xml", который отображает канал RSS 2.0.
-feed_filename = "rss.xml"
+feed_filenames = ["rss.xml"]
 
 
 # Количество статей для включения в фид rss ленту. Все элементы включены,
