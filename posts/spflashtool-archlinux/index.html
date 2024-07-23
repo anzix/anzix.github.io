@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>SPFlashTool (Версия 5) на Arch Linux (софт на работу не проверен)</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  SPFlashTool (Версия 5) на Arch Linux (софт на работу не проверен)
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-03-02T19:00:29+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux/">linux</a>
+
+<br>
+
+
+
+<p>При подключении телефона с процессором mediatek</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">...
+</span><span style="color:#ffb054;">[</span><span style="color:#ffee80;"> +13,240631] usb 1-1.1: new high-speed USB device number 10 using ehci-pci
+</span><span style="color:#ffb054;">[</span><span style="color:#ffee80;">  +0,078864] usb 1-1.1: New USB device found, idVendor</span><span style="color:#ff9d00;">=</span><span style="color:#ffee80;">0e8d, idProduct</span><span style="color:#ff9d00;">=</span><span style="color:#ffee80;">2000, bcdDevice</span><span style="color:#ff9d00;">=</span><span style="color:#ffee80;"> 1.00
+</span><span style="color:#ffb054;">[</span><span style="color:#ffee80;">  +0,000005] usb 1-1.1: New USB device strings: Mfr</span><span style="color:#ff9d00;">=</span><span style="color:#ffee80;">1, Product</span><span style="color:#ff9d00;">=</span><span style="color:#ffee80;">2, SerialNumber</span><span style="color:#ff9d00;">=</span><span style="color:#ffee80;">0
+</span><span style="color:#ffb054;">[</span><span style="color:#ffee80;">  +0,000001] usb 1-1.1: Product: MT65xx Preloader
+</span><span style="color:#ffb054;">[</span><span style="color:#ffee80;">  +0,000001] usb 1-1.1: Manufacturer: MediaTek
+</span><span style="color:#ffb054;">[</span><span style="color:#ffee80;">  +0,021773] cdc_acm 1-1.1:1.0: Zero length descriptor references
+</span><span style="color:#ffb054;">[</span><span style="color:#ffee80;">  +0,000005] cdc_acm: probe of 1-1.1:1.0 failed with error -22
+</span><span style="color:#ffb054;">[</span><span style="color:#ffee80;">  +0,080230] cdc_acm 1-1.1:1.1: ttyACM0: USB ACM device
+</span><span style="color:#f9f9f9;">[ноя18</span><span style="color:#ffee80;"> 00:29] usb 1-1.1: USB disconnect, device number 10
+</span><span style="color:#f9f9f9;">...
+</span></code></pre>
+<p>Добавляем своего пользователя в группу uucp, для того чтобы были права на запись в виртуальный COM-порт</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> usermod</span><span style="color:#f9f9f9;"> -aG</span><span style="color:#ffee80;"> uucp </span><span style="color:#f9f9f9;">$(whoami)
+</span></code></pre>
+<p>В новой версии SPFlashTool 6 <a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/spflashtool-bin">spflashtool-bin</a> не могу найти поле с "Scatter-loading File"
+и "Download-Agent File". Окей, прожал комбинацию клавиш <kbd><kbd>CTRL</kbd>+<kbd>ALT</kbd>+<kbd>v</kbd></kbd> открылись доп-ные поля и появился "Download-Agent File" НО "Scatter-loading File" <strong>нету</strong></p>
+<p>Для скачивания <span style="color:green">НОРМАЛЬНОЙ</span> версии с наличием заливки scatter файла вот что мне пришлось сделать</p>
+<p>Дабы не пришлось собирать <a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/qtwebkit">qtwebkit</a> (который подтягивает очень много зависимостей для сборки) просто соберите бинарник <a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/qtwebkit-bin">qtwebkit-bin</a> и ваше время и нервы будут сохранены :)</p>
+<p><img src="/images/SPFlashTool-ArchLinux/swappy-20221118-151453.png" alt="image" /></p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">yay -S</span><span style="color:#ffee80;"> qtwebkit-bin
+</span></code></pre>
+<p>Далее просто собираем 5 версию бинарника <a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/spflashtool5-bin">spflashtool5-bin</a> с наличием заливки scatter файла</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">yay -S</span><span style="color:#ffee80;"> spflashtool5-bin
+</span></code></pre>
+<p>Вуаля, это заняло мне 5 минут
+<img src="/images/SPFlashTool-ArchLinux/1668766134.png" alt="image" /></p>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

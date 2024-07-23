@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>!Принтер KYOCERA FS-1060DN на Arch Linux</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  !Принтер KYOCERA FS-1060DN на Arch Linux
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-03-06T20:40:11+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux/">linux</a>
+
+<br>
+
+
+
+<p>При подключении dmesg выводил</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">[ноя 9 16:35] usb 1-1.1: new high-speed USB device number 4 using ehci-pci
+</span><span style="color:#f9f9f9;">[  +0,079051] usb 1-1.1: New USB device found, idVendor=0482, idProduct=0494, bcdDevice= 2.27
+</span><span style="color:#f9f9f9;">[  +0,000003] usb 1-1.1: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+</span><span style="color:#f9f9f9;">[  +0,000002] usb 1-1.1: Product: FS-1060DN
+</span><span style="color:#f9f9f9;">[  +0,000001] usb 1-1.1: Manufacturer: Kyocera
+</span><span style="color:#f9f9f9;">[  +0,000001] usb 1-1.1: SerialNumber: NW92Z02857
+</span><span style="color:#f9f9f9;">[  +0,009150] usblp 1-1.1:1.0: usblp0: USB Bidirectional printer dev 4 if 0 alt 0 proto 2 vid 0x0482 pid 0x0494
+</span><span style="color:#f9f9f9;">[  +0,000031] usbcore: registered new interface driver usblp
+</span></code></pre>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">lsusb
+</span></code></pre>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">Bus 001 Device 004: ID 0482:0494 Kyocera Corp. FS-1060DN
+</span></code></pre>
+<p>Устанавливаем пакеты первой необходимости</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> cups cups-pdf
+</span></code></pre>
+<p>Активируем сервис systemd</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> systemctl enable</span><span style="color:#f9f9f9;"> --now</span><span style="color:#ffee80;"> cups.service
+</span></code></pre>
+<p>После активации вы можете посетить локально созданный веб интерфейс для управления задачами принтера (необходимы реквизиты хост машины) <code>http://localhost:631/</code></p>
+<p>Далее нам нужен Aur пакет драйвер для нашего принтера, <a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/kyocera-cups">kyocera-cups</a> мне не удалось установить</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">curl: (22) The requested URL returned error: 404
+</span><span style="color:#f9f9f9;">==&gt; ОШИБКА: Ошибка при загрузке &#39;https://www.kyoceradocumentsolutions.us/content/download-center-americas/us/drivers/drivers/KyoceraLinuxPackages_20220203_tar_gz.download.gz&#39;
+</span><span style="color:#f9f9f9;">    Прерывание...
+</span><span style="color:#f9f9f9;"> -&gt; ошибка сборки: kyocera-cups
+</span></code></pre>
+<p>Поэтому я решил установить aur пакет <a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/kyocera-print-driver">kyocera-print-driver</a> который установился успешно</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">yay -S</span><span style="color:#ffee80;"> kyocera-print-driver
+</span></code></pre>
+<p>После чего устанавливаем мастер настроек для принтера</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> system-config-printer
+</span></code></pre>
+<p>Для вызова мастера настроек</p>
+<ol>
+<li>В меню вызова приложений: Параметры печати (Параметры печати)</li>
+<li>В терминале вводим: <code>system-config-printer</code></li>
+</ol>
+<p><img src="/images/kyocera-fs-1060dn-archlinux/1667994357.png" alt="image" />
+<img src="/images/kyocera-fs-1060dn-archlinux/1667995429.png" alt="image" /></p>
+<p>После успешного добавления принтера пробую распечатать 1 пробную страницу</p>
+<p><span style="color:red">Произошла ошибка при печати</span></p>
+<p>Вывод в dmesg с segmentation fault</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">....
+</span><span style="color:#f9f9f9;">[  +0,097262] rastertokpsl[76872]: segfault at 740064009f ip 000000000040c182 sp 00007ffeb8c77e80 error 4 in rastertokpsl[400000+30000]
+</span><span style="color:#f9f9f9;">[  +0,000011] Code: 75 0d eb 79 41 ff cc eb 03 45 89 ec 45 31 f6 47 8d 2c 26 b9 02 00 00 00 48 89 df 44 89 e8 99 f7 f9 41 89 c5 48 98 48 c1 e0 04 &lt;48&gt; 8b 74 05 00 e8 1d 91 00 00 83 f8 00 74 44 45 0f 4c e5 45 0f 4d
+</span><span style="color:#f9f9f9;">....
+</span></code></pre>
+<p>С ошибкой в веб интерфейсе Cups статус <strong>Остановлено "Filter failed"</strong></p>
+<p>Также ВАЖНЫЕ логи cups находятся</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">nvim</span><span style="color:#ffee80;"> /var/log/cups/error_log
+</span></code></pre>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">....
+</span><span style="color:#f9f9f9;">PID 1079969 (/usr/lib/cups/filter/rastertokpsl) crashed on signal 11.
+</span><span style="color:#f9f9f9;">....
+</span></code></pre>
+<p><span style="color:green">РЕШЕНИЕМ для меня</span> было скачать репо <a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/Fe-Ti/rastertokpsl-re/">rastertokpsl-re</a> и произвести установку
+<a rel="noopener nofollow noreferrer" target="_blank" href="https://bbs.archlinux.org/viewtopic.php?id=272961">Сурс решения</a></p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">git</span><span style="color:#ffee80;"> clone https://github.com/Fe-Ti/rastertokpsl-re
+</span><span style="color:#ffb054;">cd</span><span style="color:#ffee80;"> rastertokpsl-re
+</span><span style="color:#f9f9f9;">cmake -B_build -H</span><span style="color:#ffee80;">.
+</span><span style="color:#f9f9f9;">cmake --build</span><span style="color:#ffee80;"> _build/
+</span><span style="color:#f9f9f9;">./install.sh
+</span></code></pre>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">Installation completed
+</span></code></pre>
+<p>Ничего перезагружать не нужно просто начните печать снова и всё заработает</p>
+<p>Проверял печать на LibreOffice и через браузер PDF файл</p>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

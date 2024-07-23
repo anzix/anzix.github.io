@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>Решение проблем с композитором Picom</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  Решение проблем с композитором Picom
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-04-15T18:33:12+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux/">linux</a>
+
+<br>
+
+
+	<aside id="toc-aside" class="toc">
+	    <details>
+			<summary>Оглавление</summary>
+	        <ol>
+	            <li>
+	                <a href="#1-reshil-problema">1.(Решил) Проблема</a>
+	                
+	            </li><li>
+	                <a href="#2-reshil-problema">2.(Решил) Проблема</a>
+	                
+	            </li><li>
+	                <a href="#3-reshil-problema">3.(Решил) Проблема</a>
+	                
+	            </li><li>
+	                <a href="#4-problema">!4.(???) Проблема</a>
+	                
+	            </li>
+	        </ol>
+		</details>
+	</aside>
+
+
+<h2 id="1-reshil-problema"><a class="anchor" href="#1-reshil-problema">#</a>&nbsp;
+1.(Решил) Проблема</h2>
+<p>Столкнулся с графическим глюком при переходе в полноэкранный (win+f) на любом терминале, но когда двигаешь мышкой или нажав клавишу - пропадает</p>
+<p><img src="/images/solving-problem-compositor-picom/blur-bug.jpg" alt="image" /></p>
+<p><font color="green">Решается</font> это отключением fading (затухание)</p>
+<p>Либо отключить dual_kawase</p>
+<h2 id="2-reshil-problema"><a class="anchor" href="#2-reshil-problema">#</a>&nbsp;
+2.(Решил) Проблема</h2>
+<p>При вызове maim (минимального скриншотера) появляется размытый экран вместо чистого</p>
+<p><font color="green">Решается</font> это добавлением в исключение blur'а picom</p>
+<p>maim вызывает slop поэтому необходимо именно его добавить в исключение</p>
+<pre style="background-color:#2b303b;color:#ffffff;"><code><span style="color:#f9f9f9;">blur-background-exclude = [
+</span><span style="color:#f9f9f9;">   &quot;class_g = &#39;slop&#39;&quot;,
+</span><span style="color:#f9f9f9;">];
+</span></code></pre>
+<h2 id="3-reshil-problema"><a class="anchor" href="#3-reshil-problema">#</a>&nbsp;
+3.(Решил) Проблема</h2>
+<p>Некоторые элементы (например toolbar, всплыв-е окна и т.д) имеют на краях слой прозрачности от blur'а dual_kawase</p>
+<p><font color="green">Решается</font> это добавлением данной строки</p>
+<pre style="background-color:#2b303b;color:#ffffff;"><code><span style="color:#f9f9f9;">wintypes: {
+</span><span style="color:#f9f9f9;">	unknown = { blur-background = false; };
+</span><span style="color:#f9f9f9;">	desktop = { blur-background = false; };
+</span><span style="color:#f9f9f9;">	dock = { blur-background = false; shadow = false; };
+</span><span style="color:#f9f9f9;">	toolbar = { blur-background = false; };
+</span><span style="color:#f9f9f9;">	menu = { blur-background = false; };
+</span><span style="color:#f9f9f9;">	utility = { blur-background = false; };
+</span><span style="color:#f9f9f9;">	splash = { blur-background = false; };
+</span><span style="color:#f9f9f9;">	dialog = { blur-background = false; };
+</span><span style="color:#f9f9f9;">	normal = { blur-background = true; shadow = false; };
+</span><span style="color:#f9f9f9;">	dropdown_menu = { blur-background = false; };
+</span><span style="color:#f9f9f9;">	popup_menu = { blur-background = false; };
+</span><span style="color:#f9f9f9;">	tooltip = { blur-background = false; };
+</span><span style="color:#f9f9f9;">	notify = { blur-background = true; shadow = false; };
+</span><span style="color:#f9f9f9;">	combo = { blur-background = false; };
+</span><span style="color:#f9f9f9;">	dnd = { blur-background = false; };
+</span><span style="color:#f9f9f9;">};
+</span></code></pre>
+<h2 id="4-problema"><a class="anchor" href="#4-problema">#</a>&nbsp;
+!4.(???) Проблема</h2>
+<p>После применения [оптимизации композитора picom для полноэкранного режима]({{&lt; ref "/content/posts/compositor-picom.md#оптимизация-picom-для-полноэкранного-режима-в-играх" &gt;}}) я столкнулся с проблемой вылета игры Serious Sam Fusion 2017 при переключении рабочего пространства</p>
+<p><font color="green">Решил</font> это добавлением в exclude (исключение) игры или программы используя xprop</p>
+<pre style="background-color:#2b303b;color:#ffffff;"><code><span style="color:#f9f9f9;">unredir-if-possible-exclude = [
+</span><span style="color:#f9f9f9;">        &quot;class_g = &#39;looking-glass-client&#39; &amp;&amp; !focused&quot;,
+</span><span style="color:#f9f9f9;">        &quot;class_g = &#39;Serious Sam Fusion 2017 - Linux - 64bit&#39;&quot;,
+</span><span style="color:#f9f9f9;">        &quot;class_g != &#39;Gimp&#39;&quot;,
+</span><span style="color:#f9f9f9;">        &quot;class_g != &#39;i3lock&#39;&quot;
+</span><span style="color:#f9f9f9;">];
+</span></code></pre>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

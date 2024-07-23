@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>Настройка композитора Picom</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  Настройка композитора Picom
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-04-15T15:52:02+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux/">linux</a>
+
+<br>
+
+
+	<aside id="toc-aside" class="toc">
+	    <details>
+			<summary>Оглавление</summary>
+	        <ol>
+	            <li>
+	                <a href="#otkliuchaem-ten-shadow-vsplyvaiushchikh-okon-sloi-prozrachnosti">Отключаем тень (shadow) всплывающих окон, слой прозрачности</a>
+	                
+	            </li><li>
+	                <a href="#kak-ubrat-poluprozrachnuiu-polosu-v-mpv">Как убрать полупрозрачную полосу в MPV?</a>
+	                
+	            </li><li>
+	                <a href="#otkliuchenie-prozrachnosti-vypadaiushchikh-meniu-prilozhenii-v-picom">!Отключение прозрачности выпадающих меню приложений в Picom</a>
+	                
+	            </li><li>
+	                <a href="#otkliuchaem-fading-zatukhanie-mezhdu-rab-stolami">Отключаем fading (затухание между раб. столами)</a>
+	                
+	            </li><li>
+	                <a href="#optimizatsiia-picom-dlia-polnoekrannogo-rezhima-v-igrakh">Оптимизация Picom для полноэкранного режима в играх</a>
+	                
+	            </li><li>
+	                <a href="#picom-git-versiia-s-blur-kawase">Picom-git версия с blur_kawase</a>
+	                
+	            </li>
+	        </ol>
+		</details>
+	</aside>
+
+
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.youtube.com/watch?v=t6Klg7CvUxA&amp;t=419s">Видео инструкция с объяснениями</a></li>
+</ul>
+<p>Он нужен для устранения тиринга для рабочего стола и для прозрачности окон (в том числе для нашего терминала Alacritty)</p>
+<p>Установка и копирование конфиг файла</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> picom
+</span><span style="color:#f9f9f9;">mkdir </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.config/picom
+</span><span style="color:#f9f9f9;">cp</span><span style="color:#ffee80;"> /etc/xdg/picom.conf </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.config/picom
+</span></code></pre>
+<p>Автозапуск</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">nano </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.xinitrc
+</span></code></pre>
+<p>Прописываю эту строчку ребутимся</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">picom -b --experimental-backends </span><span style="color:#ff9d00;">&amp;
+</span></code></pre>
+<ul>
+<li><code>-b</code> Запустить в качестве фонового процесса для сеанса</li>
+</ul>
+<h2 id="otkliuchaem-ten-shadow-vsplyvaiushchikh-okon-sloi-prozrachnosti"><a class="anchor" href="#otkliuchaem-ten-shadow-vsplyvaiushchikh-okon-sloi-prozrachnosti">#</a>&nbsp;
+Отключаем тень (shadow) всплывающих окон, слой прозрачности</h2>
+<p>Чтобы убрать вот в firefox (пикрил) и других подобных программ</p>
+<p><img src="/images/compositor-picom/shadow-before.png" alt="image" /></p>
+<p>За это отвечает параметр shadow, который в конфиге picom стоит в положении <strong>true</strong></p>
+<p>В конфиге picom</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">nano </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.config/picom.conf
+</span></code></pre>
+<p>Ставим значение false</p>
+<pre data-lang="conf" style="background-color:#2b303b;color:#ffffff;" class="language-conf "><code class="language-conf" data-lang="conf"><span style="color:#f9f9f9;">shadow </span><span style="color:#ff9d00;">= </span><span style="color:#ff628c;">false</span><span style="color:#f9f9f9;">;
+</span></code></pre>
+<p>Таким образом мы избавили firefox и другие программы от теней</p>
+<p><img src="/images/compositor-picom/shadow-after.png" alt="image" /></p>
+<h2 id="kak-ubrat-poluprozrachnuiu-polosu-v-mpv"><a class="anchor" href="#kak-ubrat-poluprozrachnuiu-polosu-v-mpv">#</a>&nbsp;
+Как убрать полупрозрачную полосу в MPV?</h2>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://bbs.archlinux.org/viewtopic.php?id=261232">Arch Linux форум</a></li>
+</ul>
+<p><img src="/images/compositor-picom/white-line-on-mpv.png" alt="image" /></p>
+<p>Решение</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">nvim </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.config/picom/config
+</span></code></pre>
+<p>Под разделом "<strong>Transparency / Opacity</strong>" комментируем или убираем <strong>frame-opacity = 0.7;</strong></p>
+<p>PROFIT!!</p>
+<h2 id="otkliuchenie-prozrachnosti-vypadaiushchikh-meniu-prilozhenii-v-picom"><a class="anchor" href="#otkliuchenie-prozrachnosti-vypadaiushchikh-meniu-prilozhenii-v-picom">#</a>&nbsp;
+!Отключение прозрачности выпадающих меню приложений в Picom</h2>
+<p>Заходите в конфиг picom, опускаетесь в самый низ и комментируете эти две строки как показано на пикче</p>
+<p><img src="/images/compositor-picom/disable-transparency-dropdown-menu.png" alt="image" /></p>
+<p>Если не нужна прозрачность на определенных окнах и всяких всплывающих списках то вот пример как это сделать</p>
+<p>Если же хотите вообще отключить прозрачность на любых окнах, то просто выше закомментируйте строчку</p>
+<pre data-lang="conf" style="background-color:#2b303b;color:#ffffff;" class="language-conf "><code class="language-conf" data-lang="conf"><span style="color:#f9f9f9;">inactive-opacity </span><span style="color:#ff9d00;">= </span><span style="color:#ff628c;">0</span><span style="color:#ff9d00;">.</span><span style="color:#ff628c;">8</span><span style="color:#f9f9f9;">;
+</span></code></pre>
+<h2 id="otkliuchaem-fading-zatukhanie-mezhdu-rab-stolami"><a class="anchor" href="#otkliuchaem-fading-zatukhanie-mezhdu-rab-stolami">#</a>&nbsp;
+Отключаем fading (затухание между раб. столами)</h2>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">nano </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.config/picom/picom.conf
+</span></code></pre>
+<p>В категории <strong>"Fading"</strong> либо комментируем либо ставим значение <strong>false</strong></p>
+<pre data-lang="conf" style="background-color:#2b303b;color:#ffffff;" class="language-conf "><code class="language-conf" data-lang="conf"><span style="font-style:italic;color:#0088ff;">#fading = true;
+</span></code></pre>
+<h2 id="optimizatsiia-picom-dlia-polnoekrannogo-rezhima-v-igrakh"><a class="anchor" href="#optimizatsiia-picom-dlia-polnoekrannogo-rezhima-v-igrakh">#</a>&nbsp;
+Оптимизация Picom для полноэкранного режима в играх</h2>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.youtube.com/watch?v=K8kF-SfkaHE">Видео инструкция</a></li>
+</ul>
+<p>При full-screen окна отключается композитор, увеличивая производительность</p>
+<p>Открываем конфиг picom</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">nvim </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.config/picom/picom.conf
+</span></code></pre>
+<p>Вставляем данные строки как показано ниже, сохраняем и всё</p>
+<pre data-lang="conf" style="background-color:#2b303b;color:#ffffff;" class="language-conf "><code class="language-conf" data-lang="conf"><span style="color:#f9f9f9;">unredir-if-possible </span><span style="color:#ff9d00;">= </span><span style="color:#ff628c;">true</span><span style="color:#f9f9f9;">;
+</span><span style="color:#f9f9f9;">unredir-if-possible-exclude </span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;"> [
+</span><span style="color:#f9f9f9;">        </span><span style="color:#9eff80;">&quot;class_g = &#39;looking-glass-client&#39; &amp;&amp; !focused&quot;
+</span><span style="color:#f9f9f9;">]
+</span></code></pre>
+<h2 id="picom-git-versiia-s-blur-kawase"><a class="anchor" href="#picom-git-versiia-s-blur-kawase">#</a>&nbsp;
+Picom-git версия с blur_kawase</h2>
+<p>Это git версия picom но с функцией замыливания фона</p>
+<ul>
+<li><font color="red">Минус</font>: Данный блюр будет чуть больше потреблять ресурсов вашего ПК</li>
+</ul>
+<p>Установка происходит через AUR пакет, стандартный пакет picom будет удалён</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">yay -S</span><span style="color:#ffee80;"> picom-git
+</span></code></pre>
+<p>После скачивания открываем конфиг picom</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">nvim </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.config/picom/picom.conf
+</span></code></pre>
+<p>И рядом добавляем эти строки</p>
+<pre data-lang="conf" style="background-color:#2b303b;color:#ffffff;" class="language-conf "><code class="language-conf" data-lang="conf"><span style="color:#f9f9f9;">blur-method </span><span style="color:#ff9d00;">= </span><span style="color:#9eff80;">&quot;dual_kawase&quot;</span><span style="color:#f9f9f9;">;
+</span><span style="color:#f9f9f9;">blur-strength </span><span style="color:#ff9d00;">= </span><span style="color:#ff628c;">3</span><span style="color:#f9f9f9;">;
+</span></code></pre>
+<p>Играйтесь со значением в "strength = [число]" и выберите свой предпочтительное размытие, сохраняем и смотрим результат</p>
+<p>Чтобы после ребута все изменения сохранились необходимо править .xprofile (для DM) или .xinitrc (запуск с TTY)</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">nvim </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.xinitrc
+</span></code></pre>
+<p>Меняем автозапуск на показанный ниже</p>
+<pre data-lang="conf" style="background-color:#2b303b;color:#ffffff;" class="language-conf "><code class="language-conf" data-lang="conf"><span style="color:#f9f9f9;">picom </span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">b </span><span style="color:#ff9d00;">--</span><span style="color:#f9f9f9;">experimental</span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">backends &amp;
+</span></code></pre>
+<p>Вот как выглядит на значение 3</p>
+<p><img src="/images/compositor-picom/blur-picom.png" alt="image" /></p>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

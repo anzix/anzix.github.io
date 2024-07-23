@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>!Геймпад 8BitDo Pro 2 на Arch Linux</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  !Геймпад 8BitDo Pro 2 на Arch Linux
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-03-24T16:46:25+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux-gaming/">linux-gaming</a>
+
+<br>
+
+
+	<aside id="toc-aside" class="toc">
+	    <details>
+			<summary>Оглавление</summary>
+	        <ol>
+	            <li>
+	                <a href="#rabota-v-wine">Работа в Wine</a>
+	                
+	            </li><li>
+	                <a href="#giroskop-v-emuliatorakh">Гироскоп в эмуляторах</a>
+	                
+	            </li><li>
+	                <a href="#switch-rezhim-v-steam">!Switch режим в Steam</a>
+	                
+	            </li>
+	        </ol>
+		</details>
+	</aside>
+
+
+<p>Firmware 3.0</p>
+<p>Чтобы геймпад появился в списке Blueman, Bluedevil (KDE) или <code>bluetoothctl</code> необходимо перевести в режим сопряжения на секунду удерживать эту кнопку. 4 индикатора должны мигать по очереди, и после этого геймпад должен появится в списке подключения к нему можно соединится.</p>
+<p><img src="/images/8bitdo-pro2-on-archlinux/button-8bitdo-pro2.jpg" alt="image" /></p>
+<p>Если вы уже ранее подключались и не можете снова подключится, попробуйте удалить из списка Blueman или Bluedevil геймпад и тогда он в списке должен появится и подключится номрмально.</p>
+<p>Данный геймпад работает хорошо со всеми типами подключения и режимами (кроме Switch, об этом позже).</p>
+<h2 id="rabota-v-wine"><a class="anchor" href="#rabota-v-wine">#</a>&nbsp;
+Работа в Wine</h2>
+<p>Использовался wine-tkg 6 rc5</p>
+<p>Чтобы вызвать меню конфигурации контроллера</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">wine</span><span style="color:#ffee80;"> control joy.cpl
+</span></code></pre>
+<p>Режим Xinput</p>
+<ul>
+<li>[По проводу] Определяется как XBox 360, всё исправно работает</li>
+<li>[По Bluetooth] Определяется как XBox One, всё исправно работает</li>
+</ul>
+<p>Режим Switch</p>
+<ul>
+<li>По проводу и по Bluetooth работают хорошо, триггеры нажимаются как кнопки, только ось круга квадратит</li>
+</ul>
+<p><img src="/images/8bitdo-pro2-on-archlinux/8bitdo-pro2-wine.png" alt="image" /></p>
+<h2 id="giroskop-v-emuliatorakh"><a class="anchor" href="#giroskop-v-emuliatorakh">#</a>&nbsp;
+Гироскоп в эмуляторах</h2>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/joaorb64/joycond-cemuhook/wiki">Joycond-Cemuhook Wiki</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.youtube.com/watch?v=aOAKbAoxP9w">Видео инструкция</a></li>
+</ul>
+<p>В некоторых из эмуляторов таких как dolphin (Wii), cemu (Wii U), citra (3DS), yuzu (Switch) стандартно невозможно использовать гироскоп. <a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/joaorb64/joycond-cemuhook/">Joycond-Cemuhook</a> решает эту проблему путём использования UDP протокола</p>
+<blockquote>
+<p>Если у вас версия ядра Linux меньше 5.16 значит устанавливаем дополнительно <a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/hid-nintendo-dkms">hid-nintendo-dkms</a></p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">yay -S</span><span style="color:#ffee80;"> hid-nintendo-dkms
+</span></code></pre>
+</blockquote>
+<p>Устанавливаем необходимые AUR пакеты <a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/joycond-git">joycond-git</a> и <a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/joycond-cemuhook-git">joycond-cemuhook-git</a></p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">yay -S</span><span style="color:#ffee80;"> joycond-git joycond-cemuhook-git
+</span></code></pre>
+<p>Конектим по проводу 8BitDo Pro 2 (режим Switch)</p>
+<blockquote>
+<p>Ранее в прошлых версиях AUR пакета cemuhook можно было его запускать от пользователя, сайчас же его необходимо запускать от рута (sudo)</p>
+</blockquote>
+<p>Запускаем в консоли данной командой</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> joycond-cemuhook
+</span></code></pre>
+<p>Теперь данные эмуляторы будут подхватывать геймпад вместе с рабочим гироскопом</p>
+<p>У меня также <a href="/posts/gyro-8bitdo-pro2-on-dolphin-wii">есть отдельный гайд по настройке геймпада для эмулятора dolphin</a></p>
+<h2 id="switch-rezhim-v-steam"><a class="anchor" href="#switch-rezhim-v-steam">#</a>&nbsp;
+!Switch режим в Steam</h2>
+<p>В Steam сейчас пока невозможно использовать драйвер hid-nintendo которое встроили в mainline ядра Linux с версии 5.16 т.к Steam использует свой драйвер. Поэтому мой геймпад при подключении не определяется вообще.</p>
+<p>Это известная проблема которую пока не исправили но есть <a rel="noopener nofollow noreferrer" target="_blank" href="https://wiki.archlinux.org/title/Gamepad#Nintendo_Switch_Pro_Controller_and_Joy-Cons">обходняки расписаные на Arch Wiki</a>, единственное что мне частично помогло это использовать <a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/DanielOgorchock/joycond">joycond</a></p>
+<p>Устанавливаем <a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/joycond-git">данный AUR пакет</a></p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">yay -S</span><span style="color:#ffee80;"> joycond-git
+</span></code></pre>
+<p>Включаем и стартуем joycond.service</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> systemctl enable</span><span style="color:#f9f9f9;"> --now</span><span style="color:#ffee80;"> joycond.service
+</span></code></pre>
+<p>После чего подключаем геймпад (по bluetooth или по проводу) с предварительно включённым режимом (S)witch</p>
+<p>Далее переходим к обходняку который описан в Arch Wiki, чтобы Steam начал распознавать наш геймпад как Switch контроллер необходимо его перевести в виртуальный Pro контроллер (virtual Pro Controller). Без включённого joycond.service у вас не получится его активировать.</p>
+<blockquote>
+<p>Данный обходняк пока не имеет поддержки гироскопа для стима</p>
+</blockquote>
+<p>Когда все 4 индикатора начнут мигать жмём обе кнопки <code>+</code> и <code>-</code> и после на геймпаде начнёт мигать только один индикатор а стим выведет уведомление что были подключены joycon'ы (да, стим будет отображать мой контроллер как joycon'ы)</p>
+<p>{{&lt; rawhtml &gt;}}</p>
+<!-- Опции controls: autoplay/play/pause -->
+<video width=100% controls play>
+    <source src="/8bitdo-pro2-on-archlinux/VID_20230324_173613.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+{{< /rawhtml >}}
+<p><img src="/images/8bitdo-pro2-on-archlinux/Screenshot_20230319_012023.png" alt="image" /></p>
+<p><img src="/images/8bitdo-pro2-on-archlinux/Screenshot_20230319_001215.png" alt="image" /></p>
+<p>Так же в статусе joycond.service будет добавлена информация что включён виртуальный Pro контроллер</p>
+<pre style="background-color:#2b303b;color:#ffffff;"><code><span style="color:#f9f9f9;">$ systemctl status joycond.service
+</span><span style="color:#f9f9f9;">.....
+</span><span style="color:#f9f9f9;">мар 19 00:40:45 arch joycond[1482774]: driver_name: Nintendo Switch Pro Controller
+</span><span style="color:#f9f9f9;">мар 19 00:40:45 arch joycond[1482774]: MAC: E4:17:D8:CC:09:CD
+</span><span style="color:#f9f9f9;">мар 19 00:40:45 arch joycond[1482774]: adding epoll_subscriber: fd=5
+</span><span style="color:#f9f9f9;">мар 19 00:42:07 arch joycond[1482774]: Virtual procon paired
+</span><span style="color:#f9f9f9;">мар 19 00:42:07 arch joycond[1482774]: adding epoll_subscriber: fd=15
+</span></code></pre>
+<p>Именуется виртуальный Pro контроллер: <code>Nintendo Switch Virtual Pro Controller (/dev/input/js2)</code></p>
+<p>И теперь можно играть в Steam игры на режиме Switch, правда как было указано выше что метод не поддерживает гироскоп</p>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

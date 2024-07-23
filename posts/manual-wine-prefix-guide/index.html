@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>!Ручное создание wine префикса для пиратской игры без использования Lutris</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  !Ручное создание wine префикса для пиратской игры без использования Lutris
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-03-04T19:21:49+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux-gaming/">linux-gaming</a>
+
+<br>
+
+
+	<aside id="toc-aside" class="toc">
+	    <details>
+			<summary>Оглавление</summary>
+	        <ol>
+	            <li>
+	                <a href="#ustanovka-dll-biblioteki-cherez-winetricks">Установка dll (библиотеки) через winetricks</a>
+	                
+	            </li><li>
+	                <a href="#ustanovka-dxvk">Установка DXVK</a>
+	                
+	            </li><li>
+	                <a href="#kak-udalit-igru-ili-programmu">Как удалить игру или программу?</a>
+	                
+	            </li>
+	        </ol>
+		</details>
+	</aside>
+
+
+<p>Руководствовался по этому гайду</p>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.youtube.com/watch?v=tbbXoqDfkY0">Видео инструкция</a></li>
+</ul>
+<p>В данном примере будет игра <a rel="noopener nofollow noreferrer" target="_blank" href="https://www.pcgamingwiki.com/wiki/Teenage_Mutant_Ninja_Turtles:_Mutants_in_Manhattan">TMNT Mutants in Manhattan</a></p>
+<p>Указываю создание префикса для игры TMNT Mutants in Manhattan и заодно по пути указываю установщик игры</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">WINEPREFIX</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">&quot;$</span><span style="color:#edef7d;">HOME</span><span style="color:#9eff80;">/.local/share/wineprefixes/TMNTMiM</span><span style="color:#f9f9f9;">&quot; wine</span><span style="color:#ffee80;"> setup.exe
+</span></code></pre>
+<p>Но выдал ошибку что не хватает MFC42.DLL (Microsoft Visual C++)</p>
+<h2 id="ustanovka-dll-biblioteki-cherez-winetricks"><a class="anchor" href="#ustanovka-dll-biblioteki-cherez-winetricks">#</a>&nbsp;
+Установка dll (библиотеки) через winetricks</h2>
+<p>Метод через терминал удобен т.к все библиотеки вы можете установить без всплывающих окон и ошибок благодаря опциям</p>
+<ul>
+<li><code>-q</code> тихая установка (никаких всплывающих окон)</li>
+<li><code>--force</code> не проверять что библиотека уже была установлена, также игнорирует: SHA256 mismatch!</li>
+</ul>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">WINEPREFIX</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">&quot;$</span><span style="color:#edef7d;">HOME</span><span style="color:#9eff80;">/.local/share/wineprefixes/TMNTMiM</span><span style="color:#f9f9f9;">&quot; winetricks -q --force</span><span style="color:#ffee80;"> mfc42 vcrun2013 vcrun2015
+</span></code></pre>
+<p>Теперь можно спокойно установить игру</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">WINEPREFIX</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">&quot;$</span><span style="color:#edef7d;">HOME</span><span style="color:#9eff80;">/.local/share/wineprefixes/TMNTMiM</span><span style="color:#f9f9f9;">&quot; wine</span><span style="color:#ffee80;"> setup.exe
+</span></code></pre>
+<p>После чего установка появится и можно устанавливать игру</p>
+<p>В установщике убираю галочки об установке дополнений (зависимостей) dll т.к они уже есть</p>
+<p>Путь установленной игры у меня это ~/Games т.е в установщике это диск Z:\home[username]\Games\</p>
+<p>После завершения уставщика переходим на этап установке dxvk</p>
+<h2 id="ustanovka-dxvk"><a class="anchor" href="#ustanovka-dxvk">#</a>&nbsp;
+Установка DXVK</h2>
+<blockquote>
+<p>Вопрос: Чем его накатывать AUR пакетом <a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/dxvk-bin">dxvk-bin</a> или используя <code>winetricks dxvk</code>?</p>
+<p>Вероятнее всего я бы предпочёл бы через winetricks т.к это более надёжный метод.
+Однако для тех кто юзает DXVK совместно с DgVoodoo или DxWrapper для старых игр для меня это рандом.</p>
+<p>Накатив DXVK из winetricks и используя DxWrapper я столкнулся в игре Freedom Fighters с багнутыми моделями персонажей стоящих в T-позе и с глючными текстурами (конфиг настроек dxwrapper.ini особо не менял только vsync включил)
+С DgVoodoo такого нет из накатанного <a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/dxvk-bin">dxvk-bin</a> и <code>winetricks dxvk</code></p>
+</blockquote>
+<p>Добавляю dxvk в префикс TMNTMiM</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">WINEPREFIX</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">&quot;$</span><span style="color:#edef7d;">HOME</span><span style="color:#9eff80;">/.local/share/wineprefixes/TMNTMiM</span><span style="color:#f9f9f9;">&quot; winetricks -q</span><span style="color:#ffee80;"> dxvk
+</span></code></pre>
+<p>После добавления можно запустить игру по созданному ярлыку</p>
+<blockquote>
+<p>В ярлык игры можно добавить переменные для улучшения производительности и другие вспомогательные штуки</p>
+</blockquote>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">DXVK_HUD</span><span style="color:#ff9d00;">=</span><span style="color:#3ad900;">compiler </span><span style="color:#f9f9f9;">vk_radv</span><span style="color:#ffee80;"> obs-gamecapture gamemoderun mangohud
+</span></code></pre>
+<p>Игра работает замечательно, даже с геймпадом 8BitDo Pro 2 (Xinput по проводу)</p>
+<h2 id="kak-udalit-igru-ili-programmu"><a class="anchor" href="#kak-udalit-igru-ili-programmu">#</a>&nbsp;
+Как удалить игру или программу?</h2>
+<p>Для конкретного префикса вводим</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">WINEPREFIX</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">&quot;$</span><span style="color:#edef7d;">HOME</span><span style="color:#9eff80;">/.local/share/wineprefixes/TMNTMiM</span><span style="color:#f9f9f9;">&quot; wine</span><span style="color:#ffee80;"> uninstaller
+</span></code></pre>
+<p>После чего удаляем игру</p>
+<p>Для простого удаления префикса, чтобы не занимал места</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">rm -rf </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.local/share/wineprefixes/TMNTMiM
+</span></code></pre>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

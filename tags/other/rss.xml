@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+      <title>Блог AniX - other</title>
+      <link>https://anzix.github.io/</link>
+      <description>Инструкции и полезные разные статьи для GNU&#x2F;Linux</description>
+      <generator>Zola</generator>
+      <language>en</language>
+      <atom:link href="https://anzix.github.io/tags/other/rss.xml" rel="self" type="application/rss+xml"/>
+      <lastBuildDate>Mon, 11 Dec 2023 18:10:00 +0500</lastBuildDate>
+      <item>
+          <title>Как в расширении violentmonkey добавить локальный скрипт</title>
+          <pubDate>Mon, 11 Dec 2023 18:10:00 +0500</pubDate>
+          <author>AniX</author>
+          <link>https://anzix.github.io/posts/installing-local-extension-violentmonkey/</link>
+          <guid>https://anzix.github.io/posts/installing-local-extension-violentmonkey/</guid>
+          <description xml:base="https://anzix.github.io/posts/installing-local-extension-violentmonkey/">&lt;ul&gt;
+&lt;li&gt;&lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;violentmonkey.github.io&#x2F;posts&#x2F;how-to-edit-scripts-with-your-favorite-editor&#x2F;&quot;&gt;Источник решения&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;rutracker.org&#x2F;forum&#x2F;viewtopic.php?p=71556284#71556284&quot;&gt;Локальный JS Скрипт&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;Необходимо было в расширениях дать доступ локально открывать файлы по URL ссылкам&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;installing-local-extension-violentmonkey&#x2F;settings_browser.png&quot; alt=&quot;image&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;При создании rutracker-script.js внутри которого &lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;rutracker.org&#x2F;forum&#x2F;viewtopic.php?p=77455960#77455960&quot;&gt;сам код&lt;&#x2F;a&gt; перетаскиваем прямо в браузер и копируем URL&lt;&#x2F;p&gt;
+&lt;p&gt;Внутри violentmonkey жмём + и &quot;Установить по ссылке&quot; вставляя скопированную ссылку&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;installing-local-extension-violentmonkey&#x2F;extension_popup.png&quot; alt=&quot;image&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+</description>
+      </item>
+    </channel>
+</rss>

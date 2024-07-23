@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>Применяем Hosts файл от StevenBlack</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  Применяем Hosts файл от StevenBlack
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-03-21T18:22:31+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux/">linux</a>
+
+<br>
+
+
+	<aside id="toc-aside" class="toc">
+	    <details>
+			<summary>Оглавление</summary>
+	        <ol>
+	            <li>
+	                <a href="#ustanovka-universal-nogo-hosts-faila">Установка универсального hosts файла</a>
+	                
+	            </li><li>
+	                <a href="#obnovlenie-universal-nogo-hosts-faila">Обновление универсального hosts файла</a>
+	                
+	            </li>
+	        </ol>
+		</details>
+	</aside>
+
+
+<p>Для избавления от рекламы, реферальных ссылок и всяких всплывающих scam сайтов есть обновляемый hosts файл</p>
+<p>Сохраняем копию оригинального файла</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">cp</span><span style="color:#ffee80;"> /etc/hosts </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/Documents/hosts.bak
+</span></code></pre>
+<h2 id="ustanovka-universal-nogo-hosts-faila"><a class="anchor" href="#ustanovka-universal-nogo-hosts-faila">#</a>&nbsp;
+Установка универсального hosts файла</h2>
+<p>Просто вставляем эту команду</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">wget -qO-</span><span style="color:#ffee80;"> https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts </span><span style="color:#ff9d00;">| </span><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> tee</span><span style="color:#f9f9f9;"> --append</span><span style="color:#ffee80;"> /etc/hosts </span><span style="color:#ff9d00;">&gt;</span><span style="color:#ffee80;">/dev/null
+</span></code></pre>
+<p>Пояснение:</p>
+<blockquote>
+<p>В конце <code>&gt;/dev/null</code> значит что команда будет выполняться без вывода подробной информации (полезная команда которая может пригодится для написания конфигов)</p>
+</blockquote>
+<h2 id="obnovlenie-universal-nogo-hosts-faila"><a class="anchor" href="#obnovlenie-universal-nogo-hosts-faila">#</a>&nbsp;
+Обновление универсального hosts файла</h2>
+<p>Я для себя написал небольшую shell функцию которая производит сравнение с источника репозитория StevenBlack и моим текущим hosts файлов и удаляет/добавляет необходимое в него.</p>
+<p>Вы можете вставить данную функцию в <code>.zshrc</code> и пользоваться ею</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Обновление уникального hosts файла StevenBlack с обработкой
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> 1. Убираю строки localhost (уже есть)
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> 2. Убираю все комментарии
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> 3. Добавляю отступ следующей строки в начале
+</span><span style="color:#ffc600;">uphosts </span><span style="color:#f9f9f9;">() {
+</span><span style="color:#f9f9f9;"> wget -t</span><span style="color:#ffee80;"> 2</span><span style="color:#f9f9f9;"> -O-</span><span style="color:#ffee80;"> https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts </span><span style="color:#f9f9f9;">\
+</span><span style="color:#f9f9f9;">  </span><span style="color:#ff9d00;">| </span><span style="color:#f9f9f9;">grep &#39;</span><span style="color:#9eff80;">^0\.0\.0\.0</span><span style="color:#f9f9f9;">&#39; \
+</span><span style="color:#f9f9f9;">  </span><span style="color:#ff9d00;">| </span><span style="color:#f9f9f9;">grep -v &#39;</span><span style="color:#9eff80;">^0\.0\.0\.0 [0-9]*\.[0-9]*\.[0-9]*\.[0-9]*$</span><span style="color:#f9f9f9;">&#39; \
+</span><span style="color:#f9f9f9;">  </span><span style="color:#ff9d00;">| </span><span style="color:#f9f9f9;">sed &#39;</span><span style="color:#9eff80;">1s/^/\n/</span><span style="color:#f9f9f9;">&#39; </span><span style="color:#ff9d00;">&gt;</span><span style="color:#ffee80;"> /tmp/adlist-all
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;"> #</span><span style="font-style:italic;color:#0088ff;"> Сравниваем содержимое файлов /etc/hosts и /tmp/adlist-all, игнорируя первые три строки
+</span><span style="color:#f9f9f9;"> diff </span><span style="color:#ff9d00;">&lt;</span><span style="color:#f9f9f9;">(tail -n</span><span style="color:#ffee80;"> +4 /etc/hosts</span><span style="color:#f9f9f9;">)</span><span style="color:#ffee80;"> /tmp/adlist-all </span><span style="color:#ff9d00;">&gt;</span><span style="color:#ffee80;"> diff.txt
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;"> #</span><span style="font-style:italic;color:#0088ff;"> Заменяем содержимое файла /etc/hosts на объединение изменений из diff.txt
+</span><span style="color:#f9f9f9;"> sudo</span><span style="color:#ffee80;"> patch /etc/hosts </span><span style="color:#ff9d00;">&lt;</span><span style="color:#ffee80;"> diff.txt
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;"> #</span><span style="font-style:italic;color:#0088ff;"> Корректировка правил универсального hosts файла
+</span><span style="color:#f9f9f9;"> sudo</span><span style="color:#ffee80;"> sed</span><span style="color:#f9f9f9;"> -i &quot;</span><span style="color:#9eff80;">/^0.0.0.0 clck.ru/s/^/#/g</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#ffee80;"> /etc/hosts </span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Реф ссылки pepper.ru
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;"> #</span><span style="font-style:italic;color:#0088ff;"> Удаляем временный файл diff.txt
+</span><span style="color:#f9f9f9;"> rm</span><span style="color:#ffee80;"> diff.txt
+</span><span style="color:#f9f9f9;">}
+</span></code></pre>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>!Полное соотношение сторон 4:3 с чёрными полосами! (TODO)</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  !Полное соотношение сторон 4:3 с чёрными полосами! (TODO)
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-10-09T17:30:00+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux-gaming/">linux-gaming</a>
+
+<br>
+
+
+
+<p>Для этого убираем опцию <code>--scale-from</code> и добавляем <code>--set 'scaling mode' 'Full aspect'</code><br />
+Также опцию <code>--mode</code> меняем на доступное 4:3 разрешение, к примеру <code>1024x768</code></p>
+<p>В конце где xrandr будет возвращать разрешение выстаставляем опцию <code>--mode 1920x1080</code><br />
+И частоту обновления <code>--rate 144</code></p>
+<p>Пример всех опций для Steam:</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">xrandr --output DisplayPort-1 --mode 1024x768 --set &#39;scaling mode&#39; &#39;Full aspect&#39; --filter nearest --rate 144 --pos 0x0 --set TearFree off; DXVK_HUD=devinfo gamemoderun mangohud obs-gamecapture %command% -language russian -maxdownloadfilesizemb 999 -novid -nojoy -vulkan -tickrate 72 +clientport 27027 ;xrandr --output DisplayPort-1 --mode 1920x1080 --transform none --dpi 96 --rate 144
+</span></code></pre>
+<p>Манипуляции с xrandr проделанные тут не увенчались успехом</p>
+<p>Ярлык рабочего стола созданного Wine'ом:</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">...
+</span><span style="color:#f9f9f9;">Exec=xrandr --output DisplayPort-1 --set &quot;scaling mode&quot; &quot;Full aspect&quot;; env obs-gamecapture WINEPREFIX=&quot;/home/anix/.local/share/wineprefixes/TH6&quot; mangohud wine C:\\\\users\\\\Public\\\\Desktop\\\\TH06\\ \\~\\ Воплощение\\ Алой\\ Дьяволицы.lnk
+</span><span style="color:#f9f9f9;">....
+</span></code></pre>
+<p>Способ если юзать консоль:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">xrandr --output</span><span style="color:#ffee80;"> DisplayPort-1</span><span style="color:#f9f9f9;"> --set &quot;</span><span style="color:#9eff80;">scaling mode</span><span style="color:#f9f9f9;">&quot; &quot;</span><span style="color:#9eff80;">Full aspect</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#ff9d00;">; </span><span style="color:#f9f9f9;">env</span><span style="color:#ffee80;"> WINEPREFIX=</span><span style="color:#f9f9f9;">&quot;$</span><span style="color:#edef7d;">HOME</span><span style="color:#9eff80;">/.local/share/wineprefixes/TH8</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#ffee80;"> wine th08</span><span style="color:#ff628c;">\ \(</span><span style="color:#ffee80;">ru</span><span style="color:#ff628c;">\)</span><span style="color:#ffee80;">.lnk
+</span></code></pre>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

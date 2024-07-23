@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>!Как играть нативно в M.U.G.E.N&#x27;ы на Linux</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  !Как играть нативно в M.U.G.E.N&#x27;ы на Linux
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-07-11T14:30:00+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux-gaming/">linux-gaming</a>
+
+<br>
+
+
+
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/ikemen-engine/Ikemen-GO">Ikemen-GO Github страница</a></li>
+</ul>
+<p>Ikemen-GO - Это fighting движок с открытым исходным кодом, поддерживающий ресурсы M.U.G.E.N.<br />
+Имеет множество улучшений таких как широкоформатное разрешение с поддержкой скейлинга спрайтов</p>
+<p>Я буду показывать на примере установки с последней git ветки, скомпилировав бинарный файл\</p>
+<blockquote>
+<p>Для тех кому не хочется компилировать бинарный файл, это также можно сделать и с уже собранным архивом вместе с скринпаком находящийся в Release, хоть работа на этом методе не проверена.</p>
+</blockquote>
+<p>Открываем терминал и клонируем репо, переходим в него и компилируем</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">git</span><span style="color:#ffee80;"> clone https://github.com/ikemen-engine/Ikemen-GO.git </span><span style="color:#ff9d00;">&amp;&amp; </span><span style="color:#ffb054;">cd</span><span style="color:#ffee80;"> Ikemen-GO
+</span><span style="color:#f9f9f9;">make -j</span><span style="color:#ffee80;"> 11 Ikemen_GO_Linux
+</span></code></pre>
+<p>После завершения копирую всё ниже перечисленное в ваш Mugen папку (их ещё называют screenpack'и)<br />
+На моём примере это будет записанный на болванку в 2012 году <strong>Naruto Storm M.U.G.E.N 2010</strong></p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">bin/Ikemen_GO_Linux
+</span><span style="color:#f9f9f9;">font
+</span><span style="color:#f9f9f9;">external
+</span><span style="color:#f9f9f9;">data
+</span></code></pre>
+<p>Переходим в <strong>Naruto Storm M.U.G.E.N 2010</strong> и запускаем командой</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">./Ikemen_GO_Linux
+</span></code></pre>
+<p>Всё работает но только шрифтов в настройках и в паузе нет, в логах показано что отсутствуют файлы</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">2023/07/10 21:52:28 failed to load f-6x9.def (screenpack font): File not found
+</span><span style="color:#f9f9f9;">2023/07/10 21:52:29 failed to load Open_Sans.def (screenpack font): File not found
+</span></code></pre>
+<p>Копирую из <a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/ikemen-engine/Ikemen_GO-Elecbyte-Screenpack">скринпака</a> отсутствующие файлы</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">font/f-6x9.def
+</span><span style="color:#f9f9f9;">font/Open_Sans.def
+</span><span style="color:#f9f9f9;">font/f-6x9.sff # Тоже необходим
+</span></code></pre>
+<p>И всё работает прям как нативно, и это без использования wine</p>
+<p><img src="/images/native-mugen-on-linux/Screenshot_20230711_014741.png" alt="image" />
+<img src="/images/native-mugen-on-linux/Screenshot_20230711_015713.png" alt="image" />
+<img src="/native-mugen-on-linux/Screenshot_20230711_015511.png" alt="image" />
+<img src="/images/native-mugen-on-linux/Screenshot_20230711_014802.png" alt="image" /></p>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

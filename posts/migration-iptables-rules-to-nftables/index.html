@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>!Миграция правил iptables в nftables</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  !Миграция правил iptables в nftables
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-03-04T20:44:20+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux/">linux</a>
+
+<br>
+
+
+
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://wiki.nftables.org/wiki-nftables/index.php/Moving_from_iptables_to_nftables">Офф гайд</a></p>
+<p>К примеру чтобы правила iptables на <a href="/posts/torrent-setup-and-migration/#%D0%BE%D0%B1%D1%85%D0%BE%D0%B4-%D0%B1%D0%BB%D0%BE%D0%BA%D0%B8%D1%80%D0%BE%D0%B2%D0%BA%D0%B8-bt-%D1%82%D1%80%D0%B5%D0%BA%D0%B5%D1%80%D0%BE%D0%B2">обход блокировок трекеров bt</a>. перешли к nftables</p>
+<p>Убедитесь что у вас установлен nftables</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> nftables
+</span></code></pre>
+<p>Вводим данные команды для перевода правил пригодный для nftables</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> iptables-save </span><span style="color:#ff9d00;">&gt;</span><span style="color:#ffee80;"> iptables_rules.txt
+</span><span style="color:#f9f9f9;">iptables-restore-translate -f</span><span style="color:#ffee80;"> iptables_rules.txt </span><span style="color:#ff9d00;">&gt;</span><span style="color:#ffee80;"> nft_ruleset.nft
+</span></code></pre>
+<p>Отключаем iptables</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> systemctl disable</span><span style="color:#f9f9f9;"> --now</span><span style="color:#ffee80;"> iptables.service
+</span></code></pre>
+<p>Создаём backup файл nftables.conf</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> cp /etc/nftables.conf /etc/nftables.conf.bak
+</span></code></pre>
+<p>Немного правим конфиг</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> bash</span><span style="color:#f9f9f9;"> -c &#39;</span><span style="color:#9eff80;">cat &lt;&lt; &quot;EOF&quot; &gt; /etc/nftables.conf
+</span><span style="color:#9eff80;">#!/usr/bin/nft -f
+</span><span style="color:#9eff80;"># vim:set ts=2 sw=2 et:
+</span><span style="color:#9eff80;">
+</span><span style="color:#9eff80;">flush ruleset
+</span><span style="color:#9eff80;">EOF</span><span style="color:#f9f9f9;">&#39;
+</span></code></pre>
+<p>Импортируем правила (iptables) в конфиг nftables.conf</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> sh</span><span style="color:#f9f9f9;"> -c &quot;</span><span style="color:#9eff80;">cat </span><span style="color:#f9f9f9;">$</span><span style="color:#edef7d;">HOME</span><span style="color:#9eff80;">/nft_ruleset.nft &gt;&gt; /etc/nftables.conf</span><span style="color:#f9f9f9;">&quot;
+</span></code></pre>
+<p>Применяем</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> nft</span><span style="color:#f9f9f9;"> -f</span><span style="color:#ffee80;"> /etc/nftables.conf
+</span></code></pre>
+<p>Просмотреть список правил</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> nft list ruleset
+</span></code></pre>
+<p>Автозапуск правил после запуска ПК</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> systemctl enable nftables
+</span></code></pre>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

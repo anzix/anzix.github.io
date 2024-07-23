@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>!Flatpak</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  !Flatpak
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-03-06T21:25:07+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux/">linux</a>
+
+<br>
+
+
+	<aside id="toc-aside" class="toc">
+	    <details>
+			<summary>Оглавление</summary>
+	        <ol>
+	            <li>
+	                <a href="#udobstva-poleznoe">Удобства / полезное</a>
+	                
+	            </li><li>
+	                <a href="#kak-vernut-sia-k-predydushchei-kommitu-flatpak">Как вернуться к предыдущей коммиту Flatpak</a>
+	                
+	            </li><li>
+	                <a href="#poleznye-optsii">Полезные опции</a>
+	                
+	            </li>
+	        </ol>
+		</details>
+	</aside>
+
+
+<p>Обновлено: 20.12.23</p>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://flathub.org/home">Магазин Flathub</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.youtube.com/watch?v=6EWK5qLCv5c">5 лучших способов управления flatpak</a></li>
+</ul>
+<p>Установка</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">pacman -S</span><span style="color:#ffee80;"> flatpak flatpak-xdg-utils flatpak-builder elfutils patch</span><span style="color:#f9f9f9;"> --needed
+</span></code></pre>
+<p>Добавляем репозиторий Flathub и Flathub-Beta</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">flatpak</span><span style="color:#ffee80;"> remote-add</span><span style="color:#f9f9f9;"> --if-not-exists</span><span style="color:#ffee80;"> flathub https://flathub.org/repo/flathub.flatpakrepo </span><span style="color:#ff9d00;">&amp;&amp;
+</span><span style="color:#f9f9f9;">flatpak</span><span style="color:#ffee80;"> remote-add</span><span style="color:#f9f9f9;"> --if-not-exists</span><span style="color:#ffee80;"> flathub-beta https://flathub.org/beta-repo/flathub-beta.flatpakrepo
+</span></code></pre>
+<p>Обновление приложений или среду выполнения</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">flatpak</span><span style="color:#ffee80;"> update
+</span></code></pre>
+<p>Разрешить доступ только для чтения к конфигурациям GTK</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> flatpak override</span><span style="color:#f9f9f9;"> --filesystem</span><span style="color:#ff9d00;">=</span><span style="color:#ffee80;">xdg-config/gtk-3.0:ro
+</span><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> flatpak override</span><span style="color:#f9f9f9;"> --filesystem</span><span style="color:#ff9d00;">=</span><span style="color:#ffee80;">xdg-config/gtk-4.0:ro
+</span></code></pre>
+<p>Включите курсоры и значки мыши в Flatpak (таким образом курсор мыши будет отображаться правильно).</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">flatpak --user</span><span style="color:#ffee80;"> override</span><span style="color:#f9f9f9;"> --filesystem</span><span style="color:#ff9d00;">=</span><span style="color:#ffee80;">/home/</span><span style="color:#f9f9f9;">$USER</span><span style="color:#ffee80;">/.icons/:ro
+</span><span style="color:#f9f9f9;">flatpak --user</span><span style="color:#ffee80;"> override</span><span style="color:#f9f9f9;"> --filesystem</span><span style="color:#ff9d00;">=</span><span style="color:#ffee80;">/usr/share/icons/:ro
+</span></code></pre>
+<p>Установка программ с Flathub</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">PKGS</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">(
+</span><span style="color:#f9f9f9;">        &#39;</span><span style="color:#9eff80;">com.discordapp.Discord</span><span style="color:#f9f9f9;">&#39; #</span><span style="font-style:italic;color:#0088ff;"> Чат для геймеров
+</span><span style="color:#f9f9f9;">        &#39;</span><span style="color:#9eff80;">com.github.tchx84.Flatseal</span><span style="color:#f9f9f9;">&#39; #</span><span style="font-style:italic;color:#0088ff;"> Управление разрешениями Flatpak, для KDE не нужен
+</span><span style="color:#f9f9f9;">        &#39;</span><span style="color:#9eff80;">net.davidotek.pupgui2</span><span style="color:#f9f9f9;">&#39; #</span><span style="font-style:italic;color:#0088ff;"> ProtonUpQt
+</span><span style="color:#f9f9f9;">        &#39;</span><span style="color:#9eff80;">com.usebottles.bottles</span><span style="color:#f9f9f9;">&#39; #</span><span style="font-style:italic;color:#0088ff;"> Бутылка Wine Менеджер
+</span><span style="color:#f9f9f9;">        &#39;</span><span style="color:#9eff80;">org.blender.Blender</span><span style="color:#f9f9f9;">&#39;
+</span><span style="color:#f9f9f9;">)
+</span><span style="color:#f9f9f9;">flatpak</span><span style="color:#ffee80;"> install</span><span style="color:#f9f9f9;"> -y --noninteractive</span><span style="color:#ffee80;"> flathub </span><span style="color:#f9f9f9;">&quot;${</span><span style="color:#edef7d;">PKGS</span><span style="color:#f9f9f9;">[</span><span style="color:#ff80e1;">@</span><span style="color:#f9f9f9;">]}&quot;
+</span></code></pre>
+<p>Правила и настройки</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Использовать wayland
+</span><span style="color:#f9f9f9;">flatpak</span><span style="color:#ffee80;"> override</span><span style="color:#f9f9f9;"> --socket</span><span style="color:#ff9d00;">=</span><span style="color:#ffee80;">wayland org.blender.Blender
+</span><span style="color:#f9f9f9;">flatpak</span><span style="color:#ffee80;"> override</span><span style="color:#f9f9f9;"> --socket</span><span style="color:#ff9d00;">=</span><span style="color:#ffee80;">wayland com.discordapp.Discord
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Дать возможность Bottles создавать ярлыки
+</span><span style="color:#f9f9f9;">flatpak</span><span style="color:#ffee80;"> override</span><span style="color:#f9f9f9;"> --filesystem</span><span style="color:#ff9d00;">=</span><span style="color:#ffee80;">xdg-data/applications com.usebottles.bottles
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Правим discord ярлык для совместимости на Wayland
+</span><span style="color:#f9f9f9;">cp</span><span style="color:#ffee80;"> /var/lib/flatpak/app/com.discordapp.Discord/current/active/files/share/applications/com.discordapp.Discord.desktop </span><span style="color:#f9f9f9;">$HOME</span><span style="color:#ffee80;">/.local/share/applications
+</span><span style="color:#f9f9f9;">sed -i &quot;</span><span style="color:#9eff80;">s|Exec=discord|Exec=flatpak run com.discordapp.Discord --enable-features=UseOzonePlatform,WaylandWindowDecorations --ozone-platform=wayland|g</span><span style="color:#f9f9f9;">&quot; $HOME</span><span style="color:#ffee80;">/.local/share/applications/com.discordapp.Discord.desktop
+</span></code></pre>
+<p>Установка программ с Flathub-beta</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">PKGS</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">(
+</span><span style="color:#f9f9f9;">        &#39;</span><span style="color:#9eff80;">org.gimp.GIMP</span><span style="color:#f9f9f9;">&#39; #</span><span style="font-style:italic;color:#0088ff;"> Редактор изображений (Имеет нативную поддержку wayland)
+</span><span style="color:#f9f9f9;">)
+</span><span style="color:#f9f9f9;">flatpak</span><span style="color:#ffee80;"> install</span><span style="color:#f9f9f9;"> -y --noninteractive</span><span style="color:#ffee80;"> flathub-beta </span><span style="color:#f9f9f9;">&quot;${</span><span style="color:#edef7d;">PKGS</span><span style="color:#f9f9f9;">[</span><span style="color:#ff80e1;">@</span><span style="color:#f9f9f9;">]}&quot;
+</span></code></pre>
+<h2 id="udobstva-poleznoe"><a class="anchor" href="#udobstva-poleznoe">#</a>&nbsp;
+Удобства / полезное</h2>
+<p>Для WM (оконных менеджеров) использующих rofi dmenu, и также для тех кто не хочет постоянно перезапускать сессию для появления ярлыков. Создаёт символическую ссылку чтобы ярлыки Flatpak'ов были в /usr/share/applications, и показывались в меню пуск</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">ln -s</span><span style="color:#ffee80;"> /var/lib/flatpak /usr/share/applications
+</span></code></pre>
+<p>Alias для удобного запуска программ через flatpak, прописываем в <code>.bashrc</code> или <code>.zshrc</code></p>
+<pre style="background-color:#2b303b;color:#ffffff;"><code><span style="color:#f9f9f9;">alias flat=&quot;flatpak run&quot;
+</span></code></pre>
+<pre style="background-color:#2b303b;color:#ffffff;"><code><span style="color:#f9f9f9;">flat [название программы]
+</span></code></pre>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.reddit.com/r/linux/comments/u3wcm7/easy_flatpak_apps_backupinstallation/">Взято из поста Reddit</a></p>
+<p>Экспорт пакетов Flatpak</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">flatpak</span><span style="color:#ffee80;"> list</span><span style="color:#f9f9f9;"> --columns</span><span style="color:#ff9d00;">=</span><span style="color:#ffee80;">application</span><span style="color:#f9f9f9;"> --app </span><span style="color:#ff9d00;">&gt;</span><span style="color:#ffee80;"> flatpaks.txt
+</span></code></pre>
+<p>Импорт пакетов Flatpak</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">xargs</span><span style="color:#ffee80;"> flatpak install</span><span style="color:#f9f9f9;"> -y </span><span style="color:#ff9d00;">&lt;</span><span style="color:#ffee80;"> flatpaks.txt
+</span></code></pre>
+<p>Очистить осиротевшие Flatpak runtimes</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">flatpak</span><span style="color:#ffee80;"> uninstall</span><span style="color:#f9f9f9;"> --unused --noninteractive
+</span></code></pre>
+<p>[11.06.2023] Во flatpak скоро будет своя собственная реализация синхронизации пакетов т.е импорт и экспорт называется <a rel="noopener nofollow noreferrer" target="_blank" href="https://gitlab.gnome.org/Cogitri/flatsync">flatsync</a>. <a rel="noopener nofollow noreferrer" target="_blank" href="https://youtu.be/n3gMicC8gU0?t=276">Новость в The Linux Experiment</a></p>
+<h2 id="kak-vernut-sia-k-predydushchei-kommitu-flatpak"><a class="anchor" href="#kak-vernut-sia-k-predydushchei-kommitu-flatpak">#</a>&nbsp;
+Как вернуться к предыдущей коммиту Flatpak</h2>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Список доступных коммитов
+</span><span style="color:#f9f9f9;">flatpak</span><span style="color:#ffee80;"> remote-info</span><span style="color:#f9f9f9;"> --log</span><span style="color:#ffee80;"> flathub org.godotengine.Godot
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Откатить до специфичной версии
+</span><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> flatpak update</span><span style="color:#f9f9f9;"> --commit</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">${HASH}</span><span style="color:#ffee80;"> org.godotengine.Godot
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Закрепить версию
+</span><span style="color:#f9f9f9;">flatpak</span><span style="color:#ffee80;"> mask org.godotengine.Godot
+</span></code></pre>
+<h2 id="poleznye-optsii"><a class="anchor" href="#poleznye-optsii">#</a>&nbsp;
+Полезные опции</h2>
+<ul>
+<li><code>-y (--assumeyes)</code> - Избавится от вопросов</li>
+<li><code>--noninteractive</code> - Без лишних подробностей</li>
+</ul>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

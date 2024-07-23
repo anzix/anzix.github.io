@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>!Ультимативный Ungoogled Chromium гайд для Arch Linux</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  !Ультимативный Ungoogled Chromium гайд для Arch Linux
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-03-12T01:07:49+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux/">linux</a>
+
+<br>
+
+
+	<aside id="toc-aside" class="toc">
+	    <details>
+			<summary>Оглавление</summary>
+	        <ol>
+	            <li>
+	                <a href="#ustanovka">Установка</a>
+	                <ol>
+	                    <li>
+	                        <a href="#nastroiki-brauzera">Настройки браузера</a>
+	                    </li><li>
+	                        <a href="#dobavlenie-magazina-rasshirenii">Добавление магазина расширений</a>
+	                    </li><li>
+	                        <a href="#rasshireniia">!Расширения</a>
+	                    </li><li>
+	                        <a href="#eksport-i-import-rasshirenii">Экспорт и Импорт расширений</a>
+	                    </li><li>
+	                        <a href="#dobavlenie-poiskovoi-sistemy-i-shortkatov">Добавление поисковой системы и шорткатов</a>
+	                    </li><li>
+	                        <a href="#rabota-s-zashchishchionnym-kontentom-drm-spotify-netflix-i-t-d">Работа с защищённым контентом DRM (Spotify Netflix и т.д)</a>
+	                    </li>
+	                </ol>
+	            </li>
+	        </ol>
+		</details>
+	</aside>
+
+
+<p>Это тот же chromium но с полностью выпиленными гугл сервисами</p>
+<p><a href="/posts/google-chrome-and-chromium-on-archlinux/#%D0%BD%D0%B5%D0%BE%D0%B1%D1%85%D0%BE%D0%B4%D0%B8%D0%BC%D1%8B%D0%B5-%D0%B8-%D0%BF%D0%BE%D0%BB%D0%B5%D0%B7%D0%BD%D1%8B%D0%B5-%D1%84%D0%BB%D0%B0%D0%B3%D0%B8">Флаги</a> применяются как и в обычном chromium'е, расположенном <code>~/.config/chromium-flags.conf</code></p>
+<h2 id="ustanovka"><a class="anchor" href="#ustanovka">#</a>&nbsp;
+Установка</h2>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">yay -S</span><span style="color:#ffee80;"> ungoogled-chromium-bin
+</span></code></pre>
+<p>(Альтернатива) Обновляемое офф репо специально для Arch</p>
+<ul>
+<li>https://github.com/ungoogled-software/ungoogled-chromium-archlinux</li>
+</ul>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">curl -s &#39;</span><span style="color:#9eff80;">https://download.opensuse.org/repositories/home:/ungoogled_chromium/Arch/x86_64/home_ungoogled_chromium_Arch.key</span><span style="color:#f9f9f9;">&#39; </span><span style="color:#ff9d00;">| </span><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman-key</span><span style="color:#f9f9f9;"> -a</span><span style="color:#ffee80;"> -
+</span><span style="color:#ffb054;">echo </span><span style="color:#f9f9f9;">&#39;
+</span><span style="color:#9eff80;">[home_ungoogled_chromium_Arch]
+</span><span style="color:#9eff80;">SigLevel = Required TrustAll
+</span><span style="color:#9eff80;">Server = https://download.opensuse.org/repositories/home:/ungoogled_chromium/Arch/$arch</span><span style="color:#f9f9f9;">&#39; </span><span style="color:#ff9d00;">| </span><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> tee</span><span style="color:#f9f9f9;"> --append</span><span style="color:#ffee80;"> /etc/pacman.conf
+</span><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -Sy
+</span></code></pre>
+<h3 id="nastroiki-brauzera"><a class="anchor" href="#nastroiki-brauzera">#</a>&nbsp;
+Настройки браузера</h3>
+<p><span style="color:green">Описание:</span>: <strong>Всегда использовать безопасные соединения HTTPS и DNS Cloudflare</strong></p>
+<p>Настройки - Конфиденциальность и безопасность - Безопасность. Включаем "Всегда использовать безопасные соединения"</p>
+<p>Тут же включаем Использовать безопасный DNS-сервер. В списке выбираем Cloudflare (1.1.1.1)</p>
+<p><span style="color:green">Описание:</span> <strong>Блокировать сторонние файлы cookie</strong></p>
+<p>Настройки - Конфиденциальность и безопасность - Файлы cookie и других данных сайтов. Включаем "Блокировать сторонние файлы cookie"</p>
+<blockquote>
+<p>Примечание: Если вы качаете что-либо с Google Drive необходимо добавить URL в "Сайты, которые всегда могут использовать файлы cookie"</p>
+</blockquote>
+<p><img src="/images/ultimate-ungoogled-chromium-guide/google-drive-cookie.png" alt="image" /></p>
+<p><span style="color:green">Описание:</span>: <strong>Не отслеживать наши данные веб сайтам</strong></p>
+<p>Включаем "Отправлять Do Not Track в запросах веб-страниц"</p>
+<p><span style="color:green">Описание:</span>: <strong>Запрещаем отслеживание геолокации для сайтов</strong></p>
+<p>Настройки - Конфиденциальность и безопасность - Настройки сайтов - секция "Разрешения" - Геоданные. Ставим "Запретить сайтам доступ к местоположению"</p>
+<h3 id="dobavlenie-magazina-rasshirenii"><a class="anchor" href="#dobavlenie-magazina-rasshirenii">#</a>&nbsp;
+Добавление магазина расширений</h3>
+<p>В этом нам поможет <a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/NeverDecaf/chromium-web-store">chromium-web-store</a></p>
+<p>Добавляем в <code>~/.config/chromium-flags.conf</code></p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">--extension-mime-request-handling</span><span style="color:#ff9d00;">=</span><span style="color:#3ad900;">always-prompt-for-install
+</span></code></pre>
+<p>Перезагружаем браузер</p>
+<p>Переходим в <strong>chrome://extensions</strong> и включаем режим разработчика</p>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/NeverDecaf/chromium-web-store/releases/latest">Скачиваем</a> Chromium.Web.Store.crx вас сразу предложат установить магазин, соглашаемся с установкой</p>
+<p><img src="/images/ultimate-ungoogled-chromium-guide/chromium-web-store.png" alt="image" /></p>
+<p>Теперь можно закачивать расширения из магазина и обновлять их этим расширением</p>
+<h3 id="rasshireniia"><a class="anchor" href="#rasshireniia">#</a>&nbsp;
+!Расширения</h3>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://chrome.google.com/webstore/detail/keepassxc-browser/oboonakemofpalcgghocfoadofidjkkk?hl=ru">KeePassXC-Browser</a> (Прекрасно работает с данным браузером)</li>
+<li>(<a href="/posts/google-chrome-and-chromium-on-archlinux/#%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0-%D1%83%D0%B4%D0%B0%D0%BB%D1%91%D0%BD%D0%BD%D1%8B%D1%85-%D1%80%D0%B0%D1%81%D1%88%D0%B8%D1%80%D0%B5%D0%BD%D0%B8%D0%B9">Удалённый</a>) <a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/Feverqwe/tSearch">TMS - Поиск торрентов</a></li>
+<li>(Удалённый) <a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/daftano/cookies.txt">cookies.txt</a> - Экспортирует куки Chrome (закинуть только src)</li>
+<li>(Выключен) <a rel="noopener nofollow noreferrer" target="_blank" href="https://chrome.google.com/webstore/detail/vimium/dbepggeogbaibhgnhhndojpepiihcmeb">Vimium</a> - браузить веб страницы vim клавишами</li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://chrome.google.com/webstore/detail/return-youtube-dislike/gebbhagfogifgggkldgodflihgfeippi">Return YouTube Dislike</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://chrome.google.com/webstore/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm">Ublock Origin</a> + <a rel="noopener nofollow noreferrer" target="_blank" href="https://filterlists.com/">Доп пользовательские фильтры</a></li>
+</ul>
+<ol>
+<li>Настройки uBo:
+<ul>
+<li>Я - опытный пользователь - Вкл</li>
+</ul>
+</li>
+<li>Вкл доп фильтры:
+<ul>
+<li>(встроенные) uBlock filters - 6шт</li>
+<li>Easy List</li>
+<li>Easy List Cookie</li>
+<li>EasyPrivacy</li>
+<li>Block Outsider Intrusion into LAN</li>
+<li>Online Malicious URL Blocklist</li>
+<li>uBlock filters – Annoyances</li>
+<li>Peter Lowe’s Ad and tracking server list</li>
+<li>EasyList Cookie</li>
+<li>RUS: RU AdList</li>
+<li>(через импорт) <a rel="noopener nofollow noreferrer" target="_blank" href="https://easylist-downloads.adblockplus.org/cntblock.txt">RU AdList: Counters</a> (достаточно его одного)</li>
+<li>(через импорт) <a rel="noopener nofollow noreferrer" target="_blank" href="https://easylist-downloads.adblockplus.org/bitblock.txt">RU AdList: BitBlock</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/yourduskquibbles/webannoyances">Web Annoyances Ultralist</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://filterlists.com/lists/clearurls-for-ublock-origin">ClearURLs for uBo</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/quenhus/uBlock-Origin-dev-filter">uBlock-Origin-dev-filter – Google – Dev</a></li>
+</ul>
+</li>
+<li>Экспортирован backup настроек</li>
+</ol>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://chrome.google.com/webstore/detail/dark-reader/eimadpbcbfnmbkopoojfekhnkhdbieeh">Dark Reader</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://chrome.google.com/webstore/detail/s3translator/debnnjfbneojbmioajinefnflopdohjk">S3.Переводчик</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://chrome.google.com/webstore/detail/steam-inventory-helper/cmeakgjggjdlcpncigglobpjbkabhmjl?hl=ru">Steam Inventory Helper</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://chrome.google.com/webstore/detail/enhanced-h264ify/omkfmpieigblcllmkgbflkikinpkodlk">enhanced-h264ify</a> - Для аппаратного кодирования</li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://chrome.google.com/webstore/detail/frankerfacez/fadndhdgpmmaapbmfcknlfgcflmmmieb">FrankerFaceZ</a></li>
+</ul>
+<ol>
+<li>Включённые дополнения:
+<ul>
+<li>7TV Emotes</li>
+<li>BetterTTV Emotes</li>
+<li>Chat Repetition Detector</li>
+<li>First Message Highlight</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://chrome.google.com/webstore/detail/sponsorblock-for-youtube/mnjggcdmjocbbbhaepdhchncahnbgone">SponsorBlock</a>
+<ul>
+<li>Самореклама/рекомендация - Показывать в полосе прокрутки</li>
+<li>Напоминание о взаимодействии (подписка) - Авто пропуск</li>
+<li>Важное - Показывать в полосе прокрутки</li>
+<li>Пауза/интро - Авто пропуск</li>
+<li>Конечная заставка/титры - Авто пропуск</li>
+<li>Предпросмотр/краткое содержание - Показывать в полосе прокрутки</li>
+<li>Музыка: Сегмент без музыки - Показывать в полосе прокрутки</li>
+</ul>
+</li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://chrome.google.com/webstore/detail/steamdb/kdbmhfkmnlmbkgbabkdealhhbfhlmmon">SteamDB</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://chrome.google.com/webstore/detail/%D0%BE%D0%B1%D1%85%D0%BE%D0%B4-%D0%B1%D0%BB%D0%BE%D0%BA%D0%B8%D1%80%D0%BE%D0%B2%D0%BE%D0%BA-%D1%80%D1%83%D0%BD%D0%B5%D1%82%D0%B0/npgcnondjocldhldegnakemclmfkngch">Обход блокировок Рунета</a> <a href="/posts/tor-archlinux/#%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B0-tor-%D0%B2%D0%BC%D0%B5%D1%81%D1%82%D0%B5-%D1%81-%D0%BE%D0%B1%D1%85%D0%BE%D0%B4-%D0%B1%D0%BB%D0%BE%D0%BA%D0%B8%D1%80%D0%BE%D0%B2%D0%BE%D0%BA-%D1%80%D1%83%D0%BD%D0%B5%D1%82%D0%B0-%D0%BF%D1%80%D0%BE%D0%BA%D1%81%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D1%82%D1%8C-%D0%B4%D0%BE%D0%BC%D0%B5%D0%BD%D1%8B-onion">+Tor прокси .onion доменов</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://chrome.google.com/webstore/detail/cute-save-button/foblnmhpgiilabdcbnfgoheplajhompg">Cute Save Button</a> - Удобная кнопка скачивания изображения</li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://chrome.google.com/webstore/detail/ff2mpv/ephjcajbkgplkjmelpglennepbpmdpjg">ff2mpv</a> (<a href="/posts/mpv-and-setup/#ff2mpv">инструкция по установке</a>)</li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://chrome.google.com/webstore/detail/cookie-autodelete/fhcgjolkccmbidfldomjliifgaodjagh">Cookie AutoDelete</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://chrome.google.com/webstore/detail/proxy-switchyomega/padekgcemlokbadohgkifijomclgjgif">Proxy SwitchyOmega</a> с настроенными <a href="/posts/tor-archlinux/#proxy-switchyomega--tor">.onion</a> и <a href="/posts/i2p-archlinux/">.i2p</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://chrome.google.com/webstore/detail/violentmonkey/jinjaccalgkegednnccohejagnlnfdag">Violentmonkey</a> (<span style="color:green">Open-Source</span>) или <span style="color:red">Tampermonkey</span> (Проприетарный)</li>
+</ul>
+<ol>
+<li>Скрипты:
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/SthephanShinkufag/Dollchan-Extension-Tools">Dollchan Extension Tools</a> - Расширяет функционал 4chan/2ch</li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://gist.github.com/Eptun/3fdcc84552e75e452731cd4621c535e9">EmuParadise Download Workaround - 1.1.1</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/FarisHijazi/Rarbg-Enhancer-UserScript">Rarbg Enhancer</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://greasyfork.org/en/scripts/41041-endless-google-fork">Endless Google [fork]</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://greasyfork.org/en/scripts/395257-better-google">Better Google</a></li>
+<li>(Для Firefox) <a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/Nuklon/Steam-Economy-Enhancer">Steam-Economy-Enhancer</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://openuserjs.org/scripts/KawaiZombi/kawai-scriptssoundcloud-downloader">@kawai-scripts/soundcloud-downloader</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://gist.github.com/origamiofficial/2557dd47fb0aaf08e3c298a236bfa14d">Recaptcha Solver (Automatically solves Recaptcha in browser)</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://openuserjs.org/scripts/nokeya/Direct_links_out">Direct links out</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://greasyfork.org/en/scripts/28497-%E7%BD%91%E9%A1%B5%E9%99%90%E5%88%B6%E8%A7%A3%E9%99%A4-%E6%94%B9">Remove web limits(modified)</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/zerodytrash/Simple-YouTube-Age-Restriction-Bypass/blob/main/dist/Simple-YouTube-Age-Restriction-Bypass.user.js">Simple YouTube Age Restriction Bypass</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/zerodytrash/YouTube-Livechat-GoToChannel">YouTube Livechat GoToChannel</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/ilyhalight/voice-over-translation">voice-over-translation</a> (<a rel="noopener nofollow noreferrer" target="_blank" href="https://raw.githubusercontent.com/ilyhalight/voice-over-translation/master/vot-cloudflare.user.js">для тех кто юзает violentmonkey</a>)</li>
+<li>(Может не работать) <a rel="noopener nofollow noreferrer" target="_blank" href="https://greasyfork.org/ru/scripts/398802-google-images-direct-links-2">Google Images direct links 2</a> - Быстрое перенаправление на картинку</li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/vladgba/Back2source">Back2source</a> (или https://github.com/quenhus/uBlock-Origin-dev-filter) - решение по вырезанию машинных переводов из поисковика (stackoverflow и т.д) как на пикче
+<img src="/images/ultimate-ungoogled-chromium-guide/back2source.png" alt="image" /></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://greasyfork.org/en/scripts/436359-privacy-redirector">Privacy Redirector</a> - перенаправляет на свободные ресурсы уважающие приватность данных</li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://greasyfork.org/ru/scripts/19993-ru-adlist-js-fixes">RU AdList JS Fixes</a> - (Использовать вместе с uBlock Origin со списком фильтров RU AdList) блокирует рекламу Яндекса, Live Journal и т.д. Вместо этого скрипта можно использовать <a rel="noopener nofollow noreferrer" target="_blank" href="https://easylist-downloads.adblockplus.org/cntblock.txt">RU AdList: Counters</a> и <a rel="noopener nofollow noreferrer" target="_blank" href="https://easylist-downloads.adblockplus.org/bitblock.txt">RU AdList: BitBlock</a> через импорт uBlockOrigin, также и наоборот</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://chrome.google.com/webstore/detail/user-agent-switcher-and-m/bhchdcejhohfmigjafbampogmaanbfkg">User-Agent Switcher and Manager</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://chrome.google.com/webstore/detail/link-gopher/bpjdkodgnbfalgghnbeggfbfjpcfamkf">Link Gopher - Extract links</a></li>
+<li>(Выключено) <a rel="noopener nofollow noreferrer" target="_blank" href="https://chrome.google.com/webstore/detail/bookmark-dupes/ombpkjoelcapenbepmgifadkgpokfgfd?hl=ru">Bookmark Dupes</a> - поиск дубликатов закладок</li>
+<li>(Выключено) <a rel="noopener nofollow noreferrer" target="_blank" href="https://chrome.google.com/webstore/detail/redirector/ocgpenflpmgnfapjedencafcfakcekcd">Redirector</a> - Пользовательские правила перенаправления</li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://chrome.google.com/webstore/detail/%D0%BA%D1%8D%D1%88%D0%B1%D1%8D%D0%BA-%D1%81%D0%B5%D1%80%D0%B2%D0%B8%D1%81-%D0%BC%D0%B5%D0%B3%D0%B0%D0%B1%D0%BE%D0%BD%D1%83%D1%81/dbfipcjecamggjfabeaclacjoohfjhhn">Кэшбэк-сервис "Мегабонус"</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://chrome.google.com/webstore/detail/browsec-vpn-free-vpn-for/omghfjlpggmjjaagoclmmobgdodcjboh">Browsec VPN - Free VPN for Chrome</a></li>
+</ul>
+<h3 id="eksport-i-import-rasshirenii"><a class="anchor" href="#eksport-i-import-rasshirenii">#</a>&nbsp;
+Экспорт и Импорт расширений</h3>
+<p>Тут всё просто. Переходим в настройки расширения Chromium Web Store</p>
+<p>Скролим вниз и копируем весь текст и сохраняем его на ПК</p>
+<p>Импортирование расширений происходит простым CopyPaste в пустое поле и нажать "Установить всё"</p>
+<p>Остальные удалённые устанавливаем вручную</p>
+<p><img src="/images/ultimate-ungoogled-chromium-guide/1668285495.png" alt="image" /></p>
+<h3 id="dobavlenie-poiskovoi-sistemy-i-shortkatov"><a class="anchor" href="#dobavlenie-poiskovoi-sistemy-i-shortkatov">#</a>&nbsp;
+Добавление поисковой системы и шорткатов</h3>
+<ul>
+<li>https://www.youtube.com/watch?v=gthBmRxDFlo</li>
+</ul>
+<p>Стандартно Ungoogled-chromium поставляется с несколькими поисковыми системами но поисковой системы <a rel="noopener nofollow noreferrer" target="_blank" href="https://search.brave.com/">brave</a> и <a rel="noopener nofollow noreferrer" target="_blank" href="https://www.startpage.com/">startpage</a> всё ещё нет. Именно поэтому я хотел рассказать как их добавить.</p>
+<p>Заходим в <strong>chrome://settings/searchEngines</strong>, жмём <strong>Добавить</strong> и вставляем</p>
+<h4 id="brave-search"><a class="anchor" href="#brave-search">#</a>&nbsp;
+Brave search</h4>
+<ul>
+<li>Поисковая система: <code>Brave</code></li>
+<li>Быстрая команда: <code>:br</code></li>
+<li>URL с параметром %s вместо запроса: <code>https://search.brave.com/search?q=%s&amp;source=desktop</code></li>
+</ul>
+<p>Сохраняем и назначаем по умолчанию</p>
+<h4 id="startpage"><a class="anchor" href="#startpage">#</a>&nbsp;
+Startpage</h4>
+<ul>
+<li>Поисковая система: <code>Startpage</code></li>
+<li>Быстрая команда: <code>:sp</code></li>
+<li>URL с параметром %s вместо запроса: <code>https://www.startpage.com/do/search?q=%s&amp;segment=startpage.brave</code></li>
+</ul>
+<p>Сохраняем и назначаем по умолчанию</p>
+<h4 id="google-search"><a class="anchor" href="#google-search">#</a>&nbsp;
+Google Search</h4>
+<p>Источники:</p>
+<ul>
+<li>https://www.youtube.com/watch?v=qV2woVC6aVw</li>
+<li>https://support.google.com/chrome/answer/95426?hl=en&amp;co=GENIE.Platform%3DDesktop#zippy=%2Curl-with-s-in-place-of-query-field:~:text=%22URL%20with%20%25s%20in%20place%20of%20query%22%20field</li>
+</ul>
+<p>Вставляем</p>
+<ul>
+<li>Поисковая система: <code>Google</code></li>
+<li>Быстрая команда: <code>google.com</code></li>
+<li>URL с параметром %s вместо запроса: <code>https://www.google.com/search?q=%s</code></li>
+<li>Suggestions URL with %s in place of query: <code>https://www.google.com/complete/search?client=chrome&amp;q=%s</code></li>
+</ul>
+<h4 id="searxng"><a class="anchor" href="#searxng">#</a>&nbsp;
+SearXNG</h4>
+<p>Источники:</p>
+<ul>
+<li>https://github.com/searxng/searxng</li>
+</ul>
+<p>Экземпляры:</p>
+<ul>
+<li>https://paulgo.io/</li>
+<li>https://searx.tiekoetter.com/ - Находится ближе, интерфейс удобнее настроен</li>
+<li>https://searx.be/</li>
+<li>https://searx.bar/</li>
+</ul>
+<p>Вставляем:</p>
+<ul>
+<li>Поисковая система: <code>SearXNG</code></li>
+<li>Быстрая команда: <code>:sx</code></li>
+<li>URL с параметром %s вместо запроса: <code>https://searx.tiekoetter.com/search?q=%s</code></li>
+</ul>
+<h3 id="rabota-s-zashchishchionnym-kontentom-drm-spotify-netflix-i-t-d"><a class="anchor" href="#rabota-s-zashchishchionnym-kontentom-drm-spotify-netflix-i-t-d">#</a>&nbsp;
+Работа с защищённым контентом DRM (Spotify Netflix и т.д)</h3>
+<p>Из данного браузера вырезана данная проприетарщина, но её можно вернуть</p>
+<p>Способы установки:</p>
+<ol>
+<li><strong>(Обновляемый) AUR пакет <a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/chromium-widevine">chromium-widevine</a></strong></li>
+</ol>
+<p>Данный пакет автоматизирует вышеперечисленные манипуляции в единый пакет, обновляется прямо после выхода новой версией ungoogled-chromium.</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">yay -S</span><span style="color:#ffee80;"> chromium-widevine
+</span></code></pre>
+<ol start="2">
+<li><strong><a rel="noopener nofollow noreferrer" target="_blank" href="https://ungoogled-software.github.io/ungoogled-chromium-wiki/faq#linux">Офф инструкция</a></strong></li>
+</ol>
+<p>Заработало при помощи офф инструкции.</p>
+<ol start="3">
+<li>(Может быть устаревшее) <strong><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/Empyreann/chromium-widevine">Скриптом</a></strong></li>
+</ol>
+<p>Или воспользовавшись данным скриптом</p>
+<p>Инструкция:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">git</span><span style="color:#ffee80;"> clone https://github.com/Empyreann/chromium-widevine.git
+</span><span style="color:#ffb054;">cd</span><span style="color:#ffee80;"> chromium-widevine
+</span><span style="color:#f9f9f9;">./use-standalone-widevine.sh
+</span></code></pre>
+<p>Для проверки что Widevine работает можно запустить данный html тест (test-widevine.html) внутри репо.</p>
+<p><img src="/images/ultimate-ungoogled-chromium-guide/widewine-test.png" alt="image" /></p>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

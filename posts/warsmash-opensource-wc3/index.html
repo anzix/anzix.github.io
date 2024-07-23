@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>!Warsmash (OpenSource WarCraft 3) на Linux</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  !Warsmash (OpenSource WarCraft 3) на Linux
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-09-01T14:10:00+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux-gaming/">linux-gaming</a>
+
+<br>
+
+
+
+<p>Частично ориентировался по <a rel="noopener nofollow noreferrer" target="_blank" href="https://www.youtube.com/watch?v=YWXzSxpgzpY">этому видео гайду</a></p>
+<p>Перед началом необходимо установить из AUR пакет</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">yay -S</span><span style="color:#ffee80;"> jdk17-temurin
+</span></code></pre>
+<p>(Не проверял) Также можно скачать с <a rel="noopener nofollow noreferrer" target="_blank" href="https://adoptium.net/download/">офф сайта</a></p>
+<p>Выдать список доступных библиотек</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">archlinux-java</span><span style="color:#ffee80;"> status
+</span></code></pre>
+<p>Выставляем глобально версию Java которую рекомендует автор проекта</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> archlinux-java set java-17-temurin
+</span></code></pre>
+<p>Если использовать java-17-openjdk и собрать проект, при запуске собранного файла  будет ошибка</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">$</span><span style="color:#ffee80;"> ./bin/warsmash
+</span><span style="color:#f9f9f9;">Picked</span><span style="color:#ffee80;"> up _JAVA_OPTIONS:</span><span style="color:#f9f9f9;"> -Djava</span><span style="color:#ffee80;">.util.prefs.userRoot=/home/anix/.config/java
+</span><span style="color:#f9f9f9;">Warsmash</span><span style="color:#ffee80;"> engine is starting...
+</span><span style="color:#f9f9f9;">Inconsistency</span><span style="color:#ffee80;"> detected by ld.so: dl-lookup.c: 107: check_match: Assertion </span><span style="color:#f9f9f9;">`version-</span><span style="color:#ff9d00;">&gt;</span><span style="color:#ffee80;">filename == NULL </span><span style="color:#ff9d00;">|| </span><span style="color:#f9f9f9;">!</span><span style="color:#ffee80;"> _dl_name_match_p (version-</span><span style="color:#ff9d00;">&gt;</span><span style="color:#ffee80;">filename, map)</span><span style="color:#f9f9f9;">&#39;</span><span style="color:#9eff80;"> failed!
+</span></code></pre>
+<p>Сборка проекта</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">git</span><span style="color:#ffee80;"> clone https://github.com/Retera/WarsmashModEngine
+</span><span style="color:#ffb054;">cd</span><span style="color:#ffee80;"> WarsmashModEngine
+</span><span style="color:#f9f9f9;">chmod -v</span><span style="color:#ffee80;"> u+x gradlew
+</span><span style="color:#f9f9f9;">./gradlew</span><span style="color:#ffee80;"> desktop:runtime
+</span></code></pre>
+<p>Путь собранного проекта находится в <code>WarsmashModEngine/desktop/build/image</code></p>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.hiveworkshop.com/threads/wc3-download-archive-1-00-1-31-1-beta-demo.326836/">Скачиваем игровые файлы - Английская версия</a></p>
+<p>Жмём на "Game Files" и скачиваем 1.29.2</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">Необходимы файлы
+</span><span style="color:#f9f9f9;">Копируем файлы
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">Иконки
+</span><span style="color:#f9f9f9;">[repo_name]/core/assets/resources
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">Скрипты и UI
+</span><span style="color:#f9f9f9;">[repo_name]/resources
+</span></code></pre>
+<p>Редактирование файла <code>warsmash.ini</code> для адаптации к версии 1.29.2</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">[DataSources]
+</span><span style="color:#f9f9f9;">Count=5
+</span><span style="color:#f9f9f9;">Type00=MPQ
+</span><span style="color:#f9f9f9;">Path00=&quot;../War3.mpq&quot;
+</span><span style="color:#f9f9f9;">Type01=MPQ
+</span><span style="color:#f9f9f9;">Path01=&quot;../War3x.mpq&quot;
+</span><span style="color:#f9f9f9;">Type02=MPQ
+</span><span style="color:#f9f9f9;">Path02=&quot;../War3xLocal.mpq&quot;
+</span><span style="color:#f9f9f9;">Type03=Folder
+</span><span style="color:#f9f9f9;">Path03=&quot;resources&quot;
+</span><span style="color:#f9f9f9;">Type04=Folder
+</span><span style="color:#f9f9f9;">Path04=&quot;../Maps&quot;
+</span></code></pre>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">[Emulator]
+</span><span style="color:#f9f9f9;">...
+</span><span style="color:#f9f9f9;">MaxPlayers=16 =&gt; 28
+</span></code></pre>
+<p>Включаем музыку <code>EnableMusic=0 =&gt; 1</code></p>
+<p>Структура папок и файлов</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;"> |-Warcraft III
+</span><span style="color:#f9f9f9;"> |  |-War3.mpq
+</span><span style="color:#f9f9f9;"> |  |-War3x.mpq
+</span><span style="color:#f9f9f9;"> |  |-War3xLocal.mpq
+</span><span style="color:#f9f9f9;"> |-warsmash
+</span><span style="color:#f9f9f9;"> |  |-core
+</span><span style="color:#f9f9f9;"> |  |  |-assets
+</span><span style="color:#f9f9f9;"> |  |  |  |-warsmash.ini
+</span><span style="color:#f9f9f9;"> |  |  |  |-resources
+</span><span style="color:#f9f9f9;"> |  |  |  |  |-Scrips
+</span><span style="color:#f9f9f9;"> |  |  |  |  |-UI
+</span><span style="color:#f9f9f9;"> |  |  |  |  |-Icon16.png
+</span><span style="color:#f9f9f9;"> |  |  |  |  |-Icon32.png
+</span><span style="color:#f9f9f9;"> |  |  |  |  |-Icon64.png
+</span><span style="color:#f9f9f9;"> |  |  |  |  |-Icon128.png
+</span><span style="color:#f9f9f9;"> |  |-desktop
+</span><span style="color:#f9f9f9;"> |  |-gradlew
+</span><span style="color:#f9f9f9;"> |  |-resources
+</span></code></pre>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

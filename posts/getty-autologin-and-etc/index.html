@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>!Настройка Getty, автологин и т.д</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  !Настройка Getty, автологин и т.д
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-04-15T20:05:17+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux/">linux</a>
+
+<br>
+
+
+	<aside id="toc-aside" class="toc">
+	    <details>
+			<summary>Оглавление</summary>
+	        <ol>
+	            <li>
+	                <a href="#avtovkhod-bez-vvoda-logina-i-parolia-nebezopasno">Автовход без ввода логина и пароля (небезопасно)</a>
+	                
+	            </li><li>
+	                <a href="#chtoby-byl-tol-ko-vvod-logina">!Чтобы был только ввод логина</a>
+	                
+	            </li><li>
+	                <a href="#chtoby-ne-bylo-vvoda-parolia">!Чтобы не было ввода пароля</a>
+	                
+	            </li><li>
+	                <a href="#chtoby-ne-bylo-output-loga-pri-starte-i-vykhode">Чтобы не было output лога при старте и выходе</a>
+	                
+	            </li>
+	        </ol>
+		</details>
+	</aside>
+
+
+<p>Мануал по всем опциям, если вдруг вам необходимо знать что делает каждая опция</p>
+<p>Пояснение, коротко <code>man agetty</code>:</p>
+<p>Описание:</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">agetty [options] port [baud_rate...] [term]
+</span></code></pre>
+<p>Опции [options]:</p>
+<ul>
+<li><code>-a</code>, <code>--autologin $USER</code> - Входит в систему указанного пользователя, не спрашивая имя пользователя или пароль.</li>
+<li><code>-n</code>, <code>--skip-login</code> - Не будет показывать пользователю его login, используется в связке с опцией --autologin указанной выше</li>
+<li><code>-N</code>, <code>--nonewline</code> - Не печатает новую строку перед записью в файл /etc/issue</li>
+<li><code>-i</code>, <code>--noissue</code> - Не отображать содержимое /etc/issue (или другого) перед написание приглашения для входа.</li>
+<li><code>-J</code>, <code>--noclear</code> - Не очищать экран до запроса. По умолчанию экран очищается.</li>
+<li><code>-p</code>, <code>--login-pause</code> - Ожидает ввода любой клавиши, прежде чем перейти к prompt для входа в систему. Возможно в сочетании с --autologin для экономии памяти путем ленивого создания shell.</li>
+<li><code>-f</code>, <code>--issue-file path</code> - Указывает разделенный знаком ":" список файлов и каталогов, отображается вместо /etc/issue (или другого)</li>
+</ul>
+<h2 id="avtovkhod-bez-vvoda-logina-i-parolia-nebezopasno"><a class="anchor" href="#avtovkhod-bez-vvoda-logina-i-parolia-nebezopasno">#</a>&nbsp;
+Автовход без ввода логина и пароля (небезопасно)</h2>
+<p>А чтобы у нас постоянно не просили постоянно при загрузке логин и пароль (Что отлично комбинируется с startx), нужно отредактировать строку</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> nano /etc/systemd/system/getty.target.wants/getty@tty1.service
+</span></code></pre>
+<p>Ищем в столбце <strong>[Service]</strong></p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">ExecStart</span><span style="color:#ff9d00;">=</span><span style="color:#3ad900;">-/sbin/agetty </span><span style="color:#f9f9f9;">-o &#39;</span><span style="color:#9eff80;">-p -- \\u</span><span style="color:#f9f9f9;">&#39; --noclear %I $TERM
+</span></code></pre>
+<h2 id="chtoby-byl-tol-ko-vvod-logina"><a class="anchor" href="#chtoby-byl-tol-ko-vvod-logina">#</a>&nbsp;
+!Чтобы был только ввод логина</h2>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">ExecStart=-/sbin/agetty -o $USER %I
+</span></code></pre>
+<h2 id="chtoby-ne-bylo-vvoda-parolia"><a class="anchor" href="#chtoby-ne-bylo-vvoda-parolia">#</a>&nbsp;
+!Чтобы не было ввода пароля</h2>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">ExecStart=-/sbin/agetty --autologin $USER --noclear %I $TERM
+</span></code></pre>
+<h2 id="chtoby-ne-bylo-output-loga-pri-starte-i-vykhode"><a class="anchor" href="#chtoby-ne-bylo-output-loga-pri-starte-i-vykhode">#</a>&nbsp;
+Чтобы не было output лога при старте и выходе</h2>
+<p><img src="/images/getty-autologin-and-etc/output-log-getty.png" alt="image" /></p>
+<p>В <code>.zprofile</code> в конце startx вводим значение <strong><code>&gt;/dev/null 2&gt;&amp;1</code></strong> после чего перезагружаемся</p>
+<pre>
+if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
+  startx <b>/dev/null 2>&1</b>
+fi
+</pre>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

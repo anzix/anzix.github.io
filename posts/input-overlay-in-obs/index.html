@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>!Оверлей входных устройств в OBS на Arch Linux используя Input Overlay</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  !Оверлей входных устройств в OBS на Arch Linux используя Input Overlay
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-03-19T23:38:18+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux-gaming/">linux-gaming</a>
+
+<br>
+
+
+
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.youtube.com/watch?v=bAFTAaKZf4k">Видеоинструкция по настройке (для Windows)</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/univrsal/input-overlay">Github страница Input Overlay</a></li>
+</ul>
+<p>Кросплатформенный плагин obs который может выводить много устройств такие как:</p>
+<ol>
+<li>Движение мышки и нажатие на кнопки</li>
+<li>Активные игровые части клавиатуры + QWERTY</li>
+<li>Геймпады такие как:
+<ul>
+<li>Dualsence</li>
+<li>Switch Pro Controller</li>
+<li>Xbox 360</li>
+<li>Gamecube</li>
+</ul>
+</li>
+</ol>
+<p>Установка <a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/obs-plugin-input-overlay">AUR пакета</a></p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">yay -S</span><span style="color:#ffee80;"> obs-plugin-input-overlay
+</span></code></pre>
+<p>Открываем Obs и добавляем Источник "Входной оверлей"</p>
+<p><img src="/images/input-overlay-in-obs/Screenshot_20230320_005346.png" alt="image" /></p>
+<p>Я буду тестировать на геймпаде 8BitDo Pro 2 в Bluetooth (Xinput) режиме</p>
+<p>После чего в первое поле</p>
+<ol>
+<li><strong>[Наложение файла изображения]</strong> Указываем путь до папки пресеты <code>/usr/share/obs/obs-plugins/input-overlay/presets</code> далее выбираем устройства, например <strong>gamepad</strong> и выбираем <strong>game-pad.png</strong> (не <em>-preview.png). Интересно то что макет для геймпада не имеет значения т.е можно выбрать **dualsense</em> и геймпад всё-равно будет работать</li>
+<li><strong>[Файл конфигурации .ini]</strong> При открытии вам уже укажут каталог в котором будет находится .json файл (не обращайте внимание на другой тип файла, оно всё-равно будет работать). Выбираете его или если файлов два значит выбираем на выбор</li>
+</ol>
+<p><img src="/images/input-overlay-in-obs/1679260464.gif" alt="image" />
+<img src="/images/input-overlay-in-obs/1679260735.gif" alt="image" /></p>
+<blockquote>
+<p>Для клавиатур в каталоге <strong>wasd-extented-numeric</strong> макет клавиш другой, именно поэтому выставляем правильный макет который находится по странному пути <code>/usr/share/obs/obs-plugins/input-overlay/presets/mouse/alternative/FAT9L/wasdwithblankpink.png</code></p>
+</blockquote>
+<p>Вот как выглядит мышка с клавиатурой</p>
+<p>{{&lt; rawhtml &gt;}}</p>
+<!-- Опции controls: autoplay/play/pause -->
+<video width=100% controls play>
+    <source src="/input-overlay-in-obs/input-overlay-on-linux.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+{{< /rawhtml >}}
+<p>Отслеживание движение мышки очень странное, оно работает в некоторых играх но с некоторым дефектом. Например в Apex Legends стрелка внутри ведёт себя странно а внутри интерфейса мышка отслеживается нормально, возможно данную проблему скоро исправят</p>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/univrsal/input-overlay/issues/310">Github Issue</a></li>
+</ul>
+<p>Также отслеживание движения мышки может вообще не работать в других играх</p>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

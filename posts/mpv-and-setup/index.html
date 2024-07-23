@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>!!Mpv и его настройка</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  !!Mpv и его настройка
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-03-21T18:26:51+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux/">linux</a>
+
+<br>
+
+
+	<aside id="toc-aside" class="toc">
+	    <details>
+			<summary>Оглавление</summary>
+	        <ol>
+	            <li>
+	                <a href="#ff2mpv">ff2mpv</a>
+	                
+	            </li><li>
+	                <a href="#prosmotr-onlain-torrenty-s-ozvuchkoi-i-oformlennymi-subtitrami-vmeste-cherez-mpv">Просмотр онлайн торренты с озвучкой и оформленными субтитрами вместе через mpv</a>
+	                <ol>
+	                    <li>
+	                        <a href="#spetsial-nye-oformlennye-shrifty">Специальные оформленные шрифты</a>
+	                    </li>
+	                </ol>
+	            </li><li>
+	                <a href="#samye-poleznye-lua-skripty-dlia-mpv">Самые полезные Lua скрипты для MPV</a>
+	                <ol>
+	                    <li>
+	                        <a href="#mpv-thumbnail-script-lua">mpv_thumbnail_script.lua</a>
+	                    </li><li>
+	                        <a href="#fuzzydir-lua">fuzzydir.lua</a>
+	                    </li><li>
+	                        <a href="#mpv-webtorrent-hook">mpv-webtorrent-hook</a>
+	                    </li><li>
+	                        <a href="#sponsorblock-lua">sponsorblock.lua</a>
+	                    </li><li>
+	                        <a href="#youtube-quality-lua">youtube-quality.lua</a>
+	                    </li><li>
+	                        <a href="#autoload-lua">autoload.lua</a>
+	                    </li><li>
+	                        <a href="#playlistmanager-lua">playlistmanager.lua</a>
+	                    </li><li>
+	                        <a href="#reload-lua">reload.lua</a>
+	                    </li><li>
+	                        <a href="#pause-indicator-lua">pause-indicator.lua</a>
+	                    </li>
+	                </ol>
+	            </li>
+	        </ol>
+		</details>
+	</aside>
+
+
+<p>Очень классный и минималистичный, а также кастомизируемый видеоплеер</p>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://mpv.io/manual/stable/">Английский мануал по mpv здесь</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/mpv-player/mpv/wiki/FAQ">Ответы на вопросы на англ</a></li>
+</ul>
+<p>Скачаваем</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> mpv
+</span></code></pre>
+<p>Можно запустить тест который будет показывать за что отвечает та или иная клавиша если вы её нажмете в mpv</p>
+<p>Введите в терминале</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">mpv --input-test --force-window --idle
+</span></code></pre>
+<ol>
+<li>В <code>mpv.conf</code></li>
+</ol>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Сохранить позицию воспроизведение при выходе
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Сохранять в директорию
+</span><span style="color:#f9f9f9;">save-position-on-quit
+</span><span style="color:#f9f9f9;">watch-later-directory</span><span style="color:#ff9d00;">=</span><span style="color:#ff80e1;">~</span><span style="color:#3ad900;">/.config/mpv/watch_later
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;">Зациклить видео с расширением webm
+</span><span style="color:#f9f9f9;">[extension.webm]
+</span><span style="color:#f9f9f9;">loop-file</span><span style="color:#ff9d00;">=</span><span style="color:#3ad900;">inf
+</span></code></pre>
+<ol start="2">
+<li>В input.conf</li>
+</ol>
+<p>Как управлять громкостью колёсиком мыши?</p>
+<p>Закинуть это в input.conf</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">AXIS_UP</span><span style="color:#ffee80;">	add volume 3
+</span><span style="color:#f9f9f9;">AXIS_DOWN</span><span style="color:#ffee80;">  add volume</span><span style="color:#f9f9f9;"> -3
+</span></code></pre>
+<p>Показать статистику видео</p>
+<p><img src="/images/mpv-and-setup/mpv_1.png" alt="image" /></p>
+<ul>
+<li>Нажмите i чтобы она на секунду появилась</li>
+<li>Нажмите Shift + i чтобы вкл на постоянку</li>
+</ul>
+<h2 id="ff2mpv"><a class="anchor" href="#ff2mpv">#</a>&nbsp;
+ff2mpv</h2>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/woodruffw/ff2mpv/wiki/Installation-on-Linux">Установка взята отсюда</a></li>
+</ul>
+<p>Это полезное расширение для (Firefox, Chromium, Brave и т.д). Он позволяет легко запускать видео из браузера в mpv</p>
+<p>Устанавливаем расширение на ваш браузер</p>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://addons.mozilla.org/ru/firefox/addon/ff2mpv/">Firefox</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://chrome.google.com/webstore/detail/ff2mpv/ephjcajbkgplkjmelpglennepbpmdpjg">Chromium</a></li>
+</ul>
+<p>Клонируем репо и выполняем конечную установку для вашего браузера</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">git</span><span style="color:#ffee80;"> clone https://github.com/woodruffw/ff2mpv
+</span><span style="color:#ffb054;">cd</span><span style="color:#ffee80;"> ff2mpv
+</span></code></pre>
+<p><code>./install.sh firefox</code> или <code>./install.sh chromium</code></p>
+<p>Готово! Расширение теперь работает</p>
+<h2 id="prosmotr-onlain-torrenty-s-ozvuchkoi-i-oformlennymi-subtitrami-vmeste-cherez-mpv"><a class="anchor" href="#prosmotr-onlain-torrenty-s-ozvuchkoi-i-oformlennymi-subtitrami-vmeste-cherez-mpv">#</a>&nbsp;
+Просмотр онлайн торренты с озвучкой и оформленными субтитрами вместе через mpv</h2>
+<p>Цель этого метода: сделать так чтобы можно было просматривать онлайн торренты с 100gb+ с полным комфортом (если ваш инет это позволяет). Также плюсом этого метода заключается в том что нет необходимости качать видеофрагменты на диск. Качать можно только Сабы и Озвучку на диск, что является жирным плюсом</p>
+<ul>
+<li>Первое что нужно сделать это скачать lua скрипт показанный в <a rel="noopener nofollow noreferrer" target="_blank" href="http://localhost:1313/posts/mpv-and-setup/#mpv-webtorrent-hook">этом разделе</a></li>
+<li>Далее идём на любой трекер, находим BDRemux или Blue-Ray раздачу с высоким разрешением, с отдельными дорожками и сабами</li>
+<li>Качаем только отдельно субтитры и озвучку</li>
+<li>И копируем magnet ссылку</li>
+<li>После открываем терминал и вводим схоже с показанным</li>
+</ul>
+<blockquote>
+<p>ВАЖНО: в <code>mpv.conf</code> должно быть прописано</p>
+</blockquote>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> --Автоматически подхватывать папку с аудио дорожкой при совпадении с названием видеоматериала--
+</span><span style="color:#f9f9f9;">audio-file-auto</span><span style="color:#ff9d00;">=</span><span style="color:#3ad900;">fuzzy
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> --Автоматически подхватывать папку с субтитрами при совпадении с названием видеоматериала--
+</span><span style="color:#f9f9f9;">sub-auto</span><span style="color:#ff9d00;">=</span><span style="color:#3ad900;">fuzzy
+</span></code></pre>
+<p>Вводим</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">mpv &quot;</span><span style="color:#9eff80;">magnet URL</span><span style="color:#f9f9f9;">&quot; -audio-file-paths</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">Путь к скачанной папке с озвучкой</span><span style="color:#f9f9f9;">&quot; -sub-file-paths</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">Путь к скачанной папке с субтитрами</span><span style="color:#f9f9f9;">&quot;
+</span></code></pre>
+<p><img src="/images/mpv-and-setup/mpv-webtorrent-hook.png" alt="image" /></p>
+<p>Как видно из этого output’а терминала (+) - значит что аудиодорожка и субтитры были добавлены</p>
+<p>Если аудиодорожка не добавляется, попробуйте перекачать торрент с внешними дорожками и сабами</p>
+<h3 id="spetsial-nye-oformlennye-shrifty"><a class="anchor" href="#spetsial-nye-oformlennye-shrifty">#</a>&nbsp;
+Специальные оформленные шрифты</h3>
+<p>До</p>
+<p><img src="/images/mpv-and-setup/before.png" alt="image" /></p>
+<p>После</p>
+<p><img src="/images/mpv-and-setup/after.png" alt="image" /></p>
+<p>Они обычно вот так поставляются в торрент раздачах</p>
+<p><img src="/images/mpv-and-setup/fonts.png" alt="image" /></p>
+<p>Создаёте папку fonts (соблюдая регистр)</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">mkdir </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.config/mpv/fonts
+</span></code></pre>
+<p>И закидываем всё из папки раздачи <strong>Fonts</strong> в <code>~/.config/mpv/fonts</code>
+Проверяем, всё должно сработать как показано на скринах До и После</p>
+<blockquote>
+<p>К сожалению в mpv пока что нет похожей реализации как -audio-file-paths и -sub-file-paths, сурс</p>
+<p>НО есть возможность с этим lua скриптом и версий mpv которая поддерживает опцию sub-fonts-dir (поддерживается только одна директория), если запустить на обычной версии mpv вылезает ошибка о несовместимости</p>
+<p><code>[sub_fonts_dir_auto] This version of mpv does not support the sub-fonts-dir option</code></p>
+<p>Возможно скоро появится такая опция</p>
+</blockquote>
+<h2 id="samye-poleznye-lua-skripty-dlia-mpv"><a class="anchor" href="#samye-poleznye-lua-skripty-dlia-mpv">#</a>&nbsp;
+Самые полезные Lua скрипты для MPV</h2>
+<p>Эти скрипты очень продвинут наш плеер, делая его более функциональным</p>
+<p>Создайте папку <strong>scripts</strong></p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#ffb054;">cd </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.config/mpv
+</span><span style="color:#f9f9f9;">mkdir</span><span style="color:#ffee80;"> scripts
+</span></code></pre>
+<p>В папку <strong>scripts</strong> мы будем помещать наши скачанные lua скрипты</p>
+<p>После установки скрипта, проверьте его работоспособность в терминале</p>
+<p>Введите mpv [путь к видео] и жмите enter, и чекайте терминал</p>
+<h3 id="mpv-thumbnail-script-lua"><a class="anchor" href="#mpv-thumbnail-script-lua">#</a>&nbsp;
+mpv_thumbnail_script.lua</h3>
+<ul>
+<li>https://github.com/marzzzello/mpv_thumbnail_script/releases</li>
+</ul>
+<p>Самый полезный</p>
+<p>Отображает миниатюры на видео дорожке при перемещении курсора</p>
+<p>Установка:</p>
+<p>Скачиваем эти два файла и кидаем их в <strong>scripts</strong></p>
+<ul>
+<li><code>mpv_thumbnail_script_client_osc.lua</code></li>
+<li><code>mpv_thumbnail_script_server.lua</code></li>
+</ul>
+<p>Также необходимо в <code>mpv.conf</code> перевести пункт osc (ибо как на пикриле скрипт будет жаловаться)</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">osc</span><span style="color:#ff9d00;">=</span><span style="color:#3ad900;">no
+</span></code></pre>
+<p><img src="/images/mpv-and-setup/mpv_thumbnail_warning.png" alt="image" /></p>
+<h4 id="uskorenie-protsessa"><a class="anchor" href="#uskorenie-protsessa">#</a>&nbsp;
+Ускорение процесса</h4>
+<p>Если у вас мощный проц и он многопоточный, то мы можем сделать наш скрипт ещё быстрее.</p>
+<p>Сделайте 2 <code>mpv_thumbnail_script_server</code> но с цифрой в конце</p>
+<p><img src="/images/mpv-and-setup/speedup-process-thumbnails-1.png" alt="image" /></p>
+<p>Так мы увеличим скорость обработки миниатюр в видео</p>
+<p>Готово!</p>
+<p><img src="/images/mpv-and-setup/speedup-process-thumbnails-2.png" alt="image" /></p>
+<h3 id="fuzzydir-lua"><a class="anchor" href="#fuzzydir-lua">#</a>&nbsp;
+fuzzydir.lua</h3>
+<ul>
+<li>https://github.com/sibwaf/mpv-scripts#fuzzydirlua</li>
+</ul>
+<p>Рекурсивный поиск путей звуковых дорожек и субтитров вместо ручного их прописывания путей для каждой папки</p>
+<p>Если вам надоело постоянно указывать директорию внешних аудиодорожек и субтитров внутри которой присутствует множество разных, в конфиг файле <code>mpv.conf</code> это можно указать данными опциями</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">audio-file-paths</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">Sounds/AniLibria:Sounds/Crunchyroll:Sounds/Студийная Банда</span><span style="color:#f9f9f9;">&quot;
+</span><span style="color:#f9f9f9;">sub-file-paths</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">Subtitles/Anime Chap [ENG]:Subtitles/Crunchyroll:Subtitles/RikuSempaiStuff:Subtitles/YakuSub Studio</span><span style="color:#f9f9f9;">&quot;
+</span></code></pre>
+<p>Однако так лишь загромождает конфиг файл, и вводить это утомительно.</p>
+<p>С данным скриптом закинутым в папку <strong>scripts</strong> можно просто добавить /** в конце</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">audio-file-paths</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">Sounds/**</span><span style="color:#f9f9f9;">&quot;
+</span><span style="color:#f9f9f9;">sub-file-paths</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">Subtitles/**</span><span style="color:#f9f9f9;">&quot;
+</span></code></pre>
+<p>И всё что в папке Sounds рекурсивно будет добавлено в ваш плеер</p>
+<h3 id="mpv-webtorrent-hook"><a class="anchor" href="#mpv-webtorrent-hook">#</a>&nbsp;
+mpv-webtorrent-hook</h3>
+<ul>
+<li>https://github.com/noctuid/mpv-webtorrent-hook</li>
+</ul>
+<p>Позволяет таскать URL magnet прямо в mpv и воспроизводить их, плюсом также можно таскать .torrent файл прямо в mpv и воспроизводить его не скачивая. Внешние сабы и озвучка не подхватываются этим скриптом, только встроенные сабы и озвучка. Поэтому аниме не посмотреть</p>
+<p>Установка</p>
+<p>Качаем необходимые пакеты</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">yay -S</span><span style="color:#ffee80;"> webtorrent-cli xidel
+</span><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> jq
+</span></code></pre>
+<p>Клонируем репо в папку <strong>scripts</strong></p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#ffb054;">cd</span><span style="color:#ffee80;"> scripts
+</span><span style="color:#f9f9f9;">git</span><span style="color:#ffee80;"> clone https://github.com/noctuid/mpv-webtorrent-hook.git
+</span></code></pre>
+<p>Запускаю mpv</p>
+<p>Копирую и таскаю URL magnet (или .torrent) прЯмо в окно mpv</p>
+<p>РАБОТАЕТ!!!</p>
+<blockquote>
+<ul>
+<li>Бывает что при повторе mpv вылетает, хз с чем это связано но после ребута всё норм стало (либо не скачаны пакеты)</li>
+<li>Также в этом скрипте можно добавить свои опции создав конфиг файл, для подробностями <a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/noctuid/mpv-webtorrent-hook#configuration">сюда</a></li>
+</ul>
+</blockquote>
+<h4 id="smena-direktorii-kesha-torrent-failov"><a class="anchor" href="#smena-direktorii-kesha-torrent-failov">#</a>&nbsp;
+Смена директории кэша торрент файлов</h4>
+<p>Кэш автоматом будет удалятся когда плеер с webtorrent’ом открыт поэтому волноваться не стоит</p>
+<p>Создаём конфиг файл и вставляем (я вписал свой hdd диск и всё в порядке)</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">nvim </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.config/mpv/script-opts/webtorrent-hook.conf
+</span></code></pre>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> change download directory
+</span><span style="color:#f9f9f9;">download_directory</span><span style="color:#ff9d00;">=</span><span style="color:#3ad900;">/media/webtorrentcache
+</span></code></pre>
+<h3 id="sponsorblock-lua"><a class="anchor" href="#sponsorblock-lua">#</a>&nbsp;
+sponsorblock.lua</h3>
+<ul>
+<li>https://github.com/po5/mpv_sponsorblock/blob/master/sponsorblock.lua</li>
+</ul>
+<p><img src="/images/mpv-and-setup/sponsorblock-lua.png" alt="image" /></p>
+<p>Всеми любимое расширение для браузеров по блокировке спонсор блоков теперь в mpv, только вот работает оно только только при новом воспроизведении</p>
+<p>Клонируем репо sponsorblock, вытаскиваем папку <strong>sponsorblock_shared</strong> и скрипт <strong>sponsorblock.lua</strong> переместив их в папку <strong>scripts</strong></p>
+<p>SponsorBlock работает как через терминал <code>mpv &lt;URL&gt;</code> так и простым перетаскиванием видео напрямую открыв mpv</p>
+<h3 id="youtube-quality-lua"><a class="anchor" href="#youtube-quality-lua">#</a>&nbsp;
+youtube-quality.lua</h3>
+<ul>
+<li>https://github.com/jgreco/mpv-youtube-quality</li>
+</ul>
+<p>Можно выбирать качество youtube через mpv на <code>ctrl+f</code></p>
+<p>Установка:</p>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://raw.githubusercontent.com/jgreco/mpv-youtube-quality/master/youtube-quality.lua">Закидываем скрипт</a> внутрь <code>~/.config/mpv/scripts/</code></li>
+<li>Редактируя скрипт заменяем на 164 строке с youtube-dl на yt-dlp по `<a rel="noopener nofollow noreferrer" target="_blank" href="https://www.reddit.com/r/mpv/comments/sy497o/comment/hxvry3t/?utm_source=share&amp;utm_medium=web2x&amp;context=3">совету от данного реддитора</a> чтобы скрипт работал.</li>
+</ul>
+<h3 id="autoload-lua"><a class="anchor" href="#autoload-lua">#</a>&nbsp;
+autoload.lua</h3>
+<ul>
+<li>https://github.com/mpv-player/mpv/blob/master/TOOLS/lua/autoload.lua</li>
+</ul>
+<p>Позволяет запускать вместо одного медиафайла а разом несколько на очереди в текущей папке,</p>
+<p>Поддерживает:</p>
+<ul>
+<li>Аудио</li>
+<li>Видео</li>
+<li>Картинки (фиг знает зачем)</li>
+</ul>
+<p>В данном конфиге я убрал автозагрузку изображений отредактировав скрипт закоментировав данные строки</p>
+<p><img src="/images/mpv-and-setup/autoload-lua.png" alt="image" /></p>
+<h3 id="playlistmanager-lua"><a class="anchor" href="#playlistmanager-lua">#</a>&nbsp;
+playlistmanager.lua</h3>
+<ul>
+<li>https://github.com/jonniek/mpv-playlistmanager/blob/master/playlistmanager.lua</li>
+</ul>
+<p>Управлять плейлистом, воспроизводя треки из списка. Очень удобен при дополнительном использовании с <a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/noctuid/mpv-webtorrent-hook">mpv-webtorrent-hook</a></p>
+<p>Просто копируем lua конфиг в <strong>scripts</strong></p>
+<p>Редактируем <code>input.conf</code> и вставляем для активации менеджера</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Бинды для playlistmanager.lua
+</span><span style="color:#f9f9f9;">TAB</span><span style="color:#ffee80;"> script-binding showplaylist
+</span></code></pre>
+<p>Нажимает TAB и управляем стрелками</p>
+<h3 id="reload-lua"><a class="anchor" href="#reload-lua">#</a>&nbsp;
+reload.lua</h3>
+<ul>
+<li>https://github.com/4e6/mpv-reload/blob/master/reload.lua</li>
+</ul>
+<p>Когда онлайн-видео застряло во время буферизации или замедленного источника CDN, перезагрузка часто помогает. Этот скрипт обеспечивает автоматическую перезагрузку видео, у которых не было прогресса буфера для некоторого времени, сохраняя текущую позицию времени. Он также добавляет бинд Ctrl + r для перезагрузки видео вручную.</p>
+<h3 id="pause-indicator-lua"><a class="anchor" href="#pause-indicator-lua">#</a>&nbsp;
+pause-indicator.lua</h3>
+<ul>
+<li>https://gist.github.com/torque/9dbc69543118347d2e5f43239a7e609a</li>
+</ul>
+<p>Всплывает индикатор паузы и воспроизведения по середине, как в ютубе</p>
+<p><img src="/images/mpv-and-setup/pause-indicator.png" alt="image" /></p>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

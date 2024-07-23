@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+      <title>Блог AniX - pinecil</title>
+      <link>https://anzix.github.io/</link>
+      <description>Инструкции и полезные разные статьи для GNU&#x2F;Linux</description>
+      <generator>Zola</generator>
+      <language>en</language>
+      <atom:link href="https://anzix.github.io/tags/pinecil/rss.xml" rel="self" type="application/rss+xml"/>
+      <lastBuildDate>Sat, 04 Mar 2023 20:49:54 +0500</lastBuildDate>
+      <item>
+          <title>!Dfu-util - установка &amp; обновление прошивки Ralim на купленный с Китая Pinecil</title>
+          <pubDate>Sat, 04 Mar 2023 20:49:54 +0500</pubDate>
+          <author>AniX</author>
+          <link>https://anzix.github.io/posts/flash-pinecil-on-archlinux/</link>
+          <guid>https://anzix.github.io/posts/flash-pinecil-on-archlinux/</guid>
+          <description xml:base="https://anzix.github.io/posts/flash-pinecil-on-archlinux/">&lt;p&gt;Источники:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;ralim.github.io&#x2F;IronOS&#x2F;Flashing&#x2F;Pinecil%20V1&#x2F;&quot;&gt;Офф инструкция установки RalimOS (Linux)&lt;&#x2F;a&gt; Ориентировался по ней&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;gist.github.com&#x2F;Dids&#x2F;2aa950d075bcf58fca98eb975a42d72b&quot;&gt;Сурс по установке через dfu-util&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;flash-pinecil-on-archlinux&#x2F;old-firmware.png&quot; alt=&quot;image&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Скачиваем dfu-util&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;sudo&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt; pacman&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt; -S&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt; dfu-util
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Мануал: &lt;code&gt;man dfu-util&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;protsess-ustanovki-proshivki-cherez-dfu-util&quot;&gt;&lt;a class=&quot;anchor&quot; href=&quot;#protsess-ustanovki-proshivki-cherez-dfu-util&quot;&gt;#&lt;&#x2F;a&gt;&amp;nbsp;
+Процесс установки прошивки через dfu-util&lt;&#x2F;h2&gt;
+&lt;p&gt;Скачиваем &lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;github.com&#x2F;Ralim&#x2F;IronOS&#x2F;releases&quot;&gt;последнюю версию RalimOS&lt;&#x2F;a&gt;, в данный момент версия 2.20&lt;&#x2F;p&gt;
+&lt;p&gt;Выбираем &lt;code&gt;Pinecil.zip&lt;&#x2F;code&gt;, распаковываем и ищем &lt;code&gt;Pinecil_RU.dfu&lt;&#x2F;code&gt; он нам и нужен&lt;&#x2F;p&gt;
+&lt;p&gt;Включаем режим DFU на Pinecil&lt;&#x2F;p&gt;
+&lt;p&gt;Для этого зажимаем кнопку - (минус) и подключаем Pinecil в ПК (дисплей на программаторе будет тёмным)&lt;&#x2F;p&gt;
+&lt;p&gt;Для проверки вводим&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;dfu-util -l
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;txt&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-txt &quot;&gt;&lt;code class=&quot;language-txt&quot; data-lang=&quot;txt&quot;&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;....
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;Found DFU: [28e9:0189] ver=0100, devnum=43, cfg=1, intf=0, path=&amp;quot;1-1.1&amp;quot;, alt=1, name=&amp;quot;@Option Bytes  &#x2F;0x1FFFF800&#x2F;01*016Be&amp;quot;, serial=&amp;quot;3TBJ&amp;quot;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;Found DFU: [28e9:0189] ver=0100, devnum=43, cfg=1, intf=0, path=&amp;quot;1-1.1&amp;quot;, alt=0, name=&amp;quot;@Internal Flash  &#x2F;0x08000000&#x2F;128*001Kg&amp;quot;, serial=&amp;quot;3TBJ&amp;quot;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Если у вас также как и у меня есть два DFU девайса, значит необходимо указать какой именно необходимо прошить а именно &lt;strong&gt;&lt;em&gt;Internal Flash&lt;&#x2F;em&gt;&lt;&#x2F;strong&gt; с цифровым указанием &lt;strong&gt;&lt;em&gt;alt=0&lt;&#x2F;em&gt;&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Из мануала dfu-util:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;txt&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-txt &quot;&gt;&lt;code class=&quot;language-txt&quot; data-lang=&quot;txt&quot;&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;-a, --alt ALT
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;        Specify  the  altsetting of the DFU interface by name or by num‐
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;        ber.
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Перевод: &lt;code&gt;-a&lt;&#x2F;code&gt; &lt;strong&gt;Указывает альтернативную настройку интерфейса DFU по имени или по номеру&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Внутри распакованной папки с локализациями Pinecil открываем терминале и вводим&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;dfu-util -D&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt; Pinecil_RU.dfu&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt; -a&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt; 0
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Весь выхлоп после команды&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;txt&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-txt &quot;&gt;&lt;code class=&quot;language-txt&quot; data-lang=&quot;txt&quot;&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;dfu-util 0.11
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;....
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;Match vendor ID from file: 28e9
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;Match product ID from file: 0189
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;Multiple alternate interfaces for DfuSe file
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;Opening DFU capable USB device...
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;Device ID 28e9:0189
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;Device DFU version 011a
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;Claiming USB DFU Interface...
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;Setting Alternate Interface #0 ...
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;Determining device status...
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;DFU state(2) = dfuIDLE, status(0) = No error condition is present
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;DFU mode device DFU version 011a
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;Device returned transfer size 2048
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;DfuSe interface name: &amp;quot;Internal Flash  &amp;quot;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;Found GD32VF103, which reports a bad page size and count for its internal memory.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;Fixed layout based on part number: page size 1024, count 128.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;File contains 1 DFU images
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;Parsing DFU image 1
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;Target name: ST...
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;Image for alternate setting 0, (1 elements, total size = 54300)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;Setting Alternate Interface #0 ...
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;Parsing element 1, address = 0x08000000, size = 54292
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;Erase   	[=========================] 100%        54292 bytes
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;Erase    done.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;Download	[=========================] 100%        54292 bytes
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;Download done.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;Done parsing DfuSe file
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;После завершения отключаем от ПК и подключаем в банку проверяя работоспособность&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;flash-pinecil-on-archlinux&#x2F;new-firmware.png&quot; alt=&quot;image&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Как видим прошивка обновилась до 2.19 и работает замечательно&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;ne-proverial-al-ternativnyi-protsess-ustanovki-obnovleniia-proshivki-cherez-staruiu-versiiu-pine64-updater&quot;&gt;&lt;a class=&quot;anchor&quot; href=&quot;#ne-proverial-al-ternativnyi-protsess-ustanovki-obnovleniia-proshivki-cherez-staruiu-versiiu-pine64-updater&quot;&gt;#&lt;&#x2F;a&gt;&amp;nbsp;
+(Не проверял) Альтернативный процесс установки&#x2F;обновления прошивки через &lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;aur.archlinux.org&#x2F;packages&#x2F;pinecil-firmware-updater-git&quot;&gt;старую версию PINE64 Updater&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;flash-pinecil-on-archlinux&#x2F;Old-PINE64-Updater.png&quot; alt=&quot;image&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Это старая QT версия ранее разработанная для Linux&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;yay -S&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt; pinecil-firmware-updater-git
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+</description>
+      </item>
+    </channel>
+</rss>

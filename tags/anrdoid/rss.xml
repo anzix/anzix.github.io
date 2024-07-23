@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+      <title>Блог AniX - anrdoid</title>
+      <link>https://anzix.github.io/</link>
+      <description>Инструкции и полезные разные статьи для GNU&#x2F;Linux</description>
+      <generator>Zola</generator>
+      <language>en</language>
+      <atom:link href="https://anzix.github.io/tags/anrdoid/rss.xml" rel="self" type="application/rss+xml"/>
+      <lastBuildDate>Sat, 18 Mar 2023 21:05:49 +0500</lastBuildDate>
+      <item>
+          <title>Фикс ошибки декомпиляции apktool в андроид</title>
+          <pubDate>Sat, 18 Mar 2023 21:05:49 +0500</pubDate>
+          <author>AniX</author>
+          <link>https://anzix.github.io/posts/fix-decompile-error-android-apktool/</link>
+          <guid>https://anzix.github.io/posts/fix-decompile-error-android-apktool/</guid>
+          <description xml:base="https://anzix.github.io/posts/fix-decompile-error-android-apktool/">&lt;ul&gt;
+&lt;li&gt;&lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;github.com&#x2F;iBotPeaches&#x2F;Apktool&#x2F;issues&#x2F;1131&quot;&gt;Github issue&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;platinmods.com&#x2F;threads&#x2F;how-to-fix-apktool-decompile-error-using-mt-manager-app-arscdecoder-error.121708&#x2F;&quot;&gt;Источник с фиксом данной проблемы&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;При декомпиляции файла используя &lt;code&gt;apktool&lt;&#x2F;code&gt; я столкнулся с данной проблемой которою мог решить только на андроиде&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;sh&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;apktool&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt; d framework-res.apk
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Вывод с ошибкой&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;color:#ffffff;&quot;&gt;&lt;code&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;.....
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;I: Loading resource table...
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;Exception in thread &amp;quot;main&amp;quot; brut.androlib.AndrolibException: Multiple resources: spec=0x01030067 style&#x2F;TextAppearance.StatusBar.EventContent, config=-v8
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;	at brut.androlib.res.data.ResType.addResource(ResType.java:50)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;	at brut.androlib.res.data.ResType.addResource(ResType.java:44)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;.......
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Вот что мне потребовалось сделать для решения проблемы:&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;Копируем framework-res.apk на телеф&lt;&#x2F;li&gt;
+&lt;li&gt;В Файловом менеджере (&lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;4pda.to&#x2F;forum&#x2F;index.php?showtopic=548542&quot;&gt;MT Manager&lt;&#x2F;a&gt;) открываем apk жмём &quot;Открыть&quot; откроется apk как zip архив&lt;&#x2F;li&gt;
+&lt;li&gt;Выберите файл resource.arsc, он спросит, в каком редакторе открыть. Выберите &quot;Редактор Arsc&quot;&lt;&#x2F;li&gt;
+&lt;li&gt;Нажмите в углу на три точки и сохраните, этим он перестроит файл .arsc и исправит ошибки.&lt;&#x2F;li&gt;
+&lt;li&gt;Вернитесь назад и вам будет предложено обновите APK просто отметьте &quot;Подпись&quot; иии сделано!&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;p&gt;После чего framework-res.apk можно будет декомпилировать и не будет никакой ошибки в apktool&lt;&#x2F;p&gt;
+&lt;p&gt;Наглядная инструкция ввиде гифки на Android&#x27;е&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;fix-decompile-error-android-apktool&#x2F;fix-for-decompile-apktool.gif&quot; alt=&quot;image&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Демонстрация экрана смартфона при помощи Scrcpy</title>
+          <pubDate>Thu, 09 Mar 2023 21:05:33 +0500</pubDate>
+          <author>AniX</author>
+          <link>https://anzix.github.io/posts/scrcpy-screen-sharing-on-linux/</link>
+          <guid>https://anzix.github.io/posts/scrcpy-screen-sharing-on-linux/</guid>
+          <description xml:base="https://anzix.github.io/posts/scrcpy-screen-sharing-on-linux/">&lt;ul&gt;
+&lt;li&gt;&lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;www.youtube.com&#x2F;watch?v=zTYYdPS4SOA&quot;&gt;Видео инструкция&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;Установка&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;sh&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;sudo&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt; pacman&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt; -S&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt; scrcpy
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;В смартфоне необходимо активировать настройки “Для разработчиков” и включить функцию “Отладка по USB”&lt;&#x2F;p&gt;
+&lt;p&gt;После чего подключаем по Usb в ПК. И запускаем утилиту в терминале командой&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;sh&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;scrcpy
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;В телефоне необходимо согласится с подключением и всё&lt;&#x2F;p&gt;
+</description>
+      </item>
+    </channel>
+</rss>

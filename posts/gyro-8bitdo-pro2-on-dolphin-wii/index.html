@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>!Motion control гироскопом с геймпада 8BitDo Pro 2 для эмулятора Dolphin (Wii)</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  !Motion control гироскопом с геймпада 8BitDo Pro 2 для эмулятора Dolphin (Wii)
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-03-15T00:22:10+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux-gaming/">linux-gaming</a>
+
+<br>
+
+
+
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.youtube.com/watch?v=nx5ppsALrC8">Ориентировался по этому видео гайду</a> (мёртвая ссылка)</li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://wiki.dolphin-emu.org/index.php?title=DSU_Client#Linux">Dolphin-emu Wiki</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/joaorb64/joycond-cemuhook/wiki#Dolphin">Офф инструкция Joycond-cemuhook</a></li>
+</ul>
+<blockquote>
+<p>Примечание: Данный метод работает только по проводу, при соединении по bluetooth <a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/joycond-cemuhook-git">joycond-cemuhook</a> не видит мой контроллер. Возможно это когда-нибудь исправят.</p>
+</blockquote>
+<p>Тестировал на примере игры Super Mario Galaxy 1/2</p>
+<p>Качаем AUR пакеты <a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/joycond-git">joycond</a> (своего рода Linux альтернатива BetterJoy) + дополнительно <a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/joycond-cemuhook-git">joycond-cemuhook</a> который позволит запустить dsu клиент (путём udp протокола) для работы гироскопа на эмуляторе.</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">yay -S</span><span style="color:#ffee80;"> joycond-git joycond-cemuhook-git
+</span></code></pre>
+<p>Конектим по проводу 8BitDo Pro 2 (режим Switch)</p>
+<p>Запускаем в консоли данной командой</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> joycond-cemuhook
+</span></code></pre>
+<p>Если видите такой выхлоп значит 8BitDo Pro 2 определился и запустил сервис</p>
+<p><img src="/images/gyro-8bitdo-pro2-on-dolphin-wii/Screenshot_20230315_170415.png" alt="image" /></p>
+<p>Оставляем терминал открытым, либо запустите как команду как процесс <code>sudo joycond-cemuhook &amp;</code></p>
+<p>Заходим в эмуль dolphin - Опции - Настройки управления. В окне категории Общее ставим галочку на "Ввод в фоне" (без этого у меня не работали кнопки управления и motion control) и следом жмём на "Другие источники ввода". Включаем клиент DSU потом жмём "Добавить" и в "Описание" можно любое (например название нашего геймпада)</p>
+<p><img src="/images/gyro-8bitdo-pro2-on-dolphin-wii/Gyro-Motion-Control-Dolphin-Wii-Mario-Galaxy-2.png" alt="image" /></p>
+<p>После добавления мы можем убедится что Motion control работает жмём на "Настройка" рядом с <code>Wii Remote 1 [Эмулируемый Wii Remote]</code></p>
+<p>Выбираем из списка наш добавленный DSU клиент, у меня он именуется так <code>DSUClient/0/8BitDo Pro 2</code></p>
+<p><strong>Данные движения</strong> (motion) т.е гироскоп:</p>
+<p>Если у вас пустые поля в секции Акселерометр и Гироскоп сбрасываем настройки нажав "По умолчанию"</p>
+<p>В этой категории убеждаемся что всё дефолтно работает (при движении и вращении геймпада оба кружка должны двигаться)</p>
+<p><img src="/images/gyro-8bitdo-pro2-on-dolphin-wii/Gyro-Motion-Control-Dolphin-Wii-Mario-Galaxy.gif" alt="image" /></p>
+<p>[Центровка] Правое нажатие на стик - R3 (Центровка motion курсора)</p>
+<p><strong>Общие и настройки</strong>:</p>
+<p>Необходимо чтобы кнопки отображались при нажатии, как на гифке</p>
+<p><img src="/images/gyro-8bitdo-pro2-on-dolphin-wii/Gyro-Motion-Control-Dolphin-Wii-Mario-Galaxy-1.gif" alt="image" /></p>
+<p>Также не рекомендуется включать Вибрацию с включенным Motion управлением, курсор при геймплее будет постоянно трястись и будет сильно мешать при геймплее</p>
+<p><strong>Расширение (управление персонажем)</strong>:</p>
+<p>Обязательно откалибруйте стик</p>
+<p><img src="/images/gyro-8bitdo-pro2-on-dolphin-wii/stick-calibration.png" alt="image" /></p>
+<ul>
+<li>[C] Правый trigger (курок) - R1 (марио приседает)</li>
+<li>[Z] Правый shoulders (бампер) - R2 (корректировка камеры)</li>
+</ul>
+<p>Теперь можно спокойно играть</p>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

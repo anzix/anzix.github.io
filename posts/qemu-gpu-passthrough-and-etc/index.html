@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>!!Виртуальная машина Qemu KVM Virt-manager!!</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  !!Виртуальная машина Qemu KVM Virt-manager!!
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-08-13T13:00:00+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux/">linux</a>
+
+<br>
+
+
+	<aside id="toc-aside" class="toc">
+	    <details>
+			<summary>Оглавление</summary>
+	        <ol>
+	            <li>
+	                <a href="#nastroika-kvm-i-libvirt">Настройка KVM и Libvirt</a>
+	                <ol>
+	                    <li>
+	                        <a href="#nastroika-virt-seti-cherez-gui-virt-manager">Настройка вирт. сети через GUI Virt Manager</a>
+	                    </li><li>
+	                        <a href="#cherez-terminal">Через терминал</a>
+	                    </li>
+	                </ol>
+	            </li><li>
+	                <a href="#problema-nevozmozhnost-zapustit-vm">!Проблема: Невозможность запустить VM!</a>
+	                
+	            </li><li>
+	                <a href="#problema-termux-soedinenie-k-vm">!Проблема: Termux соединение к VM!</a>
+	                
+	            </li><li>
+	                <a href="#problema-uvelichennyi-tekst-v-okonnom-menedzhere">!Проблема: увеличенный текст в оконном менеджере!</a>
+	                
+	            </li><li>
+	                <a href="#problema-ispol-zovanii-picom-v-vm">Проблема: Использовании picom в VM</a>
+	                
+	            </li><li>
+	                <a href="#problema-ne-mogu-sozdat-snapshot-aktivnoe-sostoianie-gostevoi-mashiny">Проблема: Не могу создать снапшот активное состояние гостевой машины</a>
+	                
+	            </li><li>
+	                <a href="#problema-netu-bootloader-a-grub-posle-importa-qcow-obraza">Проблема: Нету bootloader'а grub после импорта qcow образа</a>
+	                
+	            </li><li>
+	                <a href="#problema-ne-mogu-udalit-displei-spice">!Проблема: Не могу удалить Дисплей Spice!</a>
+	                
+	            </li><li>
+	                <a href="#problema-qemu-commandline-ne-vstavliaetsia-v-xml-fail-virt-manager">!Проблема: <qemu:commandline> не вставляется в xml файл virt-manager!</a>
+	                
+	            </li><li>
+	                <a href="#obshchii-bufer-obmena">Общий буфер обмена</a>
+	                <ol>
+	                    <li>
+	                        <a href="#kak-na-window-manager-e-zadeistvovat-obshchii-bufer-obmena">Как на Window Manager'е задействовать общий буфер обмена</a>
+	                    </li>
+	                </ol>
+	            </li><li>
+	                <a href="#obshchie-papki-shared-folders-ispol-zuia-virtiofs">!Общие папки (Shared Folders) используя virtiofs!</a>
+	                
+	            </li><li>
+	                <a href="#obshchie-papki-shared-folders-ispol-zuia-virtio-9p">Общие папки (Shared Folders) используя virtio-9p</a>
+	                
+	            </li><li>
+	                <a href="#rezervirovanie-obraza-qcow2-iz-var-lib-libvirt-images">!!Резервирование образа qcow2 из /var/lib/libvirt/images/!!</a>
+	                
+	            </li><li>
+	                <a href="#ruchnoe-redaktirovanie-xml-fail">Ручное редактирование xml файл</a>
+	                
+	            </li><li>
+	                <a href="#gde-nakhodiatsia-logi-zapuska-gostia-vm">Где находятся логи запуска Гостя VM?</a>
+	                
+	            </li><li>
+	                <a href="#gde-nakhodiatsia-argumenty-zapuska-qemu-esli-zapuskat-iz-virt-manager">Где находятся аргументы запуска qemu если запускать из Virt-Manager?</a>
+	                
+	            </li>
+	        </ol>
+		</details>
+	</aside>
+
+
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.youtube.com/watch?v=9trs2SNeW3o&amp;list=WL&amp;index=7">CLI Видеоинструкция (gentoo edition)</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://wiki.libvirt.org/page/Main_Page">Вики libvirt</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.linux-kvm.org/page/HOWTO">Вики kvm</a></li>
+</ul>
+<p>Требования:</p>
+<ul>
+<li>
+<p>У вас должен быть установлен и настроен polkit аутентификатор</p>
+</li>
+<li>
+<p>Требуется включить в Bios'е (для процессоров Intel) технологию виртуализации VT-d<br />
+У меня на HuananZhi X79 ZD3 она находится во вкладке <strong>Chipset</strong> - <strong>North Bridge</strong> - <strong>IOH Configuration</strong> - <strong>Intel VT for Directed I/O Configuration</strong> и включаем <strong>Intel VT-d</strong></p>
+</li>
+</ul>
+<p><img src="/images/qemu-gpu-passthrough-and-etc/bios_vt-d.png" alt="image" /></p>
+<ul>
+<li>Требуется отключить CSM в Bios'е<br />
+Находится во вкладке <strong>boot</strong> - <strong>CSM parameters</strong> - меняем <strong>Launch CSM</strong> на disabled</li>
+</ul>
+<p><img src="/images/qemu-gpu-passthrough-and-etc/bios_csm.png" alt="image" /></p>
+<p>Устанавливаем все эти пакеты</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> virt-manager qemu qemu-arch-extra dnsmasq iptables-nft dmidecode edk2-ovmf swtpm
+</span></code></pre>
+<p>Соглашаемся на удаление iptables</p>
+<h2 id="nastroika-kvm-i-libvirt"><a class="anchor" href="#nastroika-kvm-i-libvirt">#</a>&nbsp;
+Настройка KVM и Libvirt</h2>
+<p>Раскомментируем эти строки в <code>/etc/libvirt/libvirtd.conf</code></p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">unix_sock_group = &quot;libvirt&quot;
+</span><span style="color:#f9f9f9;">unix_sock_rw_perms = &quot;0770&quot;
+</span></code></pre>
+<p>Или вводим в терминале</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> sed</span><span style="color:#f9f9f9;"> -i &#39;</span><span style="color:#9eff80;">s/^#unix_sock_group/unix_sock_group/</span><span style="color:#f9f9f9;">&#39;</span><span style="color:#ffee80;"> /etc/libvirt/libvirtd.conf
+</span><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> sed</span><span style="color:#f9f9f9;"> -i &#39;</span><span style="color:#9eff80;">s/^#unix_sock_rw_perms/unix_sock_rw_perms/</span><span style="color:#f9f9f9;">&#39;</span><span style="color:#ffee80;"> /etc/libvirt/libvirtd.conf
+</span></code></pre>
+<p>Добавляем нашего юзера в приведённые ниже группы</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> usermod</span><span style="color:#f9f9f9;"> -aG</span><span style="color:#ffee80;"> libvirt,kvm,input </span><span style="color:#f9f9f9;">$(whoami)
+</span></code></pre>
+<p>Вот инфо про данные группы</p>
+<ul>
+<li>kvm - Доступ к виртуальным машинам использующие <a rel="noopener nofollow noreferrer" target="_blank" href="https://wiki.archlinux.org/title/KVM">KVM</a></li>
+<li>libvirt - Позволяет обычному пользователю (через PolicyKit) подключиться к демону libvirtd, не запрашивая пароль root</li>
+<li>input - необходим для проброса evdev устройств usb мышки, клавиатуры и т.д</li>
+</ul>
+<p>Просмотреть группы принадлежащие юзеру командой <code>groups $(whoami)</code></p>
+<p>Если у вас образы iso в другом разделе своего диска, тогда вам потребуется отредактировать <code>qemu.conf</code>, и дать привилегии qemu читать данный iso.</p>
+<blockquote>
+<p>Без этого у вас <a href="/posts/qemu-gpu-passthrough-and-etc/#1-problema-nevozmozhnost-zapustit-vm">вылезет данная ошибка</a></p>
+</blockquote>
+<p><code>sudo nvim /etc/libvirt/qemu.conf</code></p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">user = &quot;libvirt-qemu&quot; -&gt; user = &quot;имяпользователя&quot;
+</span><span style="color:#f9f9f9;">group = &quot;libvirt-qemu&quot; -&gt; group = &quot;wheel&quot;
+</span></code></pre>
+<p>Для упрощения можете ввести эти команды в терминале</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> sed</span><span style="color:#f9f9f9;"> -i &quot;</span><span style="color:#9eff80;">s|^#user = .*|user = </span><span style="color:#80ff82;">\&quot;</span><span style="color:#f9f9f9;">${</span><span style="color:#edef7d;">USERNAME</span><span style="color:#f9f9f9;">}</span><span style="color:#80ff82;">\&quot;</span><span style="color:#9eff80;">|g</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#ffee80;"> /etc/libvirt/qemu.conf
+</span><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> sed</span><span style="color:#f9f9f9;"> -i &quot;</span><span style="color:#9eff80;">s|^#group = .*|group = </span><span style="color:#80ff82;">\&quot;</span><span style="color:#9eff80;">wheel</span><span style="color:#80ff82;">\&quot;</span><span style="color:#9eff80;">|g</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#ffee80;"> /etc/libvirt/qemu.conf
+</span></code></pre>
+<p>В параметрах ядра необходимо прописать опции <code>intel_iommu=on iommu=pt</code> и ребутнутся</p>
+<blockquote>
+<p>Пояснение: Делается это для того чтобы можно было пробросить свою видеокарту в VM</p>
+</blockquote>
+<p>Запускаем сервис</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> systemctl enable</span><span style="color:#f9f9f9;"> --now</span><span style="color:#ffee80;"> libvirtd
+</span></code></pre>
+<p>Для проверки сервиса</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">systemctl</span><span style="color:#ffee80;"> status libvirtd
+</span></code></pre>
+<p><a href="/posts/qemu-gpu-passthrough-and-etc/#bad-name-at-etc-hosts-line">В статусе были ошибки от dnsmasq которые я исправил</a></p>
+<h3 id="nastroika-virt-seti-cherez-gui-virt-manager"><a class="anchor" href="#nastroika-virt-seti-cherez-gui-virt-manager">#</a>&nbsp;
+Настройка вирт. сети через GUI Virt Manager</h3>
+<p>Проводим все манипуляции через через GUI Virt Manager'а</p>
+<p>Запускаем GUI “Менеджер виртуальных машин” через меню приложений (rofi или dmenu)<br />
+Или командой <code>virt-manager</code> терминале</p>
+<p>Выбираем созданную ВМ из списка и жмём "Свойства подключения" который находятся в тулбаре менеджера "Правка"</p>
+<p>В открывшимся окне во второй вкладке "Вирт-ые сети" можно</p>
+<p>Создать новую вирт. сеть<br />
+Вкл/выкл вирт. сеть <br />
+Удалить вирт. сеть</p>
+<p>Название сети (которое можно поменять), состояние и её автозапуск</p>
+<p>Включаем вирт. сеть и ставим галку о автозапуске</p>
+<p>Вуаля, теперь можно создать виртуальную машину</p>
+<h3 id="cherez-terminal"><a class="anchor" href="#cherez-terminal">#</a>&nbsp;
+Через терминал</h3>
+<p>Список всех вирт. сетей</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">$ sudo virsh net-list --all
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;"> Имя       Состояние    Автозапуск   Постоянный
+</span><span style="color:#f9f9f9;">-------------------------------------------------
+</span><span style="color:#f9f9f9;"> default   не активен   no           yes
+</span></code></pre>
+<p>Включить [default] вирт. сеть</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> virsh net-start default
+</span></code></pre>
+<p>Автозапуск вирт. сети [default] при запуске системы</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> virsh net-autostart default
+</span></code></pre>
+<p>Готово</p>
+<h4 id="bad-name-at-etc-hosts-line"><a class="anchor" href="#bad-name-at-etc-hosts-line">#</a>&nbsp;
+bad name at /etc/hosts line <strong>*</strong></h4>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/StevenBlack/hosts/issues/333">Сурс</a></p>
+<p>С прописанными в /etc/hosts от <a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/StevenBlack/hosts">StevenBlack</a> из <a href="/posts/hosts-file-by-stevenblack">данного моего гайда</a>, dnsmasq возмущается на данные строки</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">$ systemctl status libvirtd
+</span><span style="color:#f9f9f9;">...
+</span><span style="color:#f9f9f9;">dnsmasq[54577]: bad address at /etc/hosts line 25
+</span><span style="color:#f9f9f9;">dnsmasq[54577]: bad address at /etc/hosts line 40796
+</span><span style="color:#f9f9f9;">dnsmasq[54577]: bad address at /etc/hosts line 40797
+</span><span style="color:#f9f9f9;">dnsmasq[54577]: bad address at /etc/hosts line 40798
+</span><span style="color:#f9f9f9;">dnsmasq[54577]: bad address at /etc/hosts line 72163
+</span><span style="color:#f9f9f9;">dnsmasq[54577]: bad address at /etc/hosts line 72164
+</span><span style="color:#f9f9f9;">dnsmasq[54577]: bad address at /etc/hosts line 72165
+</span></code></pre>
+<p>Решил это просто отредактировав файл hosts закомментировав (НЕ удалять) эти указанные номером строки</p>
+<p>Чтобы быстро перейти к данной строчке вот небольшой лайфках<br />
+В vim/nvim вводим <code>:'номерстроки'</code> и жмём enter</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">fe80::1%lo0 localhost
+</span><span style="color:#f9f9f9;">0.0.0.0 27--01bbcpolice.powercoremedia.com
+</span><span style="color:#f9f9f9;">0.0.0.0 27--m01police.55fifayellow.com
+</span><span style="color:#f9f9f9;">0.0.0.0 27--m01police.best-rc-store.com
+</span><span style="color:#f9f9f9;">0.0.0.0 www.27--01bbcpolice.powercoremedia.com
+</span><span style="color:#f9f9f9;">0.0.0.0 www.27--m01police.55fifayellow.com
+</span><span style="color:#f9f9f9;">0.0.0.0 www.27--m01police.best-rc-store.com
+</span></code></pre>
+<p>Или воспользуйтесь данной командой для автоматического удаления данных строк</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> sed</span><span style="color:#f9f9f9;"> -i &#39;</span><span style="color:#9eff80;">/fe80::1%lo0 localhost/d;/0.0.0.0 27--01bbcpolice.powercoremedia.com/d;/0.0.0.0 www.27--01bbcpolice.powercoremedia.com/d</span><span style="color:#f9f9f9;">&#39;</span><span style="color:#ffee80;"> /etc/hosts
+</span></code></pre>
+<p>И рестарт libvirtd</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> systemctl restart libvirtd
+</span></code></pre>
+<p>Нажал Начать Установку
+Первое с чем я столкнулся и то как это решил</p>
+<p>Автоматически запустил live CD Arch Linux
+SSH соединение в VM произошёл и всё прекрасно работает (соединение default NAT)
+Только вот на андроид через Termux не работает</p>
+<p>На Manjaro Plasma Live Iso интерфейс лагает
+Решил эту проблему довольно просто</p>
+<h2 id="problema-nevozmozhnost-zapustit-vm"><a class="anchor" href="#problema-nevozmozhnost-zapustit-vm">#</a>&nbsp;
+!Проблема: Невозможность запустить VM!</h2>
+<p>Столкнулся с данной ошибкой, из-за того что место в котором расположено iso находится на другом разделе</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">Не удалось завершить установку:
+</span><span style="color:#f9f9f9;">«внутренняя ошибка: QEMU неожиданно завершил работу монитора: 2022-07-20T16:53:24.729056Z
+</span><span style="color:#f9f9f9;">qemu-system-x86_64: -device {&quot;driver&quot;:&quot;virtio-blk-pci&quot;,&quot;bus&quot;:&quot;pci.4&quot;,&quot;addr&quot;:&quot;0x0&quot;,&quot;drive&quot;:&quot;libvirt-1-format&quot;,&quot;id&quot;:&quot;virtio-disk0&quot;,&quot;bootindex&quot;:1}:
+</span><span style="color:#f9f9f9;">Could not open &#39;/media/Distrib/iso/Linux/archlinux-2022.07.01-x86_64.iso&#39;: Permission denied»
+</span></code></pre>
+<p>Решилось путём редактирования конфига <code>/etc/libvirt/qemu.conf</code>. Раскоментируем строки для предоставления qemu все полномочия чтения данного iso<br />
+<a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/jedi4ever/veewee/issues/996#issuecomment-59161407">Сурс</a></p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">user = &quot;libvirt-qemu&quot; -&gt; user = &quot;имяпользователя&quot;
+</span><span style="color:#f9f9f9;">group = &quot;libvirt-qemu&quot; -&gt; group = &quot;wheel&quot;
+</span></code></pre>
+<p>Или ввести эти команды в терминале</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> sed</span><span style="color:#f9f9f9;"> -i &quot;</span><span style="color:#9eff80;">s|^#user = .*|user = </span><span style="color:#80ff82;">\&quot;</span><span style="color:#f9f9f9;">${</span><span style="color:#edef7d;">USERNAME</span><span style="color:#f9f9f9;">}</span><span style="color:#80ff82;">\&quot;</span><span style="color:#9eff80;">|g</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#ffee80;"> /etc/libvirt/qemu.conf
+</span><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> sed</span><span style="color:#f9f9f9;"> -i &quot;</span><span style="color:#9eff80;">s|^#group = .*|group = </span><span style="color:#80ff82;">\&quot;</span><span style="color:#9eff80;">wheel</span><span style="color:#80ff82;">\&quot;</span><span style="color:#9eff80;">|g</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#ffee80;"> /etc/libvirt/qemu.conf
+</span></code></pre>
+<p>Сохраняем конфиг и перезагружаем сервис libvirtd</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> systemctl restart libvirtd
+</span></code></pre>
+<h2 id="problema-termux-soedinenie-k-vm"><a class="anchor" href="#problema-termux-soedinenie-k-vm">#</a>&nbsp;
+!Проблема: Termux соединение к VM!</h2>
+<p>На Андроид по SSH не коннектится в VM с помощью программы Termux<br />
+Когда жму коннект мне не выдаёт промпт о вводе пароля</p>
+<p>Пока не решил данную проблему</p>
+<h2 id="problema-uvelichennyi-tekst-v-okonnom-menedzhere"><a class="anchor" href="#problema-uvelichennyi-tekst-v-okonnom-menedzhere">#</a>&nbsp;
+!Проблема: увеличенный текст в оконном менеджере!</h2>
+<p>В Arch Linux при настроенным тайловым оконным менеджере всё стало увеличенным включая терминал</p>
+<p>Происходит это когда я юзаю дисплей Virtio + OpenGl ускорением</p>
+<p>При создании ВМ с Arch Linux и любом окружении WM/DE скейлит текст в терминале alacritty (в конфиге alacritty размер шрифта выставлен 14)</p>
+<p>Текст выглядит больше обычного</p>
+<h2 id="problema-ispol-zovanii-picom-v-vm"><a class="anchor" href="#problema-ispol-zovanii-picom-v-vm">#</a>&nbsp;
+Проблема: Использовании picom в VM</h2>
+<p>В настройках виртуального оборудования во вкладке Видео выставлено Модель: Virtio с включенным 3D ускорением<br />
+При использовании моего picom config'а как композитора в окружениях таких как LXDE, LXQT и т.п перемещение окон идёт с отставанием с заметным input лагом</p>
+<p>Решение: В конфиге picom выставить</p>
+<pre data-lang="conf" style="background-color:#2b303b;color:#ffffff;" class="language-conf "><code class="language-conf" data-lang="conf"><span style="color:#f9f9f9;">backend </span><span style="color:#ff9d00;">= </span><span style="color:#9eff80;">&quot;xrender&quot;</span><span style="color:#f9f9f9;">; </span><span style="color:#ff9d00;">-&gt; </span><span style="color:#9eff80;">&quot;glx&quot;
+</span><span style="color:#f9f9f9;">vsync </span><span style="color:#ff9d00;">= </span><span style="color:#ff628c;">true</span><span style="color:#f9f9f9;">; </span><span style="color:#ff9d00;">-&gt; </span><span style="color:#ff628c;">false
+</span></code></pre>
+<p>И запустить picom командой</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">picom -b --experimental-backends </span><span style="color:#ff9d00;">&amp;
+</span></code></pre>
+<p>Теперь всё очень плавное на 100% при 60hz дисплей в гостевой вм</p>
+<h2 id="problema-ne-mogu-sozdat-snapshot-aktivnoe-sostoianie-gostevoi-mashiny"><a class="anchor" href="#problema-ne-mogu-sozdat-snapshot-aktivnoe-sostoianie-gostevoi-mashiny">#</a>&nbsp;
+Проблема: Не могу создать снапшот активное состояние гостевой машины</h2>
+<p>Ошибка создания снимка: Операция не поддерживается: внутренние снимки виртуальной машины с микропрограммой на основе pflash не поддерживаются</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">Error creating snapshot: Operation not supported:
+</span><span style="color:#f9f9f9;">Internal snapshots of a VM with pflash based firmware are not supported.
+</span></code></pre>
+<ul>
+<li>
+<p>Решение для гостевой Linux машине: создавать снимок гостя можно только в выключенном состоянии (UEFI)</p>
+</li>
+<li>
+<p>Решение для гостевой Win10 машине: Смог исправить это отредактировав xml файл в данной строке вместо <strong>type="pflash"</strong> написать <strong>type="rom"</strong></p>
+</li>
+</ul>
+<pre data-lang="xml" style="background-color:#2b303b;color:#ffffff;" class="language-xml "><code class="language-xml" data-lang="xml"><span style="color:#f9f9f9;">&lt;</span><span style="color:#9effff;">loader readonly</span><span style="color:#f9f9f9;">=&quot;</span><span style="color:#9eff80;">yes</span><span style="color:#f9f9f9;">&quot; </span><span style="color:#9effff;">type</span><span style="color:#f9f9f9;">=&quot;</span><span style="color:#9eff80;">rom</span><span style="color:#f9f9f9;">&quot;&gt;/usr/share/edk2-ovmf/x64/OVMF_CODE.fd&lt;/</span><span style="color:#9effff;">loader</span><span style="color:#f9f9f9;">&gt;
+</span></code></pre>
+<p>После я смог сделать снимок экрана</p>
+<h2 id="problema-netu-bootloader-a-grub-posle-importa-qcow-obraza"><a class="anchor" href="#problema-netu-bootloader-a-grub-posle-importa-qcow-obraza">#</a>&nbsp;
+Проблема: Нету bootloader'а grub после импорта qcow образа</h2>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://superuser.com/questions/1235970/stuck-on-uefi-interactive-shell-with-mac-os-x-high-sierra-vm">Сурс</a></p>
+<p>После переустановки Арча на хосте я импортировал qcow образ и обнаружил что на нём вместо появления grub и запуска я получаю UEFI Interactive Shell</p>
+<p><img src="/images/qemu-gpu-passthrough-and-etc/uefi-interactive-shell.png" alt="image" /></p>
+<p>Решаение</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">Выходим из uefi shell введя exit
+</span><span style="color:#f9f9f9;">Далее в bios&#39;е выбираем &quot;Boot Maintenance Manager&quot; - &quot;Boot From File&quot; - Выбрать &quot;EFI, PciRoot...&quot; - мы находимся в boot разделе
+</span><span style="color:#f9f9f9;">Выбираем &quot;&lt;EFI&gt; - &lt;arch&gt; - &lt;grubx64.efi&gt;&quot; после чего появится grub и загрузится в гостевую машину
+</span></code></pre>
+<p>Чтобы при последующей перезагрузке не сталкиватся с этим необходимо всего-лишь заново установить grub в <code>/boot/efi</code> и обновить конфиг grub</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> grub-install</span><span style="color:#f9f9f9;"> --efi-directory</span><span style="color:#ff9d00;">=</span><span style="color:#ffee80;">/boot/efi
+</span><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> grub-mkconfig</span><span style="color:#f9f9f9;"> -o</span><span style="color:#ffee80;"> /boot/grub/grub.cfg
+</span></code></pre>
+<h2 id="problema-ne-mogu-udalit-displei-spice"><a class="anchor" href="#problema-ne-mogu-udalit-displei-spice">#</a>&nbsp;
+!Проблема: Не могу удалить Дисплей Spice!</h2>
+<p>Хотел проброс видюхи на win10 но появилась такая проблема</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">Ошибка удаления устройства: конфигурация не поддерживается: chardev &#39;spicevmc&#39; not supported without spice graphics
+</span></code></pre>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://superuser.com/a/1726093">Временное решение</a></p>
+<p>Добавить удалённый канал spice<br />
+Поставить Видео - none</p>
+<h2 id="problema-qemu-commandline-ne-vstavliaetsia-v-xml-fail-virt-manager"><a class="anchor" href="#problema-qemu-commandline-ne-vstavliaetsia-v-xml-fail-virt-manager">#</a>&nbsp;
+!Проблема: <code>&lt;qemu:commandline&gt;</code> не вставляется в xml файл virt-manager!</h2>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://unix.stackexchange.com/questions/495703/qemu-commandline-arguments-to-lib-virt-are-not-accepted-unable-to-save-xml-fil">Источник</a></li>
+</ul>
+<p><strong>Решением</strong> было сразу при редактировании вставить заполненную строку с содержимым т.е где троеточие должны быть вставлены переменные</p>
+<pre data-lang="xml" style="background-color:#2b303b;color:#ffffff;" class="language-xml "><code class="language-xml" data-lang="xml"><span style="color:#f9f9f9;">&lt;</span><span style="color:#9effff;">qemu</span><span style="color:#f9f9f9;">:</span><span style="color:#9effff;">commandline</span><span style="color:#f9f9f9;">&gt;
+</span><span style="color:#f9f9f9;">...
+</span><span style="color:#f9f9f9;">&lt;/</span><span style="color:#9effff;">qemu</span><span style="color:#f9f9f9;">:</span><span style="color:#9effff;">commandline</span><span style="color:#f9f9f9;">&gt;
+</span></code></pre>
+<p>Дополнительно вставив в самый вверх</p>
+<pre data-lang="xml" style="background-color:#2b303b;color:#ffffff;" class="language-xml "><code class="language-xml" data-lang="xml"><span style="color:#f9f9f9;">&lt;</span><span style="color:#9effff;">domain xmlns</span><span style="color:#f9f9f9;">:</span><span style="color:#9effff;">qemu</span><span style="color:#f9f9f9;">=&quot;</span><span style="color:#9eff80;">http://libvirt.org/schemas/domain/qemu/1.0</span><span style="color:#f9f9f9;">&quot; </span><span style="color:#9effff;">type</span><span style="color:#f9f9f9;">=&quot;</span><span style="color:#9eff80;">kvm</span><span style="color:#f9f9f9;">&quot;&gt;
+</span></code></pre>
+<p>И после применения у меня данные строки сохранились</p>
+<h2 id="obshchii-bufer-obmena"><a class="anchor" href="#obshchii-bufer-obmena">#</a>&nbsp;
+Общий буфер обмена</h2>
+<p>Проверено на: VM Arch Linux с окружением KDE Plasma, Gnome, Xfce4</p>
+<p>Буфер обмена работает как с гостя на хост так и наоборот</p>
+<p>Гостю необходимо установить пакет</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> spice-vdagent
+</span></code></pre>
+<p><strong>Убедитесь</strong> чтобы в virt-manager'е было добавлено оборудование - Канал Spice с типом уст-ва Агент SPICE (spicevmc)<br />
+Если оборудование у вас есть тогда просто перезагружаем гостевую машину, после скачивания пакета</p>
+<p>Для пользователей системы инициализации OpenRC (Artix Linux) устанавливаем пакеты</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> qemu-guest-agent spice-vdagent spice-vdagent-openrc
+</span></code></pre>
+<p>Запускаем сервис</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">rc-update</span><span style="color:#ffee80;"> add spice-vdagent
+</span></code></pre>
+<h3 id="kak-na-window-manager-e-zadeistvovat-obshchii-bufer-obmena"><a class="anchor" href="#kak-na-window-manager-e-zadeistvovat-obshchii-bufer-obmena">#</a>&nbsp;
+Как на Window Manager'е задействовать общий буфер обмена</h3>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://unix.stackexchange.com/a/642568">Сурс решения</a></p>
+<p>Столкнулся с подобным я на <a rel="noopener nofollow noreferrer" target="_blank" href="https://wiki.archlinux.org/title/IceWM">icewm</a>.<br />
+Покопавшись нашёл решение, необходимо было запустить команду <code>spice-vdagent</code> в терминале, можно также её добавить в автозапуск файла <code>~/.xprofile</code> (Для DM) или <code>~/.xinitrc</code> (запуск с TTY)</p>
+<p>Или также можно стартануть systemd сервис</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> systemctl start spice-vdagentd
+</span></code></pre>
+<h2 id="obshchie-papki-shared-folders-ispol-zuia-virtiofs"><a class="anchor" href="#obshchie-papki-shared-folders-ispol-zuia-virtiofs">#</a>&nbsp;
+!Общие папки (Shared Folders) используя virtiofs!</h2>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://sysguides.com/share-files-between-kvm-host-and-linux-guest-using-virtiofs/">Инструкция на англ</a></p>
+<p>На хосте выбираем место где будет гость цеплять наши файлы</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">mkdir </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/Shared
+</span></code></pre>
+<p>В VirtManager добавляем оборудование "Файловая система" с данными настройками<br />
+Драйвер: virtiofs<br />
+Путь на хосте: /home/$USER/Shared (т.е то место где гость будет цеплять файлы)<br />
+Путь в гостевой ОС: Qemu (место в гостевой VM используемое для идентификации общего каталога, который необходимо смонтировать в гостевой ОС)</p>
+<p>После добавления уст-ва загружаемся в VM и создаём каталог для монтирования общей папки</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">mkdir </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/Qemu
+</span></code></pre>
+<p>Монтируем</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Пример
+</span><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> mount</span><span style="color:#f9f9f9;"> -t</span><span style="color:#ffee80;"> virtiofs </span><span style="color:#ff9d00;">[</span><span style="color:#ffee80;">Имя папки хоста которую ходим передать</span><span style="color:#ff9d00;">] [</span><span style="color:#ffee80;">Путь созданного каталога в гостевой ОС для монтирования</span><span style="color:#ff9d00;">]
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Команда
+</span><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> mount</span><span style="color:#f9f9f9;"> -t</span><span style="color:#ffee80;"> virtiofs Qemu /home/</span><span style="color:#f9f9f9;">$USER</span><span style="color:#ffee80;">/Shared
+</span></code></pre>
+<p>И вуаля Общая Папка появилась с файлом который мы будучи хостом поместили внутрь<br />
+Чтобы сделать монтирование Shared Folders постоянным при включении гостя, прописываем в <code>/etc/fstab</code></p>
+<pre data-lang="conf" style="background-color:#2b303b;color:#ffffff;" class="language-conf "><code class="language-conf" data-lang="conf"><span style="color:#f9f9f9;">Shared		</span><span style="color:#ff9d00;">/</span><span style="color:#f9f9f9;">home</span><span style="color:#ff9d00;">/</span><span style="color:#f9f9f9;">onix</span><span style="color:#ff9d00;">/</span><span style="color:#f9f9f9;">Qemu	virtiofs	defaults	</span><span style="color:#ff628c;">0 0
+</span></code></pre>
+<p>Вот и всё!</p>
+<h2 id="obshchie-papki-shared-folders-ispol-zuia-virtio-9p"><a class="anchor" href="#obshchie-papki-shared-folders-ispol-zuia-virtio-9p">#</a>&nbsp;
+Общие папки (Shared Folders) используя virtio-9p</h2>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.baeldung.com/linux/qemu-from-terminal#6-sharing-a-directory-between-host-and-guest">Инструкция ENG</a></p>
+<p>На хосте выбираем место где будет гость цеплять наши файлы</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">mkdir </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/Shared
+</span></code></pre>
+<p>В VirtManager добавляем оборудование "Файловая система" с данными настройками<br />
+Драйвер: virtio-9p<br />
+Путь на хосте: /home/user/Shared (т.е то место где мы добавляем файлы с которыми хотим поделится чтобы гость их видел)<br />
+Путь в гостевой ОС: host0 (идентификация общего каталога т.е mount tag, называть можно как угодно)</p>
+<p>После добавления уст-ва загружаемся в VM и создаём каталог для монтирования общей папки</p>
+<p>Папка будет называться vmshare и будет находится в домашнем каталоге гостя</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">mkdir </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/vmshare
+</span></code></pre>
+<p>Монтируем</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Пример
+</span><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> mount</span><span style="color:#f9f9f9;"> -v -t</span><span style="color:#ffee80;"> 9p</span><span style="color:#f9f9f9;"> -o</span><span style="color:#ffee80;"> trans=virtio,version=9p2000.L </span><span style="color:#ff9d00;">[</span><span style="color:#ffee80;">Индентификатор общего каталога т.е mount tag</span><span style="color:#ff9d00;">] [</span><span style="color:#ffee80;">Путь созданного каталога в гостевой ОС для монтирования</span><span style="color:#ff9d00;">]
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Команда
+</span><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> mount</span><span style="color:#f9f9f9;"> -v -t</span><span style="color:#ffee80;"> 9p</span><span style="color:#f9f9f9;"> -o</span><span style="color:#ffee80;"> trans=virtio,version=9p2000.L host0 </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/vmshare
+</span></code></pre>
+<p>Готово! Общая папка создана</p>
+<h2 id="rezervirovanie-obraza-qcow2-iz-var-lib-libvirt-images"><a class="anchor" href="#rezervirovanie-obraza-qcow2-iz-var-lib-libvirt-images">#</a>&nbsp;
+!!Резервирование образа qcow2 из /var/lib/libvirt/images/!!</h2>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/virtualization_deployment_and_administration_guide/sect-domain_commands-creating_a_virtual_machine_xml_dump_configuration_file">Creating a Virtual Machine XML Dump</a></li>
+</ul>
+<p>Обычное копирование на мой NTFS HDD диск, производится успешно</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> cp /var/lib/libvirt/images/win10.qcow2 /media/Other/backup_w10.qcow2
+</span></code></pre>
+<p>50gb передалось за 10 минут</p>
+<p>Данной командой можно сдампить xml файл гостя</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> virsh dumpxml win10 </span><span style="color:#ff9d00;">&gt; </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/win10dump.xml
+</span></code></pre>
+<h2 id="ruchnoe-redaktirovanie-xml-fail"><a class="anchor" href="#ruchnoe-redaktirovanie-xml-fail">#</a>&nbsp;
+Ручное редактирование xml файл</h2>
+<p>Есть два варианта</p>
+<ol>
+<li><code>sudo EDITOR=nvim virsh edit win10</code></li>
+<li><code>sudo vim /etc/libvirt/qemu/win10.xml</code></li>
+</ol>
+<p>Если вы ДЕЙСТВИТЕЛЬНО не знаете что делаете, не делайте этого. Потому что virsh edit имеет проверка синтаксиса, чтобы выявлять некоторые проблемы. Совсем как visudo делает.</p>
+<h2 id="gde-nakhodiatsia-logi-zapuska-gostia-vm"><a class="anchor" href="#gde-nakhodiatsia-logi-zapuska-gostia-vm">#</a>&nbsp;
+Где находятся логи запуска Гостя VM?</h2>
+<p>В <code>/var/log/libvirt/qemu/{VMNAME}</code></p>
+<h2 id="gde-nakhodiatsia-argumenty-zapuska-qemu-esli-zapuskat-iz-virt-manager"><a class="anchor" href="#gde-nakhodiatsia-argumenty-zapuska-qemu-esli-zapuskat-iz-virt-manager">#</a>&nbsp;
+Где находятся аргументы запуска qemu если запускать из Virt-Manager?</h2>
+<p>В <code>/var/log/libvirt/{VMNAME}.log</code></p>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

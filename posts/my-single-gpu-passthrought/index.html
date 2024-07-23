@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>!Проброс одиночной AMDGPU в виртуалку Win10!</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  !Проброс одиночной AMDGPU в виртуалку Win10!
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-10-05T22:30:00+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux/">linux</a>
+
+<br>
+
+
+	<aside id="toc-aside" class="toc">
+	    <details>
+			<summary>Оглавление</summary>
+	        <ol>
+	            <li>
+	                <a href="#trebovaniia">Требования</a>
+	                <ol>
+	                    <li>
+	                        <a href="#sozdaiom-gostevuiu-vm-windows-10">Создаём гостевую VM Windows 10</a>
+	                    </li>
+	                </ol>
+	            </li><li>
+	                <a href="#libvirt-hook-helper">!!libvirt hook helper!!</a>
+	                
+	            </li><li>
+	                <a href="#dokachivaem-draivera-virtio-dlia-w10-11">Докачиваем драйвера Virtio для W10/11</a>
+	                
+	            </li><li>
+	                <a href="#vkliuchenie-hyper-v">Включение Hyper-V</a>
+	                
+	            </li><li>
+	                <a href="#hyper-v-enlightenment-i-obshchie-optimizatsii-xml-faila-vm">!!Hyper-V Enlightenment и общие оптимизации xml файла VM!!</a>
+	                
+	            </li><li>
+	                <a href="#cpu-pinning">!!CPU Pinning!!</a>
+	                
+	            </li><li>
+	                <a href="#huge-memory-pages">!!Huge memory pages!!</a>
+	                
+	            </li><li>
+	                <a href="#kak-oboiti-snizhenie-proizvoditel-nosti-pri-vkliuchionnom-hyper-v">Как обойти снижение производительности при включённом Hyper-V</a>
+	                
+	            </li>
+	        </ol>
+		</details>
+	</aside>
+
+
+<ol>
+<li>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.youtube.com/watch?v=hQL5h5GteTY&amp;t=1327s">URL</a> RUS полу-гайд<br />
+Работает. Однако из-за неполноценности видео-гайда при выключении гостя шинды экран не возвращает обратно на хост (черный экран).<br />
+Также из-за того что ставил qcow2 образ на HDD всё очень медленное, поставив его на SSD дало значительный прирост.</p>
+</li>
+<li>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.youtube.com/watch?v=7zrRFX4UK_s">URL</a> Для Gentoo</p>
+</li>
+<li>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.youtube.com/watch?v=BUSrdUoedTo&amp;t=664s">URL</a> Muta</p>
+</li>
+<li>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.youtube.com/watch?v=h7SG7ccjn-g">URL</a> Muta</p>
+</li>
+<li>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.youtube.com/watch?v=CwEVj00SwYM">URL</a> На французском (видео немного устарело) актуальный от него же <a rel="noopener nofollow noreferrer" target="_blank" href="https://gitlab.com/Mageas/single-gup-passthrough">гайд тут</a><br />
+Всё работает также с исправленным чёрным экраном. Данный гайд работает на все 100%</p>
+</li>
+<li>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.youtube.com/watch?v=3BxAaaRDEEw">URL</a> На дистре Fedora</p>
+</li>
+</ol>
+<p>Другие полезные источники</p>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.reddit.com/r/VFIO/">Сабреддит Vfio</a> (ENG)</li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://discord.com/invite/f63cXwH">Дискорд сервер Vfio</a> (ENG)</li>
+</ul>
+<h2 id="trebovaniia"><a class="anchor" href="#trebovaniia">#</a>&nbsp;
+Требования</h2>
+<ul>
+<li>В настройках virt-manager выставляем этот чекбокс "Включить редактирование XML"</li>
+<li>Вам необходимо <a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/virtio-win/virtio-win-pkg-scripts">скачать драйвера virtio для W10/W11</a> позже в процессе установки windows их необходимо будет установить для доступа к виртуальному диску и доступ в интернет<br />
+<br />
+Внутри Git репо выбираете <strong>Stable virtio-win ISO</strong> версию драйверов</li>
+</ul>
+<h3 id="sozdaiom-gostevuiu-vm-windows-10"><a class="anchor" href="#sozdaiom-gostevuiu-vm-windows-10">#</a>&nbsp;
+Создаём гостевую VM Windows 10</h3>
+<p>Память выставляем на ваше усмотрение, если будете играть в триплA (AAA) игры и на хосте 16gb тогда выставляете около 12-14gb, чтобы было с запасом для хоста чтобы предостеречь от зависания виртуальной машины</p>
+<p>Процессоров дадим гостю 10 если проц 12 поточный, чтобы на хосте был запас</p>
+<p>В шаге 4 вам предложат где будет хранится ВМ т.е qcow2 образ и каков будет её размер, скажу сразу что <strong>не рекомендую</strong> хранить образ qcow2 на HDD разделе. Возможно из-за того что у меня файловая система на HDD ntfs но на виртуалке я сталкивался медленным интерфейсом в целом, переход на SSD (т.е закинув на пул default в котором будет расположен по пути <code>/var/lib/libvirt/images</code>) значительно улучшило производительность и отзывчивость системы.</p>
+<blockquote>
+<p><strong>Примечание</strong>: Дополнительно увеличить производительность можно поставив формат образа не qcow2 а raw<br />
+Отличие в том что qcow2 динамически распределяет файлы т.е будет заполнятся и становится всё больше по мере поступления данных, он медленнее в чтении и записи но занимает меньше места.<br />
+Raw этого нет т.е скорость в чтении и записи будет больше (заметно на примере перемещение файлов с одного устройство на другое) но будет сразу занимать столько места сколько вы ему назначите.<br />
+Минус raw в том что вы не сможете делать снапшоты своей VM<br />
+<a rel="noopener nofollow noreferrer" target="_blank" href="https://techpiezo.com/tech-insights/raw-vs-qcow2-disk-images-in-qemu-kvm/">Сравнение Raw vs Qcow2</a></p>
+</blockquote>
+<ul>
+<li>Название VM: "win10"</li>
+<li>В оборудование VM добавляем CD-ROM и выбираем скачанный ISO драйвер и отметив его в списке меню загрузок.</li>
+<li>Во вкладке Обзор - Микропрограмму ставим UEFI (или UEFI secboot для Windows 11)</li>
+<li>Во вкладке Процессоры выставляем галочку "Копировать конфигурацию ЦП хоста (host-passthrough)" и "Установить топологию ЦП вручную", сокеты меняем на 1, ядра 5, потоков 2</li>
+<li>Во вкладке Sata диск 1 выставляем Virtio для наилучшей производительности</li>
+<li>Во вкладке NIC выставляем модель устройства: Virtio для наилучшей производительности</li>
+<li>(Для Windows 11) Во вкладке TPM добавляем эмулируемый TPM версия 2.0</li>
+</ul>
+<p>Начинаем обычную установку Windows</p>
+<p>Как только дойдёте до разметки диска вам необходимо загрузить драйвер для отображения разметки диска и указываете:<br />
+<code>CD-дисковод (E:) virtio-win-xxx &gt; amd64 &gt; win10</code>
+Жмём запустить</p>
+<p>Путь драйвера для показа диска разметки -<br />
+Как появится в списке "<strong>Red Hat  VirtIO SCSI controller</strong>" жмём Далее</p>
+<p>После установки выключаю гостя</p>
+<h4 id="nastroika-vm"><a class="anchor" href="#nastroika-vm">#</a>&nbsp;
+!Настройка VM!</h4>
+<p>В списке оборудования Virt-Manager</p>
+<ul>
+<li>Video меняю на none</li>
+</ul>
+<p>Из оборудования удаляю:</p>
+<ul>
+<li>Планшет</li>
+<li>Channel spice</li>
+<li>Sound ich*</li>
+</ul>
+<p>В "<strong>PCI-устройство</strong>" добавляю устройства для проброса</p>
+<p>Проброс видюхи вместе с аудиоинтерфейсом</p>
+<ul>
+<li><code>0000:03:00:0 Advanced Micro Devices, Inc. [AMD/ATI] Ellesmere [Radeon RX 470/480/570/570X/580/580X/590]</code></li>
+<li><code>0000:03:00:1 Advanced Micro Devices, Inc. [AMD/ATI] Ellesmere HDMI Audio [Radeon RX 470/480 / 570/580/590]</code></li>
+</ul>
+<p>Звук с колонок</p>
+<ul>
+<li><code>0000:00:1B:0 Intel Corporation C600/X79 series chipset High Definition Audio Controller</code></li>
+</ul>
+<p>USB 2/3 контроллер</p>
+<ul>
+<li><code>0000:00:1D:0 Intel Corporation C600/X79 series chipset USB2 Enhanced Host Controller #1</code></li>
+<li><code>0000:00:1A:0 Intel Corporation C600/X79 series chipset USB2 Enhanced Host Controller #2</code></li>
+<li><code>0000:07:00:0 VIA Technologies, Inc. VL805/806 xHCI USB 3.0 Controller</code></li>
+</ul>
+<p>В разделе "<strong>Хранилище</strong>" ставим "Выбрать или создать дополнительное пространство данных"<br />
+И пробрасываем по отдельности наши разделы</p>
+<p>К примеру мой ntfs HDD</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">/dev/sdb1
+</span><span style="color:#f9f9f9;">/dev/sdb2
+</span><span style="color:#f9f9f9;">/dev/sdb3
+</span><span style="color:#f9f9f9;">/dev/sdb4
+</span></code></pre>
+<p>Тип шины выбираем Virtio для наилучшей производительности.</p>
+<h2 id="libvirt-hook-helper"><a class="anchor" href="#libvirt-hook-helper">#</a>&nbsp;
+!!libvirt hook helper!!</h2>
+<p>Libvirt Hook Helper будет заставлять вашу систему (хост машину) выключать-запускать модули драйверов видеокарты, сервисы и ваш дисплей менеджер перед включением вм гостя win10 так и после выключения.</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> mkdir /etc/libvirt/hooks
+</span><span style="color:#f9f9f9;">sudo -e</span><span style="color:#ffee80;"> /etc/libvirt/hooks/qemu
+</span></code></pre>
+<p>Вставляем в qemu <a rel="noopener nofollow noreferrer" target="_blank" href="https://gitlab.com/Mageas/single-gup-passthrough#libvirt-hook-helper">этот libvirt hook helper</a></p>
+<!-- Ниже это другое но схожее -->
+<!---->
+<!-- ```sh -->
+<!-- sudo mkdir /etc/libvirt/hooks -->
+<!-- wget -qO- https://gitlab.com/risingprismtv/single-gpu-passthrough/-/raw/master/hooks/qemu | sudo tee --append /etc/libvirt/hooks/qemu >/dev/null -->
+<!-- sudo chmod +x /etc/libvirt/hooks/qemu -->
+<!---->
+<!-- wget -qO- https://gitlab.com/risingprismtv/single-gpu-passthrough/-/raw/master/hooks/vfio-startup.sh | sudo tee --append /etc/libvirt/hooks/vfio-startup.sh >/dev/null -->
+<!-- sudo chmod +x /etc/libvirt/hooks/vfio-startup.sh -->
+<!-- sudo ln -s /etc/libvirt/hooks/vfio-startup.sh /bin/vfio-startup.sh -->
+<!---->
+<!-- wget -qO- https://gitlab.com/risingprismtv/single-gpu-passthrough/-/raw/master/hooks/vfio-teardown.sh | sudo tee --append /etc/libvirt/hooks/vfio-teardown.sh >/dev/null -->
+<!-- sudo chmod +x /etc/libvirt/hooks/vfio-teardown.sh -->
+<!-- sudo ln -s /etc/libvirt/hooks/vfio-teardown.sh /bin/vfio-teardown.sh -->
+<!---->
+<!-- wget -qO- https://gitlab.com/risingprismtv/single-gpu-passthrough/-/raw/master/systemd-no-sleep/libvirt-nosleep@.service | sudo tee --append /etc/systemd/system/libvirt-nosleep@.service >/dev/null -->
+<!-- sudo chmod 644 -R /etc/systemd/system/libvirt-nosleep@.service -->
+<!-- sudo chown root:root /etc/systemd/system/libvirt-nosleep@.service -->
+<!-- ``` -->
+<p><img src="/images/my-single-gpu-passthrought/libvirt-hooks-qemu-config.png" alt="image" /></p>
+<p>Делаем данный файл исполняемым <code>sudo chmod +x /etc/libvirt/hooks/qemu</code></p>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://gitlab.com/Mageas/single-gup-passthrough#config-libvirt-hooks">Config Libvirt Hooks</a></p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo -e</span><span style="color:#ffee80;"> /etc/libvirt/hooks/kvm.conf
+</span><span style="color:#f9f9f9;">VIRSH_GPU_VIDEO</span><span style="color:#ff9d00;">=</span><span style="color:#3ad900;">pci_0000_03_00_0
+</span><span style="color:#f9f9f9;">VIRSH_GPU_AUDIO</span><span style="color:#ff9d00;">=</span><span style="color:#3ad900;">pci_0000_03_00_1
+</span></code></pre>
+<p>Start/Stop Libvirt Hooks</p>
+<p>Вставляем данную переменную с добавлением вашего имя ВМ</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">KVM_NAME</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">win10</span><span style="color:#f9f9f9;">&quot;
+</span></code></pre>
+<p>Создаём скрипт запуска хука</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> mkdir</span><span style="color:#f9f9f9;"> -p</span><span style="color:#ffee80;"> /etc/libvirt/hooks/qemu.d/</span><span style="color:#f9f9f9;">${KVM_NAME}</span><span style="color:#ffee80;">/prepare/begin
+</span><span style="color:#f9f9f9;">sudo -e</span><span style="color:#ffee80;"> /etc/libvirt/hooks/qemu.d/</span><span style="color:#f9f9f9;">${KVM_NAME}</span><span style="color:#ffee80;">/prepare/begin/start.sh
+</span></code></pre>
+<p>Содержимое файла <code>start.sh</code></p>
+<p><img src="/images/my-single-gpu-passthrought/libvirt-hooks-start-sh.png" alt="image" /></p>
+<p>Тоже делаем данный файл исполняемым <code>sudo chmod +x start.sh</code></p>
+<p>Далее создаём скрипт остановку хука</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> mkdir</span><span style="color:#f9f9f9;"> -p</span><span style="color:#ffee80;"> /etc/libvirt/hooks/qemu.d/</span><span style="color:#f9f9f9;">${KVM_NAME}</span><span style="color:#ffee80;">/release/end
+</span><span style="color:#f9f9f9;">sudo -e</span><span style="color:#ffee80;"> /etc/libvirt/hooks/qemu.d/</span><span style="color:#f9f9f9;">${KVM_NAME}</span><span style="color:#ffee80;">/release/end/stop.sh
+</span></code></pre>
+<p>Содержимое файла <code>stop.sh</code></p>
+<p><img src="/images/my-single-gpu-passthrought/libvirt-hooks-stop-sh.png" alt="image" /></p>
+<p>Тоже делаем данный файл исполняемым <code>sudo chmod +x stop.sh</code></p>
+<blockquote>
+<p>Установил lightdm lightdm-gtk-greeter для того чтобы работал при выключении гостя <strong>вход</strong> обратно в хост машину без бесконечного чёрного экрана с которым я сталкивался.</p>
+</blockquote>
+<h2 id="dokachivaem-draivera-virtio-dlia-w10-11"><a class="anchor" href="#dokachivaem-draivera-virtio-dlia-w10-11">#</a>&nbsp;
+Докачиваем драйвера Virtio для W10/11</h2>
+<p>В <strong>Диспетчере устройств</strong> есть отсутствующие драйвера такие как</p>
+<ul>
+<li>Ethernet Controller</li>
+<li>PCI Device</li>
+<li>PCI Simple Communication Controller</li>
+</ul>
+<p>Выбираем любой кликаем на <strong>Обновить драйвер</strong> - <strong>Поиск драйверов локально</strong> - жмём <strong>Обзор</strong></p>
+<p>Добавляем оборудование CD-ROM в virt-manager'е выбирая iso <a rel="noopener nofollow noreferrer" target="_blank" href="https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/stable-virtio/virtio-win.iso">virtio-win-xxx</a> т.е <code>E:\</code> и жмём Ок - Next (<a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/virtio-win/virtio-win-pkg-scripts">Github страница</a>)</p>
+<p><img src="/images/my-single-gpu-passthrought/adding-drivers.png" alt="image" /></p>
+<p>После загрузке первого драйвера, продолжаем и с последующими, повторяя тоже самое.</p>
+<p>Когда закончили, следует скачать и установить дрова для проброшенной видюхи дабы иметь возможность изменить разрешение и герцовку моника.</p>
+<h2 id="vkliuchenie-hyper-v"><a class="anchor" href="#vkliuchenie-hyper-v">#</a>&nbsp;
+Включение Hyper-V</h2>
+<p>Используя PowerShell и ввести:</p>
+<pre data-lang="PowerShell" style="background-color:#2b303b;color:#ffffff;" class="language-PowerShell "><code class="language-PowerShell" data-lang="PowerShell"><span style="color:#ffb054;">Enable-WindowsOptionalFeature </span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">Online </span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">FeatureName Microsoft</span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">Hyper</span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">V </span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">All
+</span></code></pre>
+<p>Включение Hyper-V через настроки:</p>
+<p>Введите в поиске "Включение и отключение компонентов", выбрав <strong>Hyper-V</strong> и нажать <strong>Ok</strong>.</p>
+<h2 id="hyper-v-enlightenment-i-obshchie-optimizatsii-xml-faila-vm"><a class="anchor" href="#hyper-v-enlightenment-i-obshchie-optimizatsii-xml-faila-vm">#</a>&nbsp;
+!!Hyper-V Enlightenment и общие оптимизации xml файла VM!!</h2>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.qemu.org/docs/master/system/i386/hyperv.html">Все параметры hyper-v enlightenment</a></li>
+<li><del><a rel="noopener nofollow noreferrer" target="_blank" href="https://docs.vrchat.com/docs/using-vrchat-in-a-virtual-machine">VrChat (EAC) запуск на виртуальной машине</a></del></li>
+</ul>
+<p>Что такое Hyper-V Enlightenment?</p>
+<p>Если коротко то это оптимизация гостя ОС при включённом Hyper-v чтобы справляться с виртуальными задачами т.е мы оптимизируем определённые задачи чтобы улучшить их взаимодействие между хостом и гостём что может снизить накладные расходы тем самым повысив производительность.</p>
+<p>*Enlightenment (просвещение) - так называемый "пара-виртуализированное расширение". Интерфейсы которые ядро Linux или QEMU предоставляют Windows гостю, предназначенные для того чтобы повысить производительность или функциональность в виртуальных средах.</p>
+<p>Меняем верх строки c xml файла VM</p>
+<pre data-lang="xml" style="background-color:#2b303b;color:#ffffff;" class="language-xml "><code class="language-xml" data-lang="xml"><span style="color:#f9f9f9;">&lt;</span><span style="color:#9effff;">domain type</span><span style="color:#f9f9f9;">=&#39;</span><span style="color:#9eff80;">kvm</span><span style="color:#f9f9f9;">&#39;&gt;
+</span><span style="color:#f9f9f9;">&lt;!--</span><span style="font-style:italic;color:#0088ff;"> на </span><span style="color:#f9f9f9;">--&gt;
+</span><span style="color:#f9f9f9;">&lt;</span><span style="color:#9effff;">domain xmlns</span><span style="color:#f9f9f9;">:</span><span style="color:#9effff;">qemu</span><span style="color:#f9f9f9;">=&quot;</span><span style="color:#9eff80;">http://libvirt.org/schemas/domain/qemu/1.0</span><span style="color:#f9f9f9;">&quot; </span><span style="color:#9effff;">type</span><span style="color:#f9f9f9;">=&quot;</span><span style="color:#9eff80;">kvm</span><span style="color:#f9f9f9;">&quot;&gt;
+</span></code></pre>
+<p>Всё что делает hyper-v vendor_id так это устанавливает значение (value) листка 0x40000000 подменяя информацию <strong>cpuid</strong> в гостевой ОС на рандомно указанное вами, значения ограничены до 12 символов. По дефолту стоит "Microsoft HV" который является черным списком для EAC из-за чего вас не пускают в игру. Именно поэтому vendor_id необходимо изменить чтобы обойти это.</p>
+<blockquote>
+<p>Пример при использовании <a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/a0rtega/pafish">pafish</a> (тест на обнаружение вм)</p>
+</blockquote>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">[-] Windows version: 6.2 build 9200
+</span><span style="color:#f9f9f9;">[-] Running in WoW64: False
+</span><span style="color:#f9f9f9;">[-] CPU: GenuineIntel
+</span><span style="color:#f9f9f9;">    Hypervisor: buttplug &lt;- подмена на значение из vendor_id
+</span><span style="color:#f9f9f9;">    CPU brand:        Intel(R) Xeon(R) CPU E5-1650 0 @ 3.20GHz
+</span></code></pre>
+<pre data-lang="xml" style="background-color:#2b303b;color:#ffffff;" class="language-xml "><code class="language-xml" data-lang="xml"><span style="color:#f9f9f9;">...
+</span><span style="color:#f9f9f9;">&lt;</span><span style="color:#9effff;">features</span><span style="color:#f9f9f9;">&gt;
+</span><span style="color:#f9f9f9;">  ...
+</span><span style="color:#f9f9f9;">  &lt;</span><span style="color:#9effff;">hyperv</span><span style="color:#f9f9f9;">&gt;
+</span><span style="color:#f9f9f9;">    ...
+</span><span style="color:#f9f9f9;">    &lt;</span><span style="color:#9effff;">vendor_id state</span><span style="color:#f9f9f9;">=&#39;</span><span style="color:#9eff80;">on</span><span style="color:#f9f9f9;">&#39; </span><span style="color:#9effff;">value</span><span style="color:#f9f9f9;">=&#39;</span><span style="color:#9eff80;">buttplug</span><span style="color:#f9f9f9;">&#39;/&gt;
+</span><span style="color:#f9f9f9;">    ...
+</span><span style="color:#f9f9f9;">  &lt;/</span><span style="color:#9effff;">hyperv</span><span style="color:#f9f9f9;">&gt;
+</span><span style="color:#f9f9f9;">  ...
+</span><span style="color:#f9f9f9;">&lt;/</span><span style="color:#9effff;">features</span><span style="color:#f9f9f9;">&gt;
+</span><span style="color:#f9f9f9;">...
+</span></code></pre>
+<p>Данная строка необходима для обладателей GPU от Nvidia, она необходима для того чтобы спрятать что мы используем KVM т.к  нашу гостевую предотвращения ошибки 43</p>
+<pre data-lang="xml" style="background-color:#2b303b;color:#ffffff;" class="language-xml "><code class="language-xml" data-lang="xml"><span style="color:#f9f9f9;">...
+</span><span style="color:#f9f9f9;">&lt;</span><span style="color:#9effff;">features</span><span style="color:#f9f9f9;">&gt;
+</span><span style="color:#f9f9f9;">  ...
+</span><span style="color:#f9f9f9;">  &lt;</span><span style="color:#9effff;">kvm</span><span style="color:#f9f9f9;">&gt;
+</span><span style="color:#f9f9f9;">    &lt;</span><span style="color:#9effff;">hidden state</span><span style="color:#f9f9f9;">=&#39;</span><span style="color:#9eff80;">on</span><span style="color:#f9f9f9;">&#39;/&gt;
+</span><span style="color:#f9f9f9;">  &lt;/</span><span style="color:#9effff;">kvm</span><span style="color:#f9f9f9;">&gt;
+</span><span style="color:#f9f9f9;">  ...
+</span><span style="color:#f9f9f9;">&lt;/</span><span style="color:#9effff;">features</span><span style="color:#f9f9f9;">&gt;
+</span><span style="color:#f9f9f9;">...
+</span></code></pre>
+<p>Начиная с QEMU 3.1, недавно введенный cpuid флаг Topoext отключен по умолчанию. Чтобы использовать гиперпоточность на процессорах AMD, вам необходимо вручную включить его и предоставить информацию о кэшировании:</p>
+<pre data-lang="xml" style="background-color:#2b303b;color:#ffffff;" class="language-xml "><code class="language-xml" data-lang="xml"><span style="color:#f9f9f9;">...
+</span><span style="color:#f9f9f9;">  &lt;</span><span style="color:#9effff;">cpu mode</span><span style="color:#f9f9f9;">=&quot;</span><span style="color:#9eff80;">host-passthrough</span><span style="color:#f9f9f9;">&quot; </span><span style="color:#9effff;">check</span><span style="color:#f9f9f9;">=&quot;</span><span style="color:#9eff80;">none</span><span style="color:#f9f9f9;">&quot; </span><span style="color:#9effff;">migratable</span><span style="color:#f9f9f9;">=&quot;</span><span style="color:#9eff80;">on</span><span style="color:#f9f9f9;">&quot;&gt;
+</span><span style="color:#f9f9f9;">    &lt;</span><span style="color:#9effff;">topology sockets</span><span style="color:#f9f9f9;">=&quot;</span><span style="color:#9eff80;">1</span><span style="color:#f9f9f9;">&quot; </span><span style="color:#9effff;">dies</span><span style="color:#f9f9f9;">=&quot;</span><span style="color:#9eff80;">1</span><span style="color:#f9f9f9;">&quot; </span><span style="color:#9effff;">cores</span><span style="color:#f9f9f9;">=&quot;</span><span style="color:#9eff80;">5</span><span style="color:#f9f9f9;">&quot; </span><span style="color:#9effff;">threads</span><span style="color:#f9f9f9;">=&quot;</span><span style="color:#9eff80;">2</span><span style="color:#f9f9f9;">&quot;/&gt;
+</span><span style="color:#f9f9f9;">    &lt;</span><span style="color:#9effff;">cache mode</span><span style="color:#f9f9f9;">=&quot;</span><span style="color:#9eff80;">passthrough</span><span style="color:#f9f9f9;">&quot;/&gt;
+</span><span style="color:#f9f9f9;">    &lt;</span><span style="color:#9effff;">feature policy</span><span style="color:#f9f9f9;">=&quot;</span><span style="color:#9eff80;">require</span><span style="color:#f9f9f9;">&quot; </span><span style="color:#9effff;">name</span><span style="color:#f9f9f9;">=&quot;</span><span style="color:#9eff80;">topoext</span><span style="color:#f9f9f9;">&quot;/&gt;
+</span><span style="color:#f9f9f9;">  &lt;/</span><span style="color:#9effff;">cpu</span><span style="color:#f9f9f9;">&gt;
+</span><span style="color:#f9f9f9;">  ...
+</span><span style="color:#f9f9f9;">&lt;/</span><span style="color:#9effff;">domain</span><span style="color:#f9f9f9;">&gt;
+</span></code></pre>
+<p>Отключаем memballoon, с ним может местами вызвать серьёзные проблемы с производительностью. Проблемы варьируются от незначительных заиканий до секундной задержки. Кроме того, memory ballooning на самом деле не работает с виртуальными машинами Vfio. Просто находим строчку <code>&lt;memballoon model='virtio'&gt;</code> и меняем <code>virtio</code> на <code>none</code></p>
+<pre data-lang="xml" style="background-color:#2b303b;color:#ffffff;" class="language-xml "><code class="language-xml" data-lang="xml"><span style="color:#f9f9f9;">   ...
+</span><span style="color:#f9f9f9;">    &lt;/</span><span style="color:#9effff;">hostdev</span><span style="color:#f9f9f9;">&gt;
+</span><span style="color:#f9f9f9;">    &lt;</span><span style="color:#9effff;">memballoon model</span><span style="color:#f9f9f9;">=&#39;</span><span style="color:#9eff80;">none</span><span style="color:#f9f9f9;">&#39;/&gt;
+</span><span style="color:#f9f9f9;">  &lt;/</span><span style="color:#9effff;">devices</span><span style="color:#f9f9f9;">&gt;
+</span><span style="color:#f9f9f9;"> ...
+</span></code></pre>
+<p>В самом конце где после <code>&lt;/devices&gt;</code> прописываем аргументы которые могут повысить производительность и избавить от медленного интерфейса системы при включённом Hyper-V</p>
+<pre data-lang="xml" style="background-color:#2b303b;color:#ffffff;" class="language-xml "><code class="language-xml" data-lang="xml"><span style="color:#f9f9f9;">&lt;</span><span style="color:#9effff;">qemu</span><span style="color:#f9f9f9;">:</span><span style="color:#9effff;">commandline</span><span style="color:#f9f9f9;">&gt;
+</span><span style="color:#f9f9f9;">    &lt;</span><span style="color:#9effff;">qemu</span><span style="color:#f9f9f9;">:</span><span style="color:#9effff;">arg value</span><span style="color:#f9f9f9;">=&quot;</span><span style="color:#9eff80;">-rtc</span><span style="color:#f9f9f9;">&quot;/&gt;
+</span><span style="color:#f9f9f9;">    &lt;</span><span style="color:#9effff;">qemu</span><span style="color:#f9f9f9;">:</span><span style="color:#9effff;">arg value</span><span style="color:#f9f9f9;">=&quot;</span><span style="color:#9eff80;">base=localtime</span><span style="color:#f9f9f9;">&quot;/&gt;
+</span><span style="color:#f9f9f9;">    &lt;</span><span style="color:#9effff;">qemu</span><span style="color:#f9f9f9;">:</span><span style="color:#9effff;">arg value</span><span style="color:#f9f9f9;">=&quot;</span><span style="color:#9eff80;">-cpu</span><span style="color:#f9f9f9;">&quot;/&gt;
+</span><span style="color:#f9f9f9;">    &lt;</span><span style="color:#9effff;">qemu</span><span style="color:#f9f9f9;">:</span><span style="color:#9effff;">arg value</span><span style="color:#f9f9f9;">=&quot;</span><span style="color:#9eff80;">host,host-cache-info=on,kvm=off,l3-cache=on,kvm-hint-dedicated=on,migratable=no,hv_relaxed,hv_spinlocks=0x1fff,hv_vapic,hv_time,hv_vendor_id=buttplug,+invtsc,+topoext</span><span style="color:#f9f9f9;">&quot;/&gt;
+</span><span style="color:#f9f9f9;">  &lt;/</span><span style="color:#9effff;">qemu</span><span style="color:#f9f9f9;">:</span><span style="color:#9effff;">commandline</span><span style="color:#f9f9f9;">&gt;
+</span></code></pre>
+<h2 id="cpu-pinning"><a class="anchor" href="#cpu-pinning">#</a>&nbsp;
+!!CPU Pinning!!</h2>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://youtu.be/WYrTajuYhCk?t=752">Объяснение от SomeOrdinaryGamers</a></p>
+<p>Для игр которые интенсивно используют CPU могут возникать</p>
+<blockquote>
+<p>Примечание: Согласно Arch Wiki на ядре Zen при Cpu pinning могут возникать подтормаживание и короткие зависания.</p>
+</blockquote>
+<h2 id="huge-memory-pages"><a class="anchor" href="#huge-memory-pages">#</a>&nbsp;
+!!Huge memory pages!!</h2>
+<p>Вставляем эти опции в параметры ядра</p>
+<p><code>default_hugepagesz=1G hugepagesz=1G hugepages=32</code></p>
+<h2 id="kak-oboiti-snizhenie-proizvoditel-nosti-pri-vkliuchionnom-hyper-v"><a class="anchor" href="#kak-oboiti-snizhenie-proizvoditel-nosti-pri-vkliuchionnom-hyper-v">#</a>&nbsp;
+Как обойти снижение производительности при включённом Hyper-V</h2>
+<p><strong>Решением</strong> для меня было добавление аргументов <a href="qemu:commandline">qemu:commandline</a> в xml файл win10</p>
+<p>Меняем верх строки c <code>&lt;domain type='kvm'&gt;</code>
+на <code>&lt;domain xmlns:qemu="http://libvirt.org/schemas/domain/qemu/1.0" type="kvm"&gt;</code></p>
+<p>В самом конце где после <code>&lt;/devices&gt;</code> прописываем аргументы</p>
+<pre data-lang="xml" style="background-color:#2b303b;color:#ffffff;" class="language-xml "><code class="language-xml" data-lang="xml"><span style="color:#f9f9f9;">&lt;</span><span style="color:#9effff;">qemu</span><span style="color:#f9f9f9;">:</span><span style="color:#9effff;">commandline</span><span style="color:#f9f9f9;">&gt;
+</span><span style="color:#f9f9f9;">    &lt;</span><span style="color:#9effff;">qemu</span><span style="color:#f9f9f9;">:</span><span style="color:#9effff;">arg value</span><span style="color:#f9f9f9;">=&quot;</span><span style="color:#9eff80;">-rtc</span><span style="color:#f9f9f9;">&quot;/&gt;
+</span><span style="color:#f9f9f9;">    &lt;</span><span style="color:#9effff;">qemu</span><span style="color:#f9f9f9;">:</span><span style="color:#9effff;">arg value</span><span style="color:#f9f9f9;">=&quot;</span><span style="color:#9eff80;">base=localtime</span><span style="color:#f9f9f9;">&quot;/&gt;
+</span><span style="color:#f9f9f9;">    &lt;</span><span style="color:#9effff;">qemu</span><span style="color:#f9f9f9;">:</span><span style="color:#9effff;">arg value</span><span style="color:#f9f9f9;">=&quot;</span><span style="color:#9eff80;">-cpu</span><span style="color:#f9f9f9;">&quot;/&gt;
+</span><span style="color:#f9f9f9;">    &lt;</span><span style="color:#9effff;">qemu</span><span style="color:#f9f9f9;">:</span><span style="color:#9effff;">arg value</span><span style="color:#f9f9f9;">=&quot;</span><span style="color:#9eff80;">host,host-cache-info=on,kvm=off,l3-cache=on,kvm-hint-dedicated=on,migratable=no,hv_relaxed,hv_spinlocks=0x1fff,hv_vapic,hv_time,hv_vendor_id=buttplug,+invtsc,+topoext</span><span style="color:#f9f9f9;">&quot;/&gt;
+</span><span style="color:#f9f9f9;">  &lt;/</span><span style="color:#9effff;">qemu</span><span style="color:#f9f9f9;">:</span><span style="color:#9effff;">commandline</span><span style="color:#f9f9f9;">&gt;
+</span></code></pre>
+<p>После чего у вас при включённом Hyper-V не будет сниженная производительность, в некоторых моментах это даже может повысить FPS в играх.<br />
+К примеру PUBG ранее не превышал больше ~60 fps (с дропами до 40) и это на самых низких настройках графики.<br />
+Теперь же FPS удвоился до 90 (может даже достигать до 100 fps т.е почти как нативно)</p>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

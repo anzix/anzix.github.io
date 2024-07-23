@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+      <title>Блог AniX - troubleshooting</title>
+      <link>https://anzix.github.io/</link>
+      <description>Инструкции и полезные разные статьи для GNU&#x2F;Linux</description>
+      <generator>Zola</generator>
+      <language>en</language>
+      <atom:link href="https://anzix.github.io/categories/troubleshooting/rss.xml" rel="self" type="application/rss+xml"/>
+      <lastBuildDate>Mon, 11 Dec 2023 17:30:00 +0500</lastBuildDate>
+      <item>
+          <title>Решение проблем с Wine&#x2F;Proton</title>
+          <pubDate>Mon, 11 Dec 2023 17:30:00 +0500</pubDate>
+          <author>AniX</author>
+          <link>https://anzix.github.io/posts/wine-solving-problem/</link>
+          <guid>https://anzix.github.io/posts/wine-solving-problem/</guid>
+          <description xml:base="https://anzix.github.io/posts/wine-solving-problem/">&lt;h2 id=&quot;ukazannyi-fail-ne-byl-naiden-wine&quot;&gt;&lt;a class=&quot;anchor&quot; href=&quot;#ukazannyi-fail-ne-byl-naiden-wine&quot;&gt;#&lt;&#x2F;a&gt;&amp;nbsp;
+Указанный файл не был найден (wine)&lt;&#x2F;h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;forum.winehq.org&#x2F;viewtopic.php?t=15267&quot;&gt;Источник&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;wine-solving-problem&#x2F;error.png&quot; alt=&quot;image&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Повторный запуск с указанием полного пути autorun.exe решило проблему&lt;&#x2F;p&gt;
+&lt;p&gt;В итоге неправильно это&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;sh&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&#x2F;run&#x2F;media&#x2F;anix&#x2F;worms2&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt; ❯ WINEPREFIX=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;quot;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#edef7d;&quot;&gt;HOME&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9eff80;&quot;&gt;&#x2F;.local&#x2F;share&#x2F;wineprefixes&#x2F;Worms&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt; wine autorun.exe
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Правильно&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;sh&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;WINEPREFIX&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff9d00;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;quot;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#edef7d;&quot;&gt;HOME&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9eff80;&quot;&gt;&#x2F;.local&#x2F;share&#x2F;wineprefixes&#x2F;Worms&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;quot; wine&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt; &#x2F;run&#x2F;media&#x2F;anix&#x2F;worms2&#x2F;autorun.exe
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;nekotorye-starye-igry-ne-zapuskaiutsia-ot-exe-faila&quot;&gt;&lt;a class=&quot;anchor&quot; href=&quot;#nekotorye-starye-igry-ne-zapuskaiutsia-ot-exe-faila&quot;&gt;#&lt;&#x2F;a&gt;&amp;nbsp;
+Некоторые старые игры не запускаются от .exe файла&lt;&#x2F;h2&gt;
+&lt;p&gt;При запуске .exe файла разрешение экрана меняется на 640x480 и игра вылетает&lt;&#x2F;p&gt;
+&lt;p&gt;Мне помог данный &lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;youtu.be&#x2F;J_L9LB3o5SQ?t=672&quot;&gt;видео гайд на отметке 11:12&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;На примере Battle Engine Aquila репак от Механиков&lt;br &#x2F;&gt;
+Необходимо было переустановить игру и в установщике отметить создание ярлыка игры на раб столе&lt;&#x2F;p&gt;
+&lt;p&gt;Решение:&lt;br &#x2F;&gt;
+Нужно было запускать .lnk (Win) файл (находящийся внутри префикса игры &lt;code&gt;&amp;lt;префикс_игры&amp;gt;&#x2F;drive_c&#x2F;users&#x2F;Public&#x2F;Desktop&#x2F;&amp;lt;ярлык_игры&amp;gt;.lnk&lt;&#x2F;code&gt; а не .exe внутри установленной игры и тогда игра запуститься&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;sh&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;WINEPREFIX&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff9d00;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;quot;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#edef7d;&quot;&gt;HOME&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9eff80;&quot;&gt;&#x2F;.local&#x2F;share&#x2F;wineprefixes&#x2F;BEAquila&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;quot; wine $HOME&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt;&#x2F;Desktop&#x2F;Battle&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff628c;&quot;&gt;\ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt;Engine&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff628c;&quot;&gt;\ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt;Aquila.lnk
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;artefakty-ispol-zuia-wine-v-staroi-igre&quot;&gt;&lt;a class=&quot;anchor&quot; href=&quot;#artefakty-ispol-zuia-wine-v-staroi-igre&quot;&gt;#&lt;&#x2F;a&gt;&amp;nbsp;
+Артефакты используя Wine в старой игре&lt;&#x2F;h2&gt;
+&lt;p&gt;При переключении раб. стола в оконном менеджере i3wm в запущенным ОБЫЧНОМ wine&#x27;ом игре Freedom Fighters появляются артефакты&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;wine-solving-problem&#x2F;normal-texture.png&quot; alt=&quot;image&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;wine-solving-problem&#x2F;artifacts.png&quot; alt=&quot;image&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Полноценное решение - это использовать связку DgVoodoo+DXVK&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;http:&#x2F;&#x2F;dege.freeweb.hu&#x2F;dgVoodoo2&#x2F;dgVoodoo2&#x2F;&quot;&gt;Скачать последнюю версию DgVoodoo&lt;&#x2F;a&gt; и при распаковки закинуть все dll&#x27;ки из &lt;strong&gt;&#x2F;dgVoodoo2_79_3&#x2F;MS&#x2F;x86&#x2F;&lt;&#x2F;strong&gt; в папку с игрой&lt;&#x2F;p&gt;
+&lt;p&gt;Что бы DgVoodoo заработал необходим DXVK, качаем AUR пакет dxvk-bin&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;sh&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;yay -S&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt; dxvk-bin
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;После установки накатываем dxvk в префикс (Freedom Fighters)&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;sh&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;WINEPREFIX&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff9d00;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;quot;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#edef7d;&quot;&gt;HOME&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9eff80;&quot;&gt;&#x2F;.local&#x2F;share&#x2F;wineprefixes&#x2F;FF&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;quot; setup_dxvk&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt; install
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Готово! Теперь запускаем игру, я для запуска использую терминал&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;sh&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;DXVK_FRAME_RATE&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff9d00;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#3ad900;&quot;&gt;60 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;obs-gamecapture&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt; mangohud gamemoderun WINEDLLOVERRIDES=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9eff80;&quot;&gt;d3d8=n,b;d3d9=n,b;d3dimm=n,b;ddraw=n,b&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt; WINEPREFIX=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;quot;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#edef7d;&quot;&gt;HOME&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9eff80;&quot;&gt;&#x2F;.local&#x2F;share&#x2F;wineprefixes&#x2F;FF&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt; wine &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;$HOME&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt;&#x2F;.local&#x2F;share&#x2F;wineprefixes&#x2F;FF&#x2F;drive_c&#x2F;users&#x2F;Public&#x2F;Desktop&#x2F;Freedom&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff628c;&quot;&gt;\ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt;Fighters.lnk
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;warcraft-3-the-frozen-throne-32bit-net-zvuka-pipewire&quot;&gt;&lt;a class=&quot;anchor&quot; href=&quot;#warcraft-3-the-frozen-throne-32bit-net-zvuka-pipewire&quot;&gt;#&lt;&#x2F;a&gt;&amp;nbsp;
+Warcraft 3 The Frozen Throne 32bit нет звука (Pipewire)&lt;&#x2F;h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;www.reddit.com&#x2F;r&#x2F;archlinux&#x2F;comments&#x2F;p9itwq&#x2F;audio_issues_with_pipewire_on_older_game&#x2F;&quot;&gt;Источник&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;Вот логи Wine&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;txt&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-txt &quot;&gt;&lt;code class=&quot;language-txt&quot; data-lang=&quot;txt&quot;&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;ALSA lib dlmisc.c:337:(snd_dlobj_cache_get0) Cannot open shared library libasound_module_pcm_pipewire.so (&#x2F;usr&#x2F;lib32&#x2F;alsa-lib&#x2F;libasound_module_pcm_pipewire.so: невозможно открыть разделяемый объектный файл: Нет такого файла или каталога)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;ALSA lib dlmisc.c:337:(snd_dlobj_cache_get0) Cannot open shared library libasound_module_pcm_pipewire.so (&#x2F;usr&#x2F;lib32&#x2F;alsa-lib&#x2F;libasound_module_pcm_pipewire.so: невозможно открыть разделяемый объектный файл: Нет такого файла или каталога)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Решением было установить&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;sh&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;sudo&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt; pacman&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt; -S&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt; lib32-pipewire
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;warcraft-3-the-frozen-throne-ne-zapuskaetsia&quot;&gt;&lt;a class=&quot;anchor&quot; href=&quot;#warcraft-3-the-frozen-throne-ne-zapuskaetsia&quot;&gt;#&lt;&#x2F;a&gt;&amp;nbsp;
+Warcraft 3 The Frozen Throne не запускается&lt;&#x2F;h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;forum.winehq.org&#x2F;viewtopic.php?p=137743#p137743&quot;&gt;Источник_1&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;forum.winehq.org&#x2F;viewtopic.php?p=130430#p130430&quot;&gt;Источник_2&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;При запуске сразу же закрывалась с выводом данной ошибки&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;txt&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-txt &quot;&gt;&lt;code class=&quot;language-txt&quot; data-lang=&quot;txt&quot;&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;(wine:529528): GStreamer-CRITICAL **: 17:46:55.114: gst_object_unref: assertion &amp;#39;object != NULL&amp;#39; failed
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;winegstreamer error: decodebin1: В вашей установке GStreamer отсутствует модуль.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;winegstreamer error: decodebin1: ..&#x2F;gstreamer&#x2F;subprojects&#x2F;gst-plugins-base&#x2F;gst&#x2F;playback&#x2F;gstdecodebin2.c(4701): gst_decode_bin_expose (): &#x2F;GstBin:bin2&#x2F;GstDecodeBin:decodebin1:
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;no suitable plugins found:
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;Missing decoder: Audio Video Interleave (AVI) (video&#x2F;x-msvideo)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Помогло решить проблему установка данного пакета (выбрал репозиторий multilib: lib32-pipewire-jack)&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;sh&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;sudo&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt; pacman&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt; -S&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt; lib32-gst-plugins-good
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Доп-но установятся данные пакеты&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;txt&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-txt &quot;&gt;&lt;code class=&quot;language-txt&quot; data-lang=&quot;txt&quot;&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;lib32-libsamplerate (0.2.2-1)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;lib32-jack2 (1.9.21-1)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;lib32-libnghttp2 (1.50.0-1)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;lib32-libsoup3 (3.2.1-1)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;lib32-wavpack (5.5.0-2)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;lib32-gpm (1.20.7-2)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;lib32-aalib (1.4rc5-3)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;lib32-taglib (1.13-1)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;lib32-popt (1.18-1)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;lib32-libdv (1.0.0-6)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;lib32-speex (1.2.1-1)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;lib32-libshout (2.4.6-1)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;lib32-libvpx (1.12.0-1)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;lib32-imlib2 (1.9.1-1)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;lib32-libcaca (0.99.beta20-1)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;lib32-libraw1394 (2.1.2-3)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;lib32-libavc1394 (0.5.4-3)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;lib32-libiec61883 (1.2.0-3)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;lib32-libgudev (237-2)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;lib32-twolame (0.4.0-2)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;lib32-gst-plugins-good (1.20.4-1)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;oshibka-ustanovshchika-repaka-mechanics-ispol-zuia-wine-unarc-dll-error-5-not-enough-memory&quot;&gt;&lt;a class=&quot;anchor&quot; href=&quot;#oshibka-ustanovshchika-repaka-mechanics-ispol-zuia-wine-unarc-dll-error-5-not-enough-memory&quot;&gt;#&lt;&#x2F;a&gt;&amp;nbsp;
+Ошибка установщика репака Mechanics используя wine: unarc.dll error -5: not enough memory&lt;&#x2F;h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;github.com&#x2F;DarkReaperBoy&#x2F;darkreaperboy.github.io&#x2F;blob&#x2F;main&#x2F;draft&#x2F;gamingonlinux&#x2F;Repackers.md&quot;&gt;Источник&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;wine-solving-problem&#x2F;unarc_error.png&quot; alt=&quot;image&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Решение &lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;github.com&#x2F;Frogging-Family&#x2F;wine-tkg-git&quot;&gt;собрать wine-tkg&lt;&#x2F;a&gt; (заменится wine-staging) и использовать его&lt;br &#x2F;&gt;
+Или использовать &lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;github.com&#x2F;Kron4ek&#x2F;Wine-Builds&#x2F;releases&quot;&gt;wine-7.18-staging-tkg-amd64&lt;&#x2F;a&gt; от &lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;github.com&#x2F;Kron4ek&quot;&gt;Kron4ek&lt;&#x2F;a&gt; в из репо &lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;github.com&#x2F;Kron4ek&#x2F;Wine-Builds&quot;&gt;Wine-Builds&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Необходимо распаковать архив и добавить в запуск бинарника wine по такому пути&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;sh&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;WINEPREFIX&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff9d00;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;quot;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#edef7d;&quot;&gt;HOME&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9eff80;&quot;&gt;&#x2F;.local&#x2F;share&#x2F;wineprefixes&#x2F;BEAquila&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;quot; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff80e1;&quot;&gt;~&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&#x2F;Downloads&#x2F;wine-7.18-staging-tkg-amd64&#x2F;bin&#x2F;wine&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt; &#x2F;media&#x2F;Distrib&#x2F;Игры&#x2F;OLD&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff628c;&quot;&gt;\ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt;GAMES&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff628c;&quot;&gt;\[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt;R.G.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff628c;&quot;&gt;\ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt;Mechanics&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff628c;&quot;&gt;\]\ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt;Battle&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff628c;&quot;&gt;\ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt;Engine&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff628c;&quot;&gt;\ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt;Aquila&#x2F;setup.exe
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Установка репака от Механиков игры Battle Engine Aquila прошла успешно&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;ne-rabotaet-geimpad-v-starykh-igrykh&quot;&gt;&lt;a class=&quot;anchor&quot; href=&quot;#ne-rabotaet-geimpad-v-starykh-igrykh&quot;&gt;#&lt;&#x2F;a&gt;&amp;nbsp;
+!Не работает геймпад в старых игрых!&lt;&#x2F;h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;kubuntu.ru&#x2F;node&#x2F;14630&quot;&gt;Источник_1&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;blog.psy-q.ch&#x2F;blog&#x2F;2017&#x2F;12&#x2F;26&#x2F;using-xbox-360-compatible-controllers-properly-inside-wine&#x2F;&quot;&gt;Источник_2&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;На игре &lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;www.pcgamingwiki.com&#x2F;wiki&#x2F;Teenage_Mutant_Ninja_Turtles_2:_Battle_Nexus&quot;&gt;TMNT 2: Battle Nexus&lt;&#x2F;a&gt;, &lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;www.pcgamingwiki.com&#x2F;wiki&#x2F;Teenage_Mutant_Ninja_Turtles:_Mutant_Melee&quot;&gt;TMNT: Melee&lt;&#x2F;a&gt;, &lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;www.pcgamingwiki.com&#x2F;wiki&#x2F;Teenage_Mutant_Ninja_Turtles_(2003)&quot;&gt;TMNT 2003&lt;&#x2F;a&gt; PC - не работает управление с геймпада&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;nekorrektnoe-otobrazhenie-shriftov-v-wine&quot;&gt;&lt;a class=&quot;anchor&quot; href=&quot;#nekorrektnoe-otobrazhenie-shriftov-v-wine&quot;&gt;#&lt;&#x2F;a&gt;&amp;nbsp;
+Некорректное отображение шрифтов в Wine&lt;&#x2F;h2&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;wine-solving-problem&#x2F;incorrect-fonts.png&quot; alt=&quot;image&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;sh&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#ffb054;&quot;&gt;cd &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;${WINEPREFIX&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff9d00;&quot;&gt;:-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff80e1;&quot;&gt;~&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt;&#x2F;.local&#x2F;share&#x2F;wineprefixes&#x2F;hexedit&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;}&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt;&#x2F;drive_c&#x2F;windows&#x2F;Fonts &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff9d00;&quot;&gt;&amp;amp;&amp;amp; for&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt; i &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff9d00;&quot;&gt;in&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt; &#x2F;usr&#x2F;share&#x2F;fonts&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff9d00;&quot;&gt;**&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff9d00;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;.{ttf,otf}&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff9d00;&quot;&gt;; do &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;ln -s &amp;quot;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#edef7d;&quot;&gt;i&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;quot; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff9d00;&quot;&gt;; done
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Данный метод описанный &lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;wiki.archlinux.org&#x2F;title&#x2F;Wine#Fonts&quot;&gt;первым в Arch Wiki&lt;&#x2F;a&gt; не работает, видимо нужно скачать шрифты винды&lt;&#x2F;p&gt;
+&lt;p&gt;Решил благодаря данной переменной&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;sh&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;FREETYPE_PROPERTIES&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff9d00;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9eff80;&quot;&gt;truetype:interpreter-version=35&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Запуск:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;sh&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;FREETYPE_PROPERTIES&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff9d00;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9eff80;&quot;&gt;truetype:interpreter-version=35&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;quot; WINEPREFIX&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff9d00;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#edef7d;&quot;&gt;HOME&lt;&#x2F;span&gt;&lt;span style=&quot;color:#3ad900;&quot;&gt;&#x2F;.local&#x2F;share&#x2F;wineprefixes&#x2F;hexedit &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;wine $HOME&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt;&#x2F;.local&#x2F;share&#x2F;wineprefixes&#x2F;hexedit&#x2F;drive_c&#x2F;Program&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff628c;&quot;&gt;\ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt;Files&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff628c;&quot;&gt;\ \(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt;x86&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff628c;&quot;&gt;\)&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt;&#x2F;Plexer&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff628c;&quot;&gt;\ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt;Code&#x2F;ResHex&#x2F;ResHex.exe
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;wine-solving-problem&#x2F;correct-fonts.png&quot; alt=&quot;image&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>В Touhou 6-8 нету BGM (фоновой wav музыки)</title>
+          <pubDate>Fri, 20 Oct 2023 23:40:00 +0500</pubDate>
+          <author>AniX</author>
+          <link>https://anzix.github.io/posts/touhou6-no-bgm/</link>
+          <guid>https://anzix.github.io/posts/touhou6-no-bgm/</guid>
+          <description xml:base="https://anzix.github.io/posts/touhou6-no-bgm/">&lt;p&gt;В игре воспроизводится только MIDI если юзать timidity&lt;&#x2F;p&gt;
+&lt;p&gt;Оказывается установив игру wav файлы почему-то не присутствовали в указанной папке игры&lt;br &#x2F;&gt;
+&lt;strong&gt;Решением&lt;&#x2F;strong&gt; было скопировать из оригинального смонтированного &lt;strong&gt;.iso&lt;&#x2F;strong&gt; файла файл содержащий bgm композиции в установленную папку игры&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;[Для TH6] Лежит в пути &lt;code&gt;&#x2F;kouma&#x2F;bgm&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;[Для TH7] Лежит внутри папки &lt;code&gt;&#x2F;youmu&#x2F;thbgm.dat&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;[Для TH8] Лежит внутри папки &lt;code&gt;&#x2F;eiya&#x2F;thbgm.dat&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;И так далее...&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>В vim&#x2F;nvim некоректные символы при открытии файла с разными кодировками</title>
+          <pubDate>Fri, 20 Oct 2023 12:35:00 +0500</pubDate>
+          <author>AniX</author>
+          <link>https://anzix.github.io/posts/nvim-incorrect-crlf-russian-symbols/</link>
+          <guid>https://anzix.github.io/posts/nvim-incorrect-crlf-russian-symbols/</guid>
+          <description xml:base="https://anzix.github.io/posts/nvim-incorrect-crlf-russian-symbols/">&lt;ul&gt;
+&lt;li&gt;&lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;stackoverflow.com&#x2F;a&#x2F;38372767&quot;&gt;Список кодировок и решения&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;dlia-failov-s-kodirovkoi-crlf-nechitabel-nye-russkie-simvoly&quot;&gt;&lt;a class=&quot;anchor&quot; href=&quot;#dlia-failov-s-kodirovkoi-crlf-nechitabel-nye-russkie-simvoly&quot;&gt;#&lt;&#x2F;a&gt;&amp;nbsp;
+Для файлов с кодировкой crlf нечитабельные русские символы&lt;&#x2F;h2&gt;
+&lt;p&gt;Вот как это выглядит&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;txt&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-txt &quot;&gt;&lt;code class=&quot;language-txt&quot; data-lang=&quot;txt&quot;&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;Èãðû êà÷àòü îòñþäà
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Вот как выглядит локаль&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;txt&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-txt &quot;&gt;&lt;code class=&quot;language-txt&quot; data-lang=&quot;txt&quot;&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;LANG=ru_RU.UTF-8
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;LC_CTYPE=&amp;quot;ru_RU.UTF-8&amp;quot;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;LC_NUMERIC=&amp;quot;ru_RU.UTF-8&amp;quot;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;LC_TIME=&amp;quot;ru_RU.UTF-8&amp;quot;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;LC_COLLATE=C
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;LC_MONETARY=&amp;quot;ru_RU.UTF-8&amp;quot;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;LC_MESSAGES=&amp;quot;ru_RU.UTF-8&amp;quot;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;LC_PAPER=&amp;quot;ru_RU.UTF-8&amp;quot;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;LC_NAME=&amp;quot;ru_RU.UTF-8&amp;quot;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;LC_ADDRESS=&amp;quot;ru_RU.UTF-8&amp;quot;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;LC_TELEPHONE=&amp;quot;ru_RU.UTF-8&amp;quot;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;LC_MEASUREMENT=&amp;quot;ru_RU.UTF-8&amp;quot;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;LC_IDENTIFICATION=&amp;quot;ru_RU.UTF-8&amp;quot;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;LC_ALL=
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Нашёл решение для vim и neovim в разных форматах vimscripts и lua&lt;&#x2F;p&gt;
+&lt;p&gt;Редактируем конфиг файл neovim&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;sh&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;nvim &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff80e1;&quot;&gt;~&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt;&#x2F;.config&#x2F;nvim&#x2F;init.vim
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Код в vimscripts&lt;&#x2F;p&gt;
+&lt;p&gt;Самое важное в нём это set fileencodings=[значение кодировки] на который триггерится vim&#x2F;neovim и преобразует некорректные символы в нормальный русский шрифт&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;vim&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-vim &quot;&gt;&lt;code class=&quot;language-vim&quot; data-lang=&quot;vim&quot;&gt;&lt;span style=&quot;color:#ffb054;&quot;&gt;set&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt; encoding=utf&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff628c;&quot;&gt;-8&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt; | &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#0088ff;&quot;&gt; Кодировка по дефолту
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffb054;&quot;&gt;set&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt; termencoding=utf&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff628c;&quot;&gt;-8&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt; | &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#0088ff;&quot;&gt; Кодировка по дефолту
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffb054;&quot;&gt;set&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt; fileformat=unix | &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#0088ff;&quot;&gt; Формат файла по дефолту
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffb054;&quot;&gt;set&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt; ffs=unix,dos,mac | &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#0088ff;&quot;&gt; Формат файла, влияющий на окончания строк - будет перебирать в указанном порядке
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffb054;&quot;&gt;set&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt; fileencodings=utf&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff628c;&quot;&gt;-8&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;,cp&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff628c;&quot;&gt;1251&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt; | &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#0088ff;&quot;&gt; Список кодировок файлов для автоопределения
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Код в lua (neovim)&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;lua&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-lua &quot;&gt;&lt;code class=&quot;language-lua&quot; data-lang=&quot;lua&quot;&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;vim.opt.encoding &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff9d00;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9eff80;&quot;&gt;utf-8&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;quot; --&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#0088ff;&quot;&gt; Кодировка по дефолту
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;vim.opt.ffs &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff9d00;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9eff80;&quot;&gt;unix,dos,mac&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;quot; --&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#0088ff;&quot;&gt; Формат файла, влияющий на окончания строк - будет перебирать в указанном порядке
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;vim.opt.fileencodings &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff9d00;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9eff80;&quot;&gt;utf-8,cp1251&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;quot; --&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#0088ff;&quot;&gt; Список кодировок файлов для автоопределения
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Теперь в Windows crlf текстовых файлов я смог нормально читать и редактировать файлы&lt;&#x2F;p&gt;
+&lt;p&gt;А в nano вообще показываются одни ромбы с вопросом���&lt;br &#x2F;&gt;
+Я пока не мог найти решение, да и я не заинтересован в нём.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;dlia-failov-s-kodirovkoi-cp936-nechitabel-nye-kitaiskie-simvoly&quot;&gt;&lt;a class=&quot;anchor&quot; href=&quot;#dlia-failov-s-kodirovkoi-cp936-nechitabel-nye-kitaiskie-simvoly&quot;&gt;#&lt;&#x2F;a&gt;&amp;nbsp;
+Для файлов с кодировкой cp936 нечитабельные китайские символы&lt;&#x2F;h2&gt;
+&lt;p&gt;Вот как это выглядит&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;nvim-incorrect-crlf-russian-symbols&#x2F;incorrect-ch-symbols.png&quot; alt=&quot;image&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Для решения необходимо просто добавить в &lt;code&gt;fileencodings=[значение кодировки]&lt;&#x2F;code&gt; после utf-8 кодировку cp936, в конце не срабатывает&lt;&#x2F;p&gt;
+&lt;p&gt;Пример neovim с lua конфигом&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;lua&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-lua &quot;&gt;&lt;code class=&quot;language-lua&quot; data-lang=&quot;lua&quot;&gt;&lt;span style=&quot;color:#ff628c;&quot;&gt;...
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;vim.opt.fileencodings &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff9d00;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9eff80;&quot;&gt;utf-8,cp936,cp1251&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;quot; --&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#0088ff;&quot;&gt; Список кодировок файлов для автоопределения
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff9d00;&quot;&gt;..&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;.
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;После добавления cp936, все символы стали отображаться как надо&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;nvim-incorrect-crlf-russian-symbols&#x2F;correct-ch-symbols.png&quot; alt=&quot;image&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Некоторые игры из Steam не определяют геймпад как Xbox360</title>
+          <pubDate>Mon, 09 Oct 2023 23:10:00 +0500</pubDate>
+          <author>AniX</author>
+          <link>https://anzix.github.io/posts/gamepad-steam-not-identify-as-xbox/</link>
+          <guid>https://anzix.github.io/posts/gamepad-steam-not-identify-as-xbox/</guid>
+          <description xml:base="https://anzix.github.io/posts/gamepad-steam-not-identify-as-xbox/">&lt;p&gt;На примере The Binding of Isaac: Rebirth (Native - OpenGL)&lt;br &#x2F;&gt;
+Геймпад 8BitDo Pro 2 Xinput по проводу&lt;&#x2F;p&gt;
+&lt;p&gt;При включённом Steam Input внутри игры геймпад нормально не определяется, но работает&lt;br &#x2F;&gt;
+Раскладка не та что должна быть, в общем беспорядок&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;gamepad-steam-not-identify-as-xbox&#x2F;steam-input.png&quot; alt=&quot;image&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;gamepad-steam-not-identify-as-xbox&#x2F;issac-incorrect-layout-gamepad.png&quot; alt=&quot;image&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Если в свойствах игры Steam во вкладке отключить Steam Input (Отключить систему ввода Steam) тогда раскладка станет нормальной и автоматически подхватит управление&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;gamepad-steam-not-identify-as-xbox&#x2F;correct-layout-gamepad.png&quot; alt=&quot;image&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>При использовании obs-vkcapture с wine в OBS не показывается mangohud (старая игра)</title>
+          <pubDate>Mon, 09 Oct 2023 17:35:00 +0500</pubDate>
+          <author>AniX</author>
+          <link>https://anzix.github.io/posts/wine-with-obs-vkcapture-not-showing-mangohud/</link>
+          <guid>https://anzix.github.io/posts/wine-with-obs-vkcapture-not-showing-mangohud/</guid>
+          <description xml:base="https://anzix.github.io/posts/wine-with-obs-vkcapture-not-showing-mangohud/">&lt;p&gt;Игра &lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;www.pcgamingwiki.com&#x2F;wiki&#x2F;Shrek_2:_The_Game&quot;&gt;Shrek 2 The Game&lt;&#x2F;a&gt;, в самой игре mangohud есть но в превью obs и на записи его нету&lt;&#x2F;p&gt;
+&lt;p&gt;Играл в Shrek 2 The Game с такими параметрами из под терминала&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;sh&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;DXVK_HUD&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff9d00;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#3ad900;&quot;&gt;compiler &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;vk_radv&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt; obs-gamecapture gamemoderun mangohud WINEPREFIX=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;quot;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#edef7d;&quot;&gt;HOME&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9eff80;&quot;&gt;&#x2F;.local&#x2F;share&#x2F;wineprefixes&#x2F;Shrek_2&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt; wine &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;$HOME&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt;&#x2F;Games&#x2F;Shrek&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff628c;&quot;&gt;\ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt;2&#x2F;System&#x2F;game.exe
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Примечание: Запускал с установленным в префикс для игры dxvk (но он не работал). Так и без dxvk&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;Obs запускал с такими опциями из под терминала &lt;code&gt;OBS_USE_EGL=1 obs&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Решил проблему благодаря DgVoodoo, необходимо &lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;http:&#x2F;&#x2F;dege.freeweb.hu&#x2F;dgVoodoo2&#x2F;dgVoodoo2&#x2F;&quot;&gt;скачать последнюю версию DgVoodoo&lt;&#x2F;a&gt; и при распаковки закинуть все dll&#x27;ки из &lt;strong&gt;&#x2F;dgVoodoo2_79_3&#x2F;MS&#x2F;x86&#x2F;&lt;&#x2F;strong&gt; в папку с игрой и прописать определение используя переменную &lt;code&gt;WINEDLLOVERRIDES=&quot;d3d8,d3d9,d3dimm,ddraw=n,b&quot;&lt;&#x2F;code&gt; при запуске игры&lt;&#x2F;p&gt;
+&lt;p&gt;Запустив с данными опциями и переменными:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;sh&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;DXVK_HUD&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff9d00;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#3ad900;&quot;&gt;compiler &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;obs-gamecapture&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt; gamemoderun mangohud WINEDLLOVERRIDES=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9eff80;&quot;&gt;d3d8=n,b;d3d9=n,b;d3dimm=n,b;ddraw=n,b&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt;  WINEPREFIX=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;quot;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#edef7d;&quot;&gt;HOME&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9eff80;&quot;&gt;&#x2F;.local&#x2F;share&#x2F;wineprefixes&#x2F;Shrek2&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt; wine &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;$HOME&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt;&#x2F;Desktop&#x2F;Shrek&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff628c;&quot;&gt;\ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt;2.lnk
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+</description>
+      </item>
+      <item>
+          <title>Проблема с записью FFmpeg в связке с AMF кодировщиком</title>
+          <pubDate>Sun, 08 Oct 2023 23:22:00 +0500</pubDate>
+          <author>AniX</author>
+          <link>https://anzix.github.io/posts/issue-ffmpeg-record-with-amf-encoder/</link>
+          <guid>https://anzix.github.io/posts/issue-ffmpeg-record-with-amf-encoder/</guid>
+          <description xml:base="https://anzix.github.io/posts/issue-ffmpeg-record-with-amf-encoder/">&lt;p&gt;При вызове команды&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;sh&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;ffmpeg -vaapi_device&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt; &#x2F;dev&#x2F;dri&#x2F;renderD128&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt; -f&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt; x11grab&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt; -video_size&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt; 1920x1080&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt; -framerate&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt; 60&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt; -i&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt; :0&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt; -c&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt;:v h264_amf output.mp4
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Выхлоп команды такой&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;txt&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-txt &quot;&gt;&lt;code class=&quot;language-txt&quot; data-lang=&quot;txt&quot;&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;zsh: segmentation fault (core dumped)  ffmpeg -vaapi_device &#x2F;dev&#x2F;dri&#x2F;renderD128 -f x11grab -video_size 1920x1080  60
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Решением было экспортировать переменную проприетарных драйверов AMDGPU-PRO командой vk_pro (из AUR пакета &lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;aur.archlinux.org&#x2F;packages&#x2F;amd-vulkan-prefixes&#x2F;&quot;&gt;amd-vulkan-prefixes&lt;&#x2F;a&gt;)&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;sh&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;vk_pro&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt; ffmpeg&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt; -vaapi_device&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt; &#x2F;dev&#x2F;dri&#x2F;renderD128&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt; -f&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt; x11grab&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt; -video_size&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt; 1920x1080&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt; -framerate&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt; 60&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt; -i&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt; :0&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt; -c&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt;:v h264_amf output.mp4
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Или просто экспортировать переменные напрямую из проприетарных дров AMDGPU-PRO&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;sh&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;VK_ICD_FILENAMES&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff9d00;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#3ad900;&quot;&gt;&#x2F;opt&#x2F;amdgpu-pro&#x2F;etc&#x2F;vulkan&#x2F;icd.d&#x2F;amd_icd64.json:&#x2F;opt&#x2F;amdgpu-pro&#x2F;etc&#x2F;vulkan&#x2F;icd.d&#x2F;amd_icd32.json &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;ffmpeg -vaapi_device&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt; &#x2F;dev&#x2F;dri&#x2F;renderD128&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt; -f&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt; x11grab&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt; -video_size&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt; 1920x1080&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt; -framerate&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt; 60&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt; -i&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt; :0&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt; -c&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt;:v h264_amf output.mp4
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+</description>
+      </item>
+      <item>
+          <title>Постоянно слышу себя через свой микро (мониторный режим)</title>
+          <pubDate>Sun, 08 Oct 2023 23:00:00 +0500</pubDate>
+          <author>AniX</author>
+          <link>https://anzix.github.io/posts/hearing-myself-through-my-mic/</link>
+          <guid>https://anzix.github.io/posts/hearing-myself-through-my-mic/</guid>
+          <description xml:base="https://anzix.github.io/posts/hearing-myself-through-my-mic/">&lt;ul&gt;
+&lt;li&gt;&lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;forum.manjaro.org&#x2F;t&#x2F;pulse-pipewire-how-to-loopback-line-in-only&#x2F;64695&quot;&gt;Источник&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;При старте системы постоянно включается мониторный режим микрофона Samson C01U Pro вместе с наушниками в подключенном jack гнездом.&lt;br &#x2F;&gt;
+Его можно навсегда отключить используя на выбор один из 2 методов&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;pervoe-reshenie&quot;&gt;&lt;a class=&quot;anchor&quot; href=&quot;#pervoe-reshenie&quot;&gt;#&lt;&#x2F;a&gt;&amp;nbsp;
+Первое Решение&lt;&#x2F;h2&gt;
+&lt;p&gt;У вас должен быть скачан пакет &lt;strong&gt;alsa-utils&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;sh&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;sudo&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt; pacman&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt; -S&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt; alsa-utils
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Откройте терминал и введите &lt;code&gt;alsamixer&lt;&#x2F;code&gt; появится панель регулировки громкости alsa&lt;br &#x2F;&gt;
+Жмём &lt;strong&gt;F6&lt;&#x2F;strong&gt; и выбираем наш микро&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;hearing-myself-through-my-mic&#x2F;sound-card-alsa.png&quot; alt=&quot;image&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;После выбираем Mic (выбрать стрелкой влево) и нажимаем на клавишу &lt;code&gt;m&lt;&#x2F;code&gt; на клаве&lt;br &#x2F;&gt;
+Готово, мониторинг микрофона отключён&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;vtoroe-reshenie&quot;&gt;&lt;a class=&quot;anchor&quot; href=&quot;#vtoroe-reshenie&quot;&gt;#&lt;&#x2F;a&gt;&amp;nbsp;
+Второе решение&lt;&#x2F;h2&gt;
+&lt;p&gt;Просто введите в терминале и готово&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;sh&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;amixer&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt; sset&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt; -c&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt; 3 Mic mute
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Пояснение по опциям:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;-c [число]&lt;&#x2F;code&gt; это ваша карта по списку&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+</description>
+      </item>
+      <item>
+          <title>Hddtemp не показывает температуру SSD</title>
+          <pubDate>Sun, 08 Oct 2023 20:10:00 +0500</pubDate>
+          <author>AniX</author>
+          <link>https://anzix.github.io/posts/hddtemp-not-showing-temp-ssd/</link>
+          <guid>https://anzix.github.io/posts/hddtemp-not-showing-temp-ssd/</guid>
+          <description xml:base="https://anzix.github.io/posts/hddtemp-not-showing-temp-ssd/">&lt;ul&gt;
+&lt;li&gt;&lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;askubuntu.com&#x2F;questions&#x2F;474669&#x2F;ssd-temperature-sensor-readout-with-hddtemp&quot;&gt;Источник&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;wiki.archlinux.org&#x2F;title&#x2F;Hddtemp#Solid_State_Drives&quot;&gt;Arch Wiki&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;Установка утилиты&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;sh&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;sudo&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt; pacman&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt; -S&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt; hddtemp
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Выхлоп&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;txt&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-txt &quot;&gt;&lt;code class=&quot;language-txt&quot; data-lang=&quot;txt&quot;&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;# hddtemp &#x2F;dev&#x2F;sda
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;ВНИМАНИЕ: Диск &#x2F;dev&#x2F;sda не дает показания температурного датчика.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;ВНИМАНИЕ: Это еще не значит, что у него его нет.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;ВНИМАНИЕ: Если вы точно знаете, что датчик есть, напишите hddtemp@guzu.net
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;ВНИМАНИЕ: (см. опции --help, --debug и --drivebase).
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&#x2F;dev&#x2F;sda: Samsung SSD 860 EVO 250G B          	@:  нет датчика
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Так как информация о температуре ssd находится в другом поле (а именно поле 190)  необходимо править датабазу hddtemp ручками&lt;&#x2F;p&gt;
+&lt;p&gt;Этой командой я добавляю обнаружение температуры своего SSD полем 190&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;sh&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;sudo&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt; bash&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt; -c &amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9eff80;&quot;&gt;cat &amp;lt;&amp;lt; EOF &amp;gt;&amp;gt; &#x2F;etc&#x2F;hddtemp.db
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9eff80;&quot;&gt;&amp;quot;Samsung SSD 860 EVO 250G&amp;quot; 190 C &amp;quot;Samsung SSD 860 EVO 250G&amp;quot;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9eff80;&quot;&gt;EOF&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;#39;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+</description>
+      </item>
+      <item>
+          <title>Решение проблем с композитором Picom</title>
+          <pubDate>Sat, 15 Apr 2023 18:33:12 +0500</pubDate>
+          <author>AniX</author>
+          <link>https://anzix.github.io/posts/solving-problem-compositor-picom/</link>
+          <guid>https://anzix.github.io/posts/solving-problem-compositor-picom/</guid>
+          <description xml:base="https://anzix.github.io/posts/solving-problem-compositor-picom/">&lt;h2 id=&quot;1-reshil-problema&quot;&gt;&lt;a class=&quot;anchor&quot; href=&quot;#1-reshil-problema&quot;&gt;#&lt;&#x2F;a&gt;&amp;nbsp;
+1.(Решил) Проблема&lt;&#x2F;h2&gt;
+&lt;p&gt;Столкнулся с графическим глюком при переходе в полноэкранный (win+f) на любом терминале, но когда двигаешь мышкой или нажав клавишу - пропадает&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;solving-problem-compositor-picom&#x2F;blur-bug.jpg&quot; alt=&quot;image&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;font color=&quot;green&quot;&gt;Решается&lt;&#x2F;font&gt; это отключением fading (затухание)&lt;&#x2F;p&gt;
+&lt;p&gt;Либо отключить dual_kawase&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;2-reshil-problema&quot;&gt;&lt;a class=&quot;anchor&quot; href=&quot;#2-reshil-problema&quot;&gt;#&lt;&#x2F;a&gt;&amp;nbsp;
+2.(Решил) Проблема&lt;&#x2F;h2&gt;
+&lt;p&gt;При вызове maim (минимального скриншотера) появляется размытый экран вместо чистого&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;font color=&quot;green&quot;&gt;Решается&lt;&#x2F;font&gt; это добавлением в исключение blur&#x27;а picom&lt;&#x2F;p&gt;
+&lt;p&gt;maim вызывает slop поэтому необходимо именно его добавить в исключение&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;color:#ffffff;&quot;&gt;&lt;code&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;blur-background-exclude = [
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;   &amp;quot;class_g = &amp;#39;slop&amp;#39;&amp;quot;,
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;];
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;3-reshil-problema&quot;&gt;&lt;a class=&quot;anchor&quot; href=&quot;#3-reshil-problema&quot;&gt;#&lt;&#x2F;a&gt;&amp;nbsp;
+3.(Решил) Проблема&lt;&#x2F;h2&gt;
+&lt;p&gt;Некоторые элементы (например toolbar, всплыв-е окна и т.д) имеют на краях слой прозрачности от blur&#x27;а dual_kawase&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;font color=&quot;green&quot;&gt;Решается&lt;&#x2F;font&gt; это добавлением данной строки&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;color:#ffffff;&quot;&gt;&lt;code&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;wintypes: {
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;	unknown = { blur-background = false; };
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;	desktop = { blur-background = false; };
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;	dock = { blur-background = false; shadow = false; };
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;	toolbar = { blur-background = false; };
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;	menu = { blur-background = false; };
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;	utility = { blur-background = false; };
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;	splash = { blur-background = false; };
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;	dialog = { blur-background = false; };
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;	normal = { blur-background = true; shadow = false; };
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;	dropdown_menu = { blur-background = false; };
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;	popup_menu = { blur-background = false; };
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;	tooltip = { blur-background = false; };
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;	notify = { blur-background = true; shadow = false; };
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;	combo = { blur-background = false; };
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;	dnd = { blur-background = false; };
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;};
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;4-problema&quot;&gt;&lt;a class=&quot;anchor&quot; href=&quot;#4-problema&quot;&gt;#&lt;&#x2F;a&gt;&amp;nbsp;
+!4.(???) Проблема&lt;&#x2F;h2&gt;
+&lt;p&gt;После применения [оптимизации композитора picom для полноэкранного режима]({{&amp;lt; ref &quot;&#x2F;content&#x2F;posts&#x2F;compositor-picom.md#оптимизация-picom-для-полноэкранного-режима-в-играх&quot; &amp;gt;}}) я столкнулся с проблемой вылета игры Serious Sam Fusion 2017 при переключении рабочего пространства&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;font color=&quot;green&quot;&gt;Решил&lt;&#x2F;font&gt; это добавлением в exclude (исключение) игры или программы используя xprop&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;color:#ffffff;&quot;&gt;&lt;code&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;unredir-if-possible-exclude = [
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;        &amp;quot;class_g = &amp;#39;looking-glass-client&amp;#39; &amp;amp;&amp;amp; !focused&amp;quot;,
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;        &amp;quot;class_g = &amp;#39;Serious Sam Fusion 2017 - Linux - 64bit&amp;#39;&amp;quot;,
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;        &amp;quot;class_g != &amp;#39;Gimp&amp;#39;&amp;quot;,
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;        &amp;quot;class_g != &amp;#39;i3lock&amp;#39;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;];
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+</description>
+      </item>
+      <item>
+          <title>Иконки контекстного меню не отображаются GTK2&#x2F;3</title>
+          <pubDate>Fri, 24 Mar 2023 14:37:28 +0500</pubDate>
+          <author>AniX</author>
+          <link>https://anzix.github.io/posts/icons-not-showing-gtk/</link>
+          <guid>https://anzix.github.io/posts/icons-not-showing-gtk/</guid>
+          <description xml:base="https://anzix.github.io/posts/icons-not-showing-gtk/">&lt;p&gt;Источник решения:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;wiki.archlinux.org&#x2F;title&#x2F;GTK#Button_and_menu_icons&quot;&gt;Arch Wiki&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;Это довольно просто решается&lt;&#x2F;p&gt;
+&lt;p&gt;Открываем конфиги для gtk2 находящийся в &lt;code&gt;~&#x2F;.gtkrc-2.0&lt;&#x2F;code&gt; или &lt;code&gt;~&#x2F;.config&#x2F;gtk-2.0&#x2F;gtkrc-2.0&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Для gtk3 &lt;code&gt;~&#x2F;.config&#x2F;gtk-3.0&#x2F;settings.ini&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;И редактируем эти файлы меняя только значения этих строк с &lt;code&gt;0&lt;&#x2F;code&gt; на &lt;code&gt;1&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;sh&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;gtk-button-images&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff9d00;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#3ad900;&quot;&gt;1
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;gtk-menu-images&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff9d00;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#3ad900;&quot;&gt;1
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Перезапускаем pcmanfm и проблема решена&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>MangoHud не работает в Minecraft Java Edition</title>
+          <pubDate>Fri, 17 Mar 2023 16:36:42 +0500</pubDate>
+          <author>AniX</author>
+          <link>https://anzix.github.io/posts/working-mangohud-in-minecraft/</link>
+          <guid>https://anzix.github.io/posts/working-mangohud-in-minecraft/</guid>
+          <description xml:base="https://anzix.github.io/posts/working-mangohud-in-minecraft/">&lt;ul&gt;
+&lt;li&gt;&lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;github.com&#x2F;flightlessmango&#x2F;MangoHud&#x2F;issues&#x2F;274&quot;&gt;Github проблема&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;Как бы я ни старался способом прописывания опции &lt;code&gt;mangohud --dlsym&lt;&#x2F;code&gt; и &lt;code&gt;MANGOHUD_DLSYM=1&lt;&#x2F;code&gt; и даже через lutris, всё это никак не могло заставить работать mangohud в майнкрафте.&lt;&#x2F;p&gt;
+&lt;p&gt;Помогло мне предзагрузка библиотек переменной LD_PRELOAD которая принудительно позволяет запустить mangohud в minecraft.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;blog.fpmurphy.com&#x2F;2012&#x2F;09&#x2F;all-about-ld_preload.html&quot;&gt;Что такое &lt;code&gt;LD_PRELOAD&lt;&#x2F;code&gt;?&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Вот 2 способа применения этой переменной&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;TL Legacy&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;p&gt;На &lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;vk.link&#x2F;tl_mc_launcher&quot;&gt;TL&lt;&#x2F;a&gt; лаунчере скачанный &lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;aur.archlinux.org&#x2F;packages&#x2F;tlauncher&quot;&gt;AUR пакетом&lt;&#x2F;a&gt; запускаем данную команду в терминале, активируя mangohud с gamemoderun&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;sh&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;LD_PRELOAD&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff9d00;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#3ad900;&quot;&gt;&#x2F;usr&#x2F;lib&#x2F;mangohud&#x2F;libMangoHud_dlsym.so:&#x2F;usr&#x2F;lib&#x2F;mangohud&#x2F;libMangoHud.so &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;gamemoderun&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt; &#x2F;usr&#x2F;bin&#x2F;tlauncher
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Для автоматизации &lt;span style=&quot;color:green&quot;&gt;рекомендуется&lt;&#x2F;span&gt; отредактировать ярлык TLauncher&#x27;а и добавить env с данными переменными&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;sh&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;sudo -e&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt; &#x2F;usr&#x2F;share&#x2F;applications&#x2F;tlauncher.desktop
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre style=&quot;background-color:#2b303b;color:#ffffff;&quot;&gt;&lt;code&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;[Desktop Entry]
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;......
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;Exec=env LD_PRELOAD=&#x2F;usr&#x2F;lib&#x2F;mangohud&#x2F;libMangoHud_dlsym.so:&#x2F;usr&#x2F;lib&#x2F;mangohud&#x2F;libMangoHud.so gamemoderun &#x2F;usr&#x2F;bin&#x2F;tlauncher
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;.....
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;ol start=&quot;2&quot;&gt;
+&lt;li&gt;Пиратка с rutracker&#x27;а&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;p&gt;Просто вводим&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;sh&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;LD_PRELOAD&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff9d00;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#3ad900;&quot;&gt;&#x2F;usr&#x2F;lib&#x2F;mangohud&#x2F;libMangoHud_dlsym.so:&#x2F;usr&#x2F;lib&#x2F;mangohud&#x2F;libMangoHud.so &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;gamemoderun &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff80e1;&quot;&gt;~&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt;&#x2F;Downloads&#x2F;Minecraft_Linux&#x2F;Minecraft_1.19.2&#x2F;start.sh
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+</description>
+      </item>
+    </channel>
+</rss>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>!!Usb Modem Arch Linux</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  !!Usb Modem Arch Linux
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-03-02T12:58:27+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux/">linux</a>
+
+<br>
+
+
+	<aside id="toc-aside" class="toc">
+	    <details>
+			<summary>Оглавление</summary>
+	        <ol>
+	            <li>
+	                <a href="#podkliuchenie-i-ispol-zovanie-usb-modema">Подключение и использование USB модема</a>
+	                
+	            </li><li>
+	                <a href="#proshivka-razblokirovka-usb-modema">Прошивка/Разблокировка USB модема</a>
+	                <ol>
+	                    <li>
+	                        <a href="#graficheskie-nativnye-programmy-na-linux">Графические нативные программы на Linux</a>
+	                    </li>
+	                </ol>
+	            </li><li>
+	                <a href="#drugaia-informatsiia-i-razmyshleniia">Другая информация и размышления</a>
+	                
+	            </li>
+	        </ol>
+		</details>
+	</aside>
+
+
+<h2 id="podkliuchenie-i-ispol-zovanie-usb-modema"><a class="anchor" href="#podkliuchenie-i-ispol-zovanie-usb-modema">#</a>&nbsp;
+Подключение и использование USB модема</h2>
+<p>Загружаешься с live usb, подключешь модем, чрутаешься в арч, ставишь, что<br />
+тебе нужно. Профит! Свой модем я подрубал просто отправив <code>AT</code> команду
+(видимо используя minicom) в порт и подняв <code>dhcp</code>.</p>
+<p>Консоль для доступа к USB модему</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> minicom
+</span></code></pre>
+<h2 id="proshivka-razblokirovka-usb-modema"><a class="anchor" href="#proshivka-razblokirovka-usb-modema">#</a>&nbsp;
+Прошивка/Разблокировка USB модема</h2>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://wiki.archlinux.org/title/Mobile_broadband_modem">Arch Wiki</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://wiki.archlinux.org/title/Mobile_broadband_modem#AT_commands">Разблокировка модема</a></li>
+</ul>
+<p><code>AT^CARDLOCK="NCK-код"</code> - разблокировка модема. NCK-код должен быть вычеслен<br />
+по IMEI. После этого модем может работать с любым GSM-провайдером (т.е операторами<br />
+модемов (Мегафон, Билайн и т. п.) с сим-картами других операторов).</p>
+<p>Для вычисления NCK-кода по имей необходим калькулятор кодов</p>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="http://calc.gmss.ru/index.php">Онлайн калькулятор для USB модемов Huawei</a></p>
+<h3 id="graficheskie-nativnye-programmy-na-linux"><a class="anchor" href="#graficheskie-nativnye-programmy-na-linux">#</a>&nbsp;
+Графические нативные программы на Linux</h3>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/bigbigmdm/Huawei_modem_calculator_v2">Huawei_modem_calculator_v2</a></p>
+<p>Установка и компиляция:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Качаем зависимости для работы программы
+</span><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> gcc-libs glibc openssl qt5-base qt5-serialport
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Клонируем
+</span><span style="color:#f9f9f9;">git</span><span style="color:#ffee80;"> clone https://github.com/bigbigmdm/Huawei_modem_calculator_v2 </span><span style="color:#ff9d00;">&amp;&amp; </span><span style="color:#ffb054;">cd</span><span style="color:#ffee80;"> Huawei_modem_calculator_v2
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Меняю на использование динамической библиотеки openssl в CMakeFiles.txt
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> это исправляет ошибку компиляции
+</span><span style="color:#f9f9f9;">sed -i</span><span style="color:#ffee80;"> CMakeLists.txt</span><span style="color:#f9f9f9;"> -e &#39;</span><span style="color:#9eff80;">s/\(set(OPENSSL_USE_STATIC_LIBS\) TRUE/\1 FALSE/</span><span style="color:#f9f9f9;">&#39;
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Собираем и компилируем
+</span><span style="color:#f9f9f9;">cmake -S</span><span style="color:#ffee80;"> .</span><span style="color:#f9f9f9;"> -B</span><span style="color:#ffee80;"> build </span><span style="color:#ff9d00;">&amp;&amp; </span><span style="color:#ffb054;">cd</span><span style="color:#ffee80;"> build
+</span><span style="color:#f9f9f9;">make -j`nproc`
+</span></code></pre>
+<p>Появиться исполняемый файл <strong>Huawei_modem_calculator</strong> его можно запустить и работать с ним</p>
+<h2 id="drugaia-informatsiia-i-razmyshleniia"><a class="anchor" href="#drugaia-informatsiia-i-razmyshleniia">#</a>&nbsp;
+Другая информация и размышления</h2>
+<ol>
+<li>
+<p>Прошивка модема используя qdl?<br />
+<a rel="noopener nofollow noreferrer" target="_blank" href="https://4pda.to/forum/index.php?showtopic=1011903&amp;view=findpost&amp;p=107379188">Быстрая смена прошивки / Смена IMEI - с помощью QFIL</a></p>
+</li>
+<li>
+<p>Возможно использовать для прошивки ZTE usb модемов?<br />
+<a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/forth32/qtools">qtools</a></p>
+<p>В Issues есть упоминание о <strong>ZTE terminal software update framework</strong></p>
+</li>
+</ol>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

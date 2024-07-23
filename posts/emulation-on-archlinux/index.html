@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>Эмуляция на Arch Linux</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  Эмуляция на Arch Linux
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-03-25T17:17:32+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux-gaming/">linux-gaming</a>
+
+<br>
+
+
+	<aside id="toc-aside" class="toc">
+	    <details>
+			<summary>Оглавление</summary>
+	        <ol>
+	            <li>
+	                <a href="#playstation-1-duckstation-na-arch-linux">Playstation 1 (Duckstation) На Arch Linux</a>
+	                
+	            </li><li>
+	                <a href="#playstation-2-pcsx2-na-arch-linux">!Playstation 2 (PCSX2) На Arch Linux</a>
+	                
+	            </li><li>
+	                <a href="#nintendo-3ds-citra-na-arch-linux">Nintendo 3DS (Citra) На Arch Linux</a>
+	                
+	            </li><li>
+	                <a href="#nintendo-gamecube-dolphin-na-arch-linux">!Nintendo GameCube (Dolphin) На Arch Linux</a>
+	                <ol>
+	                    <li>
+	                        <a href="#vkliuchaem-zastavku-gamecube">Включаем заставку GameCube</a>
+	                    </li><li>
+	                        <a href="#emuliatsiia-nunchuck-dlia-geimpada-xbox">Эмуляция Nunchuck для геймпада Xbox</a>
+	                    </li><li>
+	                        <a href="#emuliatsiia-nunchuck-s-pomoshch-iu-giroskopa-8bitdo-pro-2">Эмуляция Nunchuck с помощью гироскопа 8BitDo Pro 2</a>
+	                    </li>
+	                </ol>
+	            </li><li>
+	                <a href="#xbox-xemu">!!XBox (Xemu)</a>
+	                
+	            </li><li>
+	                <a href="#nintendo-wiiu-cemu">!Nintendo WiiU (Cemu)</a>
+	                <ol>
+	                    <li>
+	                        <a href="#optimizatsiia-cemu">!!Оптимизация Cemu</a>
+	                    </li>
+	                </ol>
+	            </li><li>
+	                <a href="#proprietary-sega-dreamcast-redream-na-arch-linux">(Proprietary) Sega DreamCast (Redream) На Arch Linux</a>
+	                
+	            </li><li>
+	                <a href="#sony-playstation-3-rpcs3-na-arch-linux">!Sony Playstation 3 (RPCS3) На Arch Linux</a>
+	                
+	            </li><li>
+	                <a href="#nintendo-switch-yuzu-na-arch-linux">!Nintendo Switch (Yuzu) На Arch Linux</a>
+	                
+	            </li>
+	        </ol>
+		</details>
+	</aside>
+
+
+<h2 id="playstation-1-duckstation-na-arch-linux"><a class="anchor" href="#playstation-1-duckstation-na-arch-linux">#</a>&nbsp;
+Playstation 1 (Duckstation) На Arch Linux</h2>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/stenzek/duckstation">Github страница Duckstation</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.youtube.com/watch?v=qOVhug5-mNM">Видео гайд по настройке для Linux</a></li>
+</ul>
+<p>Устанавливаем AUR пакет <a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/duckstation-git/">duckstation-git</a></p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">yay -S</span><span style="color:#ffee80;"> duckstation-git
+</span></code></pre>
+<p>Процесс компиляции займёт немного времени и ресурсов ПК</p>
+<ul>
+<li>[По проводу] Геймпад 8BitDo Pro 2 хорошо себя ведёт, без нареканий</li>
+<li>[По Bluetooth] Геймпад тоже очень хорошо себя ведёт</li>
+</ul>
+<p>Не забудьте скачать bios'ы для эмулятора</p>
+<h2 id="playstation-2-pcsx2-na-arch-linux"><a class="anchor" href="#playstation-2-pcsx2-na-arch-linux">#</a>&nbsp;
+!Playstation 2 (PCSX2) На Arch Linux</h2>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://pcsx2.net/">Официальный сайт PCSX2</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.youtube.com/watch?v=7Q0gy0s8Mxo">Видео гайд по настройке для Linux</a></li>
+</ul>
+<p>Установка стабильной версии (проверял на этой версии)</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> pcsx2
+</span></code></pre>
+<p>Если хотите более экспериментальную и более новую версию данного эмулятора, качаем AUR пакет <a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/pcsx2-git/">pcsx2-git</a>, обнова каждый день выходит</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">yay -S</span><span style="color:#ffee80;"> pcsx2-git
+</span></code></pre>
+<p>Запускаем и настраиваем</p>
+<ul>
+<li>[По проводу] Мой геймпад 8BitDo Pro 2 по проводу (в режиме xinput) сразу определился в эмуляторе с поддержкой вибрации.</li>
+</ul>
+<blockquote>
+<p>Есть небольшая проблема, вибрация на геймпаде постоянно интенсивная, нету перехода из слабого моторчика в сильный при геймплее. Проблема не в геймпаде, и не в настройке пада на Arch’е, дело в самом эмуляторе pcsx2.
+Решил я эту проблему установив AUR пакет <a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/pcsx2-git/">pcsx2-git</a></p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">yay -S</span><span style="color:#ffee80;"> pcsx2-git
+</span></code></pre>
+</blockquote>
+<ul>
+<li>[По Bluetooth] Геймпад в режиме (S)witch и (X)input определяется и работает, правда вот из-за прошивки 1.03 у геймпада траблы с вибрацией (проверял на Git версии), но в целом всё работает</li>
+</ul>
+<p>Биосы и iso’шники берите и ищите сами, думаю это не составит труда</p>
+<h2 id="nintendo-3ds-citra-na-arch-linux"><a class="anchor" href="#nintendo-3ds-citra-na-arch-linux">#</a>&nbsp;
+Nintendo 3DS (Citra) На Arch Linux</h2>
+<p>Качаем данный <a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/citra-qt-git">AUR пакет</a></p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">yay -S</span><span style="color:#ffee80;"> citra-qt-git
+</span></code></pre>
+<p>Запускаем ярлык citra</p>
+<ul>
+<li>[По проводу] Мой геймпад по проводу при игре не определялся автоматический
+<blockquote>
+<p>Чтобы он определился нужно перейти в "Emulation" - "Configure" во вкладке "Controls" жмём "Auto Map" после нажатия "OK" нужно нажать любую клавишу на геймпаде. И тогда геймпад 8BitDo Pro 2 сразу заработал</p>
+</blockquote>
+</li>
+<li>[По Bluetooth] Геймпад хорошо работает, также необходимо нажать автоназначение. В целом всё работает.</li>
+</ul>
+<h2 id="nintendo-gamecube-dolphin-na-arch-linux"><a class="anchor" href="#nintendo-gamecube-dolphin-na-arch-linux">#</a>&nbsp;
+!Nintendo GameCube (Dolphin) На Arch Linux</h2>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.youtube.com/watch?v=sHyKA5OrRdQ">Видео гайд по настройке для Linux</a></li>
+</ul>
+<p>Качаете обычную стабильную версию</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> dolphin-emu
+</span></code></pre>
+<p>Либо экспериментальную версию git</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">yay -S</span><span style="color:#ffee80;"> dolphin-emu-git
+</span></code></pre>
+<p>На первом запуске эмуля необходимо вручную настроить управление и вибрацию геймпада</p>
+<p>Игры GameCube:</p>
+<ul>
+<li>[По проводу] 8BitDo PRO 2 в режиме Xinput работает хорошо</li>
+<li>[По Bluetooth] В режиме Xinput (показывается как evdev/0/8BitDo Pro 2) идеально всё работает без проблем даже вибрация (настройка вибрации такая: Sine|Square|Triangle|Strong|Weak)</li>
+</ul>
+<p>Игры на Wii Нунчак Motion controls т.е гироскопом:</p>
+<ul>
+<li>[По проводу] Работает также как и по bluetooth</li>
+<li>[По Bluetooth] Работает замечательно (выключена вибрация) с помощью DSU сервера + joycond-cemuhook, сделал гайд по настройке</li>
+</ul>
+<p>Производительность на пресете vulkan (на моей RX580 4GB) в разы лучше и стабильнее фпс</p>
+<h3 id="vkliuchaem-zastavku-gamecube"><a class="anchor" href="#vkliuchaem-zastavku-gamecube">#</a>&nbsp;
+Включаем заставку GameCube</h3>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://drive.google.com/drive/folders/0B3FTVdj1y-LYcVdwZzloSl83WVk?resourcekey=0-IneDlrReX1_1cYO9cmiFgg">Скачиваем из google drive</a> только один дамп ipl gamecube это USA</p>
+<p>Лучше всего работает биос (заставка GC) от USA</p>
+<p>Разместить скачанный USA дамп в <code>~/.local/share/dolphin-emu/GC/USA</code>. В настройках Dolphin во вкладке "GameCube" отключить "Пропускать главное меню"</p>
+<p>Если видите ошибку <code>"The IPL File Is Not a known good dump"</code>. Отключите в настройках "Использовать обработчики ошибок"</p>
+<p>Done!</p>
+<h3 id="emuliatsiia-nunchuck-dlia-geimpada-xbox"><a class="anchor" href="#emuliatsiia-nunchuck-dlia-geimpada-xbox">#</a>&nbsp;
+Эмуляция Nunchuck для геймпада Xbox</h3>
+<p>В данном гайде для примера будет выступать bluetooth 8BitDo Pro 2 Xinput режим, настройка которая работает замечательно на Arch Linux'е так и на Шинде</p>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.youtube.com/watch?v=ID1rDKiaLsE">Настраивал по этому видео гайду</a></p>
+<h3 id="emuliatsiia-nunchuck-s-pomoshch-iu-giroskopa-8bitdo-pro-2"><a class="anchor" href="#emuliatsiia-nunchuck-s-pomoshch-iu-giroskopa-8bitdo-pro-2">#</a>&nbsp;
+Эмуляция Nunchuck с помощью гироскопа 8BitDo Pro 2</h3>
+<p>По проводу в режиме Switch и используя joycond-cemuhook мне удалось использовать гироскоп как Нунчак</p>
+<p><a href="/posts/gyro-8bitdo-pro2-on-dolphin-wii">Мой вручную написанный гайд по настройке</a>, идеально работает прям как на Шинде с использованием BetterJoy</p>
+<h2 id="xbox-xemu"><a class="anchor" href="#xbox-xemu">#</a>&nbsp;
+!!XBox (Xemu)</h2>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.youtube.com/watch?v=-1EsLpJS90g">Видео гайд по настройке для Linux</a></li>
+</ul>
+<h2 id="nintendo-wiiu-cemu"><a class="anchor" href="#nintendo-wiiu-cemu">#</a>&nbsp;
+!Nintendo WiiU (Cemu)</h2>
+<p>Так как Cemu теперь open source мы будем использовать именно её</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">yay -S</span><span style="color:#ffee80;"> cemu
+</span></code></pre>
+<p>В время запуска игры у меня звук не появлялся, <font color="green">решением</font> было зайти в Основные настройки (General settings) - вкладка "Audio" - и в секции TV выбрать ваше выходное аудио устройство (Device)</p>
+<p>Настройки геймпада (Input Settings)</p>
+<p>Обязательно выбираем Wii U GamePad и назначаем кнопки</p>
+<p>Геймпад 8BitDo Pro 2 (прошивка 3.0) в режиме Switch по проводу и по Bluetooth не работает гироскоп без UDP подключения т.е необходим <a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/joaorb64/joycond-cemuhook">joycond-cemuhook</a></p>
+<h3 id="optimizatsiia-cemu"><a class="anchor" href="#optimizatsiia-cemu">#</a>&nbsp;
+!!Оптимизация Cemu</h3>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://chriztr.github.io/cemu_shader_and_pipeline_caches/">Коллекция кэшей шейдеров для Cemu</a></p>
+<p>Закидываем кэш шейдеров из любой игры в данный путь
+$HOME/.local/share/cemu/</p>
+<h2 id="proprietary-sega-dreamcast-redream-na-arch-linux"><a class="anchor" href="#proprietary-sega-dreamcast-redream-na-arch-linux">#</a>&nbsp;
+(Proprietary) Sega DreamCast (Redream) На Arch Linux</h2>
+<p>Установка данного эмулятора довольно необычная, т.к нам ничего компилировать не нужно. Достаточно просто скачать исполняемый файл и запустить его</p>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://redream.io/download">Скачиваем</a> для Linux “Development Releases” redream, не “Stable Release” потому что дата последних обновлений на этой ветке не было аж 2 года</p>
+<p>Распаковываем архив и запускаем командой <code>./redream</code></p>
+<h2 id="sony-playstation-3-rpcs3-na-arch-linux"><a class="anchor" href="#sony-playstation-3-rpcs3-na-arch-linux">#</a>&nbsp;
+!Sony Playstation 3 (RPCS3) На Arch Linux</h2>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.youtube.com/watch?v=VBE_IOCdaCQ">Видео гайд по настройке для Linux</a></p>
+<blockquote>
+<p>Рекомендую собрать бинарник а не целый исходный код rpcs3</p>
+</blockquote>
+<p>Скачиваем <a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/rpcs3-bin">AUR пакет</a></p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">yay -S</span><span style="color:#ffee80;"> rpcs3-bin
+</span></code></pre>
+<p>После запуска эмуля необходимо <a rel="noopener nofollow noreferrer" target="_blank" href="https://www.playstation.com/ru-ru/support/hardware/ps3/system-software/">скачать</a> и установить прошивку ps3</p>
+<p>Жмём “File” - “Install Firmware” - указываем файл прошивки</p>
+<p>Игры сами знаете где качать</p>
+<ul>
+<li>[По проводу] Обработчик Evdev, режим Xinput Геймпад 8BitDo Pro 2 по проводу прекрасно работает даже вибрация, определяется как Xbox 360</li>
+<li>[По Bluetooth] Работает но вибрация слабая (возможно из-за прошивки 1.03, и то что я его до сих пор не обновляю) и почему-то не все кнопки работают (например R2)</li>
+</ul>
+<blockquote>
+<p>UPD 06.05.2022 [По Bluetooth]: Версия RPCS3 0.0.22-13535 обработчик Evdev, 8Bitdo Pro 2 Firmware 1.08, режим S и A не определяется эмулятором. Определился с режимом D (Android) НО не работает нормально стики, разметка не помогает. В общем, пока не юзабельно</p>
+</blockquote>
+<p>Настройки которые я включил в самом эмуляторе:</p>
+<ol>
+<li>“CPU” - “Enable SPU loop detection”</li>
+<li>“GPU” - “White Color Buffers” (устраняет проблемы текстур клинков Хаоса Кратоса в GOW: Collection) “Asynchronous Texture Streaming” + Увеличил разрешение на 1920x1080</li>
+<li>"Audio" - "Enable Time Stretching" "75%" (устраняет ежесекундные затупы звука) просто поставил галочку и ничего не трогал</li>
+</ol>
+<h2 id="nintendo-switch-yuzu-na-arch-linux"><a class="anchor" href="#nintendo-switch-yuzu-na-arch-linux">#</a>&nbsp;
+!Nintendo Switch (Yuzu) На Arch Linux</h2>
+<p>Скачиваем AUR пакет раннего доступа yuzu (для более свежих обновлений)</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">yay -S</span><span style="color:#ffee80;"> yuzu-early-access
+</span></code></pre>
+<blockquote>
+<p>Для быстрой компиляции необходимо настроить makepkg.conf</p>
+</blockquote>
+<p>После запуска вас попросят о наличии prod.keys ключей, найти эти ключи очень легко если вы умеете гуглить. Если нашли ключи тогда кидаем ключи в эту директорию <code>~/.local/share/yuzu/keys</code> и перезапускаем yuzu</p>
+<p>Игры тоже вы можете найти, если в интернете не первый год :)</p>
+<p>Не забывайте добавлять обновления и DLC к игре, сделать это можно так “Файл” - “Установить файлы в NAND” - выбираете nsp файлы</p>
+<ul>
+<li>[По проводу] Геймпад 8BitDo Pro 2 отлично работает в режиме S (Switch) и X (Xinput) с вибрацией. В режиме S (Switch) сразу из коробки работает гироскоп и вибрация, ничего настраивать не нужно.</li>
+<li>[По Bluetooth + cemuhook] Чтобы всё заработало необходимо включить в разделе "Расширенные" пункт "Включить UDP контроллеры". И Геймпад в режиме S (Switch) будет работать замечательно прямо также как и по проводу, вибрация и гироскоп работают</li>
+</ul>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

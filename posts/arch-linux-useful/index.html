@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>!Полезное Arch Linux (Обслуживание&#x2F;Фиксы&#x2F;Советы и т.д)</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  !Полезное Arch Linux (Обслуживание&#x2F;Фиксы&#x2F;Советы и т.д)
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-10-26T01:45:00+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux/">linux</a>
+
+<br>
+
+
+	<aside id="toc-aside" class="toc">
+	    <details>
+			<summary>Оглавление</summary>
+	        <ol>
+	            <li>
+	                <a href="#5-glavnykh-printsipov-ispol-zovaniia-arch-linux">5 Главных принципов использования Arch Linux</a>
+	                
+	            </li><li>
+	                <a href="#arch-tar-ball-iso-pgp-kliuchi-ne-initsializirovalis">Arch tar ball ISO: PGP ключи не инициализировались</a>
+	                
+	            </li><li>
+	                <a href="#peresborka-ustarevshikh-python-paketov-na-novuiu-versiiu">Пересборка устаревших Python пакетов на новую версию</a>
+	                
+	            </li><li>
+	                <a href="#kak-uznat-prichinu-udaleniia-aur-paketa">Как узнать причину удаления AUR пакета?</a>
+	                
+	            </li><li>
+	                <a href="#kak-skachat-udalionnyi-administratsiei-aur-repozitorii">Как скачать удалённый администрацией AUR репозиторий?</a>
+	                
+	            </li><li>
+	                <a href="#obnovlenie-nomera-versii-i-khesh-pkgbuild-aur-paketa">!Обновление номера версии и хэш PKGBUILD AUR пакета</a>
+	                
+	            </li>
+	        </ol>
+		</details>
+	</aside>
+
+
+<h2 id="5-glavnykh-printsipov-ispol-zovaniia-arch-linux"><a class="anchor" href="#5-glavnykh-printsipov-ispol-zovaniia-arch-linux">#</a>&nbsp;
+5 Главных принципов использования Arch Linux</h2>
+<ol>
+<li>Перед установкой AUR пакета читай PKGBUILD, ради своей же безопасности</li>
+<li>Команда <code>yay -Pw</code> довольно удобно запускать перед обновлениями, потому что, если что-то потребует ручного вмешательства, это будет опубликовано на главной странице веб-сайта arch</li>
+<li>Не проверяйте обновления используя <code>pacman -Syu</code> или <code>yay</code> а потом отменять на ctrl+c, ты этим можешь всё испортить. Вместо этого юзай команду <code>checkupdates</code></li>
+<li>Не проверяйте обновления каждую минуту, делай это только спустя неделю</li>
+<li>Если очень долго не обновлялись, рекомендуется запустить эту команду <code>sudo pacman -Sy archlinux-keyring &amp;&amp; sudo pacman -Su</code></li>
+</ol>
+<h2 id="arch-tar-ball-iso-pgp-kliuchi-ne-initsializirovalis"><a class="anchor" href="#arch-tar-ball-iso-pgp-kliuchi-ne-initsializirovalis">#</a>&nbsp;
+Arch tar ball ISO: PGP ключи не инициализировались</h2>
+<p>Ошибка GPG ключей pacman из-за слишком быстрой синхронизации и установки пакетов</p>
+<p>Как этого избежать:</p>
+<p>Смотрим статус у этого сервиса</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">systemctl</span><span style="color:#ffee80;"> status pacman-init.service
+</span></code></pre>
+<p>Если вы видите: "<strong>Finished Initializes Pacman keyring</strong>" значит можно использовать синхронизацию зеркал и устанавливать пакеты.<br />
+Если же вы не видите эту надпись значит процесс инициализации ключей pacman ещё не прошёл</p>
+<h2 id="peresborka-ustarevshikh-python-paketov-na-novuiu-versiiu"><a class="anchor" href="#peresborka-ustarevshikh-python-paketov-na-novuiu-versiiu">#</a>&nbsp;
+Пересборка устаревших Python пакетов на новую версию</h2>
+<p>Проверить зависящие пакеты версии python</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">pacman -Qoq</span><span style="color:#ffee80;"> /usr/lib/python</span><span style="color:#ff9d00;">&lt;</span><span style="color:#ffee80;">version</span><span style="color:#ff9d00;">&gt;
+</span></code></pre>
+<p>Пересобрать их с последней версией python</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">yay -S $(pacman -Qoq</span><span style="color:#ffee80;"> /usr/lib/python</span><span style="color:#ff9d00;">&lt;</span><span style="color:#ffee80;">version</span><span style="color:#ff9d00;">&gt;</span><span style="color:#f9f9f9;">)
+</span></code></pre>
+<h2 id="kak-uznat-prichinu-udaleniia-aur-paketa"><a class="anchor" href="#kak-uznat-prichinu-udaleniia-aur-paketa">#</a>&nbsp;
+Как узнать причину удаления AUR пакета?</h2>
+<p>Весь список AUR запросов находятся по ссылке<br />
+https://lists.archlinux.org/archives/list/aur-requests@lists.archlinux.org/</p>
+<p>По поиску можно ввести пакет который был удалён и узнать причину</p>
+<p>Есть также архив запросов которые добавляются (судя по всему) по завершению года<br />
+https://lists.archlinux.org/pipermail/aur-requests/</p>
+<h2 id="kak-skachat-udalionnyi-administratsiei-aur-repozitorii"><a class="anchor" href="#kak-skachat-udalionnyi-administratsiei-aur-repozitorii">#</a>&nbsp;
+Как скачать удалённый администрацией AUR репозиторий?</h2>
+<p>Примером будет legacylauncher который удалили по причине EULA Minecraft'а<br />
+https://lists.archlinux.org/archives/list/aur-requests@lists.archlinux.org/message/IU3UVJPD3EHNXQLMXKKSX727GCLMNGYL/</p>
+<p>Так как обычно по <a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/legacylauncher">ссылке</a> появляется ошибка 404 есть метод который позволит найти официально исходники репо\</p>
+<p>Обойти это можно перейдя в дерево <strong>cgit</strong> по текущему адресу с вводом названия пакета<br />
+https://aur.archlinux.org/cgit/aur.git/tree/?h=legacylauncher</p>
+<p>Тут можно увидеть исходники включая <strong>PKGBUILD</strong> отобразив в raw формате нажав <strong>plain</strong> и затем скачав его</p>
+<p>Также можно клонировать удалённый репозиторий командой, в конце названия обязательно должен быть .git</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">git</span><span style="color:#ffee80;"> clone https://aur.archlinux.org/legacylauncher.git
+</span></code></pre>
+<p>И вуаля удалённое репо у вас.</p>
+<h2 id="obnovlenie-nomera-versii-i-khesh-pkgbuild-aur-paketa"><a class="anchor" href="#obnovlenie-nomera-versii-i-khesh-pkgbuild-aur-paketa">#</a>&nbsp;
+!Обновление номера версии и хэш PKGBUILD AUR пакета</h2>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.youtube.com/watch?v=hfVGVZ9rzo4">Источник</a></li>
+</ul>
+<p>Описание: Как актуализировать PKGBUILD aur пакет который устарел, в данном примере будет выступать proton-ge-custom-bin</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">yay -S</span><span style="color:#ffee80;"> proton-ge-custom-bin
+</span></code></pre>
+<p>Затем отменяем загрузку<br />
+Переходим в <code>$HOME/.cache/yay/proton-ge-custom-bin/</code> и открываем <strong>PKGBUILD</strong> вашим редактором и меняем в нём строку связанную с версией пакета</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">....
+</span><span style="color:#f9f9f9;">pkgver</span><span style="color:#ff9d00;">=</span><span style="color:#3ad900;">GE_Proton7_41 </span><span style="color:#f9f9f9;">-</span><span style="color:#ff9d00;">&gt;</span><span style="color:#ffee80;"> pkgver=GE_Proton7_42
+</span><span style="color:#f9f9f9;">....
+</span></code></pre>
+<p>Затем сохраняем и оставаясь в каталоге обновляем хэш-суммы данной командой <code>updpkgsums</code><br />
+Команда вытянет из указанного url исходник и после подсчитает контрольные суммы и автоматически запишет их в PKGBUILD.</p>
+<p>Теперь пробуем собрать данный пакет и установить его</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">makepkg -sric
+</span></code></pre>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

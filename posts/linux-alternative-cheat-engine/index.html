@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>Linux (Не)альтернативы Cheat Engine</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  Linux (Не)альтернативы Cheat Engine
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-03-04T18:13:01+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux-gaming/">linux-gaming</a>
+
+<br>
+
+
+	<aside id="toc-aside" class="toc">
+	    <details>
+			<summary>Оглавление</summary>
+	        <ol>
+	            <li>
+	                <a href="#game-conqueror">Game Conqueror</a>
+	                
+	            </li><li>
+	                <a href="#pince">PINCE</a>
+	                
+	            </li>
+	        </ol>
+		</details>
+	</aside>
+
+
+<h2 id="game-conqueror"><a class="anchor" href="#game-conqueror">#</a>&nbsp;
+Game Conqueror</h2>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/scanmem/scanmem/tree/main/gui">Github</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.youtube.com/watch?v=xBGCjtdfaq0">Видео инструкция по использованию</a></li>
+</ul>
+<p>Минусы:</p>
+<ul>
+<li>Не умеет подсвечивать изменённое значение</li>
+</ul>
+<p>Установка</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> gameconqueror
+</span></code></pre>
+<p>Использование на примере Sims 2 Сезон Погоды (Wine Staging + DXVK 2.0)</p>
+<p>Запускаем Game Conqueror</p>
+<p>Нажав на иконку добавляем процесс игры, у меня это..</p>
+<pre style="background-color:#2b303b;color:#ffffff;"><code><span style="color:#f9f9f9;">2525436 - Z:\home\anix\Games\The Sims 2 - Seasons\sims2seasons\TSBin\Sims2EP5.exe
+</span></code></pre>
+<p>После запуска игры я например хочу больше денег, чтобы найти данное значение необходимо запомнить сколько у вас денег, вводим в секции Value: значение вашего баланса в игре</p>
+<p>Например у меня 1141, и сканируем нажав на лупу. Я получил 469 адресов</p>
+<p>Затем начнём поиск нашего кошелька вычтем из нашего баланса деньги купив что-нибудь мелкое. После покупки ищем в Game Conqueror поле значение баланса после покупки у меня это 1129 (-12)</p>
+<p>Я получил 2 адреса с данным значением, добавляем оба и чек-лист нажав по ним два раза</p>
+<p><img src="/images/linux-alternative-cheat-engine/1671552591.png" alt="image" />
+<img src="/images/linux-alternative-cheat-engine/1671552562.png" alt="image" /></p>
+<p>Чтобы узнать какой из них отвечает за денежный баланс в игре пробуйте на обеих адреса добавить значение 50000</p>
+<p>После добавления в адрес 154d53d4 в Sims 2 я продаю предмет и значения увеличились на то которое я выставлял
+<img src="/images/linux-alternative-cheat-engine/changed-value.png" alt="image" /></p>
+<h2 id="pince"><a class="anchor" href="#pince">#</a>&nbsp;
+PINCE</h2>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/korcankaraokcu/PINCE">Github</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.youtube.com/watch?v=hUPvk2ejYTk">Обзор и использование PINCE</a></li>
+</ul>
+<p>Плюсы:</p>
+<ul>
+<li>Умеет подсвечивать изменённое значение</li>
+</ul>
+<p>Есть доступный AUR пакет <a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/pince-git"><code>pince-git</code></a> для скачивания, хотя PKGBUILD очень долгое время не обновлялся и именно поэтому я вам рекомендую собрать его самому</p>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/korcankaraokcu/PINCE#installing">Инструкция по сборке Pince</a></p>
+<p>Для запуска в терминале вводим:</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Для AUR пакета pince-git
+</span><span style="color:#f9f9f9;">pince
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Для тех кто собрирал вручную
+</span><span style="color:#f9f9f9;">sh</span><span style="color:#ffee80;"> PINCE.sh
+</span></code></pre>
+<p>Проверял на игре Sims 2 Сезон Погоды (Wine Staging + DXVK 2.0)</p>
+<p>Жмем на иконку компьютера с подписью "Create or attach to process" и в поиске ищем название процесса игры и жмем "Open"</p>
+<p>Далее выбираем "Decimal" и вводим денежный баланс в игре и жмём First Scan
+Затем в игре уменьшаем или увеличиваем денежный баланс, в окне адресов показано красным что значение изменилось.</p>
+<p><img src="/images/linux-alternative-cheat-engine/1671555558.png" alt="image" /></p>
+<p>Жмём по адресу дважды для добавления в таблицу адресов и уже в нём меняем значение какое пожелаете, я выбрал 900000</p>
+<p>В игре после этого надо обновить денежный счётчик и тогда денежный баланс обновится на тот который вы указали в выбранном адресе</p>
+<p><img src="/images/linux-alternative-cheat-engine/1671556150.png" alt="image" /></p>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>!WINE разное полезное</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  !WINE разное полезное
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-10-20T15:20:00+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux-gaming/">linux-gaming</a>
+
+<br>
+
+
+	<aside id="toc-aside" class="toc">
+	    <details>
+			<summary>Оглавление</summary>
+	        <ol>
+	            <li>
+	                <a href="#avto-protsess-sozdaniia-arkhivirovannykh-rezervnykh-kopii-failov-sokhranenii-igry">Авто процесс создания архивированных резервных копий файлов сохранений игры</a>
+	                
+	            </li><li>
+	                <a href="#x11-xorg-ruchnoe-vosstanovlenie-gammy-pri-vykhode-iz-igry-wine">(X11 Xorg) Ручное восстановление гаммы при выходе из игры wine</a>
+	                
+	            </li><li>
+	                <a href="#wine-zapusk-bat-failov-batnikov-2-varianta">Wine. Запуск bat-файлов («батников») 2 варианта</a>
+	                
+	            </li><li>
+	                <a href="#udalenie-konkretnoi-programmy-bez-ispol-zovaniia-gui">Удаление конкретной программы без использования GUI</a>
+	                
+	            </li><li>
+	                <a href="#vyvod-logov-v-wine">Вывод логов в wine</a>
+	                
+	            </li><li>
+	                <a href="#smena-versii-sovmestimosti-wine-cherez-cli-winxp-win7-win10">Смена версии совместимости wine через cli (winxp / win7 / win10)</a>
+	                
+	            </li><li>
+	                <a href="#kak-udalit-biblioteki-kotorye-byli-ustanovleny-cherez-winetricks">Как удалить библиотеки которые были установлены через winetricks?</a>
+	                
+	            </li><li>
+	                <a href="#interesnoe-primenenie-pereopredelenii-dlia-wine">Интересное применение переопределений для wine</a>
+	                
+	            </li><li>
+	                <a href="#sozdanie-prefiksa-wine-v-tekushchei-direktorii">Создание префикса wine в текущей директории</a>
+	                
+	            </li><li>
+	                <a href="#primenenie-dll-ok-utilitoi-regsvr32">Применение dll'ок утилитой regsvr32</a>
+	                
+	            </li><li>
+	                <a href="#ubisoft-argumenty-zapuska-igry-pri-vypolnenii-ubisoft-connect">Ubisoft аргументы запуска игры при выполнении Ubisoft Connect</a>
+	                
+	            </li><li>
+	                <a href="#ne-provereno-slishkom-bystrye-ili-medlennye-starye-igry-pod-wine">(Не проверено) Слишком быстрые или медленные старые игры под wine</a>
+	                
+	            </li><li>
+	                <a href="#liogkii-sposob-vyzvat-autorun-exe-iz-smontirovannogo-obraza-ispol-zuia-wine">Лёгкий способ вызвать AUTORUN.exe из смонтированного образа используя wine</a>
+	                
+	            </li>
+	        </ol>
+		</details>
+	</aside>
+
+
+<h2 id="avto-protsess-sozdaniia-arkhivirovannykh-rezervnykh-kopii-failov-sokhranenii-igry"><a class="anchor" href="#avto-protsess-sozdaniia-arkhivirovannykh-rezervnykh-kopii-failov-sokhranenii-igry">#</a>&nbsp;
+Авто процесс создания архивированных резервных копий файлов сохранений игры</h2>
+<p>Например я хочу упростить или сделать автоматическим процесс создания<br />
+архивированных резервных копий файлов сохранений одиночной игры.<br />
+Я бы хотел, чтобы у них была временная метка, чтобы они не перезаписывали друг друга.</p>
+<p>Вероятно, лучше всего запустить процесс архивации после завершения вашей игры. Напр.</p>
+<p>Скачиваем пакет <code>zip</code></p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> zip
+</span></code></pre>
+<p>Архивируем сейвы игры когда игра закрывается, zip архив будет находится в $HOME</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">wine</span><span style="color:#ffee80;"> thegame.exe </span><span style="color:#ff9d00;">&amp;&amp; </span><span style="color:#f9f9f9;">zip -r &quot;</span><span style="color:#9eff80;">saves-</span><span style="color:#f9f9f9;">$(</span><span style="color:#edef7d;">date</span><span style="color:#ffee80;"> +</span><span style="color:#f9f9f9;">%</span><span style="color:#edef7d;">s</span><span style="color:#f9f9f9;">)</span><span style="color:#9eff80;">.zip</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#ffee80;"> /путь_до_saves/
+</span></code></pre>
+<p>Вариант для <code>.desktop</code> ярлыка lutris, на примере игры Lego Harry Potter: Years 1-4</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">...
+</span><span style="color:#f9f9f9;">Exec=env LUTRIS_SKIP_INIT=1 lutris lutris:rungameid/1 &amp;&amp; zip -r &quot;saves-$(date +%s).zip&quot; &quot;/home/user/Games/gog/lego-harry-potter-years-1-4/drive_c/users/anix/AppData/Roaming/WB Games/LEGO® Harry Potter™/SavedGames&quot;
+</span><span style="color:#f9f9f9;">...
+</span></code></pre>
+<h2 id="x11-xorg-ruchnoe-vosstanovlenie-gammy-pri-vykhode-iz-igry-wine"><a class="anchor" href="#x11-xorg-ruchnoe-vosstanovlenie-gammy-pri-vykhode-iz-igry-wine">#</a>&nbsp;
+(X11 Xorg) Ручное восстановление гаммы при выходе из игры wine</h2>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://steamcommunity.com/app/253980/discussions/0/2741975115063956992/">Источник_1</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/lutris/lutris/issues/1010#issuecomment-411502044">Источник_2</a></li>
+</ul>
+<p>Скачиваем данный пакет</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> xorg-xgamma
+</span></code></pre>
+<p>И вводим для восстановления гаммы</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">xgamma -gamma</span><span style="color:#ffee80;"> 1
+</span></code></pre>
+<h2 id="wine-zapusk-bat-failov-batnikov-2-varianta"><a class="anchor" href="#wine-zapusk-bat-failov-batnikov-2-varianta">#</a>&nbsp;
+Wine. Запуск bat-файлов («батников») 2 варианта</h2>
+<p>Их запуск отличается от запуска exe-файлов.</p>
+<ol>
+<li>Пример запуска script.bat:</li>
+</ol>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">WINEPREFIX</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">/home/</span><span style="color:#f9f9f9;">$</span><span style="color:#edef7d;">USER</span><span style="color:#9eff80;">/.wine</span><span style="color:#f9f9f9;">&quot; wine</span><span style="color:#ffee80;"> start /unix </span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">/home/</span><span style="color:#f9f9f9;">$</span><span style="color:#edef7d;">USER</span><span style="color:#9eff80;">/.wine/drive_c/script.bat</span><span style="color:#f9f9f9;">&quot;
+</span></code></pre>
+<ol start="2">
+<li>Открыть *.bat файл <code>wineconsole cmd</code> или <code>wine cmd</code></li>
+</ol>
+<p>И в нём уже ввести <code>script.bat</code></p>
+<h2 id="udalenie-konkretnoi-programmy-bez-ispol-zovaniia-gui"><a class="anchor" href="#udalenie-konkretnoi-programmy-bez-ispol-zovaniia-gui">#</a>&nbsp;
+Удаление конкретной программы без использования GUI</h2>
+<p>Вот как это применяется используя команду, регистр имени программы не имеет значения</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">WINEPREFIX</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">/home/</span><span style="color:#f9f9f9;">$</span><span style="color:#edef7d;">USER</span><span style="color:#9eff80;">/.wine</span><span style="color:#f9f9f9;">&quot; wine</span><span style="color:#ffee80;"> uninstaller</span><span style="color:#f9f9f9;"> --remove</span><span style="color:#ffee80;"> название_программы
+</span></code></pre>
+<p>После удаление программ из wine, оставшиеся файлы находятся</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">~/.local/share/applications/wine/
+</span><span style="color:#f9f9f9;">~/.local/share/icons/hicolor/
+</span></code></pre>
+<p>После удаления иконок необходимо выполнить команду</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">update-desktop-database </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.local/share/applications
+</span></code></pre>
+<h2 id="vyvod-logov-v-wine"><a class="anchor" href="#vyvod-logov-v-wine">#</a>&nbsp;
+Вывод логов в wine</h2>
+<p>Вывести в файл wine-log.txt только ошибки и предупреждения в ходе выполнения программы:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">WINEDEBUG</span><span style="color:#ff9d00;">=</span><span style="color:#3ad900;">-all,+err,+warn </span><span style="color:#f9f9f9;">WINEPREFIX</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">/home/</span><span style="color:#f9f9f9;">$</span><span style="color:#edef7d;">USER</span><span style="color:#9eff80;">/.wine</span><span style="color:#f9f9f9;">&quot; wine &quot;</span><span style="color:#9eff80;">C:/games/my_game/game.exe</span><span style="color:#f9f9f9;">&quot; </span><span style="color:#ff9d00;">&amp;&gt;</span><span style="color:#ffee80;"> wine-log.txt
+</span></code></pre>
+<p>Вывести в файл wine-dll-log.txt список Windows-библиотек (dll), используемых в процессе запуска программы:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">WINEDEBUG</span><span style="color:#ff9d00;">=</span><span style="color:#3ad900;">+loaddll </span><span style="color:#f9f9f9;">WINEPREFIX</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">/home/</span><span style="color:#f9f9f9;">$</span><span style="color:#edef7d;">USER</span><span style="color:#9eff80;">/.wine</span><span style="color:#f9f9f9;">&quot; wine</span><span style="color:#ffee80;"> notepad </span><span style="color:#ff9d00;">&amp;&gt;</span><span style="color:#ffee80;"> wine-dll-log.txt
+</span></code></pre>
+<h2 id="smena-versii-sovmestimosti-wine-cherez-cli-winxp-win7-win10"><a class="anchor" href="#smena-versii-sovmestimosti-wine-cherez-cli-winxp-win7-win10">#</a>&nbsp;
+Смена версии совместимости wine через cli (winxp / win7 / win10)</h2>
+<p>Для этого используется winetricks</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">WINEPREFIX</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">prefix_name</span><span style="color:#f9f9f9;">&quot; winetricks</span><span style="color:#ffee80;"> win10
+</span></code></pre>
+<h2 id="kak-udalit-biblioteki-kotorye-byli-ustanovleny-cherez-winetricks"><a class="anchor" href="#kak-udalit-biblioteki-kotorye-byli-ustanovleny-cherez-winetricks">#</a>&nbsp;
+Как удалить библиотеки которые были установлены через winetricks?</h2>
+<p>В <code>winecfg</code> разделе библиотеки те что <code>*</code> удаляем и всё востановлено</p>
+<h2 id="interesnoe-primenenie-pereopredelenii-dlia-wine"><a class="anchor" href="#interesnoe-primenenie-pereopredelenii-dlia-wine">#</a>&nbsp;
+Интересное применение переопределений для wine</h2>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">WINEDLLOVERRIDES</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">d3d...=n;dxgi=n;quartz=n,b;</span><span style="color:#f9f9f9;">&quot;
+</span></code></pre>
+<h2 id="sozdanie-prefiksa-wine-v-tekushchei-direktorii"><a class="anchor" href="#sozdanie-prefiksa-wine-v-tekushchei-direktorii">#</a>&nbsp;
+Создание префикса wine в текущей директории</h2>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">WINEPREFIX</span><span style="color:#ff9d00;">=</span><span style="color:#80ff82;">\$</span><span style="color:#f9f9f9;">(pwd)
+</span></code></pre>
+<h2 id="primenenie-dll-ok-utilitoi-regsvr32"><a class="anchor" href="#primenenie-dll-ok-utilitoi-regsvr32">#</a>&nbsp;
+Применение dll'ок утилитой regsvr32</h2>
+<p>На примере Warcraft III</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">regsvr32 $HOME</span><span style="color:#ffee80;">/Downloads/WarcraftIII_Linux/WarcraftIII_1.26a/game_info/da
+</span><span style="color:#f9f9f9;">ta/blizzard.ax
+</span></code></pre>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">regsvr32: DLL «$HOME/Downloads/WarcraftIII_Linux/WarcraftIII_1.26a/game_info/da
+</span><span style="color:#f9f9f9;">ta/blizzard.ax» успешно зарегистрирована
+</span></code></pre>
+<h2 id="ubisoft-argumenty-zapuska-igry-pri-vypolnenii-ubisoft-connect"><a class="anchor" href="#ubisoft-argumenty-zapuska-igry-pri-vypolnenii-ubisoft-connect">#</a>&nbsp;
+Ubisoft аргументы запуска игры при выполнении Ubisoft Connect</h2>
+<p>Вот как это делается</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">WINEPREFIX</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">prefix</span><span style="color:#f9f9f9;">&quot; wine</span><span style="color:#ffee80;"> UbisoftConnect.exe uplay://launch/273/0
+</span></code></pre>
+<h2 id="ne-provereno-slishkom-bystrye-ili-medlennye-starye-igry-pod-wine"><a class="anchor" href="#ne-provereno-slishkom-bystrye-ili-medlennye-starye-igry-pod-wine">#</a>&nbsp;
+(Не проверено) Слишком быстрые или медленные старые игры под wine</h2>
+<p>Решение использовать утилиту cpulimit чтобы ограничить процент использования процессора. Например:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">cpulimit -l</span><span style="color:#ffee80;"> 50 wine game.exe
+</span></code></pre>
+<p>Доступные значения от 0 до (количество ядер * 100). То есть если у тебя два ядра, то максимальное значение - 200.</p>
+<h2 id="liogkii-sposob-vyzvat-autorun-exe-iz-smontirovannogo-obraza-ispol-zuia-wine"><a class="anchor" href="#liogkii-sposob-vyzvat-autorun-exe-iz-smontirovannogo-obraza-ispol-zuia-wine">#</a>&nbsp;
+Лёгкий способ вызвать AUTORUN.exe из смонтированного образа используя wine</h2>
+<p>Вызываете деинсталлятор данной командой</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">WINEPREFIX</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">&quot;$</span><span style="color:#edef7d;">HOME</span><span style="color:#9eff80;">/.local/share/wineprefixes/[ПРЕФИКС_ИГРЫ] wine uninstaller
+</span></code></pre>
+<p>Жмёте "Установить" - указываете путь к смонтированному образу и запускаете AutoRun.exe</p>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

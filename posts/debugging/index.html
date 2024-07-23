@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>Всё что связано с отладкой используя gdb, debuginfod</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  Всё что связано с отладкой используя gdb, debuginfod
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2024-07-27T23:50:00+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/c/">C</a>
+
+<br>
+
+
+	<aside id="toc-aside" class="toc">
+	    <details>
+			<summary>Оглавление</summary>
+	        <ol>
+	            <li>
+	                <a href="#poniatie-otladochnaia-informatsiia">Понятие отладочная информация</a>
+	                
+	            </li><li>
+	                <a href="#plokhaia-otladka-programmy">Плохая отладка программы</a>
+	                
+	            </li><li>
+	                <a href="#khoroshii-sposob-otladki-ispol-zuia-debuginfod-rekomenduemyi">Хороший способ отладки: Используя debuginfod (рекомендуемый)</a>
+	                
+	            </li><li>
+	                <a href="#vot-kak-ispol-zuetsia-debuginfod-v-infrastrukture-arch-linux">Вот как используется debuginfod в инфраструктуре Arch Linux</a>
+	                
+	            </li><li>
+	                <a href="#otladochnyi-paket-debug-dlia-neofitsial-nykh-paketov-v-arch-linux-dlia-razrabotchikov">Отладочный пакет *-debug для неофициальных пакетов в Arch Linux (для разработчиков)</a>
+	                
+	            </li><li>
+	                <a href="#kak-lokal-no-proverit-otladochnyi-debug-paket-cherez-debuginfod">Как локально проверить отладочный *-debug пакет через debuginfod?</a>
+	                
+	            </li><li>
+	                <a href="#chto-zhe-na-samom-dele-delaet-optsiia-debug-v-pkgbuild-pri-sborke">Что же на самом деле делает опция debug в PKGBUILD при сборке?</a>
+	                
+	            </li><li>
+	                <a href="#razlichnye-laifkhaki-gdb">Различные лайфхаки gdb</a>
+	                
+	            </li>
+	        </ol>
+		</details>
+	</aside>
+
+
+<p>В данном руководстве я буду использовать мой проект на Си <code>inventory</code> из книжки<br />
+"C Programming A Modern Approach 2nd Ed от King, K. N" (Глава 16, страница 391) в<br />
+качестве подопытного.</p>
+<h2 id="poniatie-otladochnaia-informatsiia"><a class="anchor" href="#poniatie-otladochnaia-informatsiia">#</a>&nbsp;
+Понятие отладочная информация</h2>
+<p>Для чего нужны отладочные символы?</p>
+<p>Отладочные символы в основном полезны для получения трассировок (backtrace)<br />
+отладки для устранения неполадок во время выполнения.</p>
+<p>О том что выбрать в компиляторе gcc, флаг <code>-g</code> или <code>-g1</code>?</p>
+<ul>
+<li>
+<p>Флаг <code>-g</code> используется для генерации отладочной информации (с elf объекта) в<br />
+формате Dwarf, который является форматом по умолчанию, используемым GCC. Этот<br />
+формат включает информацию об исходном коде, такую как номера строк, имена<br />
+переменных и типы. Отладочная информация хранится в исполняемом файле, что<br />
+позволяет отлаживать программу с помощью таких инструментов, как GDB.</p>
+<p>Компиляция с данным флагом для крупных проектов <strong>может быть как правило очень<br />
+медленным</strong></p>
+</li>
+<li>
+<p>Флаг <code>-g1</code> флаг который генерирует минимальную отладочную информацию. Он похож<br />
+на <code>-g</code>, но он содержит только самую важную информацию, такую как <strong>таблица номера<br />
+строк, описания функций и внешних переменных</strong>. Но не будет информации о локальных<br />
+переменных. Это уменьшает размер отладочной информации, делая исполняемый файл меньше.</p>
+<p>Файл <code>inventory</code> без отладочной информации, а <code>inventory-debug</code> с флагами отладки<br />
+<code>-g3</code>. Что является максимальная отладочная информация и вот как значительно весят<br />
+два разных исполняемых файла</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">.rwxr-xr-x  16Ki anix 14 июл 16:04  inventory
+</span><span style="color:#f9f9f9;">.rwxr-xr-x  49Ki anix 14 июл 16:05  inventory.debug
+</span></code></pre>
+<p>Вот как весит файл <code>inventory-debug</code> с флагом <code>-g1</code></p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">.rwxr-xr-x  18Ki anix 14 июл 16:10  inventory.debug
+</span></code></pre>
+</li>
+</ul>
+<p>Что за флаг <code>-ggdb&lt;уровень&gt;</code>?</p>
+<ul>
+<li>
+<p><code>-ggdb&lt;уровень&gt;</code>: Создавать отладочную информацию для использования GDB. Это<br />
+означает использование наиболее выразительного доступного формата (DWARF, st<br />
+abs или собственный формат, если ни один из них не поддерживается),<br />
+включая расширения GDB, если это вообще возможно.</p>
+<blockquote>
+<p>Для совместимости с использованием другого отладчика как Valgrind лучше всего<br />
+ограничится <code>-g1</code></p>
+</blockquote>
+</li>
+</ul>
+<h2 id="plokhaia-otladka-programmy"><a class="anchor" href="#plokhaia-otladka-programmy">#</a>&nbsp;
+Плохая отладка программы</h2>
+<p>Вот как выглядит плохой способ отладки при получения трассировки (backtrace)</p>
+<p>Запускаем отладчик <code>gdb /usr/bin/inventory</code>, записываем логи <code>set logging enabled on</code>,<br />
+запускаем программу <code>run</code>. Найдите pid запущенной программы используя<br />
+<code>ps aux | grep inventory</code> и убейте данный процесс <code>kill -SIGSEGV pid</code></p>
+<p>После чего выводим полную трассировку <code>thread apply all bt full</code>, и вот что мы видим</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">Program received signal SIGSEGV, Segmentation fault.
+</span><span style="color:#f9f9f9;">0x00007ffff7ea4981 in read () from /usr/lib/libc.so.6
+</span><span style="color:#f9f9f9;">(gdb) thread apply all bt full
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">Thread 1 (Thread 0x7ffff7d99740 (LWP 1013355) &quot;inventory&quot;):
+</span><span style="color:#f9f9f9;">#0  0x00007ffff7ea4981 in read () from /usr/lib/libc.so.6
+</span><span style="color:#f9f9f9;">No symbol table info available.
+</span><span style="color:#f9f9f9;">#1  0x00007ffff7e25e63 in _IO_file_underflow () from /usr/lib/libc.so.6
+</span><span style="color:#f9f9f9;">No symbol table info available.
+</span><span style="color:#f9f9f9;">#2  0x00007ffff7e282c2 in _IO_default_uflow () from /usr/lib/libc.so.6
+</span><span style="color:#f9f9f9;">No symbol table info available.
+</span><span style="color:#f9f9f9;">#3  0x00007ffff7e00618 in ?? () from /usr/lib/libc.so.6
+</span><span style="color:#f9f9f9;">No symbol table info available.
+</span><span style="color:#f9f9f9;">#4  0x00007ffff7df3a06 in __isoc99_scanf () from /usr/lib/libc.so.6
+</span><span style="color:#f9f9f9;">No symbol table info available.
+</span><span style="color:#f9f9f9;">#5  0x000055555555507e in ?? ()
+</span><span style="color:#f9f9f9;">No symbol table info available.
+</span><span style="color:#f9f9f9;">#6  0x00007ffff7dc1c88 in ?? () from /usr/lib/libc.so.6
+</span><span style="color:#f9f9f9;">No symbol table info available.
+</span><span style="color:#f9f9f9;">#7  0x00007ffff7dc1d4c in __libc_start_main () from /usr/lib/libc.so.6
+</span><span style="color:#f9f9f9;">No symbol table info available.
+</span><span style="color:#f9f9f9;">#8  0x0000555555555145 in ?? ()
+</span><span style="color:#f9f9f9;">No symbol table info available.
+</span></code></pre>
+<p>Н-И-Ч-Е-Г-О, это по причине того что нету отладочной информации (об этом<br />
+свидетельствует "No symbol table info available"). Используйте <strong>хорошую
+отладку программы</strong>.</p>
+<h2 id="khoroshii-sposob-otladki-ispol-zuia-debuginfod-rekomenduemyi"><a class="anchor" href="#khoroshii-sposob-otladki-ispol-zuia-debuginfod-rekomenduemyi">#</a>&nbsp;
+Хороший способ отладки: Используя debuginfod (рекомендуемый)</h2>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://wiki.archlinux.org/title/Debuginfod">Arch Wiki Debuginfod</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://archlinux.org/news/debug-packages-and-debuginfod/">Новость о добавлении debuginfod в Arch Linux 2022</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://community.kde.org/Guidelines_and_HOWTOs/Debugging/How_to_create_useful_crash_reports#Debuginfod">KDE инструкция о полезной отладке используя debuginfod</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://developers.redhat.com/blog/2019/12/17/deploying-debuginfod-servers-for-your-developers">RedHat Blog представление Debuginfod</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.altlinux.org/Debuginfo">Alt Linux Wiki</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://ubuntu.com/server/docs/about-debuginfod">Ubuntu Docs</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://sourceware.org/elfutils/Debuginfod.html">Официальная страница debuginfod</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/KDAB/hotspot/blob/master/HACKING.md#debugging-the-appimage">Отладка AppImage используя debuginfod</a></li>
+</ul>
+<p>TL;DR: debuginfod предоставляет веб-сервер отладочной информации без установки<br />
+отладочных пакетов.</p>
+<p>Подробное описание: debuginfod будет предоставлять отладочные данные по запросу в<br />
+соответствии с запросами GDB/Valgrind и другого программного обеспечения для отладки.<br />
+Debuginfod будет прозрачно извлекать/собирать отладочные данные и исходный код по мере<br />
+необходимости во время отладки с помощью программного обеспечения, поддерживаемого debuginfod.</p>
+<p>У каждого дистрибутива Linux есть свой сервер debuginfo которые обслуживает<br />
+отладочные символы, например у меня на Arch Linux уже присутствует указанный<br />
+https сервер Arch Linux. Достаточно просто глянуть <code>$DEBUGINFOD_URLS</code> переменную<br />
+чтобы убедится.</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">$ echo $DEBUGINFOD_URLS
+</span><span style="color:#f9f9f9;">https://debuginfod.archlinux.org
+</span></code></pre>
+<p>Это очень полезно как для отладки своего ПО так и просто помощь людям<br />
+которым вы хотите помочь.</p>
+<p>Приступим</p>
+<ol>
+<li>
+<p>Есть два варианта:</p>
+<ul>
+<li>
+<p>Если столкнулись с SEGFAULT и вы хотите помочь отладить стороннего ПО:<br />
+Вызываем отладчик используя <code>coredump</code> команду: $ <code>coredumpctl debug PID</code><br />
+Для поиска <strong>PID</strong> вызовите <code>coredumpctl list</code></p>
+</li>
+<li>
+<p>Если же вы отлаживаете своё ПО: То просто вызываете <code>gdb путь/до/исполняемого</code></p>
+</li>
+</ul>
+</li>
+<li>
+<p>Если спрашивает <strong><code>Enable debuginfod for this session? (y or [n])</code></strong> обязательно<br />
+соглашаемся на <code>y</code> (это может использовать до нескольких сотней МБ трафика для<br />
+загрузки файлов отладочной информации)</p>
+</li>
+<li>
+<p>Если возникает это жмём <code>c</code> и Enter</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">--Type &lt;RET&gt; for more, q to quit, c to continue without paging--
+</span></code></pre>
+</li>
+<li>
+<p>По умолчанию если включить логирование то название будет <code>gdb.txt</code>, если оно<br />
+вам не нравиться то вы можете использовать команду <code>(gdb) set logging file your_file_name.log</code><br />
+После этого включить логирование в файл <code>(gdb) set logging enabled on</code></p>
+</li>
+<li>
+<p>Запускаете отслеживание (backtrace) <code>(gdb) bt</code> или запускаете программу<br />
+<code>(gdb) run</code> (может долго запускаться потому-что загружает отладочную<br />
+информацию)</p>
+</li>
+<li>
+<p>В случае если программа работает и в какой-то момент останавливается<br />
+(например <code>kill -SIGSEGV pid</code>) запустите <code>(gdb) thread apply all bt full</code>,<br />
+после окончания вы можете отключить логирование <code>(gdb) set logging enabled off</code>.<br />
+И выходим на <code>q</code> и соглашаемся выйти на <code>y</code></p>
+</li>
+<li>
+<p>Теперь если вы получили лог файл который вы хотите отправить разработчикам, вы<br />
+можете отредактировать в нём любую личную информацию, если она слишком длинная,<br />
+поместите ее в любой сервис <code>pastebin</code> и поделитесь ссылкой</p>
+</li>
+</ol>
+<h2 id="vot-kak-ispol-zuetsia-debuginfod-v-infrastrukture-arch-linux"><a class="anchor" href="#vot-kak-ispol-zuetsia-debuginfod-v-infrastrukture-arch-linux">#</a>&nbsp;
+Вот как используется debuginfod в инфраструктуре Arch Linux</h2>
+<p>Для официальных пакетов в репозиториях <strong>Core</strong> и <strong>Extra</strong></p>
+<ol>
+<li>
+<p>Собирается пакет с опцией <strong>debug</strong> (выставлен в PKGBUILD)</p>
+</li>
+<li>
+<p>При сборке <strong>обычный пакет (содержащий executable)</strong> и <strong><code>*-debug</code> (содержащий<br />
+debuginfo)</strong> пакет отправляется в сервер debuginfod который индексирует отладочную<br />
+информацию.</p>
+</li>
+<li>
+<p>В вашем дистрибутиве по умолчанию будет указан свой сервер debuginfod (для Arch Linux это<br />
+<code>https://debuginfod.archlinux.org</code>) откуда берётся и извлекается отладочная<br />
+информация во время выполнения отладчика используя gdb/Valgrind.</p>
+</li>
+<li>
+<p>Пользователю (клиенту) можно сразу отлаживать программу и она сразу всю<br />
+отладочную информацию скачает.</p>
+</li>
+<li>
+<p>Поэтому для клиентов не имеет смысл качать пакет <code>*-debug</code> (хоть это возможно),<br />
+так как они уже <a rel="noopener nofollow noreferrer" target="_blank" href="https://debuginfod.archlinux.org/packages">индексированы на наличие отладочной информации</a>.</p>
+</li>
+<li>
+<p>(Опционально): Для улучшения поиска отладочной информации стоит ещё добавить<br />
+URL сервера debuginfod помимо Arch Linux через пробел:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#ffc600;">export </span><span style="color:#f9f9f9;">DEBUGINFOD_URLS</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">https://debuginfod.archlinux.org ДРУГОЙ_URL_DEBUGINFO_1 ДРУГОЙ_URL_DEBUGINFO_2</span><span style="color:#f9f9f9;">&quot;
+</span></code></pre>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://sourceware.org/elfutils/Debuginfod.html">Список всех доступных публичных серверов указаны тут</a></p>
+</li>
+</ol>
+<p>Для неофициальных пакетов (AUR):</p>
+<p>В то время как <strong>наше ПО поставляется неофициально, в виде пакета AUR</strong>,<br />
+в установке <code>*-debug</code> пакета имеет смысл. Так как это единственный удобный<br />
+вариант отладки и получения отладочных символов (debug symbols), особенно для<br />
+добровольцев кто хочет помочь развивать ваше ПО.</p>
+<h2 id="otladochnyi-paket-debug-dlia-neofitsial-nykh-paketov-v-arch-linux-dlia-razrabotchikov"><a class="anchor" href="#otladochnyi-paket-debug-dlia-neofitsial-nykh-paketov-v-arch-linux-dlia-razrabotchikov">#</a>&nbsp;
+Отладочный пакет <code>*-debug</code> для неофициальных пакетов в Arch Linux (для разработчиков)</h2>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://wiki.archlinux.org/title/Arch_package_guidelines">Рекомендации по пакету Arch</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://wiki.archlinux.org/title/Debugging/Getting_traces#Compilation_options">Arch Wiki Debugging</a></li>
+</ul>
+<p>Как было сказано, помимо обычного пакета <code>inventory</code> следом идёт отладочный пакет<br />
+<code>inventory-debug</code> добавленными отладочными символами</p>
+<p>Нужно указать в PKGBUILD опцию <code>debug</code> чтобы создавался <code>inventory-debug</code><br />
+пакет вместе с обычным пакетом.</p>
+<pre data-lang="PKGBUILD" style="background-color:#2b303b;color:#ffffff;" class="language-PKGBUILD "><code class="language-PKGBUILD" data-lang="PKGBUILD"><span style="color:#f9f9f9;">options</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">(&#39;</span><span style="color:#9eff80;">debug</span><span style="color:#f9f9f9;">&#39;)
+</span></code></pre>
+<blockquote>
+<p>Если вы спросите "нужно ли менять секцию <code>build()</code> тип компиляции команды<br />
+<code>make</code> на <code>debug</code>?", ответ "Нет, не нужно". Потому-что при включённой <strong>опции<br />
+<code>debug</code></strong> используются флаги <code>DEBUG_CFLAGS</code> и <code>DEBUG_CXXFLAGS</code> из конфиг<br />
+файла <code>/etc/makepkg.conf</code>. Собственно добавляются в <code>CFLAGS</code> и используются<br />
+компилятором <code>gcc</code>, <a rel="noopener nofollow noreferrer" target="_blank" href="https://wiki.archlinux.org/title/Debugging/Getting_traces#Compilation_options">это описано здесь</a>.<br />
+ОДНАКО (для больших проектов), вы можете переопределить флаги отладки в основном только для<br />
+пакетизации, например в Arch Linux файле PKGBUILD переопределить флаги отладки<br />
+<code>DEBUG_CFLAGS</code> или <code>DEBUG_CXXFLAGS</code> на свои (<code>DEBUG_CFLAGS=" -g1"</code>) для<br />
+<strong>генерации минимальных отладочных файлов</strong>. Это может значительно ускорить<br />
+компиляцию и уменьшить размер этих данных для вносчиков <em>и позволит упаковать<br />
+данные в <code>debuginfod</code>"</em> (не понял, что это значит? FIXME)</p>
+</blockquote>
+<p>Раз речь зашла про PKGBUILD то при отладке рекомендуется использовать опцию<br />
+<code>check</code> которая активирует секцию <code>check()</code> (если она присутвтвует)</p>
+<p>Ничего больше изменять/добавлять в PKGBUILD не нужно. Тепепрь собираем пакет<br />
+используя команду <code>makepkg -sric</code></p>
+<p>Сборка с отладочным пакетом будет идентично с тем как поставляются пакеты в<br />
+<a rel="noopener nofollow noreferrer" target="_blank" href="https://geo.mirror.pkgbuild.com/extra-debug/os/x86_64/">отдельном зеркале</a></p>
+<p>Символы отладки после установки пакета находятся в <code>/usr/lib/debug/usr/bin/inventory.debug</code><br />
+Теперь можно использовать gdb для отладки моего ПО.</p>
+<blockquote>
+<p>Из выхлопа ниже, обратите внимание, что отладочная информация для <code>/usr/bin/inventory</code><br />
+загрузилась также из <code>/usr/lib/debug/usr/bin/inventory.debug</code>. Файлы с отладочной<br />
+информацией хранятся в дереве <code>/usr/lib/debug/</code>. Это довольно удобно</p>
+</blockquote>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">gdb /usr/bin/inventory
+</span><span style="color:#f9f9f9;">Reading symbols from /usr/bin/inventory...
+</span><span style="color:#f9f9f9;">Reading symbols from /usr/lib/debug/usr/bin/inventory.debug...
+</span><span style="color:#f9f9f9;">(gdb) b main
+</span><span style="color:#f9f9f9;">Breakpoint 1 at 0x1020: file src/inventory.c, line 35.
+</span><span style="color:#f9f9f9;">(gdb) run
+</span><span style="color:#f9f9f9;">Starting program: /usr/bin/inventory
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">This GDB supports auto-downloading debuginfo from the following URLs:
+</span><span style="color:#f9f9f9;">  &lt;https://debuginfod.archlinux.org&gt;
+</span><span style="color:#f9f9f9;">Enable debuginfod for this session? (y or [n])
+</span><span style="color:#f9f9f9;">Debuginfod has been disabled.
+</span><span style="color:#f9f9f9;">To make this setting permanent, add &#39;set debuginfod enabled off&#39; to .gdbinit.
+</span><span style="color:#f9f9f9;">[Thread debugging using libthread_db enabled]
+</span><span style="color:#f9f9f9;">Using host libthread_db library &quot;/usr/lib/libthread_db.so.1&quot;.
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">Breakpoint 1, main () at src/inventory.c:35
+</span><span style="color:#f9f9f9;">35      {
+</span><span style="color:#f9f9f9;">(gdb) list
+</span><span style="color:#f9f9f9;">30       * Повторяется, пока пользователь не введёт команду &lt;q&gt;.
+</span><span style="color:#f9f9f9;">31       * Печатает сообщение об ошибке, если пользователь вводит
+</span><span style="color:#f9f9f9;">32       * недопустимый код.
+</span><span style="color:#f9f9f9;">33      */
+</span><span style="color:#f9f9f9;">34      int main(void)
+</span><span style="color:#f9f9f9;">35      {
+</span><span style="color:#f9f9f9;">36              char code;
+</span><span style="color:#f9f9f9;">37
+</span><span style="color:#f9f9f9;">38              for (;;) {
+</span><span style="color:#f9f9f9;">39                      printf(&quot;Введите код операции: &quot;);
+</span></code></pre>
+<h2 id="kak-lokal-no-proverit-otladochnyi-debug-paket-cherez-debuginfod"><a class="anchor" href="#kak-lokal-no-proverit-otladochnyi-debug-paket-cherez-debuginfod">#</a>&nbsp;
+Как локально проверить отладочный <code>*-debug</code> пакет через debuginfod?</h2>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://zakuarbor.github.io/blog/debugging-symbols/">Ручное добавление отладочных символов в Non-Debug сборке</a> - Полезное чтиво</li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://stackoverflow.com/questions/866721/how-to-generate-gcc-debug-symbol-outside-the-build-target">Создание отдельного файла с символами отладки</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://interrupt.memfault.com/blog/dealing-with-large-symbol-files">Работа с огромными отладочными символами</a> - Полезное чтиво</li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://maskray.me/blog/2022-10-30-distribution-of-debug-information">Поставка отладочной информации, разные методы включая debuginfod</a> - <strong>Рекомендуется прочитать</strong></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://youtu.be/X4Eg7vfPNPY?si=aR6B7lqZtJeZYT-u&amp;t=703">debuginfod demo: get debugging data + sources easily - DevConf.CZ 2021</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.youtube.com/watch?v=q9buD4Vvp2I">Ubuntu Summit 2022 | Debuginfod in Ubuntu</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://man.archlinux.org/man/objcopy.1.en">man objcopy</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://man.archlinux.org/man/core/elfutils/eu-srcfiles.1.en">man eu-srcfiles</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://man.archlinux.org/man/eu-readelf.1.en">man eu-readelf</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://man.archlinux.org/man/extra/libdwarf/dwarfdump.1.en">man dwarfdump</a></li>
+</ul>
+<p>В данном примере я покажу как работает debuginfod используя сборку AUR пакета с<br />
+<strong>debug</strong> опцией и созданием своего локального сервера, чтобы я сам мог локально<br />
+получить отладочную информацию своего ПО используя <code>debuginfod-find</code></p>
+<p>Устанавливаем пакет (который содержит <code>debuginfod-find</code>)</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> debuginfod
+</span></code></pre>
+<p><strong>Настройка серверной части debuginfod</strong>:</p>
+<p>Удаляем пути debuginfod upstream сервер Arch Linux, чтобы убедится что<br />
+запускается и используется сервер локально а НЕ сервер Arch Linux</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#ffc600;">export </span><span style="color:#f9f9f9;">DEBUGINFOD_URLS</span><span style="color:#ff9d00;">=
+</span></code></pre>
+<p>Перемещаем <strong>собранный обычный и debug пакет в отдельную папку</strong></p>
+<p>Запускаем debuginfod сервер на индексирование исполняемых/исполняемого<br />
+файлов, анализ и записи отладочной информации и исходников</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Если находитесь внутри папки с пакетами, можете использовать `-F .` (точку) как текущий каталог
+</span><span style="color:#f9f9f9;">debuginfod -v -Z</span><span style="color:#ffee80;"> .tar.zst=zstdcat</span><span style="color:#f9f9f9;"> -F</span><span style="color:#ffee80;"> путь/где/лежат_архивы_пакетов/
+</span></code></pre>
+<p>Пояснения по опциям <code>debuginfod</code>:</p>
+<ul>
+<li><code>-v</code>: Увеличьте подробности протоколирования в стандартном дескрипторе<br />
+файла ошибок. Можно повторить для увеличения детализации. Подробность<br />
+по умолчанию равна 0.</li>
+<li><code>-F</code>: Активирует сканирование файлов ELF/DWARF. По умолчанию отключено.</li>
+<li><code>-Z</code>: Активируйте дополнительный шаблон при сканировании архива. Файлы<br />
+с расширением EXT (включая точку) будут обработаны. Например<br />
+<code>-Z .tar.zst=zstdcat</code> сообщает ему использовать <code>zstdcat</code> для обработки<br />
+файла <code>.tar.zst</code> (например, пакета Arch Linux).<br />
+Для другого типа архива, например <code>tar.lz4</code> это должно быть так: <code>-Z .tar.lz4=lz4cat</code></li>
+</ul>
+<p><strong>Для клиента (тот кто будет брать отладочную информацию для отладки ПО)</strong>:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Если вы хотите точно видеть, какие сетевые запросы выполняются и какие
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> кэшированные файлы используются, вы можете установить
+</span><span style="color:#ffc600;">export </span><span style="color:#f9f9f9;">DEBUGINFOD_VERBOSE</span><span style="color:#ff9d00;">=</span><span style="color:#3ad900;">1 </span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Предупреждение: очень подробно
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Если вы хотите видеть диагностику хода выполнения во время загрузки
+</span><span style="color:#ffc600;">export </span><span style="color:#f9f9f9;">DEBUGINFOD_PROGRESS</span><span style="color:#ff9d00;">=</span><span style="color:#3ad900;">1
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Необходимо если вы испытываете очень медленное ожидание в попытках поиска
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> файла используя debuginfod-find. Эта переменная управляет временем ожидания
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> начала загрузки для каждого HTTP-соединения debuginfod. Сервер, который не может
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> предоставить хотя бы 100 КБ данных в течение этого количества секунд, пропускается.
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Значение по умолчанию — 90 секунд. (Ноль или отрицательное значение означает «нет тайм-аута».)
+</span><span style="color:#ffc600;">export </span><span style="color:#f9f9f9;">DEBUGINFOD_TIMEOUT</span><span style="color:#ff9d00;">=</span><span style="color:#3ad900;">5
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> ОБЯЗАТЕЛЬНО: Выставляем URL сервера на локальный для локальных проектов, тем самым только
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> у нас будет хранится отладочная информация
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> По умолчанию debuginfod прослушивает порт 8002
+</span><span style="color:#ffc600;">export </span><span style="color:#f9f9f9;">DEBUGINFOD_URLS</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">http://localhost:8002</span><span style="color:#f9f9f9;">&quot;
+</span></code></pre>
+<p>Вопрос: Как debuginfod находит отладочные символы для двоичного файла, который<br />
+я отлаживаю?</p>
+<p>Ответ: <code>debuginfod</code> использует уникальный хэш, который идентифицирует двоичные<br />
+файлы и разделяемые библиотеки, называемый Build-ID. Этот 160-битный хэш SHA-1<br />
+генерируется компилятором, и с ним можно ознакомиться с помощью таких инструментов,<br />
+как:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> readelf
+</span><span style="color:#f9f9f9;">readelf -n</span><span style="color:#ffee80;"> /usr/bin/inventory </span><span style="color:#ff9d00;">| </span><span style="color:#f9f9f9;">awk &#39;</span><span style="color:#9eff80;">/ID сборки:/ {print $3}</span><span style="color:#f9f9f9;">&#39;
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> eu-readelf
+</span><span style="color:#f9f9f9;">eu-readelf -n</span><span style="color:#ffee80;"> /usr/bin/inventory </span><span style="color:#ff9d00;">| </span><span style="color:#f9f9f9;">awk &#39;</span><span style="color:#9eff80;">/Build ID:/ {print $3}</span><span style="color:#f9f9f9;">&#39;
+</span></code></pre>
+<p>И можно узнать исходники CU (Compilation Unit) разделяемой библиотеки командой.</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">eu-srcfiles -c -e</span><span style="color:#ffee80;"> /usr/bin/inventory
+</span></code></pre>
+<p>Основной выхлоп от <code>readelf</code></p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">6a9952fbf6e6d429fb07ac48f5e1c80cb323037a
+</span></code></pre>
+<p><strong>ID сборки</strong> это и есть <strong>Build-ID</strong>, хеш двоичного файла</p>
+<p><strong>ВАЖНО</strong>: <strong>Пакет <code>inventory-debug</code> не скачиваю</strong> специально для того чтобы я<br />
+мог протестировать <code>debuginfod</code> локальный сервер в котором этот самый<br />
+<code>inventory-debug</code> пакет (и обычный) и индексируются</p>
+<p>Запрос собранной информации по <strong>Build-ID</strong> от сервера debuginfod можно использовать<br />
+команду <code>debuginfod-find</code></p>
+<p>При запросе важно чтобы размер файла не должен быть пустым. Находиться это будет<br />
+в <code>~/.cache/debuginfod_client/Build-ID/Запрошенная_информация</code></p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Для начало убедимся что мы получим тот самый Build-ID от debuginfo
+</span><span style="color:#f9f9f9;">debuginfod-find</span><span style="color:#ffee80;"> debuginfo /usr/bin/inventory </span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Запрос только отладочной информации из исполняемого
+</span><span style="color:#f9f9f9;">/home/anix/.cache/debuginfod_client/6a9952fbf6e6d429fb07ac48f5e1c80cb323037a/debuginfo #</span><span style="font-style:italic;color:#0088ff;"> ДА, это он самый!
+</span><span style="color:#f9f9f9;">debuginfod-find</span><span style="color:#ffee80;"> executable 6a9952fbf6e6d429fb07ac48f5e1c80cb323037a </span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Запрос только исполняемого файла используя Build-ID
+</span><span style="color:#f9f9f9;">/home/anix/.cache/debuginfod_client/6a9952fbf6e6d429fb07ac48f5e1c80cb323037a/executable #</span><span style="font-style:italic;color:#0088ff;"> Да! Есть запрос!
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Теперь запрос исходников (для проверки будет 2), указываю путь такой который
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> является структурой для debug пакета (обычно это например /usr/src/debug/package_name/executable_name/src/source.c)
+</span><span style="color:#f9f9f9;">debuginfod-find</span><span style="color:#ffee80;"> source 6a9952fbf6e6d429fb07ac48f5e1c80cb323037a /usr/src/debug/inventory-git/inventory/src/inventory.c </span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Первый исходник
+</span><span style="color:#f9f9f9;">/home/anix/.cache/debuginfod_client/6a9952fbf6e6d429fb07ac48f5e1c80cb323037a/source##usr##src##debug##inventory-git##inventory##src##inventory.c #</span><span style="font-style:italic;color:#0088ff;"> Да!
+</span><span style="color:#f9f9f9;">debuginfod-find</span><span style="color:#ffee80;"> source 6a9952fbf6e6d429fb07ac48f5e1c80cb323037a /usr/src/debug/inventory-git/inventory/src/readline.c </span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Второй исходник
+</span><span style="color:#f9f9f9;">/home/anix/.cache/debuginfod_client/6a9952fbf6e6d429fb07ac48f5e1c80cb323037a/source##usr##src##debug##inventory-git##inventory##src##readline.c #</span><span style="font-style:italic;color:#0088ff;"> Да!
+</span></code></pre>
+<p>Видно что файл отсканирован на предмет данных которые находятся в <code>~/.cache/debuginfod_client/</code>,<br />
+например hash код <code>6a9952fbf6e6d429fb07ac48f5e1c80cb323037a</code> будет вытягивать отладчик<br />
+gdb/Valgrind если будет натыкаться на отсутствие отладочной информации.</p>
+<p>Отлаживаем файл используя gdb, при вопросе о использовании debuginfod на<br />
+адресс <code>http://localhost:8002</code> отвечаем <code>y</code></p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">gdb</span><span style="color:#ffee80;"> /usr/bin/inventory
+</span></code></pre>
+<p>Вот выхлоп</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">$ gdb /usr/bin/inventory
+</span><span style="color:#f9f9f9;">Reading symbols from /usr/bin/inventory...
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">This GDB supports auto-downloading debuginfo from the following URLs:
+</span><span style="color:#f9f9f9;">  &lt;http://localhost:8002&gt;
+</span><span style="color:#f9f9f9;">Enable debuginfod for this session? (y or [n]) y
+</span><span style="color:#f9f9f9;">Debuginfod has been enabled.
+</span><span style="color:#f9f9f9;">To make this setting permanent, add &#39;set debuginfod enabled on&#39; to .gdbinit.
+</span><span style="color:#f9f9f9;">Reading symbols from /home/anix/.cache/debuginfod_client/6a9952fbf6e6d429fb07ac48f5e1c80cb323037a/debuginfo...
+</span><span style="color:#f9f9f9;">(gdb)
+</span></code></pre>
+<p>Как видно, первое это прочтены символы исполняемого файла, затем после включения<br />
+debuginfo сразу же запросил файд содержащий только отладочные символы (debug symbols)</p>
+<p>Отлаживаем файл используя Valgrind (в разы полезнее)</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">valgrind --leak-check</span><span style="color:#ff9d00;">=</span><span style="color:#ffee80;">full</span><span style="color:#f9f9f9;"> --track-origins</span><span style="color:#ff9d00;">=</span><span style="color:#ffee80;">yes</span><span style="color:#f9f9f9;"> -s --show-leak-kinds</span><span style="color:#ff9d00;">=</span><span style="color:#ffee80;">all</span><span style="color:#f9f9f9;"> --max-stackframe</span><span style="color:#ff9d00;">=</span><span style="color:#ffee80;">8016174317795404487 /usr/bin/inventory
+</span></code></pre>
+<blockquote>
+<p>TODO: У меня почему-то valgring не может локально без debug пакета выполнить<br />
+отладку. Если изменить переменную DEBUGINFOD_URLS на<br />
+<code>export DEBUGINFOD_URLS="http://localhost:8002"</code><br />
+То он просто не может по причине неправильно выставленного URL. Необходимо расследование.</p>
+</blockquote>
+<p>Что очень круто, так это то что debuginfod может скачивать отладочную информации<br />
+и исходный код для нескольких версий вашего ПО</p>
+<p>Отключение сервера <code>debuginfod</code></p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#ffb054;">unset</span><span style="color:#ffee80;"> DEBUGINFOD_URLS
+</span></code></pre>
+<p>Вы также можете включить/отключить его исключительно в GDB, добавив следующую<br />
+команду в свой <code>.gdbinit</code> или используя ее перед началом сеанса отладки:</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">set debuginfod enabled off
+</span></code></pre>
+<h2 id="chto-zhe-na-samom-dele-delaet-optsiia-debug-v-pkgbuild-pri-sborke"><a class="anchor" href="#chto-zhe-na-samom-dele-delaet-optsiia-debug-v-pkgbuild-pri-sborke">#</a>&nbsp;
+Что же на самом деле делает опция debug в PKGBUILD при сборке?</h2>
+<p>По сути производится две основные команды: <code>objcopy</code> и <code>strip</code></p>
+<p>objcopy - копирует и переводит объектные файлы</p>
+<p>В данный момент я покажу всё кроме включения исходников, которые намного легче это<br />
+делает простая опция <code>debug</code> в PKGBUILD</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Сделал копию исполняемого содержащий только отладочную информацию
+</span><span style="color:#f9f9f9;">objcopy --only-keep-debug</span><span style="color:#ffee80;"> inventory inventory.debug
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Сделал копию исполняемого с обрезанной отладочной информацией
+</span><span style="color:#f9f9f9;">strip -S</span><span style="color:#ffee80;"> inventory</span><span style="color:#f9f9f9;"> -o</span><span style="color:#ffee80;"> inventory.stripped
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Просматриваем Build-ID и копируем его
+</span><span style="color:#f9f9f9;">eu-readelf -n</span><span style="color:#ffee80;"> inventory </span><span style="color:#ff9d00;">| </span><span style="color:#f9f9f9;">awk &#39;</span><span style="color:#9eff80;">/Build ID:/ {print $3}</span><span style="color:#f9f9f9;">&#39;
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> e9d865b4869aac5bc45a0b086a73c4d3a2e4aa74
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Завернул эти два файла в zstd архив и переместил в удобную для сервера папку
+</span><span style="color:#f9f9f9;">tar</span><span style="color:#ffee80;"> cf inventory.tar.zst</span><span style="color:#f9f9f9;"> --zstd</span><span style="color:#ffee80;"> inventory.stripped inventory.debug
+</span><span style="color:#f9f9f9;">mv</span><span style="color:#ffee80;"> inventory.tar.zst debuginfo/
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Запускаю север debuginfod для извлечения отладочной информации архива
+</span><span style="color:#f9f9f9;">debuginfod -v -Z</span><span style="color:#ffee80;"> .tar.zst=zstdcat</span><span style="color:#f9f9f9;"> -F</span><span style="color:#ffee80;"> путь/до/архива.tar.zst/
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Выставляем URL сервера на локальный для клиентского запроса
+</span><span style="color:#ffc600;">export </span><span style="color:#f9f9f9;">DEBUGINFOD_URLS</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">http://localhost:8002</span><span style="color:#f9f9f9;">&quot;
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> При поиске используя debuginfod-find я могу получить executable и debuginfo
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Вставляем скопированный Build-ID
+</span><span style="color:#f9f9f9;">debuginfod-find</span><span style="color:#ffee80;"> debuginfo e9d865b4869aac5bc45a0b086a73c4d3a2e4aa74 </span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Запрос только отладочной информации
+</span><span style="color:#f9f9f9;">debuginfod-find</span><span style="color:#ffee80;"> executable e9d865b4869aac5bc45a0b086a73c4d3a2e4aa74 </span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Запрос только исполняемого файла
+</span></code></pre>
+<h2 id="razlichnye-laifkhaki-gdb"><a class="anchor" href="#razlichnye-laifkhaki-gdb">#</a>&nbsp;
+Различные лайфхаки gdb</h2>
+<ol>
+<li>
+<p>Saving Breakpoints</p>
+<p>To save breakpoints, you can use the <code>save breakpoints [filename]</code> in GDB.</p>
+<ul>
+<li>
+<p>Start by setting some breakpoints in your code</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">gdb -q ./my_program
+</span><span style="color:#f9f9f9;">(gdb) break main
+</span><span style="color:#f9f9f9;">(gdb) break some_function
+</span></code></pre>
+</li>
+<li>
+<p>Save the breakpoints to a file</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">(gdb) save breakpoints my_breakpoints.txt
+</span></code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>Loading Breakpoints</p>
+<p>To load breakpoints from a file, you can use the <code>source [filename]</code> in GDB.</p>
+<ul>
+<li>
+<p>Start a new debugging session</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">gdb -q ./my_program
+</span></code></pre>
+</li>
+<li>
+<p>Load the breakpoints from the file</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">(gdb) source my_breakpoints.txt
+</span></code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>Загрузка файла с отладочными символами вручную (вряд-ли пригодиться)</p>
+<p>Создание файла только с отладочными символами можно использовать <code>objcopy</code></p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">objcopy --only-keep-debug</span><span style="color:#ffee80;"> inventory inventory.debug
+</span></code></pre>
+<p>Выполняем gdb и загружаем файл символов используя <code>symbol-file &lt;файл.debug&gt;</code><br />
+команду</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">Reading</span><span style="color:#ffee80;"> symbols from inventory.stripped...
+</span><span style="color:#f9f9f9;">(No</span><span style="color:#ffee80;"> debugging symbols found in hello.debug.stripped</span><span style="color:#f9f9f9;">)
+</span><span style="color:#ff9d00;">&gt;&gt;&gt;</span><span style="color:#f9f9f9;"> symbol-file inventory.debug  #</span><span style="font-style:italic;color:#0088ff;"> используя эту команду для загрузки файла символов
+</span><span style="color:#f9f9f9;">Reading</span><span style="color:#ffee80;"> symbols from inventory.debug...
+</span></code></pre>
+</li>
+</ol>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

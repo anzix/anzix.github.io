@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>Менеджмент сессии аудиоустройств - Wireplumber</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  Менеджмент сессии аудиоустройств - Wireplumber
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-03-06T23:42:47+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux/">linux</a>
+
+<br>
+
+
+	<aside id="toc-aside" class="toc">
+	    <details>
+			<summary>Оглавление</summary>
+	        <ol>
+	            <li>
+	                <a href="#izmenit-nazvaniia-audioustroistv">Изменить названия аудиоустройств</a>
+	                
+	            </li><li>
+	                <a href="#otkliuchenie-nenuzhnogo-vykhoda-audio-hdmi-gpu">Отключение ненужного выхода аудио HDMI GPU</a>
+	                
+	            </li>
+	        </ol>
+		</details>
+	</aside>
+
+
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.youtube.com/watch?v=Zv1P6-kUn0c">Видео инструкция с объяснениями</a></li>
+</ul>
+<p>Скачиваем данный пакет, pipewire-media-session заменится на wireplumber.</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> wireplumber
+</span></code></pre>
+<p>После чего перезапускаем ПК</p>
+<h2 id="izmenit-nazvaniia-audioustroistv"><a class="anchor" href="#izmenit-nazvaniia-audioustroistv">#</a>&nbsp;
+Изменить названия аудиоустройств</h2>
+<p>В терминале вводим</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">pw-cli</span><span style="color:#ffee80;"> list-objects Node
+</span></code></pre>
+<p>В данном примере возьму выход на наушники через jack микрофона Samson C01U Pro. Находим длинное имя для выхода (output) устройства и копируем его</p>
+<pre>
+........
+id 32, type PipeWire:Interface:Node/3
+ 		object.serial = "58"
+ 		object.path = "alsa:pcm:3:front:3:playback"
+ 		factory.id = "18"
+ 		client.id = "35"
+ 		device.id = "48"
+ 		priority.session = "1009"
+ 		priority.driver = "1009"
+ 		node.description = "C01U Pro condenser microphone Аналоговый стерео"
+ 		node.name = "<b>alsa_output.usb-Samson_Technologies_Samson_C01U_Pro_Mic-00.analog-stereo</b>"
+		node.nick = "Samson C01U Pro Mic"
+ 		media.class = "Audio/Sink"
+</pre>
+<p>То есть я копирую <strong><code>alsa_output.usb-Samson_Technologies_Samson_C01U_Pro_Mic-00.analog-stereo</code></strong></p>
+<p>И тут же ищем и копируем для входного (input) устройство</p>
+<pre>
+........
+id 52, type PipeWire:Interface:Node/3
+ 		object.serial = "58"
+ 		object.path = "alsa:pcm:3:hw:3:capture"
+ 		factory.id = "18"
+ 		client.id = "35"
+ 		device.id = "48"
+ 		priority.session = "2000"
+ 		priority.driver = "2000"
+ 		node.description = "C01U Pro condenser microphone Моно"
+ 		node.name = "<b>alsa_input.usb-Samson_Technologies_Samson_C01U_Pro_Mic-00.mono-fallback</b>"
+		node.nick = "Samson C01U Pro Mic"
+ 		media.class = "Audio/Source"
+</pre>
+<p>Здесь также, но я копирую <strong><code>alsa_input.usb-Samson_Technologies_Samson_C01U_Pro_Mic-00.mono-fallback</code></strong></p>
+<p>Создаём структуру папки</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">mkdir -p </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.config/wireplumber/main.lua.d/
+</span></code></pre>
+<p>Создаём внутри <strong>main.lua.d</strong> наш первый конфиг чтобы переименовывать входной и выходное аудиоустройство в более понятном виде.</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">nvim </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.config/wireplumber/main.lua.d/51-Samson_C01UPro-rename.lua
+</span></code></pre>
+<blockquote>
+<p>Пояснение:</p>
+<p>В <strong><code>node.description</code></strong> указываем ваше укороченное имя, это название будет применятся на общих для аудиомикшерах программ таких как pavucontrol, pasystray, cli pulsemixer и т.д</p>
+<p>А <strong><code>node.nick</code></strong> указываем то же самое но название но оно уже предназначено для применения наименования для профессиональных программ таких как patchbay, qpwgraph, QjackCtl и т.д</p>
+</blockquote>
+<pre data-lang="lua" style="background-color:#2b303b;color:#ffffff;" class="language-lua "><code class="language-lua" data-lang="lua"><span style="color:#f9f9f9;">rule </span><span style="color:#ff9d00;">= </span><span style="color:#f9f9f9;">{
+</span><span style="color:#f9f9f9;">  </span><span style="color:#3ad900;">matches </span><span style="color:#f9f9f9;">= {
+</span><span style="color:#f9f9f9;">    {
+</span><span style="color:#f9f9f9;">      { &quot;</span><span style="color:#9eff80;">node.name</span><span style="color:#f9f9f9;">&quot;, &quot;</span><span style="color:#9eff80;">equals</span><span style="color:#f9f9f9;">&quot;, &quot;</span><span style="color:#9eff80;">alsa_output.usb-Samson_Technologies_Samson_C01U_Pro_Mic-00.analog-stereo</span><span style="color:#f9f9f9;">&quot; },
+</span><span style="color:#f9f9f9;">    },
+</span><span style="color:#f9f9f9;">  },
+</span><span style="color:#f9f9f9;">  </span><span style="color:#3ad900;">apply_properties </span><span style="color:#f9f9f9;">= {
+</span><span style="color:#f9f9f9;">    [&quot;</span><span style="color:#9eff80;">node.description</span><span style="color:#f9f9f9;">&quot;] = &quot;</span><span style="color:#9eff80;">C01U Pro</span><span style="color:#f9f9f9;">&quot;,
+</span><span style="color:#f9f9f9;">  },
+</span><span style="color:#f9f9f9;">}
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#eb939a;">table</span><span style="color:#f9f9f9;">.</span><span style="color:#ffb054;">insert</span><span style="color:#f9f9f9;">(alsa_monitor.</span><span style="color:#ffee80;">rules</span><span style="color:#f9f9f9;">, rule)
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">rule </span><span style="color:#ff9d00;">= </span><span style="color:#f9f9f9;">{
+</span><span style="color:#f9f9f9;">  </span><span style="color:#3ad900;">matches </span><span style="color:#f9f9f9;">= {
+</span><span style="color:#f9f9f9;">    {
+</span><span style="color:#f9f9f9;">      { &quot;</span><span style="color:#9eff80;">node.name</span><span style="color:#f9f9f9;">&quot;, &quot;</span><span style="color:#9eff80;">equals</span><span style="color:#f9f9f9;">&quot;, &quot;</span><span style="color:#9eff80;">alsa_input.usb-Samson_Technologies_Samson_C01U_Pro_Mic-00.mono-fallback</span><span style="color:#f9f9f9;">&quot; },
+</span><span style="color:#f9f9f9;">    },
+</span><span style="color:#f9f9f9;">  },
+</span><span style="color:#f9f9f9;">  </span><span style="color:#3ad900;">apply_properties </span><span style="color:#f9f9f9;">= {
+</span><span style="color:#f9f9f9;">    [&quot;</span><span style="color:#9eff80;">node.description</span><span style="color:#f9f9f9;">&quot;] = &quot;</span><span style="color:#9eff80;">C01U Pro</span><span style="color:#f9f9f9;">&quot;,
+</span><span style="color:#f9f9f9;">	[&quot;</span><span style="color:#9eff80;">node.nick</span><span style="color:#f9f9f9;">&quot;] = &quot;</span><span style="color:#9eff80;">C01U Pro</span><span style="color:#f9f9f9;">&quot;
+</span><span style="color:#f9f9f9;">  },
+</span><span style="color:#f9f9f9;">}
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#eb939a;">table</span><span style="color:#f9f9f9;">.</span><span style="color:#ffb054;">insert</span><span style="color:#f9f9f9;">(alsa_monitor.</span><span style="color:#ffee80;">rules</span><span style="color:#f9f9f9;">, rule)
+</span></code></pre>
+<p>Сохраняем и перезагружаем pipewire или ребутимся</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">systemctl --user</span><span style="color:#ffee80;"> restart pipewire
+</span></code></pre>
+<p>После перезапуска в pavucontrol и Cli утилита pulsemixer будет показывать ваше укороченное название аудиоустройство которое вы указали</p>
+<p>Для вывода из колонок (Speakers) находите тоже в node</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">pw-cli</span><span style="color:#ffee80;"> list-objects Node
+</span></code></pre>
+<pre>
+		......
+		node.description = "Встроенное аудио Аналоговый стерео"
+ 		node.name = "<b>alsa_output.pci-0000_00_1b.0.analog-stereo</b>"
+ 		node.nick = "ALC662 rev3 Analog"
+ 		media.class = "Audio/Sink"
+</pre>
+<p>Копирую <strong><code>alsa_output.pci-0000_00_1b.0.analog-stereo</code></strong></p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">nvim </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.config/wireplumber/main.lua.d/51-Speakers-rename.lua
+</span></code></pre>
+<pre data-lang="lua" style="background-color:#2b303b;color:#ffffff;" class="language-lua "><code class="language-lua" data-lang="lua"><span style="color:#f9f9f9;">rule </span><span style="color:#ff9d00;">= </span><span style="color:#f9f9f9;">{
+</span><span style="color:#f9f9f9;">  </span><span style="color:#3ad900;">matches </span><span style="color:#f9f9f9;">= {
+</span><span style="color:#f9f9f9;">    {
+</span><span style="color:#f9f9f9;">      { &quot;</span><span style="color:#9eff80;">node.name</span><span style="color:#f9f9f9;">&quot;, &quot;</span><span style="color:#9eff80;">equals</span><span style="color:#f9f9f9;">&quot;, &quot;</span><span style="color:#9eff80;">alsa_output.pci-0000_00_1b.0.analog-stereo</span><span style="color:#f9f9f9;">&quot; },
+</span><span style="color:#f9f9f9;">    },
+</span><span style="color:#f9f9f9;">  },
+</span><span style="color:#f9f9f9;">  </span><span style="color:#3ad900;">apply_properties </span><span style="color:#f9f9f9;">= {
+</span><span style="color:#f9f9f9;">    [&quot;</span><span style="color:#9eff80;">node.description</span><span style="color:#f9f9f9;">&quot;] = &quot;</span><span style="color:#9eff80;">Колонки</span><span style="color:#f9f9f9;">&quot;,
+</span><span style="color:#f9f9f9;">	[&quot;</span><span style="color:#9eff80;">node.nick</span><span style="color:#f9f9f9;">&quot;] = &quot;</span><span style="color:#9eff80;">Колонки</span><span style="color:#f9f9f9;">&quot;
+</span><span style="color:#f9f9f9;">  },
+</span><span style="color:#f9f9f9;">}
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#eb939a;">table</span><span style="color:#f9f9f9;">.</span><span style="color:#ffb054;">insert</span><span style="color:#f9f9f9;">(alsa_monitor.</span><span style="color:#ffee80;">rules</span><span style="color:#f9f9f9;">, rule)
+</span></code></pre>
+<p>При перезагрузке pipewire вот что у меня получилось в pulsemixer
+<img src="/images/wireplumber-audio-session-management/pulsemixer-rename-audio.png" alt="image" /></p>
+<h2 id="otkliuchenie-nenuzhnogo-vykhoda-audio-hdmi-gpu"><a class="anchor" href="#otkliuchenie-nenuzhnogo-vykhoda-audio-hdmi-gpu">#</a>&nbsp;
+Отключение ненужного выхода аудио HDMI GPU</h2>
+<p>В этот раз ищем не в узлах (Node) а в Device</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">pw-cli</span><span style="color:#ffee80;"> list-objects Device
+</span></code></pre>
+<pre>
+.............
+id 42, type PipeWire:Interface:Device/3
+ 		object.serial = "42"
+ 		factory.id = "14"
+ 		client.id = "32"
+ 		device.api = "alsa"
+ 		device.description = "Ellesmere HDMI Audio [Radeon RX 470/480 / 570/580/590]"
+ 		device.name = "<b>alsa_card.pci-0000_03_00.1</b>"
+ 		device.nick = "HDA ATI HDMI"
+ 		media.class = "Audio/Device"
+..............
+</pre>
+<p>То есть копируем <strong><code>alsa_card.pci-0000_03_00.1</code></strong></p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">nvim </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.config/wireplumber/main.lua.d/51-amd-disable.lua
+</span></code></pre>
+<blockquote>
+<p>Пояснение:</p>
+<p>Под matches вместо <strong><code>node.name</code></strong> должно быть <strong><code>device.name</code></strong></p>
+<p>Под <strong><code>apply_properties</code></strong> вводите <strong><code>["device.disabled"] = true</code></strong> это применяет отключение данного аудиоустройства которое вы выставили в matches</p>
+</blockquote>
+<pre data-lang="lua" style="background-color:#2b303b;color:#ffffff;" class="language-lua "><code class="language-lua" data-lang="lua"><span style="color:#f9f9f9;">rule </span><span style="color:#ff9d00;">= </span><span style="color:#f9f9f9;">{
+</span><span style="color:#f9f9f9;">  </span><span style="color:#3ad900;">matches </span><span style="color:#f9f9f9;">= {
+</span><span style="color:#f9f9f9;">    {
+</span><span style="color:#f9f9f9;">      { &quot;</span><span style="color:#9eff80;">device.name</span><span style="color:#f9f9f9;">&quot;, &quot;</span><span style="color:#9eff80;">equals</span><span style="color:#f9f9f9;">&quot;, &quot;</span><span style="color:#9eff80;">alsa_card.pci-0000_03_00.1</span><span style="color:#f9f9f9;">&quot; },
+</span><span style="color:#f9f9f9;">    },
+</span><span style="color:#f9f9f9;">  },
+</span><span style="color:#f9f9f9;">  </span><span style="color:#3ad900;">apply_properties </span><span style="color:#f9f9f9;">= {
+</span><span style="color:#f9f9f9;">    [&quot;</span><span style="color:#9eff80;">device.disabled</span><span style="color:#f9f9f9;">&quot;] = </span><span style="color:#ff628c;">true</span><span style="color:#f9f9f9;">,
+</span><span style="color:#f9f9f9;">  },
+</span><span style="color:#f9f9f9;">}
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#eb939a;">table</span><span style="color:#f9f9f9;">.</span><span style="color:#ffb054;">insert</span><span style="color:#f9f9f9;">(alsa_monitor.</span><span style="color:#ffee80;">rules</span><span style="color:#f9f9f9;">, rule)
+</span></code></pre>
+<p>После перезагрузки pipewire в pavucontrol больше не будет появлятся ненужное аудио устройство
+<img src="/images/wireplumber-audio-session-management/pavucontrol-hdmi-gpu-disable.png" alt="image" />
+<img src="/images/wireplumber-audio-session-management/hdmi-audio-gpu-disable-pulsemixer.png" alt="image" /></p>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

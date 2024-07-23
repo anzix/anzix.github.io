@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>F3 Probe - Проверка карты памяти на фальшивый объем</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  F3 Probe - Проверка карты памяти на фальшивый объем
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-03-02T12:51:55+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux/">linux</a>
+
+<br>
+
+
+
+<p>Некоторые поддельные карты рекламируют больший размер, чем их фактическая мощность, что может привести к потере данных или другому неожиданному поведению.</p>
+<p>Качаем данный инструмент</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">yay -S</span><span style="color:#ffee80;"> f3
+</span></code></pre>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/AltraMayor/f3/blob/master/doc/usage.rst">Документация и использование</a></p>
+<p>Для проверки вводим</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> f3probe</span><span style="color:#f9f9f9;"> --destructive --time-ops</span><span style="color:#ffee80;"> /dev/sdc
+</span></code></pre>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">F3</span><span style="color:#ffee80;"> probe 8.0
+</span><span style="color:#f9f9f9;">Copyright</span><span style="color:#ffee80;"> (C</span><span style="color:#f9f9f9;">) 2010</span><span style="color:#ffee80;"> Digirati Internet LTDA.
+</span><span style="color:#f9f9f9;">This</span><span style="color:#ffee80;"> is free software</span><span style="color:#ff9d00;">; </span><span style="color:#f9f9f9;">see</span><span style="color:#ffee80;"> the source for copying conditions.
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">WARNING:</span><span style="color:#ffee80;"> Probing normally takes from a few seconds to 15 minutes, but
+</span><span style="color:#f9f9f9;">        it</span><span style="color:#ffee80;"> can take longer. Please be patient.
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">Good</span><span style="color:#ffee80;"> news: The device </span><span style="color:#f9f9f9;">`/dev/sdc&#39;</span><span style="color:#9eff80;"> is the real thing
+</span><span style="color:#9eff80;">
+</span><span style="color:#9eff80;">Device geometry:
+</span><span style="color:#9eff80;">                *Usable* size: 116.08 GB (243445760 blocks)
+</span><span style="color:#9eff80;">               Announced size: 116.08 GB (243445760 blocks)
+</span><span style="color:#9eff80;">                       Module: 128.00 GB (2^37 Bytes)
+</span><span style="color:#9eff80;">       Approximate cache size: 0.00 Byte (0 blocks), need-reset=no
+</span><span style="color:#9eff80;">          Physical block size: 512.00 Byte (2^9 Bytes)
+</span><span style="color:#9eff80;">
+</span><span style="color:#9eff80;">Probe time: 7</span><span style="color:#f9f9f9;">&#39;35&quot;
+</span><span style="color:#9eff80;">Operation: total time / count = avg time
+</span><span style="color:#9eff80;">     Read: 1.32s / 4817 = 274us
+</span><span style="color:#9eff80;">    Write: 7&#39;33</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#ffee80;"> / 4192321 = 108us
+</span><span style="color:#ffee80;">    </span><span style="color:#f9f9f9;">Reset:</span><span style="color:#ffee80;"> 1us / 1 = 1us
+</span></code></pre>
+<p>На 120 гб карты памяти сканирование заняло 7 с половиной минут</p>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

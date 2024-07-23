@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>Окружение GNOME, заметки и прочее</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  Окружение GNOME, заметки и прочее
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-10-26T01:20:00+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux/">linux</a>
+
+<br>
+
+
+	<aside id="toc-aside" class="toc">
+	    <details>
+			<summary>Оглавление</summary>
+	        <ol>
+	            <li>
+	                <a href="#posledovatel-nyi-interfeis-tulkita-qt-v-gnome-sleduia-stiliu-libadwaita">!Последовательный интерфейс тулкита QT в GNOME следуя стилю LibAdwaita</a>
+	                
+	            </li><li>
+	                <a href="#eksport-i-import-nastroek-dconf">Экспорт и Импорт настроек dconf</a>
+	                
+	            </li><li>
+	                <a href="#goriachie-klavishi-gnome">Горячие клавиши GNOME</a>
+	                <ol>
+	                    <li>
+	                        <a href="#goriachie-klavishi-v-gnome-faily">Горячие клавиши в GNOME файлы</a>
+	                    </li>
+	                </ol>
+	            </li><li>
+	                <a href="#gnome-razlichnye-rasshireniia">Gnome различные расширения</a>
+	                
+	            </li><li>
+	                <a href="#gtk-pakety-dlia-gnome-flatpak">GTK Пакеты для GNOME (Flatpak)</a>
+	                
+	            </li><li>
+	                <a href="#razlichnoe-poleznoe">Различное полезное</a>
+	                
+	            </li>
+	        </ol>
+		</details>
+	</aside>
+
+
+<h2 id="posledovatel-nyi-interfeis-tulkita-qt-v-gnome-sleduia-stiliu-libadwaita"><a class="anchor" href="#posledovatel-nyi-interfeis-tulkita-qt-v-gnome-sleduia-stiliu-libadwaita">#</a>&nbsp;
+!Последовательный интерфейс тулкита QT в GNOME следуя стилю LibAdwaita</h2>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/GabePoel/KvLibadwaita">KvLibadwaita Github</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/FedoraQt/QAdwaitaDecorations">QAdwaitaDecorations</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.reddit.com/r/archlinux/comments/16osm1k/adwaitacolorschemes_package_gone_from_the_repos/">Reddit пост</a></li>
+</ul>
+<p>Для глобальной внешности QT 5/6 качаем все эти пакеты</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">yay -S</span><span style="color:#ffee80;"> qt5ct qt6ct kvantum kvantum-theme-libadwaita-git qadwaitadecorations-qt6 qadwaitadecorations-qt5
+</span></code></pre>
+<p>Пояснение по пакетам:</p>
+<ul>
+<li><code>qt5ct</code> <code>qt6ct</code> - конфигураторы тулкитов qt5/qt6</li>
+<li><code>kvantum</code> - движок для QT 5/6 приложений</li>
+<li><code>kvantum-theme-libadwaita-git</code> - тема для kvantum'а</li>
+<li><code>qadwaitadecorations-qt6</code> <code>qadwaitadecorations-qt5</code> - новая декорация окон для QT 5/6 Wayland приложений</li>
+</ul>
+<p>Выставляем KvLibadwaitaDark в качестве темы для QT 5/6 приложений</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">mkdir -v </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.config/Kvantum
+</span><span style="color:#ffb054;">echo </span><span style="color:#f9f9f9;">&#39;</span><span style="color:#9eff80;">theme=KvLibadwaitaDark</span><span style="color:#f9f9f9;">&#39; </span><span style="color:#ff9d00;">&gt; </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.config/Kvantum/kvantum.kvconfig
+</span></code></pre>
+<p>Открываем оба qt5ct и qt6ct.<br />
+Выбираем kvantum или kvantum-dark в качестве стиля темы.<br />
+Применяем изменения.</p>
+<p>И выставляем переменные в <code>~/.config/environment.d/50-gnome.conf</code> или <code>/etc/environment</code></p>
+<pre data-lang="conf" style="background-color:#2b303b;color:#ffffff;" class="language-conf "><code class="language-conf" data-lang="conf"><span style="font-style:italic;color:#0088ff;"># Для последовательного стиля приложений Qt
+</span><span style="font-style:italic;color:#0088ff;"># Устанавливает декорацию окон Wayland
+</span><span style="font-style:italic;color:#0088ff;"># QAdwaitaDecorations
+</span><span style="color:#eb939a;">QT_WAYLAND_DECORATION</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">adwaita
+</span><span style="font-style:italic;color:#0088ff;"># Устанавливает тему платформы по умолчанию
+</span><span style="color:#eb939a;">QT_QPA_PLATFORMTHEME</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">qt6ct
+</span><span style="color:#f9f9f9;">
+</span><span style="font-style:italic;color:#0088ff;"># Курсор
+</span><span style="color:#eb939a;">XCURSOR_THEME</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">Adwaita
+</span><span style="color:#eb939a;">XCURSOR_SIZE</span><span style="color:#ff9d00;">=</span><span style="color:#ff628c;">24
+</span></code></pre>
+<p>Производим перелогин используя команду <code>systemctl soft-reboot</code> и стилизация сделана<br />
+Теперь когда вы хотите поменять оформление тулкита QT вам нужно открывать kvantum и менять его там<br />
+И после применения выставленный движок qt6ct подхватывают стиль из kvantum и прорисовывает его</p>
+<p>Проблема: декорация окон немного не правильно отображается, кнопка закрыть не прорисована</p>
+<p><img src="/images/gnome-de-notes/Screenshot_20231126_020000_e.png" alt="image" /></p>
+<p>Решение: Данная не прорисовка происходит только в qt6 приложениях<br />
+Необходимо открыть <code>qt6ct</code> и во вкладке "Стиль значков" выбрать Adwaita<br />
+Проблема решена</p>
+<p><img src="/images/gnome-de-notes/Screenshot_20231126_020316.png" alt="image" /></p>
+<h2 id="eksport-i-import-nastroek-dconf"><a class="anchor" href="#eksport-i-import-nastroek-dconf">#</a>&nbsp;
+Экспорт и Импорт настроек dconf</h2>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://askubuntu.com/questions/984205/how-to-save-gnome-settings-in-a-file">Источник</a></li>
+</ul>
+<p>Экспорт настроек</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">dconf</span><span style="color:#ffee80;"> dump / </span><span style="color:#ff9d00;">&gt;</span><span style="color:#ffee80;"> dconf_backup.txt
+</span></code></pre>
+<p>Импорт настроек</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">dconf</span><span style="color:#ffee80;"> load / </span><span style="color:#ff9d00;">&lt;</span><span style="color:#ffee80;"> dconf_backup.txt
+</span></code></pre>
+<p>Просмотр настроек рекурсивно с поиском опции</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">gsettings</span><span style="color:#ffee80;"> list-recursively </span><span style="color:#ff9d00;">| </span><span style="color:#f9f9f9;">grep </span><span style="color:#ff9d00;">[</span><span style="color:#ffee80;">опция</span><span style="color:#ff9d00;">]
+</span></code></pre>
+<h2 id="goriachie-klavishi-gnome"><a class="anchor" href="#goriachie-klavishi-gnome">#</a>&nbsp;
+Горячие клавиши GNOME</h2>
+<ol>
+<li>Смена вирт. столов: Ctrl+Alt + стрелки вправо влево</li>
+<li>Свернуть окно: Super+h</li>
+<li>Переместить окно в другое раб. стол: Super+Shift+PageDown/PageUp</li>
+<li>Resize окна: Super+MMC (средняя кнопка мыши)</li>
+</ol>
+<h3 id="goriachie-klavishi-v-gnome-faily"><a class="anchor" href="#goriachie-klavishi-v-gnome-faily">#</a>&nbsp;
+Горячие клавиши в GNOME файлы</h3>
+<ol>
+<li>Навигация по родительским директориям: Alt+стрелки вверх вниз</li>
+</ol>
+<h2 id="gnome-razlichnye-rasshireniia"><a class="anchor" href="#gnome-razlichnye-rasshireniia">#</a>&nbsp;
+Gnome различные расширения</h2>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/hardpixel/systemd-manager">systemd-manager</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://gitlab.com/skrewball/openweather">openweather</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/p91paul/middleclickclose">middleclickclose</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/jdoda/hotedge">Угол показа обзора вниз</a>: <a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/gnome-shell-extension-hot-edge-git">AUR</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/kazysmaster/gnome-shell-extension-disable-unredirect">gnome-shell-extension-disable-unredirect</a> - без него во многих играх в полноэкранном режиме не показывается курсор</li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/jeffchannell/jiggle">Тряска курсора для его нахождения как в MacOS</a></li>
+</ul>
+<h2 id="gtk-pakety-dlia-gnome-flatpak"><a class="anchor" href="#gtk-pakety-dlia-gnome-flatpak">#</a>&nbsp;
+GTK Пакеты для GNOME (Flatpak)</h2>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://flathub.org/apps/io.github.seadve.Mousai">Mousai</a> - Распознавание музыки</li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://flathub.org/apps/com.feaneron.Boatswain">Boatswain</a> - Elgato Stream Decks контроль</li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://flathub.org/apps/io.github.vikdevelop.SaveDesktop">SaveDesktop</a> - Сохранение конфигов DE</li>
+</ul>
+<h2 id="razlichnoe-poleznoe"><a class="anchor" href="#razlichnoe-poleznoe">#</a>&nbsp;
+Различное полезное</h2>
+<ol>
+<li>Имена (id) расширений</li>
+</ol>
+<p>ID GNOME расширений находятся по пути <code>/usr/share/gnome-shell/extensions/</code><br />
+Некоторые похоже с версии Gnome 45 ID расширений могут находится по пути <code>~/.local/share/gnome-shell/extensions/</code></p>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

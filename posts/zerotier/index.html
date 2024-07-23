@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>ZeroTier - как поиграть в Minecraft с другом используя Arch Linux</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  ZeroTier - как поиграть в Minecraft с другом используя Arch Linux
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-03-01T13:55:09+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux-gaming/">linux-gaming</a>
+
+<br>
+
+
+	<aside id="toc-aside" class="toc">
+	    <details>
+			<summary>Оглавление</summary>
+	        <ol>
+	            <li>
+	                <a href="#podkliuchenie-druga-na-windows">Подключение друга на Windows:</a>
+	                
+	            </li>
+	        </ol>
+		</details>
+	</aside>
+
+
+<p>Обновлено: 20.11.23</p>
+<p>Ориентировался на данные источники</p>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.youtube.com/watch?v=RGTzRTC1JxM&amp;t=634s">Видео инструкция 1</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.youtube.com/watch?v=JXB6FHJsqOw">Видео инструкция 2</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://wiki.archlinux.org/title/ZeroTier">Arch Wiki ZeroTier</a></li>
+</ul>
+<p>Плюсы:</p>
+<ol>
+<li>Не требует проброса портов</li>
+</ol>
+<p>Качаем пакет</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> zerotier-one
+</span></code></pre>
+<p>Запускаем systemd сервис zerotier</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> systemctl enable</span><span style="color:#f9f9f9;"> --now</span><span style="color:#ffee80;"> zerotier-one.service
+</span></code></pre>
+<p>(TODO) необходимо проверить</p>
+<p>Чтобы иметь возможность пропустить, используя <code>sudo</code></p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> cat /var/lib/zerotier-one/authtoken.secret </span><span style="color:#ff9d00;">&gt; </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.zeroTierOneAuthToken
+</span></code></pre>
+<p>Чтобы узнать id своего компьютера</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> zerotier-cli info
+</span></code></pre>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Пример выхлопа
+</span><span style="color:#f9f9f9;">200</span><span style="color:#ffee80;"> info 89e92ceee5 1.2.4 ONLINE
+</span></code></pre>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.zerotier.com/">Регаемся в ZeroTier</a></p>
+<p>В браузере залогинившись и подтвердив почту жмём на странице ZeroTier <span style="color:#9a5500">Create A Network</span> и кликаем на созданную сеть</p>
+<p>На ПК коннектимся используя команду<br />
+(<em>network_id</em> указан в странице ZeroTier в <strong>Basics</strong>)</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> zerotier-cli join network_id
+</span></code></pre>
+<p>Что я сделал на главной странице ZeroTier Central:</p>
+<ol>
+<li>Поменял авто назначение <strong>IPv4 Auto-Assign</strong></li>
+<li><strong>(Обязательно)</strong> Отмечаем галочкой в столбце <strong>Auth?</strong> наш подключённый ПК Arch Linux дабы аутентифицировать его в сети</li>
+</ol>
+<p>Создаю каталог для размещения Minecraft сервера</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">mkdir </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/Server_</span><span style="color:#ff9d00;">[</span><span style="color:#ffee80;">version</span><span style="color:#ff9d00;">]
+</span></code></pre>
+<p>Скачиваем <a rel="noopener nofollow noreferrer" target="_blank" href="https://www.minecraft.net/ru-ru/download/server">server.jar</a> и помещаем его в созданную папку</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#ffb054;">cd </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/Server_</span><span style="color:#ff9d00;">[</span><span style="color:#ffee80;">version</span><span style="color:#ff9d00;">]
+</span></code></pre>
+<p>Пробный запуск сервера в консоли (У меня 16Gb ОЗУ поэтому я выделил столько памяти серверу)</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">java -Xmx6124M -Xms6124M -jar</span><span style="color:#ffee80;"> server.jar nogui
+</span></code></pre>
+<p>Создастся необходимые файлы и потом попросит принять EULA<br />
+Редактируем внутри папки сервера <code>eula.txt</code></p>
+<pre style="background-color:#2b303b;color:#ffffff;"><code><span style="color:#f9f9f9;">eula=true
+</span></code></pre>
+<p>Редактируем <code>server.properties</code></p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">...
+</span><span style="color:#f9f9f9;">online-mode</span><span style="color:#ff9d00;">=</span><span style="color:#3ad900;">false </span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Для пираток
+</span><span style="color:#f9f9f9;">max-players</span><span style="color:#ff9d00;">=</span><span style="color:#3ad900;">3
+</span><span style="color:#f9f9f9;">motd</span><span style="color:#ff9d00;">=</span><span style="color:#3ad900;">Test </span><span style="color:#f9f9f9;">Arch</span><span style="color:#ffee80;"> Linux Anix </span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Это описание сервера
+</span><span style="color:#f9f9f9;">...
+</span></code></pre>
+<p>Останавливаем сервер<br />
+<kbd><kbd>CTRL</kbd>+<kbd>c</p>
+<p>Или написав <code>stop</code> в терминале в котором запущен сервер</p>
+<p>И запускаем снова</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">java -Xmx6124M -Xms6124M -jar</span><span style="color:#ffee80;"> server.jar nogui
+</span></code></pre>
+<p>Запускаем <a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/tlauncher">tlauncher</a>: ForgeOptifine [version]<br />
+После запуска майна вводим в "Прямое подключение" <code>localhost</code> для проверки сервера</p>
+<h2 id="podkliuchenie-druga-na-windows"><a class="anchor" href="#podkliuchenie-druga-na-windows">#</a>&nbsp;
+Подключение друга на Windows:</h2>
+<p>Он должен скачать Windows версию клиента ZeroTier, после скачивания в трее будет <span style="color:yellow">жёлтый значок</span>, жмём на него и выбираем <strong>Join Network...</strong></p>
+<p>Даём другу ваш <em>network_id</em> который указан на странице ZeroTier в <strong>Basics</strong></p>
+<p><strong>(Обязательно)</strong> На странице браузера ZeroTier отмечаем галочкой в столбце <strong>Auth?</strong> дабы аутентифицировать ПК друга</p>
+<p>В консоли нашего ПК вводим <code>ifconfig</code></p>
+<p>Видим новое созданное уст-во <strong>ztrta2ogfu</strong>.<br />
+Копируем <strong>inet</strong> ip и даём вашему другу с прописанным портом майна 25565.<br />
+Он вставляем этот ip в майн, и Готово!</p>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

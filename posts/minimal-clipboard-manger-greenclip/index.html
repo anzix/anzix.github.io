@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>Greenclip - Минималистичный Rofi&#x2F;dmenu clipboard менеджер с поддержкой картинок и исключениями</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  Greenclip - Минималистичный Rofi&#x2F;dmenu clipboard менеджер с поддержкой картинок и исключениями
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-03-23T22:22:51+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux/">linux</a>
+
+<br>
+
+
+	<aside id="toc-aside" class="toc">
+	    <details>
+			<summary>Оглавление</summary>
+	        <ol>
+	            <li>
+	                <a href="#ignor-bufera-iz-prilozhenii">Игнор буфера из приложений</a>
+	                
+	            </li>
+	        </ol>
+		</details>
+	</aside>
+
+
+<ul>
+<li>https://github.com/erebe/greenclip</li>
+</ul>
+<p>Для тех кому не нравится GUI менеджеры буфера обмена</p>
+<p>Качаем <a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/rofi-greenclip">AUR пакет</a></p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">yay -S</span><span style="color:#ffee80;"> rofi-greenclip
+</span></code></pre>
+<p>Создаём конфиг</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">cat </span><span style="color:#ff9d00;">&lt;&lt; EOF &gt; </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.config/greenclip.toml
+</span><span style="color:#ffee80;">  [greenclip]
+</span><span style="color:#ffee80;">  history_file = &quot;/home/</span><span style="color:#f9f9f9;">$</span><span style="color:#edef7d;">USER</span><span style="color:#ffee80;">/.cache/greenclip.history&quot;
+</span><span style="color:#ffee80;">  max_history_length = 50
+</span><span style="color:#ffee80;">  max_selection_size_bytes = 0
+</span><span style="color:#ffee80;">  trim_space_from_selection = true
+</span><span style="color:#ffee80;">  use_primary_selection_as_input = false
+</span><span style="color:#ffee80;">  blacklisted_applications = []
+</span><span style="color:#ffee80;">  enable_image_support = true
+</span><span style="color:#ffee80;">  image_cache_directory = &quot;/tmp/greenclip&quot;
+</span><span style="color:#ffee80;">  static_history = [
+</span><span style="color:#ffee80;"> &#39;&#39;&#39;¯\_(ツ)_/¯&#39;&#39;&#39;,
+</span><span style="color:#ffee80;">]
+</span><span style="color:#ff9d00;">EOF
+</span></code></pre>
+<p>Прописываем его в .xprofile (для DM) или .xinitrc (запуск с TTY) для автозапуска</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">greenclip</span><span style="color:#ffee80;"> daemon </span><span style="color:#ff9d00;">&amp;
+</span></code></pre>
+<p>Или используя systemd сервис</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">systemctl --user</span><span style="color:#ffee80;"> enable greenclip.service
+</span></code></pre>
+<p>Бинды для sxhkd</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Greenclip clipboard manager [Rofi]
+</span><span style="color:#f9f9f9;">super</span><span style="color:#ffee80;"> + v
+</span><span style="color:#f9f9f9;">    rofi -modi &quot;</span><span style="color:#9eff80;">clipboard:greenclip print</span><span style="color:#f9f9f9;">&quot; -show</span><span style="color:#ffee80;"> clipboard</span><span style="color:#f9f9f9;"> -run-command &#39;</span><span style="color:#9eff80;">{cmd}</span><span style="color:#f9f9f9;">&#39;
+</span></code></pre>
+<blockquote>
+<p>Примечание: У меня почему-то dmenu бинд одной командой не выполняется, решил проблему создав bash скрипт, сделав его исполняемым и всё заработало.</p>
+</blockquote>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">cat </span><span style="color:#ff9d00;">&lt;&lt; EOF &gt; </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.local/bin/dmenu-greenclip
+</span><span style="color:#ffee80;">#!/bin/bash
+</span><span style="color:#ffee80;">greenclip print | grep . | dmenu -i -l 10 -p clipboard | xargs -r -d&#39;\n&#39; -I &#39;{}&#39; greenclip print &#39;{}&#39;
+</span><span style="color:#ff9d00;">EOF
+</span></code></pre>
+<p>После чего назначив в sxhkd, dmenu вариант заработал без проблем</p>
+<pre style="background-color:#2b303b;color:#ffffff;"><code><span style="color:#f9f9f9;"># Greenclip clipboard manager [dmenu]
+</span><span style="color:#f9f9f9;">super + v
+</span><span style="color:#f9f9f9;">    dmenu-greenclip
+</span></code></pre>
+<h2 id="ignor-bufera-iz-prilozhenii"><a class="anchor" href="#ignor-bufera-iz-prilozhenii">#</a>&nbsp;
+Игнор буфера из приложений</h2>
+<p>К примеру мне не нужно чтобы менеджер буфера отслеживал мои пароли из keepassxc</p>
+<p>Запускаем демон</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">greenclip
+</span></code></pre>
+<p>Затем копируем что-либо из keepassxc. Копируем в output'е с кавычками "Qt Selection Owner for keepassxc"</p>
+<p>И вставляем в конфиг ~/.config/greenclip.toml и сохраняем</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">blacklisted_applications</span><span style="color:#ffee80;"> = </span><span style="color:#ff9d00;">[</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">Qt Selection Owner for keepassxc</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#ff9d00;">]
+</span></code></pre>
+<p>После чего менеджер не будет копировать любой output из keepassxc</p>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>Tor Archlinux</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  Tor Archlinux
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-03-08T00:42:54+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux/">linux</a>
+
+<br>
+
+
+	<aside id="toc-aside" class="toc">
+	    <details>
+			<summary>Оглавление</summary>
+	        <ol>
+	            <li>
+	                <a href="#rabota-tor-vmeste-s-obkhod-blokirovok-runeta-proksirovat-domeny-onion">Работа Tor вместе с Обход блокировок Рунета проксировать домены .onion</a>
+	                
+	            </li><li>
+	                <a href="#proxy-switchyomega-tor">Proxy SwitchyOmega + Tor</a>
+	                <ol>
+	                    <li>
+	                        <a href="#otkryvat-saity-tol-ko-onion-saity-dannymi-proksiami">Открывать сайты только *.onion сайты данными проксями</a>
+	                    </li>
+	                </ol>
+	            </li><li>
+	                <a href="#foxyproxy-standard-tor">FoxyProxy Standard + Tor</a>
+	                
+	            </li>
+	        </ol>
+		</details>
+	</aside>
+
+
+<p>Источники</p>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://ctlos.github.io/wiki/packages/other-pkg/#tor">Ctlos Wiki</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://wiki.archlinux.org/title/User:Katoumegumi#Using_Tor_bridges">Arch Wiki</a></li>
+</ul>
+<p>Установка</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> tor torsocks
+</span><span style="color:#f9f9f9;">yay -S</span><span style="color:#ffee80;"> obfs4proxy
+</span></code></pre>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> systemctl start tor
+</span><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> systemctl status tor
+</span></code></pre>
+<p>Видим что застряло на 5%, т.к провайдер блокирует тор</p>
+<p><img src="/images/tor-archlinux/tor-status.png" alt="image" /></p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> mkdir</span><span style="color:#f9f9f9;"> -p</span><span style="color:#ffee80;"> /etc/torrc.d/
+</span><span style="color:#f9f9f9;">sudo -e</span><span style="color:#ffee80;"> /etc/tor/torrc
+</span></code></pre>
+<p>Раскоментируем <code>%include /etc/torrc.d/*.conf</code> и сохраняем</p>
+<p>В данном файле указываем строки</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo -e</span><span style="color:#ffee80;"> /etc/torrc.d/custom.conf
+</span></code></pre>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">UseBridges 1
+</span><span style="color:#f9f9f9;">ClientTransportPlugin obfs4 exec /usr/bin/obfs4proxy
+</span><span style="color:#f9f9f9;">Bridge [!данные из bridges@torproject.org]
+</span></code></pre>
+<blockquote>
+<p>! Заводим доп. акк гугл и пишем в gmail на этот ящик bridges@torproject.org оставив пустой тему а в сообщении вводим "get transport obfs4" (данные из которых у меня заработал tor)"</p>
+</blockquote>
+<p>Перезапускаем tor</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> systemctl restart tor
+</span></code></pre>
+<p>Если в статусе видите данную строку значить пробуйте другие даные из bridges@torproject.org</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">Proxy Client: unable to connect OR connection (handshaking (proxy))
+</span></code></pre>
+<p>Если до сих пор не работает tor, тогда производим данные манипуляции описанные в</p>
+<ul>
+<li>https://wiki.archlinux.org/title/Tor#Problem_with_user_value</li>
+</ul>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> nano /usr/lib/systemd/system/tor.service
+</span></code></pre>
+<p>Добавляем в <code>[Service]</code> и сохраняем</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">User=root
+</span><span style="color:#f9f9f9;">Group=root
+</span><span style="color:#f9f9f9;">Type=simple
+</span></code></pre>
+<p>Выполняем эти команды</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> chown</span><span style="color:#f9f9f9;"> -R</span><span style="color:#ffee80;"> tor:tor /var/lib/tor/
+</span><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> chmod</span><span style="color:#f9f9f9;"> -R</span><span style="color:#ffee80;"> 700 /var/lib/tor
+</span></code></pre>
+<p>После чего перезапускаем tor</p>
+<pre style="background-color:#2b303b;color:#ffffff;"><code><span style="color:#f9f9f9;">sudo systemctl daemon-reload
+</span><span style="color:#f9f9f9;">sudo systemctl restart tor
+</span></code></pre>
+<p>Вы должны увидеть в статусе загрузку (bootstrapped) до 100%. Это значит что узел тор запущен
+<img src="/images/tor-archlinux/tor-works.png" alt="image" /></p>
+<h2 id="rabota-tor-vmeste-s-obkhod-blokirovok-runeta-proksirovat-domeny-onion"><a class="anchor" href="#rabota-tor-vmeste-s-obkhod-blokirovok-runeta-proksirovat-domeny-onion">#</a>&nbsp;
+Работа Tor вместе с Обход блокировок Рунета проксировать домены .onion</h2>
+<p>Если данное расширение у вас уже установлено, необходимо только активировать чекбокс "<strong>Использовать СВОЙ локальный Tor</strong>" также (<span style="color:green">РЕКОМЕНДУЕТСЯ для безопасности</span>) во вкладке "Модификаторы" поставить чекбокс "<strong>Проксировать только HTTPS-сайты</strong>"</p>
+<p><img src="/images/tor-archlinux/anticensority.png" alt="image" /></p>
+<h2 id="proxy-switchyomega-tor"><a class="anchor" href="#proxy-switchyomega-tor">#</a>&nbsp;
+Proxy SwitchyOmega + Tor</h2>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://chrome.google.com/webstore/detail/proxy-switchyomega/padekgcemlokbadohgkifijomclgjgif">Proxy SwitchyOmega</a></li>
+</ul>
+<p>Запускаем тор</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> systemctl start tor
+</span></code></pre>
+<p>Открываем настройки расширения и редактируем профиль proxy. Переименовываем его в "Tor"</p>
+<ul>
+<li>Protocol - SOCKS5</li>
+<li>Server - 127.0.0.1</li>
+<li>Port - 9050</li>
+</ul>
+<p><img src="/images/tor-archlinux/switchyomega-tor.png" alt="image" /></p>
+<p>После чего применяем изменения и пробуем протестировать на https://check.torproject.org/</p>
+<p>В быстром меню расширения жмём на уже настроенный прокси и теперь браузер перенаправляет на трафик тор</p>
+<p><img src="/images/tor-archlinux/switchyomega-menu.png" alt="image" /></p>
+<p>Можно использовать вместе с Torrent Search</p>
+<h3 id="otkryvat-saity-tol-ko-onion-saity-dannymi-proksiami"><a class="anchor" href="#otkryvat-saity-tol-ko-onion-saity-dannymi-proksiami">#</a>&nbsp;
+Открывать сайты только *.onion сайты данными проксями</h3>
+<p>Для этого открываем настройки расширения, создаём новый профиль "New profile"</p>
+<ul>
+<li>Имя профиля - Onion</li>
+<li>Тип профиля - Switch Profile</li>
+</ul>
+<p>Жмём Create</p>
+<p><img src="/images/tor-archlinux/creating-new-profile.png" alt="image" /></p>
+<p>И указываем как показано</p>
+<ul>
+<li>Condition Type - Host wildcard</li>
+<li>Condition Details - .onion</li>
+<li>Profile - наш Tor прокси из списка</li>
+</ul>
+<p>Жмём Apply Changes</p>
+<p><img src="/images/tor-archlinux/switchyomega-rules-tor.png" alt="image" /></p>
+<p>В иконке расширения выбираем наш созданный Switch Profile - onion и всё</p>
+<p><img src="/images/tor-archlinux/switchyomega-menu-onion.png" alt="image" /></p>
+<p>Теперь прокси сами будут включатся когда будут обрабатывать запросы на .onion сайты</p>
+<h2 id="foxyproxy-standard-tor"><a class="anchor" href="#foxyproxy-standard-tor">#</a>&nbsp;
+FoxyProxy Standard + Tor</h2>
+<ul>
+<li>https://addons.mozilla.org/ru/firefox/addon/foxyproxy-standard</li>
+</ul>
+<p>Для Firefox</p>
+<p>При установке расширения открываем настройки и жмём "Добавить"</p>
+<ul>
+<li>Название - Tor</li>
+<li>Тип прокси - SOCKS5</li>
+<li>Прокси IP адрес - 127.0.0.1</li>
+<li>Порт - 9050</li>
+</ul>
+<p>Жмём Сохранить и редактировать шаблоны</p>
+<ul>
+<li>Название - onion</li>
+<li>Шаблон - *.onion</li>
+<li>Тип - Wildcard</li>
+<li>HTTP/s - all (Для большей безопасности <span style="color:green">РЕКОМЕНДУЕТСЯ</span> проксировать только HTTPS запросы, HTTP сайты <span style="color:red">могут читаться и изменяться конечными участниками сети Tor!</span>)</li>
+</ul>
+<p><img src="/images/tor-archlinux/foxyproxy-https.png" alt="image" /></p>
+<p>Жмём на иконку расширения и выбираем "Использовать прокси по шаблону и прядку"</p>
+<p><img src="/images/tor-archlinux/foxyproxy-setup.png" alt="image" /></p>
+<p>Теперь это расширение будет в обычном режиме обрабатывать обычные запросы (без прокси), а когда вы будете открывать сайты .onion расширение автоматически будет включать данные прокси Tor</p>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>Google Chrome или Chromium в Arch Linux</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  Google Chrome или Chromium в Arch Linux
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-03-12T17:10:47+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux/">linux</a>
+
+<br>
+
+
+	<aside id="toc-aside" class="toc">
+	    <details>
+			<summary>Оглавление</summary>
+	        <ol>
+	            <li>
+	                <a href="#vkliuchenie-apparatnogo-dekodirovaniia-hardware-decode">Включение Аппаратного Декодирования (Hardware Decode)</a>
+	                <ol>
+	                    <li>
+	                        <a href="#neobkhodimye-i-poleznye-flagi">Необходимые и полезные флаги</a>
+	                    </li><li>
+	                        <a href="#reshaem-problemu-medlennogo-skrolla-myshi-chromium-based-brauzerov-ispravleno-v-109-0-5414-74">Решаем проблему медленного скролла мыши Chromium Based браузеров (Исправлено в 109.0.5414.74)</a>
+	                    </li><li>
+	                        <a href="#ustanovka-udalionnykh-rasshirenii">Установка удалённых расширений</a>
+	                    </li>
+	                </ol>
+	            </li>
+	        </ol>
+		</details>
+	</aside>
+
+
+<p><span style="color:red">Внимание</span>: Я не рекомендую пользоваться Гугл Хромом на Арче по нескольким причинам:</p>
+<ul>
+<li>Возникают мелкие графические артефакты, в определённых местах, пока не знаю с чем это связано (пикча)</li>
+<li>Возникают проблемы с открытием “Настройка и управление Chrome”, которая совсем не открывается, фиксится сменой раб. столов</li>
+</ul>
+<p>Поэтому как замену google-chrome <span style="color:green">рекомендуется использовать</span> chromium или ungoogled-chromium</p>
+<p><img src="/images/google-chrome-and-chromium-on-archlinux/google-chrome-bug.png" alt="image" /></p>
+<p>Необходимо установить шрифты для корректной работы данных браузеров</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> ttf-dejavu noto-fonts noto-fonts-emoji
+</span></code></pre>
+<p>Устанавливаем на выбор браузер</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> AUR пакет Google Chrome
+</span><span style="color:#f9f9f9;">yay -S</span><span style="color:#ffee80;"> google-chrome
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Стандартный Chromium
+</span><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> chromium
+</span></code></pre>
+<h2 id="vkliuchenie-apparatnogo-dekodirovaniia-hardware-decode"><a class="anchor" href="#vkliuchenie-apparatnogo-dekodirovaniia-hardware-decode">#</a>&nbsp;
+Включение Аппаратного Декодирования (Hardware Decode)</h2>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://wiki.archlinux.org/title/Hardware_video_acceleration#Configuring_VA-API">Arch Wiki - Configure VA-API</a></li>
+</ul>
+<p>Для проверки наличия VA-API</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">vainfo
+</span></code></pre>
+<p>При такой ошибке необходим пакет <a rel="noopener nofollow noreferrer" target="_blank" href="https://archlinux.org/packages/extra/x86_64/libva-mesa-driver/"><code>libva-mesa-driver</code></a></p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">vaInitialize failed with error code -1 (unknown libva error),exit
+</span></code></pre>
+<p>Для проверки наличия VDPAU</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">vdpauinfo
+</span></code></pre>
+<p>При такой ошибки необходим пакет <a rel="noopener nofollow noreferrer" target="_blank" href="https://archlinux.org/packages/extra/x86_64/mesa-vdpau/"><code>mesa-vdpau</code></a></p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">display: :0 screen: 0 Failed to open VDPAU backend libvdpau_radeonsi.so: cannot open shared object file: No such file or directory Error creating VDPAU device: 1
+</span></code></pre>
+<p><strong>Скачиваем эти пакеты для AMD</strong></p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> libva-mesa-driver mesa-vdpau
+</span></code></pre>
+<p>Также <strong>очень рекомендуется</strong> установить расширение <a rel="noopener nofollow noreferrer" target="_blank" href="https://chrome.google.com/webstore/detail/enhanced-h264ify/omkfmpieigblcllmkgbflkikinpkodlk">enhanced-h264ify</a> чтобы принудительно ставить аппаратный рендер видео в H264 вместо vp8/vp9/AV1 (без него в консоли показывается что аппаратный видеодекодер отключен)</p>
+<p>С включёнными флагами описанными ниже удалось заставить google chrome и chromium/ungoogled-chromium работать на аппаратном декодировании</p>
+<p>Включаем любое видео в ютубе, жмём F12 - три точки - More tools - Media. Далее жмём на вкладку Media и видим название видоса в списке, жмём на него и видим всю инфу о декодировании, в данном случае работает VDAVideoDecoder</p>
+<p><img src="/images/google-chrome-and-chromium-on-archlinux/hardware-encoding-enabled.png" alt="image" /></p>
+<h3 id="neobkhodimye-i-poleznye-flagi"><a class="anchor" href="#neobkhodimye-i-poleznye-flagi">#</a>&nbsp;
+Необходимые и полезные флаги</h3>
+<p><span style="color:green">Все флаги которые у вас включены в браузер</span>: chrome://version/</p>
+<p>Повзаимствованые флаги</p>
+<ul>
+<li>https://github.com/dreammjow/ChromiumHardening</li>
+<li>https://github.com/GoogleChrome/chrome-launcher/blob/main/docs/chrome-flags-for-tools.md</li>
+</ul>
+<p>Настройка флагов для подобных браузеров идентична, кроме разве что названия конфига</p>
+<p><strong>Для Chromium / Ungoogled-Chromium</strong>: Вводим параметры конфига по данному пути <code>~/.config/chromium-flags.conf</code></p>
+<p><strong>Для Google Chrome (НЕ ТЕСТИРОВАЛ)</strong>: Вводим параметры конфига по данному пути <code>~/.config/chrome-flags.conf</code></p>
+<p><strong>Для Brave</strong>: Вводим параметры конфига по данному пути
+<code>~/.config/brave-flags.conf</code></p>
+<ol>
+<li><span style="color:green">Описание</span>:</li>
+</ol>
+<ul>
+<li>WebUIDarkMode - Включает тёмную тему</li>
+<li>ScrollableTabStrip - (<strong><span style="color:green">Рекомендуется</span></strong> для Arch Linux) Отключает скролл вкладок</li>
+<li>DownloadBubble - Новый вид загрузок как в Edge</li>
+</ul>
+<p><code>--enable-features=WebUIDarkMode,ScrollableTabStrip,DownloadBubble</code></p>
+<ol start="2">
+<li><span style="color:green">Описание</span>: Принудительная тёмная тема браузера</li>
+</ol>
+<p><code>--force-dark-mode</code></p>
+<ol start="3">
+<li><span style="color:green">Описание</span>: Убираем уведомление "Сделать хром браузером по умолчанию"</li>
+</ol>
+<p><code>--no-default-browser-check</code></p>
+<ol start="4">
+<li><span style="color:green">Описание</span>: Отключить автоматическое добавление поисковых систем с веб-страниц</li>
+</ol>
+<p><code>--disable-search-engine-collection</code></p>
+<ol start="5">
+<li><span style="color:green">Описание</span>: Включает параллельную закачку для ускорение скорости скачивания</li>
+</ol>
+<p><code>--enable-parallel-downloading</code></p>
+<ol start="6">
+<li><span style="color:green">Описание</span>: Убирает панель "Список для чтения"</li>
+</ol>
+<p><code>--hide-sidepanel-button</code></p>
+<ol start="7">
+<li><span style="color:green">Описание</span>: Убирает в newtab самые посещаемые сайты</li>
+</ol>
+<p><code>--disable-top-sites</code></p>
+<ol start="8">
+<li><span style="color:green">Описание</span>: Отключает ненужную иконку профиля</li>
+</ol>
+<p><code>--show-avatar-button=never</code></p>
+<ol start="9">
+<li><span style="color:green">Описание</span>: Автоматический отклоняет любые уведомления разрешения браузера</li>
+</ol>
+<p><code>--deny-permission-prompts</code></p>
+<ol start="10">
+<li><span style="color:green">Описание</span>: Восстанавливает последнюю сессию</li>
+</ol>
+<p><code>--restore-last-session</code></p>
+<ol start="11">
+<li><span style="color:green">Описание</span>: Улучшаем производительность путём включения Hardware Acceleration (Аппаратное ускорение)</li>
+</ol>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">--ignore-gpu-blocklist
+</span><span style="color:#f9f9f9;">--enable-gpu-rasterization
+</span><span style="color:#f9f9f9;">--enable-zero-copy
+</span><span style="color:#f9f9f9;">--use-vulkan
+</span></code></pre>
+<ol start="12">
+<li><span style="color:green">Описание</span>: Включаем 144hz, вставляете любую т.к обе команды одинаково действуют и работают</li>
+</ol>
+<p>На выбор:</p>
+<ol>
+<li>VA-API для xwayland (wayland)</li>
+</ol>
+<p><code>--use-gl=desktop</code></p>
+<ol start="2">
+<li>VA-API для Xorg</li>
+</ol>
+<p><code>--use-gl=egl</code></p>
+<ol start="13">
+<li><span style="color:green">Описание</span>: Дополнительно прописываем вот это, чтобы отключить сообщения о ошибках</li>
+</ol>
+<p><code>--disable-gpu-driver-bug-workarounds</code></p>
+<p><strong>UPD (17.03.22)</strong>: Обнаружил такую <span style="color:green">проблему</span> при обновленном google-chrome/chromium</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">Problems Detected
+</span><span style="color:#f9f9f9;">Accelerated video decode/encode has been disabled, either via blocklist, about:flags or the command line.
+</span><span style="color:#f9f9f9;">Disabled Features: video_decode/video_encode
+</span></code></pre>
+<p><span style="color:green">Решение</span>: Вводим в *-flags.conf внутри данной секции</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">--enable-features</span><span style="color:#ff9d00;">=</span><span style="color:#3ad900;">....VaapiVideoEncoder,VaapiVideoDecoder,CanvasOopRasterization..
+</span><span style="color:#f9f9f9;">--disable-features</span><span style="color:#ff9d00;">=</span><span style="color:#3ad900;">UseChromeOSDirectVideoDecoder
+</span></code></pre>
+<p>Проверить на поддержку Hardware Acceleration, введите <code>chrome://gpu</code></p>
+<p><img src="/images/google-chrome-and-chromium-on-archlinux/fully-hw-accelerated.png" alt="image" /></p>
+<p><strong>UPD (11.06.22)</strong>: Следующая ошибка при обновлённом chromium'e/chrome</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">Problems Detected
+</span><span style="color:#f9f9f9;">WebGPU has been disabled via blocklist or the command line.
+</span><span style="color:#f9f9f9;">Disabled Features: webgpu
+</span></code></pre>
+<p>Это экспериментальная опция, может нарушить работу браузера. Но чуть увеличивает плавность рендера 3D объектов</p>
+<p><code>--enable-unsafe-webgpu</code></p>
+<p><span style="color:green">Описание</span>: Браузер будет подхватывать pac прокси от antizapret (не используя расширения)</p>
+<p><code>--proxy-pac-url=https://antizapret.prostovpn.org/proxy.pac</code></p>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://testufo.com/">Тестирование браузера на 144hz</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://solarsystem.nasa.gov/planets/saturn/overview/">Тестирование на 3D объекты 1</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://webglsamples.org/aquarium/aquarium.html">Тестирование на 3D объекты 2</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://madebyevan.com/webgl-water/">Тестирование на аппаратное ускорение</a></li>
+</ul>
+<p><strong>Совет</strong>: Raw Draw игнорьте и не включайте, будут проблемы в отображениях шрифтов</p>
+<h3 id="reshaem-problemu-medlennogo-skrolla-myshi-chromium-based-brauzerov-ispravleno-v-109-0-5414-74"><a class="anchor" href="#reshaem-problemu-medlennogo-skrolla-myshi-chromium-based-brauzerov-ispravleno-v-109-0-5414-74">#</a>&nbsp;
+Решаем проблему медленного скролла мыши Chromium Based браузеров (Исправлено в 109.0.5414.74)</h3>
+<p>Это не проблема Linux а проблема браузеров на основе electron/chromium об этом упоминается в <a rel="noopener nofollow noreferrer" target="_blank" href="https://wiki.archlinux.org/title/chromium#Chromium_slow_scroll_speed">Arch Wiki + способы решения</a></p>
+<p>Самым простым решением будет использовать расширение <a rel="noopener nofollow noreferrer" target="_blank" href="https://chrome.google.com/webstore/detail/smoothscroll/nbokbjkabcmbfdlbddjidfmibcpneigj">SmoothScroll</a></p>
+<p>Есть вариант с использование инструмента <a rel="noopener nofollow noreferrer" target="_blank" href="https://archlinux.org/packages/extra/x86_64/imwheel/">imwheel</a> который умеет настраивать ход колеса мыши к любому софту. Однако работает оно с некоторыми раздражающими <span style="color:red">ПРОБЛЕМАМИ</span>.</p>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://wiki.archlinux.org/title/IMWheel">imwheel на Arch Wiki</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.youtube.com/watch?v=NoHfqfRYbk4">Видео гайд от DT</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.youtube.com/watch?v=jFcpCsrIpYk">Тоже оч годный гайд (большую часть почерпнул от него)</a></li>
+</ul>
+<p>Устанавливаем пакет</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> imwheel
+</span></code></pre>
+<p>Создаём конфиг в $HOME директории и вставляем</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">nvim</span><span style="color:#ffee80;"> .imwheelrc
+</span></code></pre>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">^(chromium|google-chrome|brave-browser)$</span><span style="color:#f9f9f9;">&quot;
+</span><span style="color:#f9f9f9;">	#</span><span style="font-style:italic;color:#0088ff;"> Фикс scroll
+</span><span style="color:#f9f9f9;">	None,</span><span style="color:#ffee80;"> Up, Button4, 2.8
+</span><span style="color:#f9f9f9;">	None,</span><span style="color:#ffee80;"> Down, Button5, 2.8
+</span><span style="color:#f9f9f9;">	#</span><span style="font-style:italic;color:#0088ff;"> Без изменений для zoom&#39;а страниц
+</span><span style="color:#f9f9f9;">	Control_L,</span><span style="color:#ffee80;"> Up,   Control_L</span><span style="color:#ff9d00;">|</span><span style="color:#f9f9f9;">Button4
+</span><span style="color:#f9f9f9;">	Control_L,</span><span style="color:#ffee80;"> Down, Control_L</span><span style="color:#ff9d00;">|</span><span style="color:#f9f9f9;">Button5
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> vim:ts=4:shiftwidth=4:syntax=sh
+</span></code></pre>
+<p>Для меня нормальное значение скролла будет 2.8, вы же можете играться с этими значениями если вас не устраивает мои</p>
+<p>Далее для теста запустим данный инструмент командой</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">imwheel -b &quot;</span><span style="color:#9eff80;">45</span><span style="color:#f9f9f9;">&quot; -k
+</span></code></pre>
+<p><strong>Описание опций</strong>:</p>
+<ul>
+<li><code>-b "45"</code> - боковые кнопки мыши не будут затрагиваться при запуске этой команды, без этой опции боковые вообще не будут работать</li>
+<li><code>-k</code> - перезагружает процесс imwheel</li>
+</ul>
+<p>Если видите такой выхлоп в терминале значит инструмент запущен</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">INFO: imwheel started (pid=6604)
+</span></code></pre>
+<p>Убить данный процесс командой</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">pkill</span><span style="color:#ffee80;"> imwheel
+</span></code></pre>
+<p>Для автозапуска imwheel при запуске системы прописываем в автозапуск файла <code>~/.xprofile</code> (Для DM) или <code>~/.xinitrc</code> (запуск с TTY)</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Исправление скролла мыши
+</span><span style="color:#f9f9f9;">imwheel -b &quot;</span><span style="color:#9eff80;">45</span><span style="color:#f9f9f9;">&quot;
+</span></code></pre>
+<h3 id="ustanovka-udalionnykh-rasshirenii"><a class="anchor" href="#ustanovka-udalionnykh-rasshirenii">#</a>&nbsp;
+Установка удалённых расширений</h3>
+<p>Папка с расширениями находится по такому пути</p>
+<p><strong>Chrome</strong>: <code>~/.config/google-chrome/Default/Extensions</code></p>
+<p><strong>Chromium</strong>: <code>~/.config/chromium/Default/Extensions</code></p>
+<p>Для примера я установлю удалённый из магазина расширений chrome, open source торрент поисковик</p>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/Feverqwe/tSearch">TMS (Torrents MultiSearch)</a></li>
+</ul>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/Feverqwe/tSearch/files/6478194/ngcldkkokhibdmeamidppdknbhegmhdh.zip">Скачиваем</a> данное расширение в формате zip</p>
+<p>Открываем окно расширения chrome - "Загрузить распакованное расширение". И открываем папку с распакованным расширением, имя которого начинается с <strong>ngcldk...</strong></p>
+<p>У вас в списке появится данное расширение</p>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>Проверка состояния HDD и SSD через терминал</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  Проверка состояния HDD и SSD через терминал
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-03-10T21:52:44+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux/">linux</a>
+
+<br>
+
+
+	<aside id="toc-aside" class="toc">
+	    <details>
+			<summary>Оглавление</summary>
+	        <ol>
+	            <li>
+	                <a href="#gui-programma-dlia-benchmarka-ssd-hdd">GUI программа для бенчмарка SSD/HDD</a>
+	                
+	            </li><li>
+	                <a href="#cli-proverka-na-skorost-chteniia-diska">Cli проверка на скорость чтения диска</a>
+	                
+	            </li>
+	        </ol>
+		</details>
+	</aside>
+
+
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://wiki.archlinux.org/title/S.M.A.R.T.">Arch Wiki - S.M.A.R.T</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.opennet.ru/man.shtml?topic=smartctl&amp;category=8&amp;russian=2">opennet</a></li>
+</ul>
+<p>Скачиваем пакет smartmontools</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> smartmontools
+</span></code></pre>
+<p>Пояснение по опциям:</p>
+<ul>
+<li><code>-i</code> / <code>-info</code> печатает различную информацию о устройстве, включая использование S.M.A.R.T, версии прошивок, версии SATA, Скорость SATA и т.д</li>
+<li><code>-A</code> / <code>-attributes</code> печатает только атрибуты S.M.A.R.T. <a rel="noopener nofollow noreferrer" target="_blank" href="https://www.ixbt.com/storage/hdd-smart-testing.shtml#n7">Подробное описание что означает каждое имя атрибут</a></li>
+<li><code>-H</code> / <code>--health</code> попросить устройство сообщить о своем состоянии SMART или ожидающих сообщениях TapeAlert. Проще говоря это быстрый тест здоровья HDD или SSD</li>
+</ul>
+<p>Запускаем от sudo вывод простой инфы о нашем ssd диске</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> smartctl</span><span style="color:#f9f9f9;"> -i</span><span style="color:#ffee80;"> /dev/sda
+</span></code></pre>
+<p>У меня такая информация о моём SSD</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">=== START OF INFORMATION SECTION ===
+</span><span style="color:#f9f9f9;">Model Family:     	Samsung based SSDs
+</span><span style="color:#f9f9f9;">Device Model:     	Samsung SSD 860 EVO 250GB
+</span><span style="color:#f9f9f9;">Serial Number:    	S3Y9NX0M351690Y
+</span><span style="color:#f9f9f9;">LU WWN Device Id:	5 002538 e40dcdd86
+</span><span style="color:#f9f9f9;">Firmware Version: 	RVT04B6Q
+</span><span style="color:#f9f9f9;">User Capacity:    	250 059 350 016 bytes [250 GB]
+</span><span style="color:#f9f9f9;">Sector Size:      	512 bytes logical/physical
+</span><span style="color:#f9f9f9;">Rotation Rate:    	Solid State Device
+</span><span style="color:#f9f9f9;">Form Factor:      	2.5 inches
+</span><span style="color:#f9f9f9;">TRIM Command:     	Available, deterministic, zeroed
+</span><span style="color:#f9f9f9;">Device is:        	In smartctl database [for details use: -P show]
+</span><span style="color:#f9f9f9;">ATA Version is:   	ACS-4 T13/BSR INCITS 529 revision 5
+</span><span style="color:#f9f9f9;">SATA Version is:  	SATA 3.2, 6.0 Gb/s (current: 6.0 Gb/s)
+</span><span style="color:#f9f9f9;">Local Time is:    	Mon Nov 22 07:33:23 2021 +05
+</span><span style="color:#f9f9f9;">SMART support is: 	Available - device has SMART capability.
+</span><span style="color:#f9f9f9;">SMART support is: 	Enabled
+</span></code></pre>
+<p>Вывод атрибут S.M.A.R.T</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> smartctl</span><span style="color:#f9f9f9;"> -A</span><span style="color:#ffee80;"> /dev/sda
+</span></code></pre>
+<p>Output атрибуты моего SSD выглядит так</p>
+<p><img src="/images/s.m.a.r.t-control-hdd-ssd/attributes.png" alt="image" /></p>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.altlinux.org/%D0%9F%D1%80%D0%BE%D0%B2%D0%B5%D1%80%D0%BA%D0%B0_%D1%81%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D0%BD%D0%B8%D1%8F_%D0%B6%D0%B5%D1%81%D1%82%D0%BA%D0%B8%D1%85_%D0%B4%D0%B8%D1%81%D0%BA%D0%BE%D0%B2">Взял инфу отсюда</a></li>
+</ul>
+<p>Ключевое значение имеет содержимое 3-х столбцов:</p>
+<ul>
+<li><code>VALUE</code> - текущее значение параметра</li>
+<li><code>WORST</code> - наихудшее значение, которого когда-либо достигало значение Value</li>
+<li><code>THRESH</code> - значение, которого должен достигнуть Value этого же атрибута, чтобы состояние атрибута было признано критическим.</li>
+</ul>
+<p>Критичным является поле <code>WHEN_FAILED</code>, если оно имеет значение <code>FAIL</code>, то высока вероятность выхода жесткого диска из строя в ближайшее время.</p>
+<p>Т.е если значение <code>VALUE</code> ближе к <code>THRESH</code>, тем ближе кончина диска</p>
+<p>Запускаем от sudo быстрый тест здоровья HDD или SSD</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> smartctl</span><span style="color:#f9f9f9;"> -H</span><span style="color:#ffee80;"> /dev/sda
+</span></code></pre>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">=== START OF READ SMART DATA SECTION ===
+</span><span style="color:#f9f9f9;">SMART overall-health self-assessment test result: PASSED
+</span></code></pre>
+<p>Если написано PASSED значит диск в порядке. Если результат не PASSED, то диск следует заменить.</p>
+<h2 id="gui-programma-dlia-benchmarka-ssd-hdd"><a class="anchor" href="#gui-programma-dlia-benchmarka-ssd-hdd">#</a>&nbsp;
+GUI программа для бенчмарка SSD/HDD</h2>
+<p>KDiskMark является полной копией CrystalDiskMark</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> kdiskmark
+</span></code></pre>
+<p><img src="/images/s.m.a.r.t-control-hdd-ssd/kdiskmark.png" alt="image" /></p>
+<h2 id="cli-proverka-na-skorost-chteniia-diska"><a class="anchor" href="#cli-proverka-na-skorost-chteniia-diska">#</a>&nbsp;
+Cli проверка на скорость чтения диска</h2>
+<p>Устанавливаем утилиту hdparm</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> hdparm
+</span></code></pre>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://losst.ru/kak-ostanovit-zhesnkij-disk-v-linux">О hdparm</a></p>
+<p>Опции:</p>
+<ul>
+<li><code>-T</code> - выполняет тест скорости чтения из кэша;</li>
+<li><code>-t</code> - выполняет тест скорости чтения с диска без кэширования;</li>
+</ul>
+<p>Запускаем проверку</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> hdparm</span><span style="color:#f9f9f9;"> -Tt</span><span style="color:#ffee80;"> /dev/sd</span><span style="color:#ff9d00;">[</span><span style="color:#ffee80;">a|b|c</span><span style="color:#ff9d00;">]
+</span></code></pre>
+<p>У меня на моём HDD 1TB</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">/dev/sdb:
+</span><span style="color:#f9f9f9;">Timing cached reads: 25236 MB in 1.99 seconds = 12681.60 MB/sec
+</span><span style="color:#f9f9f9;">Timing buffered disk reads: 614 MB in 3.00 seconds = 204.59 MB/sec
+</span></code></pre>
+<p>На SSD Samsung Evo 860 256GB</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">/dev/sda:
+</span><span style="color:#f9f9f9;">Timing cached reads: 24594 MB in 1.99 seconds = 12357.06 MB/sec
+</span><span style="color:#f9f9f9;">Timing buffered disk reads: 1484 MB in 3.00 seconds = 494.21 MB/sec
+</span></code></pre>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

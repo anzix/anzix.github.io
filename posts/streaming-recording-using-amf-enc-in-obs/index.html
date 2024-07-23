@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>!Стриминг и запись AMF аппаратным декодированием на Arch Linux</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  !Стриминг и запись AMF аппаратным декодированием на Arch Linux
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-12-11T02:10:00+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux/">linux</a>
+
+<br>
+
+
+
+<p>Источники:</p>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://wiki.archlinux.org/title/FFmpeg#AMD_AMF">Arch Wiki FFmpeg AMF</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.youtube.com/watch?v=SRGAA7PyAEI">Видео гайд на Arch</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.youtube.com/watch?v=-HWt-yZcGcY">Видео гайд на Gentoo</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.youtube.com/watch?v=gQtO3tlMqE4">Видео гайд на Fedora (Wayland)</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.reddit.com/r/linux_gaming/comments/qwqxwd/how_to_enable_amd_amf_encoding_in_obs/">Инструкция на Reddit</a></li>
+</ul>
+<p>Инструкция посвящается для тех кто сидит на старых RDNA 1 Polaris 10 т.е RX 470/480/570/580</p>
+<p>Кодировщик FFMPEG VAAPI в obs плох и не юзабелен, чаще всего вызывает постоянные тормоза и частый перегруз encoder'а, обычно такое не происходит на новых RDNA 2 видюхах, но вот для RDNA 1 это постоянная проблема.<br />
+В этом поможет проприетарные драйвера Vulkan AMDGPU-PRO и AMF AMDGPU-PRO которые позволят нам запустить obs с данными драйверами и использовать AMD AMF H.264/AVC (через FFmpeg) кодировщик который может существенно повысить качество стрима и записи при минимальном затрате производительности и без перегрузов кодировщика.<br />
+И ещё AMF НЕ работает с open-source'ным amdgpu драйвером.</p>
+<blockquote>
+<p>Пояснение: AMF <a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/GPUOpen-LibrariesAndSDKs/AMF">Advanced Media Framework</a> это AMD-шный проприетарный конкурент-альтернатива кодировщика NVENC от Nvidia</p>
+</blockquote>
+<p>Некоторые дистрибутивы не поставляют версию FFMPEG скомпилированной поддержкой AMF на дистрибутивах на основе Arch он уже включён по умолчанию, поэтому вам следует проверить, имеет ли ваша версия FFMPEG поддержку AMF, запустив данную команду</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">ffmpeg -encoders </span><span style="color:#ff9d00;">| </span><span style="color:#f9f9f9;">grep -i</span><span style="color:#ffee80;"> amf
+</span></code></pre>
+<p>Если вывод этой команды такой...</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;"> V....D h264_amf             AMD AMF H.264 Encoder (codec h264)
+</span><span style="color:#f9f9f9;"> V....D hevc_amf             AMD AMF HEVC encoder (codec hevc)
+</span></code></pre>
+<p>Тогда вы готовы к дальнейшей установке</p>
+<p>Качаем пакеты проприетарных драйверов</p>
+<blockquote>
+<p>Пояснение: Чтобы у нас появился в obs кодировщик AMD AMF H.264/AVC (via FFmpeg) необходим плагин <a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/Xaymar/obs-StreamFX">obs-streamfx</a></p>
+</blockquote>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">yay -S</span><span style="color:#ffee80;"> lib32-vulkan-amdgpu-pro vulkan-amdgpu-pro amf-amdgpu-pro obs-streamfx
+</span></code></pre>
+<p>Для удобства рекомендуется установить AUR пакет <a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/amd-vulkan-prefixes">amd-vulkan-prefixes</a> позволяющий легко запускать игры, приложения и obs с определённым icd драйвером, не конфликтуя с основным драйвером который к примеру описан о <a href="https://anzix.github.io/posts/streaming-recording-using-amf-enc-in-obs/TODO">смене с vulkan на radv (vulkan-radeon)</a> таким образом можно выжать максимум производительности из игры и записи (или трансляции) из obs.</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">yay -S</span><span style="color:#ffee80;"> amd-vulkan-prefixes
+</span></code></pre>
+<p>В терминале вводим переменную <code>vk_pro</code> таким образом вызывая проприетарный драйвер (у которого есть кодировщик AMF) запустив вместе с ним obs</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">$</span><span style="color:#ffee80;"> vk_pro obs
+</span></code></pre>
+<p>Для тех кто хочет всё запустить вручную необходимо ввести за obs переменную <code>VK_ICD_FILENAMES="путь до ICD файла amdgpu-pro" obs</code></p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">VK_ICD_FILENAMES</span><span style="color:#ff9d00;">=</span><span style="color:#3ad900;">/usr/share/vulkan/icd.d/amd_pro_icd64.json:/usr/share/vulkan/icd.d/amd_pro_icd32.json </span><span style="color:#f9f9f9;">obs
+</span></code></pre>
+<p>В настройках Вывода - вкладке Трансляция и Запись будет доступен данный кодировщик</p>
+<p><img src="/images/streaming-recording-using-amf-enc-in-obs/obs-settings.png" alt="image" /></p>
+<p>Теперь для удобства лишь необходимо создать псевдоним (alias) в <code>.bashrc</code> или <code>.zshrc</code> для удобного запуска</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#ffb054;">alias </span><span style="color:#ffc600;">obs</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">VK_ICD_FILENAMES=/opt/amdgpu-pro/etc/vulkan/icd.d/amd_icd64.json:/opt/amdgpu-pro/etc/vulkan/icd.d/amd_icd32.json OBS_USE_EGL=1 obs</span><span style="color:#f9f9f9;">&quot;
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> или
+</span><span style="color:#ffb054;">alias </span><span style="color:#ffc600;">obs</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/amd_pro_icd64.json:/usr/share/vulkan/icd.d/amd_pro_icd32.json OBS_USE_EGL=1  obs</span><span style="color:#f9f9f9;">&quot;
+</span></code></pre>
+<p>Не знаю почему, но если я использую <strong>amd_pro_icd64.json</strong> из <code>/usr/share/vulkan/icd.d/</code> у меня при изменении битрейта и начав запись obs вылетает впадая в segfault</p>
+<p>Если у кого-то также я советую установить отдельные части драйверов AMDGPU-PRO Vulkan и AMF которые будут закачаны в <code>/opt</code> и запускать данные <code>VK_ICD_FILENAMES</code> от туда</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">git</span><span style="color:#ffee80;"> clone https://github.com/DoomPenguin9/amdgpu-pro-vulkan-and-amf-only.git
+</span><span style="color:#ffb054;">cd</span><span style="color:#ffee80;"> amdgpu-pro-vulkan-and-amf-only
+</span><span style="color:#f9f9f9;">makepkg -si
+</span></code></pre>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

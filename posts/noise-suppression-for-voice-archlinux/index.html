@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>Плагин подавления шума микрофона в реальном времени noise-suppression-for-voice</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  Плагин подавления шума микрофона в реальном времени noise-suppression-for-voice
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-03-07T00:59:13+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux/">linux</a>
+
+<br>
+
+
+
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/werman/noise-suppression-for-voice">Github страница проекта</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.youtube.com/watch?v=lrrUXVoNpqg">Видео Гайд для Windows</a></li>
+</ul>
+<p>В моём примере всё будет делаться на pipewire</p>
+<p>Требование:</p>
+<ol>
+<li>Ваш микрофон должен иметь поддержку частоту дискретизации в 48000 Hz. Pipewire по умолчанию переводит частоту дискретизации на 48000. Однако на всякий проверить это можно данной командой</li>
+</ol>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">cat</span><span style="color:#ffee80;"> /proc/asound/card3/stream0
+</span></code></pre>
+<pre>
+Samson Technologies Samson C01U Pro Mic at usb-0000:00:1d.0-1.6, full speed : USB Audio
+
+Playback:
+ Status: Running
+   Interface = 1
+   Altset = 1
+   Packet Size = 196
+   Momentary freq = <u><b>48000 Hz</b></u> (0x30.0000)
+ Interface 1
+   Altset 1
+   Format: S16_LE
+   Channels: 2
+   Endpoint: 0x01 (1 OUT) (SYNC)
+   Rates: 44100, 48000
+   Bits: 16
+   Channel map: FL FR
+</pre>
+<p>Как видно из <code>Momentary freq</code> мне ничего менять не нужно</p>
+<p>Качаем плагин</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> noise-suppression-for-voice
+</span></code></pre>
+<p>Создаём необходимую папку</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">mkdir -p </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.config/pipewire/pipewire.conf.d/
+</span></code></pre>
+<p>Вставляем <a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/werman/noise-suppression-for-voice#:~:text=context.modules%20%3D%20%5B%0A%7B%20%20%20name%20%3D%20libpipewire,Source%0A%20%20%20%20%20%20%20%20%20%20%20%20audio.rate%20%3D%2048000%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%7D%0A%5D">это всё</a> но меняем на то что показано ниже</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">nvim </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.config/pipewire/pipewire.conf.d/99-input-denoising.conf
+</span></code></pre>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">...........
+</span><span style="color:#f9f9f9;">			.........
+</span><span style="color:#f9f9f9;">			#</span><span style="font-style:italic;color:#0088ff;"> Название
+</span><span style="color:#f9f9f9;">			node.description</span><span style="color:#ffee80;"> = </span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">Noise Canceling source</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#ffee80;"> --</span><span style="color:#ff9d00;">&gt;&gt; </span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">Шумодав микро</span><span style="color:#f9f9f9;">&quot;
+</span><span style="color:#f9f9f9;">			media.name</span><span style="color:#ffee80;"> = </span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">Noise Canceling source</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#ffee80;"> --</span><span style="color:#ff9d00;">&gt;&gt; </span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">Шумодав микро</span><span style="color:#f9f9f9;">&quot;
+</span><span style="color:#f9f9f9;">			........
+</span><span style="color:#f9f9f9;">					........
+</span><span style="color:#f9f9f9;">					#</span><span style="font-style:italic;color:#0088ff;"> Указываем путь библиотеки из скачанного пакета noise-suppression-for-voice
+</span><span style="color:#f9f9f9;">					plugin</span><span style="color:#ffee80;"> = /path/to/librnnoise_ladspa.so --</span><span style="color:#ff9d00;">&gt;&gt;</span><span style="color:#ffee80;"> plugin = /usr/lib/ladspa/librnnoise_ladspa.so
+</span><span style="color:#f9f9f9;">					......
+</span><span style="color:#f9f9f9;">		..........
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">.........
+</span></code></pre>
+<p>Перезагружаем pipewire</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">systemctl --user</span><span style="color:#ffee80;"> restart pipewire
+</span></code></pre>
+<p>Открываем obs, и в Mic/Aur жмём на шестерёнку и выбираем "Свойства"
+В выпадающем списке выбираем "Шумодав микро"</p>
+<p><img src="/images/noise-suppression-for-voice-archlinux/obs.png" alt="image" /></p>
+<p><img src="/images/noise-suppression-for-voice-archlinux/obs-noise-suppression-source.png" alt="image" /></p>
+<p>Теперь у вас активированный шумодав на вашем микрофоне</p>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

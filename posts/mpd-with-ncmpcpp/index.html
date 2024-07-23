@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>!Mpd + ncmpcpp</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  !Mpd + ncmpcpp
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-03-22T01:47:28+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux/">linux</a>
+
+<br>
+
+
+	<aside id="toc-aside" class="toc">
+	    <details>
+			<summary>Оглавление</summary>
+	        <ol>
+	            <li>
+	                <a href="#ncmpcpp">ncmpcpp</a>
+	                <ol>
+	                    <li>
+	                        <a href="#raznye-poleznye-shtuki">!Разные полезные штуки</a>
+	                    </li>
+	                </ol>
+	            </li><li>
+	                <a href="#otkryt-ncmpcpp-s-vizualizatorom">Открыть ncmpcpp с визуализатором</a>
+	                <ol>
+	                    <li>
+	                        <a href="#playerctl-mpd-mpris">Playerctl + mpd-mpris</a>
+	                    </li>
+	                </ol>
+	            </li>
+	        </ol>
+		</details>
+	</aside>
+
+
+<p>MPD сокращенно (музыкальный демон), а ncmpcpp это музыкальный плеер</p>
+<p>Установка и настройка</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> mpd
+</span><span style="color:#f9f9f9;">mkdir -p </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.config/mpd/playlists
+</span><span style="color:#f9f9f9;">touch </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.config/mpd/</span><span style="color:#f9f9f9;">{</span><span style="color:#ffee80;">database</span><span style="color:#f9f9f9;">,</span><span style="color:#ffee80;">pid</span><span style="color:#f9f9f9;">,</span><span style="color:#ffee80;">state</span><span style="color:#f9f9f9;">}
+</span></code></pre>
+<p>Копируем пример конфига</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">cp</span><span style="color:#ffee80;"> /usr/share/doc/mpd/mpdconf.example </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.config/mpd/mpd.conf
+</span><span style="color:#f9f9f9;">nvim </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.config/mpd/mpd.conf
+</span></code></pre>
+<!-- Либо используем [мой пользовательский конфиг файл]() -->
+<p>Запуск демона MPD</p>
+<ol>
+<li>Прописываем в <code>.xprofile</code> (для DM) или <code>.xinitrc</code> (запуск с TTY) для автозапуска</li>
+</ol>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#ffb054;">echo </span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">mpd &amp;</span><span style="color:#f9f9f9;">&quot; </span><span style="color:#ff9d00;">&gt;&gt; </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.xinitrc
+</span></code></pre>
+<ol start="2">
+<li>Или запускаем systemd сервис</li>
+</ol>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">systemctl --user</span><span style="color:#ffee80;"> enable</span><span style="color:#f9f9f9;"> --now</span><span style="color:#ffee80;"> mpd
+</span></code></pre>
+<p>Для проверки запустите status сервиса</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">systemctl --user</span><span style="color:#ffee80;"> status mpd
+</span></code></pre>
+<p>Также скачиваем mpc, он необходим для уведомления о текущим треке и для обновления базу данных о треке</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> mpc
+</span></code></pre>
+<p>Для обновления вводим <code>mpc update</code></p>
+<h2 id="ncmpcpp"><a class="anchor" href="#ncmpcpp">#</a>&nbsp;
+ncmpcpp</h2>
+<p>Это TUI музыкальный клиент</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> ncmpcpp
+</span><span style="color:#f9f9f9;">mkdir </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.config/ncmpcpp
+</span></code></pre>
+<p>Копируем пример конфиг файл</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">cp</span><span style="color:#ffee80;"> /usr/share/doc/ncmpcpp/config </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.config/ncmpcpp
+</span></code></pre>
+<!-- Либо используем [мой пользовательский конфиг файл]() -->
+<blockquote>
+<p>ВАЖНО: Для того что понять какая клавиша за что отвечает - нажмите F1</p>
+</blockquote>
+<p>Мини версия клавиш или то что я часто нажимаю на этом плеере</p>
+<pre style="background-color:#2b303b;color:#ffffff;"><code><span style="color:#f9f9f9;"># Перемещение по вкладкам с помощью цифр и равно(=)
+</span><span style="color:#f9f9f9;">1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | =
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;"># Добавить в список воспроизведения (Целую папку | Файл) если находитесь во вкладке 2 (Browser)
+</span><span style="color:#f9f9f9;">Space
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;"># Воспроизвести трек
+</span><span style="color:#f9f9f9;">Backspace
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;"># Воспроизвести выбранный трек
+</span><span style="color:#f9f9f9;">Enter
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;"># Пауза/Воспроизведение
+</span><span style="color:#f9f9f9;">p
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;"># Следующий трек | Предыдущий трек
+</span><span style="color:#f9f9f9;">         Shift+&gt; | Shift+&lt;
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;"># Повторить трек по кругу (необходимо вкл (y) - “Single Mode” только играет один трек, а затем останавливается)
+</span><span style="color:#f9f9f9;">r
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;"># Очистить список воспроизведения (1)
+</span><span style="color:#f9f9f9;">c
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;"># Вкл|Выкл режим вперемешку
+</span><span style="color:#f9f9f9;">z
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;"># Вкл|Выкл режим crossfade (затухание при конце следующего трека)
+</span><span style="color:#f9f9f9;">x
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;"># Обновить базу данных музыки
+</span><span style="color:#f9f9f9;">u
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;"># Разделить окно по ширине (полезно совмещать с вкладкой (8) Визуализатор)
+</span><span style="color:#f9f9f9;">Ctrl+l
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;"># Смена интерфейс (рекомендую classic). В конфиге ncmpcpp определяется как
+</span><span style="color:#f9f9f9;"># user_interface = &quot;alternative&quot;
+</span><span style="color:#f9f9f9;">\
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;"># Информация о треке
+</span><span style="color:#f9f9f9;">i
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;"># Информация о композиторе
+</span><span style="color:#f9f9f9;">Shift+i
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;"># Включить (Найти) текста песни
+</span><span style="color:#f9f9f9;">l
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;"># Выйти
+</span><span style="color:#f9f9f9;">q
+</span></code></pre>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="http://dotshare.it/category/mpd/ncmpcpp/">Страница по различным dot файлам ncmpcpp</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://pkgbuild.com/~jelle/ncmpcpp/">Cheatsheet страница по ncmpcpp</a></li>
+</ul>
+<h3 id="raznye-poleznye-shtuki"><a class="anchor" href="#raznye-poleznye-shtuki">#</a>&nbsp;
+!Разные полезные штуки</h3>
+<h1 id="otkryt-ncmpcpp-s-vizualizatorom"><a class="anchor" href="#otkryt-ncmpcpp-s-vizualizatorom">#</a>&nbsp;
+Открыть ncmpcpp с визуализатором</h1>
+<p>Прописать в конфиге</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">startup_slave_screen</span><span style="color:#ffee80;"> = </span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">visualizer</span><span style="color:#f9f9f9;">&quot;
+</span></code></pre>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">ncmpcpp -S</span><span style="color:#ffee80;"> visualizer
+</span></code></pre>
+<h2 id="playerctl-mpd-mpris"><a class="anchor" href="#playerctl-mpd-mpris">#</a>&nbsp;
+Playerctl + mpd-mpris</h2>
+<p>playerctl - это MPRIS Media Player контроллер для Spotify, VLC, BMP, XMMS2 и другие</p>
+<p>Установка</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> playerctl
+</span></code></pre>
+<p>Playerctl не поддерживает mpd из коробки, поэтому при нажатии на FN+F6|7|8 никаких действий в mpd не происходит только в браузере</p>
+<p>При проверке в терминале</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">playerctl</span><span style="color:#ffee80;"> next
+</span></code></pre>
+<pre style="background-color:#2b303b;color:#ffffff;"><code><span style="color:#f9f9f9;">output: No players found
+</span></code></pre>
+<p>Есть <font color="green">решение</font> реализации MPRIS протокола для mpd называется <a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/natsukagami/mpd-mpris">mpd-mpris</a><br />
+На данный момент mpd-mpris предоставляет:</p>
+<ol>
+<li>Статус о проигрываемом треке (KDE)</li>
+<li>Умеет показывать обложки любого трека (если он прописан в тегах)</li>
+<li>Управление треков мультимедийными клавишами</li>
+</ol>
+<p><img src="/images/mpd-with-ncmpcpp/mpDris2_1.png" alt="image" /></p>
+<p><img src="/images/mpd-with-ncmpcpp/mpDris2_2.png" alt="image" /></p>
+<p><img src="/images/mpd-with-ncmpcpp/mpDris2_3.png" alt="image" /></p>
+<p>Установка</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">yay -S</span><span style="color:#ffee80;"> mpd-mpris
+</span></code></pre>
+<p>Для автозапуска прописываем в <code>~/.xprofile</code> (для DM) или <code>~/.xinitrc</code> (запуск с TTY)</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">mpd-mpris -no-instance </span><span style="color:#ff9d00;">&amp;
+</span></code></pre>
+<p>Или включив systemd сервис</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">systemctl --user</span><span style="color:#ffee80;"> enable</span><span style="color:#f9f9f9;"> --now</span><span style="color:#ffee80;"> mpd-mpris
+</span></code></pre>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

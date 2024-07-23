@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>Минималистичные просмотрщики изображений</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  Минималистичные просмотрщики изображений
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-03-24T00:48:14+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux/">linux</a>
+
+<br>
+
+
+	<aside id="toc-aside" class="toc">
+	    <details>
+			<summary>Оглавление</summary>
+	        <ol>
+	            <li>
+	                <a href="#feh">feh</a>
+	                <ol>
+	                    <li>
+	                        <a href="#skroll-izobrazhenii-myshkoi">Скролл изображений мышкой</a>
+	                    </li><li>
+	                        <a href="#izmenenie-fona-i-avtomasshtabirovanie">Изменение фона и автомасштабирование</a>
+	                    </li><li>
+	                        <a href="#ispravlenie-shriftov-kirillitsy-v-puti-papok-i-nazvanii">Исправление шрифтов кириллицы в пути папок и названии</a>
+	                    </li><li>
+	                        <a href="#deistviia-action">Действия (action)</a>
+	                    </li>
+	                </ol>
+	            </li><li>
+	                <a href="#nsxiv">nsxiv</a>
+	                <ol>
+	                    <li>
+	                        <a href="#izmeniaem-tsvet-zadnika-perednik-shrift-i-tsvet-bara-a-takzhe-metku">Изменяем цвет задника, передник, шрифт и цвет бара а также Метку</a>
+	                    </li><li>
+	                        <a href="#obrabotchik-klavish-key-handler">Обработчик-клавиш (key-handler)</a>
+	                    </li><li>
+	                        <a href="#bol-she-informatsii-v-status-bar">Больше информации в Status bar</a>
+	                    </li>
+	                </ol>
+	            </li>
+	        </ol>
+		</details>
+	</aside>
+
+
+<p>Ниже представлены разные просмотрщиков основное их отличие это комплексность</p>
+<h2 id="feh"><a class="anchor" href="#feh">#</a>&nbsp;
+feh</h2>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://uriesk.wordpress.com/2017/04/30/using-feh-as-the-default-image-viewerbrowser-in-a-tiling-wm-environment/">ENG Гайд по настройке с подробностями</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://man.archlinux.org/man/feh.1#OPTIONS">Список опции в Arch Wiki</a></li>
+</ul>
+<p>Самый легковесный просмотрщик изображений. Его ещё можно юзать как обои на раб стол</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> feh
+</span></code></pre>
+<ul>
+<li><code>~/.config/feh/themes</code> - для настройки фона и тем</li>
+<li><code>~/.config/feh/keys</code> - для клавиатурных биндов</li>
+<li><code>~/.config/feh/buttons</code> - для биндов кнопок мыши</li>
+</ul>
+<h3 id="skroll-izobrazhenii-myshkoi"><a class="anchor" href="#skroll-izobrazhenii-myshkoi">#</a>&nbsp;
+Скролл изображений мышкой</h3>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.reddit.com/r/linuxquestions/comments/ae3pzr/how_to_get_feh_to_zoom_in_with_scroll_wheel/">Источник из subreddit</a></li>
+</ul>
+<p>Вставляем в <code>~/.config/feh/buttons</code></p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Unbind existing scroll operations
+</span><span style="color:#f9f9f9;">prev_img
+</span><span style="color:#f9f9f9;">next_img
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Set &lt;action&gt; &lt;mouse button&gt;
+</span><span style="color:#f9f9f9;">zoom_in</span><span style="color:#ffee80;"> 4
+</span><span style="color:#f9f9f9;">zoom_out</span><span style="color:#ffee80;"> 5
+</span></code></pre>
+<h3 id="izmenenie-fona-i-avtomasshtabirovanie"><a class="anchor" href="#izmenenie-fona-i-avtomasshtabirovanie">#</a>&nbsp;
+Изменение фона и автомасштабирование</h3>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://unix.stackexchange.com/questions/426526/how-to-permanently-set-default-color-of-fehs-background-to-black">Источник из stackexchange</a></li>
+</ul>
+<p>Меня постоянно бесит прозрачность на фоне, хорошо что данный фон можно изменить (я поставил чёрный) в конфигурационном файле <code>~/.config/feh/themes</code> добавил данные строки</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">feh --image-bg</span><span style="color:#ff9d00;">=</span><span style="color:#ffee80;">black </span><span style="color:#f9f9f9;">\
+</span><span style="color:#f9f9f9;">--draw-filename \
+</span><span style="color:#f9f9f9;">--scale-down \
+</span><span style="color:#f9f9f9;">--auto-zoom \
+</span><span style="color:#ffee80;">....
+</span></code></pre>
+<h3 id="ispravlenie-shriftov-kirillitsy-v-puti-papok-i-nazvanii"><a class="anchor" href="#ispravlenie-shriftov-kirillitsy-v-puti-papok-i-nazvanii">#</a>&nbsp;
+Исправление шрифтов кириллицы в пути папок и названии</h3>
+<p>Качаем шрифт, например roboto</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> ttf-roboto
+</span></code></pre>
+<p>Вставляем к дополнению к конфигу <code>~/.config/feh/themes</code></p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">....
+</span><span style="color:#f9f9f9;">--fontpath</span><span style="color:#ffee80;"> /usr/share/fonts/TTF </span><span style="color:#f9f9f9;">\
+</span><span style="color:#f9f9f9;">--font</span><span style="color:#ffee80;"> Roboto-Regular/11 </span><span style="color:#f9f9f9;">\
+</span><span style="color:#f9f9f9;">--menu-font</span><span style="color:#ffee80;"> Roboto-Regular/11 </span><span style="color:#f9f9f9;">\
+</span><span style="color:#ffee80;">....
+</span></code></pre>
+<h3 id="deistviia-action"><a class="anchor" href="#deistviia-action">#</a>&nbsp;
+Действия (action)</h3>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://unix.stackexchange.com/questions/227863/bind-key-to-custom-script-in-feh">Источник</a></li>
+</ul>
+<p>Данные действия значительно упрощаю работу с картинками, как собственно и с nsxiv</p>
+<blockquote>
+<p>Использование их осуществляется только цифрами на клавиатуре</p>
+<p>Чтобы показать список действий нажмите <code>a</code></p>
+</blockquote>
+<p>Вставляем к дополнению к конфигу <code>~/.config/feh/themes</code></p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">--action1 &quot;</span><span style="color:#9eff80;">;[Скопировать изображение в буфер обмена] xclip -selection clipboard -t image/png &lt; %F &amp;&amp; dunstify &#39;Изображение скопировано!&#39; &#39;%F&#39;</span><span style="color:#f9f9f9;">&quot; \
+</span><span style="color:#f9f9f9;">--action2 &quot;</span><span style="color:#9eff80;">;[Скопировать путь в буфер обмена] echo %F | xclip -i -selection clipboard &amp;&amp; dunstify &#39;Путь к файлу скопирован&#39; &#39;%F&#39;</span><span style="color:#f9f9f9;">&quot;  \
+</span><span style="color:#f9f9f9;">--action3 &quot;</span><span style="color:#9eff80;">;[Отредактировать используя Gimp] gimp %F &amp;</span><span style="color:#f9f9f9;">&quot; \
+</span><span style="color:#f9f9f9;">--action4 &quot;</span><span style="color:#9eff80;">;[Показать в проводнике pcmanfm] pcmanfm %F/.. &amp;</span><span style="color:#f9f9f9;">&quot;
+</span></code></pre>
+<h2 id="nsxiv"><a class="anchor" href="#nsxiv">#</a>&nbsp;
+nsxiv</h2>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/muennich/sxiv">Simple X Image Viewer</a> из семейства <a rel="noopener nofollow noreferrer" target="_blank" href="https://suckless.org/">Suckless</a> который заброшен и не развивается. Поэтому второй (<a rel="noopener nofollow noreferrer" target="_blank" href="https://codeberg.org/nsxiv/nsxiv">Neo Simple X Image Viewer</a>) является его форком т.е продолжением который поддерживаться и пока распространяется в виде <a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/nsxiv">AUR пакета</a></p>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.youtube.com/watch?v=GYW9i_u5PYs">Обзор на sxiv от Люка</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.youtube.com/watch?v=ocwuA9Cs8RA">Обзор на nsxiv от Brodie</a></li>
+</ul>
+<p>Установка</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">yay -S</span><span style="color:#ffee80;"> nsxiv
+</span></code></pre>
+<blockquote>
+<p>80% в этом просмотрщике управляется клавой (20% управляется мышкой), поэтому я рекомендую посетить man страницу по нему если у вас возникли вопросы <code>man nsxiv</code></p>
+</blockquote>
+<p>Коротко о стандартных хоткеях и командах</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Следующая | предыдущая картинка
+</span><span style="color:#f9f9f9;">      n,</span><span style="color:#ffee80;"> Пробел </span><span style="color:#ff9d00;">| </span><span style="color:#f9f9f9;">p,</span><span style="color:#ffee80;"> Backspace
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Или мышкой кликая с края изображения
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> (клавой) Приблизить | Отдалить
+</span><span style="color:#f9f9f9;">          +</span><span style="color:#ff9d00;">|</span><span style="color:#f9f9f9;">-
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> (мышкой) Приблизить | Отдалить
+</span><span style="color:#f9f9f9;">Колёсиком</span><span style="color:#ffee80;"> мыши
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> (клавой) Перемещение при зуме
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Стрелки | vim клавиши
+</span><span style="color:#f9f9f9;">    ←↓</span><span style="color:#ffee80;"> ↑ → </span><span style="color:#ff9d00;">| </span><span style="color:#f9f9f9;">h,j,k,l
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> (Мышкой) Перемещение при зуме
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Удерживая СКМ
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Перевернуть картинку на 90º
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Вправо | Влево
+</span><span style="color:#f9f9f9;">     Shift+</span><span style="color:#ff9d00;">&gt;|</span><span style="color:#f9f9f9;">Shift+</span><span style="color:#ff9d00;">&lt;
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> (Через фм) Воспроизвести | остановить Gif (если гифка статичная)
+</span><span style="color:#f9f9f9;">Ctrl+Space
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> (Через терминал) Воспроизвести Gif командой
+</span><span style="color:#f9f9f9;">nsxiv -a </span><span style="color:#ff9d00;">[</span><span style="color:#ffee80;">гифка</span><span style="color:#ff9d00;">]</span><span style="color:#ffee80;">.gif
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Отметить одно изображение (Выделить)
+</span><span style="color:#f9f9f9;">m
+</span></code></pre>
+<h3 id="izmeniaem-tsvet-zadnika-perednik-shrift-i-tsvet-bara-a-takzhe-metku"><a class="anchor" href="#izmeniaem-tsvet-zadnika-perednik-shrift-i-tsvet-bara-a-takzhe-metku">#</a>&nbsp;
+Изменяем цвет задника, передник, шрифт и цвет бара а также Метку</h3>
+<p>Он меняется в <code>.Xresources</code> такими параметрами</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">Nsxiv.window.background: #</span><span style="font-style:italic;color:#0088ff;">000000
+</span><span style="color:#f9f9f9;">Nsxiv.window.foreground: #</span><span style="font-style:italic;color:#0088ff;">e7e7e7
+</span><span style="color:#f9f9f9;">Nsxiv.bar.background: #</span><span style="font-style:italic;color:#0088ff;">000000
+</span><span style="color:#f9f9f9;">Nsxiv.mark.foreground: #</span><span style="font-style:italic;color:#0088ff;">8DF345
+</span><span style="color:#f9f9f9;">Nsxiv.bar.font:</span><span style="color:#ffee80;"> monospace-12
+</span></code></pre>
+<h3 id="obrabotchik-klavish-key-handler"><a class="anchor" href="#obrabotchik-klavish-key-handler">#</a>&nbsp;
+Обработчик-клавиш (key-handler)</h3>
+<p>Это очень сильно расширяет функционал nsxiv добавляя хоткей клавишу <strong>Ctrl+x</strong> пробуждая наш обработчик-клавиш который потом считывает в файле определённую клавишу, которая определена в нём</p>
+<p>Создаём папку</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">mkdir -pv </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.config/nsxiv/exec/
+</span></code></pre>
+<p>И копируем key-handler как у <a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/LukeSmithxyz/voidrice/blob/master/.config/sxiv/exec/key-handler">Luke Smith</a> в указанную директорию</p>
+<p>Делаем его исполняемым</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">chmod</span><span style="color:#ffee80;"> +x key-handler
+</span></code></pre>
+<p>При открытии картинки жмём комбинацию клавиш <strong>Crtl+x</strong> и указанную в key-handler клавишу</p>
+<h3 id="bol-she-informatsii-v-status-bar"><a class="anchor" href="#bol-she-informatsii-v-status-bar">#</a>&nbsp;
+Больше информации в Status bar</h3>
+<p>Данный конфиг добавляет внизу</p>
+<p>[Размер] [ширина/высота] [Имя файла] [Zoom] [картинка по счёту]</p>
+<p>Копируем файл, делаем его исполняемым и проверяем</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">cp</span><span style="color:#ffee80;"> /usr/share/doc/nsxiv/examples/image-info </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.config/nsxiv/exec/
+</span></code></pre>
+<p>Открывать все изображения находящиеся в каталоге. А не по одному, особенно если юзаете pcmanfm</p>
+<h4 id="v-vide-skripta"><a class="anchor" href="#v-vide-skripta">#</a>&nbsp;
+!В виде скрипта</h4>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://codeberg.org/nsxiv/nsxiv-extra/raw/branch/master/scripts/nsxiv-rifle/nsxiv-rifle">Качаете скрипт nsxiv-rifle</a> и закидываете его в $PATH переменную (т.е в <code>~/.local/bin</code>), в терминале вводим данную команду</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">wget -P $HOME</span><span style="color:#ffee80;">/.local/bin https://codeberg.org/nsxiv/nsxiv-extra/raw/branch/master/scripts/nsxiv-rifle/nsxiv-rifle
+</span></code></pre>
+<p>Либо можете взять (немного модифицированный) скрипт из <a rel="noopener nofollow noreferrer" target="_blank" href="https://gitlab.com/anzix/dotfiles/-/raw/master/base/local/.local/bin/scripts/nsxiv-rifle">моего dotfiles</a></p>
+<p>Делаем его исполняемым</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">chmod</span><span style="color:#ffee80;"> +x nsxiv-rifle
+</span></code></pre>
+<p>Создаём <strong>nsxiv-rifle.desktop</strong> в директории <code>$HOME/.local/share/applications/</code></p>
+<p>Вписываем всё это и сохраняем</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">nvim </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.local/share/applications/nsxiv-rifle.desktop
+</span></code></pre>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">[Desktop</span><span style="color:#ffee80;"> Entry]
+</span><span style="color:#f9f9f9;">Type</span><span style="color:#ff9d00;">=</span><span style="color:#3ad900;">Application
+</span><span style="color:#f9f9f9;">Name</span><span style="color:#ff9d00;">=</span><span style="color:#3ad900;">nsxiv-rifle
+</span><span style="color:#f9f9f9;">GenericName</span><span style="color:#ff9d00;">=</span><span style="color:#3ad900;">Image </span><span style="color:#f9f9f9;">Viewer
+</span><span style="color:#f9f9f9;">Exec</span><span style="color:#ff9d00;">=</span><span style="color:#3ad900;">nsxiv-rifle </span><span style="color:#f9f9f9;">%F
+</span><span style="color:#f9f9f9;">MimeType</span><span style="color:#ff9d00;">=</span><span style="color:#3ad900;">image/bmp</span><span style="color:#ff9d00;">;</span><span style="color:#f9f9f9;">image/gif</span><span style="color:#ff9d00;">;</span><span style="color:#f9f9f9;">image/jpeg</span><span style="color:#ff9d00;">;</span><span style="color:#f9f9f9;">image/jpg</span><span style="color:#ff9d00;">;</span><span style="color:#f9f9f9;">image/png</span><span style="color:#ff9d00;">;</span><span style="color:#f9f9f9;">image/tiff</span><span style="color:#ff9d00;">;</span><span style="color:#f9f9f9;">image/x-bmp</span><span style="color:#ff9d00;">;</span><span style="color:#f9f9f9;">image/x-portable-anymap</span><span style="color:#ff9d00;">;</span><span style="color:#f9f9f9;">image/x-portable-bitmap</span><span style="color:#ff9d00;">;</span><span style="color:#f9f9f9;">image/x-portable-graymap</span><span style="color:#ff9d00;">;</span><span style="color:#f9f9f9;">image/x-tga</span><span style="color:#ff9d00;">;</span><span style="color:#f9f9f9;">image/x-xpixmap</span><span style="color:#ff9d00;">;</span><span style="color:#f9f9f9;">image/webp</span><span style="color:#ff9d00;">;
+</span><span style="color:#f9f9f9;">NoDisplay</span><span style="color:#ff9d00;">=</span><span style="color:#3ad900;">true
+</span><span style="color:#f9f9f9;">Icon</span><span style="color:#ff9d00;">=</span><span style="color:#3ad900;">nsxiv
+</span></code></pre>
+<p>Далее прописываем в <code>$HOME/.config/mimeapps.list</code> и сохраняем</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">nvim </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.config/mimeapps.list
+</span></code></pre>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">image/jpg</span><span style="color:#ff9d00;">=</span><span style="color:#3ad900;">nsxiv-rifle.desktop</span><span style="color:#ff9d00;">;
+</span><span style="color:#f9f9f9;">image/jpeg</span><span style="color:#ff9d00;">=</span><span style="color:#3ad900;">nsxiv-rifle.desktop</span><span style="color:#ff9d00;">;
+</span><span style="color:#f9f9f9;">image/png</span><span style="color:#ff9d00;">=</span><span style="color:#3ad900;">nsxiv-rifle.desktop</span><span style="color:#ff9d00;">;
+</span><span style="color:#f9f9f9;">image/gif</span><span style="color:#ff9d00;">=</span><span style="color:#3ad900;">nsxiv-rifle.desktop</span><span style="color:#ff9d00;">;
+</span><span style="color:#f9f9f9;">image/webp</span><span style="color:#ff9d00;">=</span><span style="color:#3ad900;">nsxiv-rifle.desktop</span><span style="color:#ff9d00;">;
+</span><span style="color:#f9f9f9;">image/tiff</span><span style="color:#ff9d00;">=</span><span style="color:#3ad900;">nsxiv-rifle.desktop</span><span style="color:#ff9d00;">;
+</span><span style="color:#f9f9f9;">image/bmp</span><span style="color:#ff9d00;">=</span><span style="color:#3ad900;">nsxiv-rifle.desktop</span><span style="color:#ff9d00;">;
+</span></code></pre>
+<p>И теперь вместо одного изображения в каталоге будут все открываться в pcmanfm и других GUI файловых менеджерах</p>
+<h4 id="patchit-source-code-nsxiv"><a class="anchor" href="#patchit-source-code-nsxiv">#</a>&nbsp;
+!Патчить source code nsxiv</h4>
+<p>Появилась возможность <a rel="noopener nofollow noreferrer" target="_blank" href="https://codeberg.org/nsxiv/nsxiv-extra/src/branch/master/patches/load-dir">пропатчить nsxiv</a></p>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

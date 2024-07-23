@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>Эмуляция оптических дисков используя CDEmu (альтернатива Daemon-Tools)</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  Эмуляция оптических дисков используя CDEmu (альтернатива Daemon-Tools)
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-03-03T21:27:49+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux-gaming/">linux-gaming</a>
+
+<br>
+
+
+	<aside id="toc-aside" class="toc">
+	    <details>
+			<summary>Оглавление</summary>
+	        <ol>
+	            <li>
+	                <a href="#montirovanie-cherez-provodnik">Монтирование через проводник</a>
+	                
+	            </li><li>
+	                <a href="#montirovanie-bolee-1-emuliruemykh-obrazov-v-cdemu">Монтирование более 1 эмулируемых образов в CDEmu</a>
+	                
+	            </li>
+	        </ol>
+		</details>
+	</aside>
+
+
+<p>Источники:</p>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://wiki.archlinux.org/title/CDemu">Arch Wiki CDemu</a></li>
+</ul>
+<p>CDEmu может монтировать .nrg .iso .cue и другие форматы</p>
+<p>Качаем пакет</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> cdemu-client
+</span></code></pre>
+<blockquote>
+<p>Примечание: если у вас обычное ядро Linux, устанавливаем <code>vhba-module-dkms</code></p>
+</blockquote>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> vhba-module-dkms
+</span></code></pre>
+<p>Для активации демона который будет удобно монтировать наши образы вставляем в .xprofile (для DM) или .xinitrc (запуск с TTY)</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">cdemu-daemon </span><span style="color:#ff9d00;">&amp;
+</span></code></pre>
+<p>Для тех кто использует дисплей менеджеры</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">systemctl --user</span><span style="color:#ffee80;"> enable</span><span style="color:#f9f9f9;"> --now</span><span style="color:#ffee80;"> cdemu-daemon.service
+</span></code></pre>
+<h2 id="montirovanie-cherez-provodnik"><a class="anchor" href="#montirovanie-cherez-provodnik">#</a>&nbsp;
+Монтирование через проводник</h2>
+<p>В проводнике pcmanfm при нажатии на iso файл правой кнопкой мыши появится действие "Клиент CDEmu", жмём на него и диск смонтирован</p>
+<p><img src="/images/CDEmu-emulate-images/1666680474.png" alt="image" /></p>
+<p>Появится уведомление что диск был смонтирован и его можно открыть</p>
+<p><img src="/images/CDEmu-emulate-images/1666681885.png" alt="image" /></p>
+<p><img src="/images/CDEmu-emulate-images/1666677451.png" alt="image" /></p>
+<p>Далее уже можно юзать wine для установки игры, в общем всё стандартно</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">WINEPREFIX</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">&quot;$</span><span style="color:#edef7d;">HOME</span><span style="color:#9eff80;">/.local/share/wineprefixes/TRA</span><span style="color:#f9f9f9;">&quot; wine</span><span style="color:#ffee80;"> /run/media/</span><span style="color:#ff9d00;">[</span><span style="color:#ffee80;">username</span><span style="color:#ff9d00;">]</span><span style="color:#ffee80;">/Tomb_Raider_AnniVERSARY/setup.exe
+</span></code></pre>
+<p>Через терминал можно вызвать status команду какие эмулированные диски смонтированы</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">cdemu</span><span style="color:#ffee80;"> status
+</span></code></pre>
+<p>После того как установили игру, смонтированный образ можно удалить командой</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">cdemu</span><span style="color:#ffee80;"> unload 0
+</span></code></pre>
+<h2 id="montirovanie-bolee-1-emuliruemykh-obrazov-v-cdemu"><a class="anchor" href="#montirovanie-bolee-1-emuliruemykh-obrazov-v-cdemu">#</a>&nbsp;
+Монтирование более 1 эмулируемых образов в CDEmu</h2>
+<p>Была проблема когда примонтированным дисководом .mds образ содержал в себе ещё .mds образы которые я не смог смонтировать CDEmu. При нажатии "Клиент CDEmu" ничего не происходило, а в терминале при вводе команды возникала ошибка</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">cdemu</span><span style="color:#ffee80;"> load 1 /run/media/</span><span style="color:#ff9d00;">[</span><span style="color:#ffee80;">username</span><span style="color:#ff9d00;">]</span><span style="color:#ffee80;">/NFS_MF_BE/CD1/NFSMW_DISC1_HKZonda_by_P2PZone.org.mds
+</span><span style="color:#f9f9f9;">ОШИБКА:</span><span style="color:#ffee80;"> Не удалось смонтировать образ: g-io-error-quark: GDBus.Error:net.sf.cdemu.CDEmuDaemon.errorDaemon.InvalidArgument: Некорректный номер накопителя! (36</span><span style="color:#f9f9f9;">)
+</span></code></pre>
+<p>Проблема была в не актуальной <a rel="noopener nofollow noreferrer" target="_blank" href="https://wiki.archlinux.org/title/CDemu">Arch Wiki CDEmu</a> статье где не было указано о добавлении эмулируемого sr устройство
+Нашёл я на странице мануала необходимую мне опцию</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">man</span><span style="color:#ffee80;"> cdemu
+</span></code></pre>
+<ul>
+<li><code>add-device</code> - Создает еще одно виртуальное устройство
+Для добавления доп-го эмулируемого sr устройства выполняем данную команду</li>
+</ul>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">cdemu</span><span style="color:#ffee80;"> add-device
+</span></code></pre>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">Накопитель</span><span style="color:#ffee80;"> добавлен успешно.
+</span></code></pre>
+<p>Теперь наконец-то удалось смонтировать второй образ диска обеими вариантами через терминал (командой cdemu load 1) или нажав на образ в проводнике "Клиент CDEmu"</p>
+<p>Если создали ненужное пустое sr устр-во, его можно удалить данной командой</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">cdemu</span><span style="color:#ffee80;"> remove-device
+</span></code></pre>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">Накопитель</span><span style="color:#ffee80;"> удален успешно.
+</span></code></pre>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

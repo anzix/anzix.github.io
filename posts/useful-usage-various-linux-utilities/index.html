@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>Полезное применение различных утилит Linux</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  Полезное применение различных утилит Linux
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-10-21T15:40:00+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux/">linux</a>
+
+<br>
+
+
+	<aside id="toc-aside" class="toc">
+	    <details>
+			<summary>Оглавление</summary>
+	        <ol>
+	            <li>
+	                <a href="#systemd">systemd</a>
+	                <ol>
+	                    <li>
+	                        <a href="#redaktirovanie-unit-systemd-cherez-nvim-vim">Редактирование unit systemd через nvim/vim</a>
+	                    </li>
+	                </ol>
+	            </li><li>
+	                <a href="#hexedit-hexdump-i-xxd">hexedit, hexdump и xxd</a>
+	                <ol>
+	                    <li>
+	                        <a href="#sravnivanie-i-redaktirovanie-shestnadtsaterichnykh-hex-chisel-s-dvukh-raznykh-binarnykh-faila">Сравнивание и редактирование шестнадцатеричных (hex) чисел с двух разных бинарных файла</a>
+	                    </li><li>
+	                        <a href="#prostoi-vid-konvertirovanie-2-kh-binarnikov-v-txt-vmeste-sravnivaia-i-redaktiruia-ikh">(Простой вид) Конвертирование 2-х бинарников в .txt вместе сравнивая и редактируя их</a>
+	                    </li><li>
+	                        <a href="#kak-nakhodit-i-redaktirovat-po-offset-u">Как находить и редактировать по offset'у?</a>
+	                    </li>
+	                </ol>
+	            </li><li>
+	                <a href="#vim-neovim">vim/neovim</a>
+	                <ol>
+	                    <li>
+	                        <a href="#kak-dobavit-v-kontse-vsekh-strok-obratnuiu-kosuiu-chertu">Как добавить в конце всех строк обратную косую черту</a>
+	                    </li><li>
+	                        <a href="#kak-slit-stroki-blokom-sniz-v-odnu-stroku">Как слить строки блоком сниз в одну строку?</a>
+	                    </li>
+	                </ol>
+	            </li><li>
+	                <a href="#wget">wget</a>
+	                
+	            </li><li>
+	                <a href="#sed">sed</a>
+	                <ol>
+	                    <li>
+	                        <a href="#kak-pri-ispol-zovanii-sed-ne-redaktiruia-stroku-zakommentirovat-eio">Как при использовании sed не редактируя строку закомментировать её</a>
+	                    </li><li>
+	                        <a href="#kak-s-pri-ispol-zovanii-sed-zamenit-znachenie-stroki-s-probelami-no-ne-lomaia-oformlenie-etoi-stroki">Как с при использовании sed заменить значение строки с пробелами но не ломая оформление этой строки</a>
+	                    </li>
+	                </ol>
+	            </li><li>
+	                <a href="#raznoe">Разное</a>
+	                
+	            </li>
+	        </ol>
+		</details>
+	</aside>
+
+
+<h2 id="systemd"><a class="anchor" href="#systemd">#</a>&nbsp;
+systemd</h2>
+<h3 id="redaktirovanie-unit-systemd-cherez-nvim-vim"><a class="anchor" href="#redaktirovanie-unit-systemd-cherez-nvim-vim">#</a>&nbsp;
+Редактирование unit systemd через nvim/vim</h3>
+<p>Вводите с добавлением опции -E</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo -E</span><span style="color:#ffee80;"> systemctl edit reflector.timer
+</span></code></pre>
+<h2 id="hexedit-hexdump-i-xxd"><a class="anchor" href="#hexedit-hexdump-i-xxd">#</a>&nbsp;
+hexedit, hexdump и xxd</h2>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.youtube.com/watch?v=AbdkZZZ7-qA">Частично позаимствовано из данного видео гайда</a></li>
+</ul>
+<p>Сдампить все шестнадцатеричные числа и вывести в терминал убрав все точкии найти одинаковые паттерны байтов</p>
+<p>Пример:</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">$ hexdump bea.exe -C | sed &#39;s/\.//g&#39; | grep &#39;AB AA AA 3F&#39;
+</span><span style="color:#f9f9f9;">001db390  00 00 22 43 00 00 16 44  ab aa aa 3f 89 88 08 3b  |&quot;CD?;|
+</span><span style="color:#f9f9f9;">001e4af0  ab aa aa 3f a0 8a 61 00  70 f6 52 00 a0 d0 52 00  |?apRR|
+</span></code></pre>
+<h3 id="sravnivanie-i-redaktirovanie-shestnadtsaterichnykh-hex-chisel-s-dvukh-raznykh-binarnykh-faila"><a class="anchor" href="#sravnivanie-i-redaktirovanie-shestnadtsaterichnykh-hex-chisel-s-dvukh-raznykh-binarnykh-faila">#</a>&nbsp;
+Сравнивание и редактирование шестнадцатеричных (hex) чисел с двух разных бинарных файла</h3>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://superuser.com/questions/125376/how-do-i-compare-binary-files-in-linux">Источник</a></li>
+</ul>
+<p>Конвертируем бинарники в читабельный формат, записывая в выходной файл которые будут удобны в сравнивании</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">xxd</span><span style="color:#ffee80;"> bea_mod.exe </span><span style="color:#ff9d00;">&gt;</span><span style="color:#ffee80;"> bea_mod.hex
+</span><span style="color:#f9f9f9;">xxd</span><span style="color:#ffee80;"> bea.exe </span><span style="color:#ff9d00;">&gt;</span><span style="color:#ffee80;"> bea.hex
+</span></code></pre>
+<p>Сравниваем с помощью neovim используя опцию -d (diff) и заодно редактируем тот который будет использоваться</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">nvim -d</span><span style="color:#ffee80;"> bea.hex bea_mod.hex
+</span></code></pre>
+<p>Как только сохранили .hex файл конвертируем его обратно в .exe используя в xxd опцию -r</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">xxd -r</span><span style="color:#ffee80;"> TMNT2.hex TMNT2.exe
+</span></code></pre>
+<p>DONE!</p>
+<h4 id="tol-ko-prosmotr-sravnivaia-oba"><a class="anchor" href="#tol-ko-prosmotr-sravnivaia-oba">#</a>&nbsp;
+Только просмотр сравнивая оба</h4>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">diff </span><span style="color:#ff9d00;">&lt;</span><span style="color:#f9f9f9;">(xxd </span><span style="color:#ff9d00;">[</span><span style="color:#ffee80;">файл</span><span style="color:#ff9d00;">]</span><span style="color:#f9f9f9;">) </span><span style="color:#ff9d00;">&lt;</span><span style="color:#f9f9f9;">(xxd </span><span style="color:#ff9d00;">[</span><span style="color:#ffee80;">другой_файл</span><span style="color:#ff9d00;">]</span><span style="color:#f9f9f9;">) </span><span style="color:#ff9d00;">&gt;</span><span style="color:#ffee80;"> diff.txt
+</span><span style="color:#f9f9f9;">less</span><span style="color:#ffee80;"> diff.txt
+</span></code></pre>
+<h3 id="prostoi-vid-konvertirovanie-2-kh-binarnikov-v-txt-vmeste-sravnivaia-i-redaktiruia-ikh"><a class="anchor" href="#prostoi-vid-konvertirovanie-2-kh-binarnikov-v-txt-vmeste-sravnivaia-i-redaktiruia-ikh">#</a>&nbsp;
+(Простой вид) Конвертирование 2-х бинарников в .txt вместе сравнивая и редактируя их</h3>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.youtube.com/watch?v=QU7CDAPoUiI">Идею позаимствовал из данного видео</a></li>
+</ul>
+<p>Конвертируем в непрерывный формат вывода hex кода и меняем расширение на .txt</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">xxd -p</span><span style="color:#ffee80;"> bea.exe </span><span style="color:#ff9d00;">&gt;</span><span style="color:#ffee80;"> bea.txt
+</span><span style="color:#f9f9f9;">xxd -p</span><span style="color:#ffee80;"> bea_mod.exe </span><span style="color:#ff9d00;">&gt;</span><span style="color:#ffee80;"> bea_mod.txt
+</span></code></pre>
+<p>Редактором nvim сравниваем оба конвертированных файла</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">nvim -d</span><span style="color:#ffee80;"> bea.txt bea_mod.txt
+</span></code></pre>
+<p>Проводим манипуляции только с одним файлом (bea.txt)</p>
+<p>После редактирование и его сохранение, обратно преобразуем этот модифицируемый текстовый файл в исполняемый .exe</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">xxd -r -p</span><span style="color:#ffee80;"> bea.txt bea.exe
+</span></code></pre>
+<h3 id="kak-nakhodit-i-redaktirovat-po-offset-u"><a class="anchor" href="#kak-nakhodit-i-redaktirovat-po-offset-u">#</a>&nbsp;
+Как находить и редактировать по offset'у?</h3>
+<p>Используя hexdump (только показать)</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">hexdump</span><span style="color:#ffee80;"> TMNT2.exe</span><span style="color:#f9f9f9;"> -C </span><span style="color:#ff9d00;">| </span><span style="color:#f9f9f9;">grep &#39;</span><span style="color:#9eff80;">00246450</span><span style="color:#f9f9f9;">&#39;
+</span></code></pre>
+<h2 id="vim-neovim"><a class="anchor" href="#vim-neovim">#</a>&nbsp;
+vim/neovim</h2>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://youtu.be/AZmEK1cjTgA?t=189">Видос по search and replace через vim</a></li>
+</ul>
+<p>Таймкод: 3:03-5:20</p>
+<h3 id="kak-dobavit-v-kontse-vsekh-strok-obratnuiu-kosuiu-chertu"><a class="anchor" href="#kak-dobavit-v-kontse-vsekh-strok-obratnuiu-kosuiu-chertu">#</a>&nbsp;
+Как добавить в конце всех строк обратную косую черту</h3>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://stackoverflow.com/questions/594448/how-can-i-add-a-string-to-the-end-of-each-line-in-vim">Источник</a></li>
+</ul>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">y desktop-file-utils
+</span><span style="color:#f9f9f9;">faudio
+</span><span style="color:#f9f9f9;">fontconfig
+</span><span style="color:#f9f9f9;">freetype2
+</span><span style="color:#f9f9f9;">gcc-libs
+</span><span style="color:#f9f9f9;">gettext
+</span><span style="color:#f9f9f9;">glu
+</span><span style="color:#f9f9f9;">lcms2
+</span><span style="color:#f9f9f9;">lib32-faudio
+</span><span style="color:#f9f9f9;">lib32-fontconfig
+</span><span style="color:#f9f9f9;">lib32-freetype2
+</span><span style="color:#f9f9f9;">lib32-gcc-libs
+</span><span style="color:#f9f9f9;">.....
+</span></code></pre>
+<p>Данная команда</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">:%norm A \
+</span></code></pre>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">y desktop-file-utils \
+</span><span style="color:#f9f9f9;">faudio \
+</span><span style="color:#f9f9f9;">fontconfig \
+</span><span style="color:#f9f9f9;">freetype2 \
+</span><span style="color:#f9f9f9;">gcc-libs \
+</span><span style="color:#f9f9f9;">gettext \
+</span><span style="color:#f9f9f9;">glu \
+</span><span style="color:#f9f9f9;">lcms2 \
+</span><span style="color:#f9f9f9;">lib32-faudio \
+</span><span style="color:#f9f9f9;">lib32-fontconfig \
+</span><span style="color:#f9f9f9;">lib32-freetype2 \
+</span><span style="color:#f9f9f9;">.....
+</span></code></pre>
+<h3 id="kak-slit-stroki-blokom-sniz-v-odnu-stroku"><a class="anchor" href="#kak-slit-stroki-blokom-sniz-v-odnu-stroku">#</a>&nbsp;
+Как слить строки блоком сниз в одну строку?</h3>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://stackoverflow.com/questions/6577508/how-can-i-merge-multiple-lines-into-one-line-in-vim">Источник</a></li>
+</ul>
+<p>Команда</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">:%j
+</span></code></pre>
+<h2 id="wget"><a class="anchor" href="#wget">#</a>&nbsp;
+wget</h2>
+<p>Скачивание файла и замена данного файла на существующий в root каталоге</p>
+<p>Например эта целая строка</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> wget</span><span style="color:#f9f9f9;"> -O</span><span style="color:#ffee80;"> /etc/makepkg.conf https://gitlab.com/anzix/dotfiles/-/raw/master/makepkg.conf
+</span></code></pre>
+<h2 id="sed"><a class="anchor" href="#sed">#</a>&nbsp;
+sed</h2>
+<h3 id="kak-pri-ispol-zovanii-sed-ne-redaktiruia-stroku-zakommentirovat-eio"><a class="anchor" href="#kak-pri-ispol-zovanii-sed-ne-redaktiruia-stroku-zakommentirovat-eio">#</a>&nbsp;
+Как при использовании sed не редактируя строку закомментировать её</h3>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://unix.stackexchange.com/a/336774">Источник</a></li>
+</ul>
+<p>На примере убрав водяной знак в конфиге dgvoodoo.conf</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sed -i &#39;</span><span style="color:#9eff80;">/^dgVoodooWatermark.*/ s/./;&amp;/</span><span style="color:#f9f9f9;">&#39;</span><span style="color:#ffee80;"> dgVoodoo.conf
+</span></code></pre>
+<p>Раскомментирование</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sed -i &#39;</span><span style="color:#9eff80;">/&lt;pattern&gt;/s/^#//g</span><span style="color:#f9f9f9;">&#39;</span><span style="color:#ffee80;"> file
+</span></code></pre>
+<p>Комментирование</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sed -i &quot;</span><span style="color:#9eff80;">/&lt;pattern&gt;/s/^/#/g</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#ffee80;"> file
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Пример
+</span><span style="color:#f9f9f9;">sed -i &quot;</span><span style="color:#9eff80;">/^#en_US.UTF-8 UTF-8/s/^#//g</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#ffee80;"> /etc/locale.gen </span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> раскомментировать
+</span><span style="color:#f9f9f9;">sed -i &quot;</span><span style="color:#9eff80;">/^en_US.UTF-8 UTF-8/s/^/#/g</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#ffee80;"> /etc/locale.gen </span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> закомментировать
+</span></code></pre>
+<p>Вставить строку рядом с другой</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sed -i &quot;</span><span style="color:#9eff80;">/^PATTERN/s/WORD/WORD ADDED_WORD/</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#ffee80;"> FILE
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Пример
+</span><span style="color:#f9f9f9;">sed -i &quot;</span><span style="color:#9eff80;">/^HOOKS=(.*)/s/udev/udev resume/</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#ffee80;"> /etc/mkinitcpio.conf
+</span></code></pre>
+<p>Заменить целую строку если был найден паттерн</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sed -i &quot;</span><span style="color:#9eff80;">/^PATTERN/c\REPLACEMENT</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#ffee80;"> FILE
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Пример
+</span><span style="color:#f9f9f9;">sed -i &quot;</span><span style="color:#9eff80;">/^GRUB_DEFAULT=0/c\GRUB_DEFAULT=saved</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#ffee80;"> /etc/default/grub
+</span></code></pre>
+<h3 id="kak-s-pri-ispol-zovanii-sed-zamenit-znachenie-stroki-s-probelami-no-ne-lomaia-oformlenie-etoi-stroki"><a class="anchor" href="#kak-s-pri-ispol-zovanii-sed-zamenit-znachenie-stroki-s-probelami-no-ne-lomaia-oformlenie-etoi-stroki">#</a>&nbsp;
+Как с при использовании sed заменить значение строки с пробелами но не ломая оформление этой строки</h3>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://stackoverflow.com/questions/44234364/replace-string-with-space-using-sed">Источник</a></li>
+</ul>
+<p>На примере данной строки</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">Filtering                           = appdriven
+</span></code></pre>
+<p>Вот так это выглядит</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sed -i &#39;</span><span style="color:#9eff80;">/^Filtering/s/appdriven/trilinear/</span><span style="color:#f9f9f9;">&#39;</span><span style="color:#ffee80;"> dgVoodoo.conf
+</span></code></pre>
+<h2 id="raznoe"><a class="anchor" href="#raznoe">#</a>&nbsp;
+Разное</h2>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Список пакетов в одну большую строку
+</span><span style="color:#f9f9f9;">packages/base </span><span style="color:#ff9d00;">| </span><span style="color:#f9f9f9;">xargs
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Список пакетов в колонку
+</span><span style="color:#f9f9f9;">packages/base </span><span style="color:#ff9d00;">| </span><span style="color:#f9f9f9;">column -t
+</span></code></pre>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

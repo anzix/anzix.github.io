@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>!Говерноры и профили для CPU или как повысить производительность без софта</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  !Говерноры и профили для CPU или как повысить производительность без софта
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-03-09T20:03:39+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux-gaming/">linux-gaming</a>
+
+<br>
+
+
+	<aside id="toc-aside" class="toc">
+	    <details>
+			<summary>Оглавление</summary>
+	        <ol>
+	            <li>
+	                <a href="#avtozagruzka-profilia-pri-starte-sistemy">Автозагрузка профиля при старте системы</a>
+	                
+	            </li>
+	        </ol>
+		</details>
+	</aside>
+
+
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://losst.ru/chastota-protsessora-v-linux">Источник_1</a></li>
+</ul>
+<p>Можно не пользоваться GUI раздутым софтом <a rel="noopener nofollow noreferrer" target="_blank" href="https://docs.google.com/document/d/1c9yqKSz5LkS1Gd422w4TMdf-_76PHySzku4PsHbxZok/edit#heading=h.qqdpy2yl5x">CoreCtrl</a></p>
+<p>Воспользовался я простой функцией, находится в моём dotfiles <a rel="noopener nofollow noreferrer" target="_blank" href="https://gitlab.com/anzix/dotfiles/-/blob/7d2e8753a639145d40bae0a7299033c5bfc99315/zshrc/.config/zsh/functions.zsh#L82-94">конфиге functions.zsh</a>
+Вставить вы её можете в <code>.zshrc</code> или <code>.bashrc</code> сохранив файл и перезапустить Shell</p>
+<p>Как юзать?</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">powermode </span><span style="color:#ff9d00;">[</span><span style="color:#ffee80;">профиль</span><span style="color:#ff9d00;">]
+</span></code></pre>
+<p>Какой используется профиль?</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">powermode</span><span style="color:#ffee80;"> which
+</span></code></pre>
+<p>Доступные профили</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">powermode</span><span style="color:#ffee80;"> options
+</span></code></pre>
+<p>Профили:</p>
+<ul>
+<li>Дефолтный режим CPU: <code>schedutil</code></li>
+<li>Экономия энергии: <code>powersave</code></li>
+<li>Производительность: <code>performance</code></li>
+<li>*Консервативный: <code>conservative</code></li>
+</ul>
+<blockquote>
+<p>*Консервативный - при появлении нагрузки резко устанавливается самая высокая частота, а при снижении нагрузки частота медленно снижается</p>
+</blockquote>
+<p>После того как выставил профиль performance, мой процессор постоянно работает на частоте 3900MHZ</p>
+<p>Посмотреть частоту всех ядер процессора можете из данной команды <span style="color:green">(советую сделать alias из неё)</span></p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">watch -n</span><span style="color:#ffee80;"> 1 grep </span><span style="color:#ff628c;">\&#39;</span><span style="color:#ffee80;">cpu MHz</span><span style="color:#ff628c;">\&#39;</span><span style="color:#ffee80;"> /proc/cpuinfo
+</span></code></pre>
+<h2 id="avtozagruzka-profilia-pri-starte-sistemy"><a class="anchor" href="#avtozagruzka-profilia-pri-starte-sistemy">#</a>&nbsp;
+Автозагрузка профиля при старте системы</h2>
+<p>Прописываем <code>cpufreq.default_governor=conservative</code> параметр в конфиге ядра Grub</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">nvim</span><span style="color:#ffee80;"> /etc/default/grub
+</span></code></pre>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">...
+</span><span style="color:#f9f9f9;">GRUB_CMDLINE_LINUX_DEFAULT</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">...cpufreq.default_governor=conservative</span><span style="color:#f9f9f9;">&quot;
+</span><span style="color:#f9f9f9;">...
+</span></code></pre>
+<p>И после перезагрузки частота процессора будет разогнанной при нагрузке</p>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

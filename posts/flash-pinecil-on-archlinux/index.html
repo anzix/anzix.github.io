@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>!Dfu-util - установка &amp; обновление прошивки Ralim на купленный с Китая Pinecil</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  !Dfu-util - установка &amp; обновление прошивки Ralim на купленный с Китая Pinecil
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-03-04T20:49:54+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux/">linux</a>
+
+         <a href="https://anzix.github.io/tags/pinecil/">pinecil</a>
+
+<br>
+
+
+	<aside id="toc-aside" class="toc">
+	    <details>
+			<summary>Оглавление</summary>
+	        <ol>
+	            <li>
+	                <a href="#protsess-ustanovki-proshivki-cherez-dfu-util">Процесс установки прошивки через dfu-util</a>
+	                
+	            </li><li>
+	                <a href="#ne-proverial-al-ternativnyi-protsess-ustanovki-obnovleniia-proshivki-cherez-staruiu-versiiu-pine64-updater">(Не проверял) Альтернативный процесс установки/обновления прошивки через старую версию PINE64 Updater</a>
+	                
+	            </li>
+	        </ol>
+		</details>
+	</aside>
+
+
+<p>Источники:</p>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://ralim.github.io/IronOS/Flashing/Pinecil%20V1/">Офф инструкция установки RalimOS (Linux)</a> Ориентировался по ней</li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://gist.github.com/Dids/2aa950d075bcf58fca98eb975a42d72b">Сурс по установке через dfu-util</a></li>
+</ul>
+<p><img src="/images/flash-pinecil-on-archlinux/old-firmware.png" alt="image" /></p>
+<p>Скачиваем dfu-util</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> dfu-util
+</span></code></pre>
+<p>Мануал: <code>man dfu-util</code></p>
+<h2 id="protsess-ustanovki-proshivki-cherez-dfu-util"><a class="anchor" href="#protsess-ustanovki-proshivki-cherez-dfu-util">#</a>&nbsp;
+Процесс установки прошивки через dfu-util</h2>
+<p>Скачиваем <a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/Ralim/IronOS/releases">последнюю версию RalimOS</a>, в данный момент версия 2.20</p>
+<p>Выбираем <code>Pinecil.zip</code>, распаковываем и ищем <code>Pinecil_RU.dfu</code> он нам и нужен</p>
+<p>Включаем режим DFU на Pinecil</p>
+<p>Для этого зажимаем кнопку - (минус) и подключаем Pinecil в ПК (дисплей на программаторе будет тёмным)</p>
+<p>Для проверки вводим</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">dfu-util -l
+</span></code></pre>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">....
+</span><span style="color:#f9f9f9;">Found DFU: [28e9:0189] ver=0100, devnum=43, cfg=1, intf=0, path=&quot;1-1.1&quot;, alt=1, name=&quot;@Option Bytes  /0x1FFFF800/01*016Be&quot;, serial=&quot;3TBJ&quot;
+</span><span style="color:#f9f9f9;">Found DFU: [28e9:0189] ver=0100, devnum=43, cfg=1, intf=0, path=&quot;1-1.1&quot;, alt=0, name=&quot;@Internal Flash  /0x08000000/128*001Kg&quot;, serial=&quot;3TBJ&quot;
+</span></code></pre>
+<p>Если у вас также как и у меня есть два DFU девайса, значит необходимо указать какой именно необходимо прошить а именно <strong><em>Internal Flash</em></strong> с цифровым указанием <strong><em>alt=0</em></strong></p>
+<p>Из мануала dfu-util:</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">-a, --alt ALT
+</span><span style="color:#f9f9f9;">        Specify  the  altsetting of the DFU interface by name or by num‐
+</span><span style="color:#f9f9f9;">        ber.
+</span></code></pre>
+<p>Перевод: <code>-a</code> <strong>Указывает альтернативную настройку интерфейса DFU по имени или по номеру</strong></p>
+<p>Внутри распакованной папки с локализациями Pinecil открываем терминале и вводим</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">dfu-util -D</span><span style="color:#ffee80;"> Pinecil_RU.dfu</span><span style="color:#f9f9f9;"> -a</span><span style="color:#ffee80;"> 0
+</span></code></pre>
+<p>Весь выхлоп после команды</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">dfu-util 0.11
+</span><span style="color:#f9f9f9;">....
+</span><span style="color:#f9f9f9;">Match vendor ID from file: 28e9
+</span><span style="color:#f9f9f9;">Match product ID from file: 0189
+</span><span style="color:#f9f9f9;">Multiple alternate interfaces for DfuSe file
+</span><span style="color:#f9f9f9;">Opening DFU capable USB device...
+</span><span style="color:#f9f9f9;">Device ID 28e9:0189
+</span><span style="color:#f9f9f9;">Device DFU version 011a
+</span><span style="color:#f9f9f9;">Claiming USB DFU Interface...
+</span><span style="color:#f9f9f9;">Setting Alternate Interface #0 ...
+</span><span style="color:#f9f9f9;">Determining device status...
+</span><span style="color:#f9f9f9;">DFU state(2) = dfuIDLE, status(0) = No error condition is present
+</span><span style="color:#f9f9f9;">DFU mode device DFU version 011a
+</span><span style="color:#f9f9f9;">Device returned transfer size 2048
+</span><span style="color:#f9f9f9;">DfuSe interface name: &quot;Internal Flash  &quot;
+</span><span style="color:#f9f9f9;">Found GD32VF103, which reports a bad page size and count for its internal memory.
+</span><span style="color:#f9f9f9;">Fixed layout based on part number: page size 1024, count 128.
+</span><span style="color:#f9f9f9;">File contains 1 DFU images
+</span><span style="color:#f9f9f9;">Parsing DFU image 1
+</span><span style="color:#f9f9f9;">Target name: ST...
+</span><span style="color:#f9f9f9;">Image for alternate setting 0, (1 elements, total size = 54300)
+</span><span style="color:#f9f9f9;">Setting Alternate Interface #0 ...
+</span><span style="color:#f9f9f9;">Parsing element 1, address = 0x08000000, size = 54292
+</span><span style="color:#f9f9f9;">Erase   	[=========================] 100%        54292 bytes
+</span><span style="color:#f9f9f9;">Erase    done.
+</span><span style="color:#f9f9f9;">Download	[=========================] 100%        54292 bytes
+</span><span style="color:#f9f9f9;">Download done.
+</span><span style="color:#f9f9f9;">Done parsing DfuSe file
+</span></code></pre>
+<p>После завершения отключаем от ПК и подключаем в банку проверяя работоспособность</p>
+<p><img src="/images/flash-pinecil-on-archlinux/new-firmware.png" alt="image" /></p>
+<p>Как видим прошивка обновилась до 2.19 и работает замечательно</p>
+<h2 id="ne-proverial-al-ternativnyi-protsess-ustanovki-obnovleniia-proshivki-cherez-staruiu-versiiu-pine64-updater"><a class="anchor" href="#ne-proverial-al-ternativnyi-protsess-ustanovki-obnovleniia-proshivki-cherez-staruiu-versiiu-pine64-updater">#</a>&nbsp;
+(Не проверял) Альтернативный процесс установки/обновления прошивки через <a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/pinecil-firmware-updater-git">старую версию PINE64 Updater</a></h2>
+<p><img src="/images/flash-pinecil-on-archlinux/Old-PINE64-Updater.png" alt="image" /></p>
+<p>Это старая QT версия ранее разработанная для Linux</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">yay -S</span><span style="color:#ffee80;"> pinecil-firmware-updater-git
+</span></code></pre>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

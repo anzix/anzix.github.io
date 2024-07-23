@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>!GZDOOM и аддоны на Linux</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  !GZDOOM и аддоны на Linux
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-07-08T15:05:00+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux-gaming/">linux-gaming</a>
+
+<br>
+
+
+	<aside id="toc-aside" class="toc">
+	    <details>
+			<summary>Оглавление</summary>
+	        <ol>
+	            <li>
+	                <a href="#nastroika-gzdoom">Настройка GZDOOM</a>
+	                
+	            </li><li>
+	                <a href="#nastroika-zdl-lanuchera">Настройка ZDL ланучера</a>
+	                
+	            </li><li>
+	                <a href="#ustanovka-project-brutality">Установка Project Brutality</a>
+	                <ol>
+	                    <li>
+	                        <a href="#nastroika-project-brutality">Настройка Project Brutality</a>
+	                    </li>
+	                </ol>
+	            </li><li>
+	                <a href="#dop-addony-project-brutality-po-poriadku-zagruzki-posle-pb">Доп аддоны Project Brutality (по порядку загрузки после PB)</a>
+	                <ol>
+	                    <li>
+	                        <a href="#karty-dlia-project-brutality">Карты для Project Brutality</a>
+	                    </li>
+	                </ol>
+	            </li><li>
+	                <a href="#litdoom-live-through-doom-0-595c">LiTDoom (Live Through DOOM) 0.595c</a>
+	                <ol>
+	                    <li>
+	                        <a href="#nastroika-litdoom">Настройка LiTDoom</a>
+	                    </li><li>
+	                        <a href="#dop-addony-litdoom">Доп аддоны LiTDoom</a>
+	                    </li><li>
+	                        <a href="#karty-dlia-litdoom">Карты для LiTDoom</a>
+	                    </li>
+	                </ol>
+	            </li>
+	        </ol>
+		</details>
+	</aside>
+
+
+<h2 id="nastroika-gzdoom"><a class="anchor" href="#nastroika-gzdoom">#</a>&nbsp;
+Настройка GZDOOM</h2>
+<p>При запуске меню будет крупным, это проблематично при запуске Project Brutality. Вот как это исправить</p>
+<blockquote>
+<p>Full options menu -&gt; Miscellaneous Options -&gt; отключить "Disable Menu Clean Scaling"</p>
+</blockquote>
+<p>Делаю всё пиксельным а не размытым</p>
+<blockquote>
+<p>Display Option - Texture Filter mode - None</p>
+</blockquote>
+<p>Включает тень для теневых карт (реалистично)</p>
+<blockquote>
+<p>Full option menu - Display Option - Dynamic Light Option - включить "Light shadowmaps"</p>
+</blockquote>
+<h2 id="nastroika-zdl-lanuchera"><a class="anchor" href="#nastroika-zdl-lanuchera">#</a>&nbsp;
+Настройка ZDL ланучера</h2>
+<p>Как запустить главное меню DOOM а не мгновенный запуск первой карты</p>
+<blockquote>
+<p>Выставляете MAP поле пустым а Skill ставите на None</p>
+</blockquote>
+<h2 id="ustanovka-project-brutality"><a class="anchor" href="#ustanovka-project-brutality">#</a>&nbsp;
+Установка Project Brutality</h2>
+<p>Установка Staging Build (самая последняя версия)</p>
+<p>Если зайти на <a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/pa1nki113r/Project_Brutality">GitHub страницу PB</a> то там будет старая версия т.е ветка (master)<br />
+Меняем ветку с <strong>master</strong> на <strong>PB_Staging</strong> и у вас будет самая последняя версия</p>
+<p>Скачиваем .zip архив и просто переносим <strong>Project_Brutality-PB_Staging.zip</strong> в ZDL лаунчер</p>
+<h3 id="nastroika-project-brutality"><a class="anchor" href="#nastroika-project-brutality">#</a>&nbsp;
+Настройка Project Brutality</h3>
+<p>Убрать углы шлема PB. Заходим в <strong>Project Brutality Settings</strong> - <strong>HUD Settings</strong> и выставляем</p>
+<blockquote>
+<p>Helmet Corners - No<br />
+Vision Glass - No</p>
+</blockquote>
+<p>Возможность прыгать в кислоте, упрощает прохождение карт<br />
+Заходим в <strong>Project Brutality Settings</strong> - <strong>Gameplay Settings</strong> - включаем "Advanced movement on hazard floors"</p>
+<h2 id="dop-addony-project-brutality-po-poriadku-zagruzki-posle-pb"><a class="anchor" href="#dop-addony-project-brutality-po-poriadku-zagruzki-posle-pb">#</a>&nbsp;
+Доп аддоны Project Brutality (по порядку загрузки после PB)</h2>
+<ol>
+<li>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://brutalrepository.pl/index.php/downloads/project-brutality/others/summary/5-others/7-glory-kills">Glory Kill Staging</a><br />
+Позволяет настраивать казнь, её индикация, длительность и радиус сбора аптечек/брони/боеприпасов.</p>
+<blockquote>
+<p><strong>! Примечание</strong>: У меня с версией 993dc8g появляется баг - оружие при перезарядке не обновляет значение на обойму</p>
+</blockquote>
+<p>В настройках Doom появится опция <strong>Glorykill Option</strong>, вот моя настройка</p>
+<blockquote>
+<p>Glory kill - yes<br />
+Holdable Crucible - yes<br />
+Stun duration - 3.0<br />
+...<br />
+Collecting Health &amp; Armor Radius - 4.0 или более</p>
+</blockquote>
+<p>Также включаем <strong>HUD Glory</strong> и настраиваем его расположение</p>
+<blockquote>
+<p>Glory Hud Enable: Yes<br />
+Glory Hud Style: Eternal Style<br />
+Glory Hud X: -595.0<br />
+Glory Hud Y: 220.0</p>
+</blockquote>
+</li>
+<li>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/caligari87/darkdoomz/releases">DarkDoomZ</a><br />
+Более тёмный DOOM + добавляет фонарик который жрёт FPS<br />
+Чтобы сделать фонарик менее прожорливым к fps надо выставить такие настройки</p>
+<blockquote>
+<p>Quality: Fancy<br />
+Incandescent (или Red Filter)<br />
+Position: Helmet</p>
+</blockquote>
+</li>
+<li>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/Tekkish/HitMarkers/releases">HitMarkers</a><br />
+Настройка HitMarkers</p>
+<blockquote>
+<p>Настройки Doom -&gt; HitMarkers Option -&gt; отключить звук меток "Use Hit Sound"</p>
+</blockquote>
+</li>
+<li>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://brutalrepository.pl/index.php/downloads/download/5-others/80-destroyable-decorations">Destroyable Decorations</a></p>
+</li>
+<li>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.moddb.com/mods/qol-power-trip/addons/damage-indicator1">Damage Indicator</a><br />
+Добавляет круговой индикатор с какой стороны прилетело пуля</p>
+</li>
+</ol>
+<h3 id="karty-dlia-project-brutality"><a class="anchor" href="#karty-dlia-project-brutality">#</a>&nbsp;
+Карты для Project Brutality</h3>
+<ol>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.moddb.com/mods/brutal-doom/downloads/eday-vanilla-for-vanilla-and-mods">Extermination Day Vanila</a><br />
+Должно быть первым в списке загружаемых .pk3 вторым идёт PB</li>
+</ol>
+<h2 id="litdoom-live-through-doom-0-595c"><a class="anchor" href="#litdoom-live-through-doom-0-595c">#</a>&nbsp;
+LiTDoom (Live Through DOOM) 0.595c</h2>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://forum.zdoom.org/viewtopic.php?t=68573">Офф. страница + Скачать</a></li>
+</ul>
+<h3 id="nastroika-litdoom"><a class="anchor" href="#nastroika-litdoom">#</a>&nbsp;
+Настройка LiTDoom</h3>
+<p>Интерфейс сделать крупнее</p>
+<blockquote>
+<p>Scaling Option - User interface scale = 3</p>
+</blockquote>
+<p>Делаем темнее окружение для атмосферы</p>
+<blockquote>
+<p>Display Option - Sector light mode = Dark (стоит по умолчанию, вроде)</p>
+</blockquote>
+<p>В LitDoom присутствует фонарик как из DarkDoomZ, его можно также настроить как и в PB</p>
+<h4 id="raznoe-poleznoe"><a class="anchor" href="#raznoe-poleznoe">#</a>&nbsp;
+Разное полезное</h4>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://imgur.com/s0nivVC">Адаптация HUD'а шлема под размер экрана</a></p>
+<h3 id="dop-addony-litdoom"><a class="anchor" href="#dop-addony-litdoom">#</a>&nbsp;
+Доп аддоны LiTDoom</h3>
+<ol>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/Tekkish/HitMarkers/releases">HitMarkers</a></li>
+</ol>
+<p>Звуки/Музыка</p>
+<ol>
+<li>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.moddb.com/mods/brutal-doom/addons/alternate-dark-ambient-music-pack">Ambient шум</a><br />
+Из-за него может зависнуть при спавне монстров</p>
+</li>
+<li>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.doomworld.com/idgames/music/hellsamb">Ambient hell</a></p>
+</li>
+</ol>
+<h3 id="karty-dlia-litdoom"><a class="anchor" href="#karty-dlia-litdoom">#</a>&nbsp;
+Карты для LiTDoom</h3>
+<ol>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.doomworld.com/idgames/levels/doom/Ports/m-o/nhfl">No Hope for Life</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.doomworld.com/forum/topic/132422-zero-brightness-10/">Zero Brightness</a></li>
+</ol>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

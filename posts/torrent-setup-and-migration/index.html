@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>Торрент клиенты и их настройка</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  Торрент клиенты и их настройка
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-03-10T23:37:30+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux/">linux</a>
+
+<br>
+
+
+	<aside id="toc-aside" class="toc">
+	    <details>
+			<summary>Оглавление</summary>
+	        <ol>
+	            <li>
+	                <a href="#qbittorrent-faily-iz-windows-10-na-linux">Qbittorrent файлы из Windows 10 на Linux</a>
+	                
+	            </li><li>
+	                <a href="#migratsiia-s-qbittorrent-na-transmission">Миграция с QBitTorrent на Transmission</a>
+	                
+	            </li><li>
+	                <a href="#smena-passkey-dlia-qbittorrent-utilitoi-passkeychanger-ot-panter-dsd">Смена passkey для qbittorrent утилитой PasskeyChanger от panter-dsd</a>
+	                
+	            </li><li>
+	                <a href="#obkhod-blokirovki-bt-trekerov">Обход блокировки bt*. трекеров</a>
+	                <ol>
+	                    <li>
+	                        <a href="#s-pomoshch-iu-faila-hosts">С помощью файла hosts</a>
+	                    </li><li>
+	                        <a href="#cherez-iptables">Через iptables</a>
+	                    </li><li>
+	                        <a href="#cherez-nftabels">!Через NFTabels</a>
+	                    </li>
+	                </ol>
+	            </li>
+	        </ol>
+		</details>
+	</aside>
+
+
+<h2 id="qbittorrent-faily-iz-windows-10-na-linux"><a class="anchor" href="#qbittorrent-faily-iz-windows-10-na-linux">#</a>&nbsp;
+Qbittorrent файлы из Windows 10 на Linux</h2>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/qbittorrent/qBittorrent/wiki/Frequently-Asked-Questions#Where_does_qBittorrent_save_its_settings">Папка в которой находятся торрент файлы</a></p>
+<p>Закидываем все файлы из Windows директории qbittorrent <code>C:\Users\&lt;username&gt;\AppData\Local\qBittorrent\BT_backup</code></p>
+<p>В
+<code>~/.local/share/qBittorrent/BT_backup</code></p>
+<p>Потом вручную в клиенте править пути к уже закачанному контенту т.к я не так много раздаю весь этот процесс не такой затруднительный.</p>
+<h2 id="migratsiia-s-qbittorrent-na-transmission"><a class="anchor" href="#migratsiia-s-qbittorrent-na-transmission">#</a>&nbsp;
+Миграция с QBitTorrent на Transmission</h2>
+<p>Отдельно закидываем файлы с расширением .torrent
+<code>~/.config/transmission/torrents</code></p>
+<p>Отдельно закидываем файлы с расширением .fastresume
+<code>~/.config/transmission/resume</code></p>
+<p>После чего при запуске GUI торренты будут видны и все разом начнут скачиваться в <code>~/Downloads</code>, поэтому СРАЗУ приостанавливаем все через контекстное меню тулбара</p>
+<p>Файл - Приостановить все</p>
+<p>Теперь необходимо указать каждый торрент отдельно папку уже закачанного. Жмём RMB на торрент из списка и выбираем - Указать расположение...</p>
+<p>Обязательно ставим галочку "Не перемещать" и жмём "Применить"</p>
+<p><img src="/images/torrent-setup-and-migration/transmission-1.png" alt="image" /></p>
+<p><img src="/images/torrent-setup-and-migration/transmission-2.png" alt="image" /></p>
+<p>Далее RMB на торрент и жмём "Проверить локальные данные" и ждём
+После чего можно начать раздавать данный торрент нажав "Запустить"</p>
+<p><img src="/images/torrent-setup-and-migration/transmisison-3.png" alt="image" /></p>
+<p>И так с каждым торрентом из списка</p>
+<h2 id="smena-passkey-dlia-qbittorrent-utilitoi-passkeychanger-ot-panter-dsd"><a class="anchor" href="#smena-passkey-dlia-qbittorrent-utilitoi-passkeychanger-ot-panter-dsd">#</a>&nbsp;
+Смена passkey для qbittorrent утилитой PasskeyChanger от panter-dsd</h2>
+<ul>
+<li>https://github.com/panter-dsd</li>
+</ul>
+<p><img src="/images/torrent-setup-and-migration/passkey-changer.png" alt="image" /></p>
+<p>Данное программное обеспечение написано на qt4, поэтому нам нужно скачать скомпилированный бинарный <a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/qt4-bin">пакет qt4 из AUR</a></p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">yay -S</span><span style="color:#ffee80;"> qt4-bin
+</span></code></pre>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/aur-archive/passkeychanger/blob/master/PKGBUILD">Оригинальный PKGBUILD</a> не удаётся построить из-за других сумм md5 и sha256. Я <a rel="noopener nofollow noreferrer" target="_blank" href="https://gitlab.com/anz1x/passkeychanger/-/blob/main/PKGBUILD">правил PKGBUILD</a> и теперь пакет собирается нормально</p>
+<p>Установка PasskeyChanger</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">git</span><span style="color:#ffee80;"> clone https://gitlab.com/anz1x/passkeychanger.git
+</span><span style="color:#ffb054;">cd</span><span style="color:#ffee80;"> passkeychanger
+</span><span style="color:#f9f9f9;">makepkg -si
+</span></code></pre>
+<p>После установки в терминале вводим для вызова GUI</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">passkeychanger
+</span></code></pre>
+<p>Прога работает я проверял</p>
+<h2 id="obkhod-blokirovki-bt-trekerov"><a class="anchor" href="#obkhod-blokirovki-bt-trekerov">#</a>&nbsp;
+Обход блокировки bt*. трекеров</h2>
+<ul>
+<li>https://rutracker.org/forum/viewtopic.php?t=5134313</li>
+</ul>
+<p>Немного инфы:</p>
+<blockquote>
+<p>Данные bt*. трекеры (служебные серверы для файлообмена) всеми известного торрент трекера RuTracker Org</p>
+</blockquote>
+<p><strong>Требования</strong>:</p>
+<blockquote>
+<p>При использовании данного способа - все остальные способы обхода блокировки трекеров нужно обязательно выключить! (если использовали прокси в настройках клиента - отключите его, поставьте Тип прокси - Нет)</p>
+</blockquote>
+<p>На примере QBitTorrent</p>
+<p><img src="/images/torrent-setup-and-migration/qbittorrent.png" alt="image" /></p>
+<h3 id="s-pomoshch-iu-faila-hosts"><a class="anchor" href="#s-pomoshch-iu-faila-hosts">#</a>&nbsp;
+С помощью файла hosts</h3>
+<p>Способ универсальный, подходит под любую систему Linux, Windows, Mac.
+Hosts файл находится по этому пути, редактируем его</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> vim /etc/hosts
+</span></code></pre>
+<p>И вставляем</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">185.15.211.203 bt.t-ru.org
+</span><span style="color:#f9f9f9;">185.15.211.203 bt2.t-ru.org
+</span><span style="color:#f9f9f9;">185.15.211.203 bt3.t-ru.org
+</span><span style="color:#f9f9f9;">185.15.211.203 bt4.t-ru.org
+</span></code></pre>
+<p>После этого перезагружаем пк и смотрим на результат</p>
+<p>До</p>
+<p><img src="/images/torrent-setup-and-migration/before.png" alt="image" /></p>
+<p>После</p>
+<p><img src="/images/torrent-setup-and-migration/after.png" alt="image" /></p>
+<h3 id="cherez-iptables"><a class="anchor" href="#cherez-iptables">#</a>&nbsp;
+Через iptables</h3>
+<p>Вставляем данную команду</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> iptables</span><span style="color:#f9f9f9;"> -t</span><span style="color:#ffee80;"> nat</span><span style="color:#f9f9f9;"> -A</span><span style="color:#ffee80;"> OUTPUT</span><span style="color:#f9f9f9;"> -p</span><span style="color:#ffee80;"> tcp</span><span style="color:#f9f9f9;"> -m</span><span style="color:#ffee80;"> tcp</span><span style="color:#f9f9f9;"> --dport</span><span style="color:#ffee80;"> 80</span><span style="color:#f9f9f9;"> -d</span><span style="color:#ffee80;"> 195.82.146.120/30</span><span style="color:#f9f9f9;"> -j</span><span style="color:#ffee80;"> DNAT</span><span style="color:#f9f9f9;"> --to-destination</span><span style="color:#ffee80;"> 185.15.211.203:80
+</span></code></pre>
+<p>Просмотреть применённое правило</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> iptables</span><span style="color:#f9f9f9;"> -vL -t</span><span style="color:#ffee80;"> nat
+</span></code></pre>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">....
+</span><span style="color:#f9f9f9;">Chain OUTPUT (policy ACCEPT 0 packets, 0 bytes)
+</span><span style="color:#f9f9f9;"> pkts bytes target     prot opt in     out     source               destination
+</span><span style="color:#f9f9f9;">    0     0 DNAT       tcp  --  any    any     anywhere             195.82.146.120/30    tcp dpt:http to:185.15.211.203:80
+</span><span style="color:#f9f9f9;">....
+</span></code></pre>
+<p>Чтобы данное правило (rules) работало при перезагрузке системы необходимо применить данные команды</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> iptables-save</span><span style="color:#f9f9f9;"> -f</span><span style="color:#ffee80;"> /etc/iptables/iptables.rules
+</span><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> systemctl enable iptables.service
+</span></code></pre>
+<p>Пояснение:</p>
+<blockquote>
+<p>Первая команда запишет все применённые правила в файл который читает iptables.service, который в свою очередь мы добавили в автозапуск</p>
+</blockquote>
+<p>Ребутимся</p>
+<h3 id="cherez-nftabels"><a class="anchor" href="#cherez-nftabels">#</a>&nbsp;
+!Через NFTabels</h3>
+<p>Скачиваем пакет nftables</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> nftables
+</span></code></pre>
+<p>Добавляем правило по обходу bt*. трекеров</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> nft add rule ip nat OUTPUT ip daddr 195.82.146.120/30 tcp dport 80 counter dnat to 185.15.211.203:80
+</span></code></pre>
+<p>Для проверки посмотрим на список правил</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> nft list ruleset
+</span></code></pre>
+<p>Создаём backup файл nftables.conf</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> cp /etc/nftables.conf /etc/nftables.conf.bak
+</span></code></pre>
+<p>Немного правим конфиг</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> bash</span><span style="color:#f9f9f9;"> -c &#39;</span><span style="color:#9eff80;">cat &lt;&lt; &quot;EOF&quot; &gt; /nft_ruleset.nft
+</span><span style="color:#9eff80;">#!/usr/bin/nft -f
+</span><span style="color:#9eff80;"># vim:set ts=2 sw=2 et:
+</span><span style="color:#9eff80;">
+</span><span style="color:#9eff80;">flush ruleset
+</span><span style="color:#9eff80;">
+</span><span style="color:#9eff80;">EOF</span><span style="color:#f9f9f9;">&#39;
+</span></code></pre>
+<p>Записываем правила в конфиг файл</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> nft</span><span style="color:#f9f9f9;"> -s</span><span style="color:#ffee80;"> list ruleset </span><span style="color:#ff9d00;">&gt;&gt;</span><span style="color:#ffee80;"> nft_ruleset.nft
+</span><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> sh</span><span style="color:#f9f9f9;"> -c &quot;</span><span style="color:#9eff80;">cat </span><span style="color:#f9f9f9;">$</span><span style="color:#edef7d;">HOME</span><span style="color:#9eff80;">/nft_ruleset.nft &gt;&gt; /etc/nftables.conf</span><span style="color:#f9f9f9;">&quot;
+</span></code></pre>
+<p>Автозапуск правил после запуска ПК</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> systemctl enable nftables
+</span></code></pre>
+<h4 id="kak-udalit-pravilo-v-nftables"><a class="anchor" href="#kak-udalit-pravilo-v-nftables">#</a>&nbsp;
+Как удалить правило в nftables</h4>
+<p>К примеру у вас в выводе <code>sudo nft list ruleset</code> два одинаковых правила</p>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://wiki.archlinux.org/title/Nftables#Deletion">Пример из Arch Wiki</a></li>
+</ul>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;"># nft --handle --numeric list chain inet my_table my_input
+</span><span style="color:#f9f9f9;">table inet my_table {
+</span><span style="color:#f9f9f9;">     chain input {
+</span><span style="color:#f9f9f9;">          type filter hook input priority 0;
+</span><span style="color:#f9f9f9;">          ip saddr 127.0.0.1 accept # handle 10
+</span><span style="color:#f9f9f9;">     }
+</span><span style="color:#f9f9f9;">}
+</span></code></pre>
+<p>Т.е если сравнить из данного примера (полагаясь из вывода команды <code>sudo nft list ruleset</code>) то выглядит это так</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> nft</span><span style="color:#f9f9f9;"> -an</span><span style="color:#ffee80;"> list chain ip nat OUTPUT
+</span></code></pre>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">table ip nat {
+</span><span style="color:#f9f9f9;">	chain OUTPUT { # handle 3
+</span><span style="color:#f9f9f9;">		type nat hook output priority -100; policy accept;
+</span><span style="color:#f9f9f9;">		ip daddr 195.82.146.120/30 tcp dport 80 counter packets 0 bytes 0 dnat to 185.15.211.203:80 # handle 6
+</span><span style="color:#f9f9f9;">		ip daddr 195.82.146.120/30 tcp dport 80 counter packets 0 bytes 0 dnat to 185.15.211.203:80 # handle 18
+</span></code></pre>
+<p>В выводе данной команды заметили так называемый <code>handle_value</code> (рукоятка и её значение, у меня это <strong>18</strong>) это значение из дубликата правила вводим в конце команды для удаления показанной ниже</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> nft delete rule ip nat OUTPUT handle 18
+</span></code></pre>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

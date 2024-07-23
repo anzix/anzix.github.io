@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>!Конвертируем Debian пакет в совместимый для Arch Linux пакет</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  !Конвертируем Debian пакет в совместимый для Arch Linux пакет
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-07-14T19:40:00+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux/">linux</a>
+
+<br>
+
+
+
+<p>Очень полезно если данных пакетов нету ни в официальных репозиториях Arch Linux ни в AUR\</p>
+<p>На данном примере я буду показывать пакет <a rel="noopener nofollow noreferrer" target="_blank" href="https://xpq4.sourceforge.io/">XPQ4</a> который предназначен для Q4OS дистрибутива основанный на Debian и Ubuntu<br />
+Он меняет внешний вид для <a rel="noopener nofollow noreferrer" target="_blank" href="https://www.trinitydesktop.org/">рабочего окружения Trinity</a> симулируя Windows 95/XP/7/8/10 вместе с иконками</p>
+<p>Скачиваем с репозитория .deb пакеты</p>
+<ul>
+<li>Основной пакет <a rel="noopener nofollow noreferrer" target="_blank" href="https://sourceforge.net/projects/xpq4/files/debrepo/pool/main/x/xpq4/">xpq4</a></li>
+<li>Зависимость <a rel="noopener nofollow noreferrer" target="_blank" href="https://sourceforge.net/projects/xpq4/files/debrepo/pool/main/l/luna/">luna</a></li>
+<li>Зависимость <a rel="noopener nofollow noreferrer" target="_blank" href="https://sourceforge.net/projects/xpq4/files/debrepo/pool/main/i/icontheme-winten/">icontheme-winten</a></li>
+</ul>
+<p>Скачиваем с AUR конвертер .deb пакетов в пакеты Arch Linux</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">yay -S</span><span style="color:#ffee80;"> debtap
+</span></code></pre>
+<p>Обновляем базу данных</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> detap</span><span style="color:#f9f9f9;"> -u
+</span></code></pre>
+<p>И конвертируем по порядку</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">debtap</span><span style="color:#ffee80;"> xpq4_4.4-a1_all.deb
+</span><span style="color:#f9f9f9;">debtap</span><span style="color:#ffee80;"> luna_1.1.1-a1_amd64.deb
+</span><span style="color:#f9f9f9;">debtap</span><span style="color:#ffee80;"> icontheme-winten_3.2-a1_all.deb
+</span></code></pre>
+<blockquote>
+<p>После каждого пакета вам могут предложить изменить некоторые строки в <code>.PKGINFO</code> если debtap обнаружил несовместимость или ошибку при конвертации</p>
+</blockquote>
+<p>После проделанных изменений вы можете уже устанавливать конвертированные пакеты командой</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -U</span><span style="color:#ffee80;"> icontheme-winten-3.2.a1-1-any.pkg.tar.zst luna-1.1.1.a1-1-x86_64.pkg.tar.zst xpq4-4.4.a1-1-any.pkg.tar.zst
+</span></code></pre>
+<p>И вот результат, однако есть вероятность не полной работоспособности некоторых исполняемых файлов который поставляет конвертированный .deb пакет</p>
+<p><img src="/images/debpkg-to-archpkg/%D1%81%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA2.png" alt="image" /></p>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

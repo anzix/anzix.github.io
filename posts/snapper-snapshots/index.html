@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>Snapper - бэкап файловой системы Btrfs</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  Snapper - бэкап файловой системы Btrfs
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-03-02T12:59:48+05:00</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux/">linux</a>
+
+<br>
+
+
+	<aside id="toc-aside" class="toc">
+	    <details>
+			<summary>Оглавление</summary>
+	        <ol>
+	            <li>
+	                <a href="#nastroika-snapper-dlia-snimkov">Настройка snapper для снимков /</a>
+	                
+	            </li><li>
+	                <a href="#kak-otkatit-ustanovlennyi-paket">Как откатить установленный пакет</a>
+	                
+	            </li><li>
+	                <a href="#spisok-displei-menedzherov-kotorye-mogut-pustit-v-read-only-snapshot-sozdannyi-snapper">Список дисплей менеджеров которые могут пустить в read-only снапшот созданный snapper</a>
+	                <ol>
+	                    <li>
+	                        <a href="#sozdanie-podtomov-subvolume-nakhodias-v-osnovnoi-sisteme">Создание подтомов (subvolume) находясь в основной системе</a>
+	                    </li>
+	                </ol>
+	            </li><li>
+	                <a href="#todo-dlia-pol-zovatelei-systemd-boot">TODO: Для пользователей systemd-boot</a>
+	                
+	            </li><li>
+	                <a href="#itogi-i-problemy">Итоги и проблемы</a>
+	                <ol>
+	                    <li>
+	                        <a href="#otsutstvuiushchie-metki-novykh-snimkov-v-grub">Отсутствующие метки новых снимков в grub</a>
+	                    </li>
+	                </ol>
+	            </li><li>
+	                <a href="#chto-ispol-zovat-systemd-servis-grub-btrfsd-ili-snap-pac-grub-i-v-chiom-raznitsa">Что использовать systemd сервис grub-btrfsd или snap-pac-grub и в чём разница?</a>
+	                
+	            </li><li>
+	                <a href="#nastroika-snapper-dlia-snimkov-home-kataloga">Настройка snapper для снимков /home каталога</a>
+	                <ol>
+	                    <li>
+	                        <a href="#iskliuchit-katalogi-ot-snimkov-v-home">Исключить каталоги от снимков в $HOME</a>
+	                    </li>
+	                </ol>
+	            </li><li>
+	                <a href="#sovety-i-triuki">Советы и трюки</a>
+	                
+	            </li><li>
+	                <a href="#kak-otkatitsia-v-read-write-snapshot-posle-slomannoi-sistemy-arch-way">Как откатится в read-write снапшот после сломанной системы (Arch way)</a>
+	                <ol>
+	                    <li>
+	                        <a href="#ne-poluchaetsia-otkatitsia-iz-za-malogo-obioma-diska">Не получается откатится из-за малого объёма диска</a>
+	                    </li><li>
+	                        <a href="#mozhno-oboitis-bez-snapper-rollback-ot-sdelat-eto-vruchnuiu">Можно обойтись без snapper-rollback от сделать это вручную?</a>
+	                    </li><li>
+	                        <a href="#problema-ne-dobavliaiutsia-novye-zapisi-snimkov-v-grub-pri-ispol-zovanii-grub-btrfsd">Проблема: Не добавляются новые записи снимков в grub при использовании grub-btrfsd</a>
+	                    </li>
+	                </ol>
+	            </li>
+	        </ol>
+		</details>
+	</aside>
+
+
+<p>Обновлено: 20.12.23</p>
+<p>Видео гайды:
+<a rel="noopener nofollow noreferrer" target="_blank" href="https://www.youtube.com/watch?v=Xynotc9BKe8&amp;t=927s">Первый</a>
+<a rel="noopener nofollow noreferrer" target="_blank" href="https://www.youtube.com/watch?v=sm_fuBeaOqE">Второй</a>
+<a rel="noopener nofollow noreferrer" target="_blank" href="https://www.youtube.com/watch?v=_97JOyC1o2o">Третий</a></p>
+<p>Список пакетов для btrfs и snapper</p>
+<ul>
+<li>snapper - основной пакет</li>
+<li>snap-pac - делает снапшоты после каждой установки/обновления/удаления пакетов Pacman</li>
+<li>grub-btrfs - добавляет grub меню снимков сделанных snapper'ом чтобы в них загружаться</li>
+<li>inotify-tools - необходимая зависимость для grub-btrfs</li>
+<li>snap-sync - использовать снимки Snapper для резервного копирования на внешний диск</li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/snap-pac-grub">snap-pac-grub</a> - дополнительно обновляет записи GRUB для grub-btrfs после того, как snap-pac сделал снимки</li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/snp">snp</a> - заворачивает любую shell команду и создаёт снимок до выполнения этой команды (snp sudo pacman -Syu)</li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/snapper-rollback">snapper-rollback</a> - откат системы который соответствует <a rel="noopener nofollow noreferrer" target="_blank" href="https://wiki.archlinux.org/index.php/Snapper#Suggested_filesystem_layout">схеме разметки Arch Linux</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/btrfs-assistant/">btrfs-assistant</a> - Gui программа обслуживания файловой системы Btrfs и для создания снимков</li>
+</ul>
+<p>Однако в текущем руководстве я буду использовать те что указаны в данной команде</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">yay -S</span><span style="color:#ffee80;"> snapper snap-pac grub-btrfs snp
+</span></code></pre>
+<p>Входим в root оболочку</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">sudo -s
+</span></code></pre>
+<p>Размонтируем <code>.snapshots</code></p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">umount</span><span style="color:#ffee80;"> /.snapshots
+</span><span style="color:#f9f9f9;">rm -rf</span><span style="color:#ffee80;"> /.snapshots
+</span></code></pre>
+<p>Создаём конфиг Snapper</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">snapper -c</span><span style="color:#ffee80;"> root create-config /
+</span></code></pre>
+<blockquote>
+<p><strong>Примечание</strong>: Если производите в режиме chroot используйте <code>--no-dbus</code> опцию</p>
+</blockquote>
+<p>Удаляем subvol .snapshots Snapper</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">btrfs</span><span style="color:#ffee80;"> subvolume delete /.snapshots
+</span></code></pre>
+<p>Повторно создаём и монтируем /.snapshots</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">mkdir</span><span style="color:#ffee80;"> /.snapshots
+</span><span style="color:#f9f9f9;">mount -a
+</span></code></pre>
+<p>Меняем права доступа для легкой замены снимка @ в любое время без потери снимков snapper.</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">chmod -v</span><span style="color:#ffee80;"> 750 /.snapshots
+</span></code></pre>
+<p>Доступ для пользователей без полномочий root</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">chown -R -v</span><span style="color:#ffee80;"> :wheel /.snapshots
+</span></code></pre>
+<h2 id="nastroika-snapper-dlia-snimkov"><a class="anchor" href="#nastroika-snapper-dlia-snimkov">#</a>&nbsp;
+Настройка snapper для снимков /</h2>
+<p>Устанавливаю лимит снимков</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">sed -i &quot;</span><span style="color:#9eff80;">s|^TIMELINE_LIMIT_HOURLY=.*|TIMELINE_LIMIT_HOURLY=</span><span style="color:#80ff82;">\&quot;</span><span style="color:#9eff80;">5</span><span style="color:#80ff82;">\&quot;</span><span style="color:#9eff80;">|g</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#ffee80;"> /etc/snapper/configs/root
+</span><span style="color:#f9f9f9;">sed -i &quot;</span><span style="color:#9eff80;">s|^TIMELINE_LIMIT_DAILY=.*|TIMELINE_LIMIT_DAILY=</span><span style="color:#80ff82;">\&quot;</span><span style="color:#9eff80;">7</span><span style="color:#80ff82;">\&quot;</span><span style="color:#9eff80;">|g</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#ffee80;"> /etc/snapper/configs/root
+</span><span style="color:#f9f9f9;">sed -i &quot;</span><span style="color:#9eff80;">s|^TIMELINE_LIMIT_WEEKLY=.*|TIMELINE_LIMIT_WEEKLY=</span><span style="color:#80ff82;">\&quot;</span><span style="color:#9eff80;">0</span><span style="color:#80ff82;">\&quot;</span><span style="color:#9eff80;">|g</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#ffee80;"> /etc/snapper/configs/root
+</span><span style="color:#f9f9f9;">sed -i &quot;</span><span style="color:#9eff80;">s|^TIMELINE_LIMIT_MONTHLY=.*|TIMELINE_LIMIT_MONTHLY=</span><span style="color:#80ff82;">\&quot;</span><span style="color:#9eff80;">0</span><span style="color:#80ff82;">\&quot;</span><span style="color:#9eff80;">|g</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#ffee80;"> /etc/snapper/configs/root
+</span><span style="color:#f9f9f9;">sed -i &quot;</span><span style="color:#9eff80;">s|^TIMELINE_LIMIT_YEARLY=.*|TIMELINE_LIMIT_YEARLY=</span><span style="color:#80ff82;">\&quot;</span><span style="color:#9eff80;">0</span><span style="color:#80ff82;">\&quot;</span><span style="color:#9eff80;">|g</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#ffee80;"> /etc/snapper/configs/root
+</span></code></pre>
+<p>Включаем службы Snapper</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">systemctl</span><span style="color:#ffee80;"> enable snapper-timeline.timer
+</span><span style="color:#f9f9f9;">systemctl</span><span style="color:#ffee80;"> enable snapper-cleanup.timer
+</span></code></pre>
+<p>Создаём первоначальный снимок</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">snapper -c</span><span style="color:#ffee80;"> root create</span><span style="color:#f9f9f9;"> --description &quot;</span><span style="color:#9eff80;">Backup</span><span style="color:#f9f9f9;">&quot;
+</span></code></pre>
+<p>Обновляем записи снимков grub</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> grub-mkconfig</span><span style="color:#f9f9f9;"> -o</span><span style="color:#ffee80;"> /boot/grub/grub.cfg
+</span></code></pre>
+<p>Plocate не показывает индексы найденых файлов если используется файловая система Btrfs</p>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://devctrl.blog/posts/plocate-not-a-drop-in-replacement-if-you-re-using-btfrs/">Источник</a></li>
+</ul>
+<p>Данная правка конфига исправляет это</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sed -i &#39;</span><span style="color:#9eff80;">s/PRUNE_BIND_MOUNTS =.*/PRUNE_BIND_MOUNTS = &quot;no&quot;/</span><span style="color:#f9f9f9;">&#39;</span><span style="color:#ffee80;"> /etc/updatedb.conf
+</span></code></pre>
+<p>Предотвращение индексирования снимков программой "updatedb"<br />
+Что замедляло бы работу системы при использовании locate/plocate</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">sed -i &#39;</span><span style="color:#9eff80;">/PRUNEPATHS/s/&quot;$/ \/\btrfsroot \/\.snapshots&quot;/</span><span style="color:#f9f9f9;">&#39;</span><span style="color:#ffee80;"> /etc/updatedb.conf
+</span></code></pre>
+<p>Готово, всё настроено и можно выходить из root оболочки</p>
+<h2 id="kak-otkatit-ustanovlennyi-paket"><a class="anchor" href="#kak-otkatit-ustanovlennyi-paket">#</a>&nbsp;
+Как откатить установленный пакет</h2>
+<p>Как только вы установили какой-либо пакет, можно вернуться назад до того как этот пакет был установлен</p>
+<p>Например:</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> cmatrix
+</span></code></pre>
+<p>Смотрим то что snapper сделал pre (до установки пакета) номер 40 и post снимок (после установки пакета) под номером 41</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">snapper</span><span style="color:#ffee80;"> ls
+</span></code></pre>
+<p>Чтобы вернуть состояние до установки пакета т.е pre, вводим</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> snapper undochange 40..41
+</span></code></pre>
+<p>И cmatrix теперь нету</p>
+<p>Чтобы вернуть состояние после установки пакета (post) вводим в обратном порядке</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> snapper undochange 41..40
+</span></code></pre>
+<p>И cmatrix снова появился</p>
+<p>Увидеть изменения pre и post можно командой</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> snapper status 41..40
+</span></code></pre>
+<h2 id="spisok-displei-menedzherov-kotorye-mogut-pustit-v-read-only-snapshot-sozdannyi-snapper"><a class="anchor" href="#spisok-displei-menedzherov-kotorye-mogut-pustit-v-read-only-snapshot-sozdannyi-snapper">#</a>&nbsp;
+Список дисплей менеджеров которые могут пустить в read-only снапшот созданный snapper</h2>
+<ul>
+<li>
+<p>LightDM - пустой чёрный экран или черный экран с мерцающим курсором</p>
+<p>2 Решения:</p>
+</li>
+<li>
+<ol>
+<li>Отредактировать конфиг <code>/etc/lightdm/lightdm.conf</code>, раскомментировать и изменить значение на true</li>
+</ol>
+</li>
+</ul>
+<pre data-lang="conf" style="background-color:#2b303b;color:#ffffff;" class="language-conf "><code class="language-conf" data-lang="conf"><span style="color:#ffc600;">[LightDM]
+</span><span style="color:#ff9d00;">...
+</span><span style="color:#f9f9f9;">user-authority-in-system-dir</span><span style="color:#ff9d00;">=</span><span style="color:#ff628c;">true
+</span></code></pre>
+<ul>
+<li>
+<ol start="2">
+<li>[Не работает] Необходимо добавить subvolume</li>
+</ol>
+</li>
+</ul>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">/var/lib/AccountsService
+</span></code></pre>
+<ul>
+<li>SDDM - Работает, заходит в снапшот без проблем и каких-либо настроек.<br />
+Только вылезает предупреждающее окно sddm, которое можно проигнорировать</li>
+</ul>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">Configuration file &quot;/var/lib/sddm/.config/sddm-greeterrc&quot; not writable
+</span><span style="color:#f9f9f9;">Please contact your system administrator
+</span></code></pre>
+<p>[Не проверено] Есть решение взятое <a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/bach001/notes_on_install_LFS/blob/main/fix_su_login_unlock_failed">отсюда</a><br />
+Вводим данную команду</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">chown -R</span><span style="color:#ffee80;"> sddm:sddm /var/lib/sddm/.config
+</span></code></pre>
+<p>Следующее что хочется заметить это то что если править конфиг sddm по пути <code>/usr/lib/sddm/sddm.conf.d/default.conf</code><br />
+И выставить экспериментальную опцию wayland как показано ниже</p>
+<pre data-lang="conf" style="background-color:#2b303b;color:#ffffff;" class="language-conf "><code class="language-conf" data-lang="conf"><span style="color:#ffc600;">[General]
+</span><span style="color:#ff9d00;">...
+</span><span style="color:#f9f9f9;">DisplayServer</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">wayland
+</span></code></pre>
+<p>Тогда в момент когда sddm должен появится происходит бесконечный чёрный экран с нижнем подчёркиванием без мерцания<br />
+Такое у меня происходит на sway с sddm (виртуалка QEMU/KVM с virt-manager)</p>
+<p>Решения я пока не знаю, кроме как:</p>
+<ol>
+<li>Не менять значение DisplayServer на wayland</li>
+<li>Не использовать SDDM и запускать из под TTY используя правив <code>~/.zprofile</code></li>
+</ol>
+<ul>
+<li>LXDM - Тоже работает, заходит в снапшот без проблем и каких-либо настроек</li>
+<li>GDM - Доходит до [ OK ] Reached target Graphical interface и застревает<br />
+Решение: необходимо добавить subvolume</li>
+</ul>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">/var/lib/AccountsService
+</span><span style="color:#f9f9f9;">/var/lib/gdm
+</span></code></pre>
+<p>Они содержат информацию о вошедшем в систему пользователе, а также информацию об отображении Gnome. Эти каталоги всегда должны быть доступны для записи. Таким образом, мы, к сожалению, вынуждены разделить их.</p>
+<p>Необходимо сделать эти субтома <strong>top level 5</strong>. Причина по которой мы это делаем это возможность монтировать данный субтом, без этого у меня не получалось монтировать и добавлять запись в fstab</p>
+<h3 id="sozdanie-podtomov-subvolume-nakhodias-v-osnovnoi-sisteme"><a class="anchor" href="#sozdanie-podtomov-subvolume-nakhodias-v-osnovnoi-sisteme">#</a>&nbsp;
+Создание подтомов (subvolume) находясь в основной системе</h3>
+<p>Для начало необходимо узнать где находится toplevel 5 подтом в котором можно находятся другие вложенные подтома</p>
+<p>Узнать это можно несколькими командами</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Первая
+</span><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> btrfs su l /
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Вторая
+</span><span style="color:#f9f9f9;">mount </span><span style="color:#ff9d00;">| </span><span style="color:#f9f9f9;">column -t
+</span></code></pre>
+<p>Переходим в каталог/раздел где лежат все подтома и воздаём те что необходимы</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#ffb054;">cd</span><span style="color:#ffee80;"> /
+</span><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> btrfs su cr @AccountsService
+</span><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> btrfs su cr @gdm
+</span></code></pre>
+<p>Смотрим что получилось командой</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;"># btrfs su l /
+</span><span style="color:#f9f9f9;">ID 275 gen 109 top level 5 path @AccountsService
+</span><span style="color:#f9f9f9;">ID 276 gen 121 top level 5 path @gdm
+</span></code></pre>
+<p>Создаём каталоги для монтирования</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> mkdir</span><span style="color:#f9f9f9;"> -v</span><span style="color:#ffee80;"> /var/lib/AccountsService
+</span><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> mkdir</span><span style="color:#f9f9f9;"> -v</span><span style="color:#ffee80;"> /var/lib/gdm
+</span></code></pre>
+<p>Для проверки мы можем монтировать данные субтома</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> mount</span><span style="color:#f9f9f9;"> -v</span><span style="color:#ffee80;"> /dev/vda2 /var/lib/AccountsService</span><span style="color:#f9f9f9;"> -o</span><span style="color:#ffee80;"> subvol=@AccountsService
+</span></code></pre>
+<p>НО вместо обычного монтирования лучше создать запись в <strong>fstab</strong></p>
+<pre data-lang="conf" style="background-color:#2b303b;color:#ffffff;" class="language-conf "><code class="language-conf" data-lang="conf"><span style="font-style:italic;color:#0088ff;"># /dev/vda2 LABEL=ArchLinux
+</span><span style="color:#eb939a;">UUID</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">c41b358c</span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">2a57</span><span style="color:#ff9d00;">-</span><span style="color:#ff628c;">412c</span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">b710</span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">eda6d62b1591       </span><span style="color:#ff9d00;">/</span><span style="color:#f9f9f9;">var</span><span style="color:#ff9d00;">/</span><span style="color:#f9f9f9;">lib</span><span style="color:#ff9d00;">/</span><span style="color:#f9f9f9;">AccountsService        btrfs           rw</span><span style="color:#ff9d00;">,</span><span style="color:#f9f9f9;">noatime</span><span style="color:#ff9d00;">,</span><span style="color:#f9f9f9;">compress</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">zstd</span><span style="color:#ff9d00;">:</span><span style="color:#ff628c;">2</span><span style="color:#ff9d00;">,</span><span style="color:#f9f9f9;">discard</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">async</span><span style="color:#ff9d00;">,</span><span style="color:#f9f9f9;">space_cache</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">v2</span><span style="color:#ff9d00;">,</span><span style="color:#f9f9f9;">subvolid</span><span style="color:#ff9d00;">=</span><span style="color:#ff628c;">275</span><span style="color:#ff9d00;">,</span><span style="color:#f9f9f9;">subvol</span><span style="color:#ff9d00;">=/</span><span style="color:#ffc600;">@AccountsService      </span><span style="color:#ff628c;">0 0
+</span><span style="color:#f9f9f9;">
+</span><span style="font-style:italic;color:#0088ff;"># /dev/vda2 LABEL=ArchLinux
+</span><span style="color:#eb939a;">UUID</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">c41b358c</span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">2a57</span><span style="color:#ff9d00;">-</span><span style="color:#ff628c;">412c</span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">b710</span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">eda6d62b1591       </span><span style="color:#ff9d00;">/</span><span style="color:#f9f9f9;">var</span><span style="color:#ff9d00;">/</span><span style="color:#f9f9f9;">lib</span><span style="color:#ff9d00;">/</span><span style="color:#f9f9f9;">gdm    btrfs           rw</span><span style="color:#ff9d00;">,</span><span style="color:#f9f9f9;">noatime</span><span style="color:#ff9d00;">,</span><span style="color:#f9f9f9;">compress</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">zstd</span><span style="color:#ff9d00;">:</span><span style="color:#ff628c;">2</span><span style="color:#ff9d00;">,</span><span style="color:#f9f9f9;">discard</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">async</span><span style="color:#ff9d00;">,</span><span style="color:#f9f9f9;">space_cache</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">v2</span><span style="color:#ff9d00;">,</span><span style="color:#f9f9f9;">subvolid</span><span style="color:#ff9d00;">=</span><span style="color:#ff628c;">276</span><span style="color:#ff9d00;">,</span><span style="color:#f9f9f9;">subvol</span><span style="color:#ff9d00;">=/</span><span style="color:#ffc600;">@gdm       </span><span style="color:#ff628c;">0 0
+</span></code></pre>
+<p>И монтируем</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> systemctl daemon-reload
+</span><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> mount</span><span style="color:#f9f9f9;"> -a
+</span></code></pre>
+<p>При установке окружения Gnome пакет <strong>accountsservice</strong> и <strong>gdm</strong> жаловались на права доступа</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">...
+</span><span style="color:#f9f9f9;">установка accountsservice
+</span><span style="color:#f9f9f9;">предупреждение: права доступа различаются у каталога /var/lib/AccountsService/
+</span><span style="color:#f9f9f9;">файловая система: 755  пакет: 775
+</span><span style="color:#f9f9f9;">установка gdm
+</span><span style="color:#f9f9f9;">предупреждение: права доступа различаются у каталога /var/lib/gdm/
+</span><span style="color:#f9f9f9;">файловая система: 755  пакет: 1770
+</span><span style="color:#f9f9f9;">...
+</span></code></pre>
+<p>Изменил как им требуется</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> chmod 775 /var/lib/AccountsService/
+</span><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> chmod 1770 /var/lib/gdm/
+</span></code></pre>
+<h2 id="todo-dlia-pol-zovatelei-systemd-boot"><a class="anchor" href="#todo-dlia-pol-zovatelei-systemd-boot">#</a>&nbsp;
+TODO: Для пользователей systemd-boot</h2>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/lepz0r/snapper-systemd-boot.sh">Github страница</a></li>
+</ul>
+<h2 id="itogi-i-problemy"><a class="anchor" href="#itogi-i-problemy">#</a>&nbsp;
+Итоги и проблемы</h2>
+<blockquote>
+<p>После проделанных операций, окружением гном и его дисплей менеджер gdm позволяет загрузится в снимок<br />
+НО у меня не получается сделать откат на снимок используя snapper-rollback который соответствует разметке Arch Linux.<br />
+Вылезает ошибка что файловая система только для чтения /btrfsroot.<br />
+Что-то мешает <strong>snapper-rollback</strong> выполнение отката даже с правами sudo (плюс в конфиге <strong>/etc/snapper-rollback.conf</strong> выставлено dev устройство).<br />
+Ранее на других окружениях с другими DM это срабатывало.</p>
+</blockquote>
+<p>Решение:</p>
+<p>Необходимо в Arch ISO под chroot'ом создать папку /btrfsroot</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">mkdir</span><span style="color:#ffee80;"> /btrfsroot
+</span></code></pre>
+<p>И смонтировать её с данными флагами</p>
+<p>ОБЯЗАТЕЛЬНО:</p>
+<ol>
+<li>Указываете тот номер раздела который у вас смонтирован как / у меня это <code>/dev/vda2</code></li>
+<li>В <code>subvolid</code> указываете 5</li>
+</ol>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">mount -v -o</span><span style="color:#ffee80;"> noatime,compress=zstd:2,space_cache=v2,subvolid=5 /dev/vda2 /btrfsroot
+</span></code></pre>
+<p>После чего команда <code>sudo snapper-rollback [num_snapshots]</code> работает и откатывает систему</p>
+<p>После отката в выхлопе команды <code>sudo btrfs su li /</code> появился подтом с таким именем</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">ID 256 gen 7 top level 5 path @2023-08-29T01:33
+</span></code></pre>
+<p>Этот подтом находится по пути /btrfsroot/<br />
+В <strong>@2023-08-30T16:08</strong> находится сломанная система с удалённым которую мы откатили на рабочий снимок</p>
+<p>Удалить его можно командой</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> btrfs su delete /btrfsroot/@2023-08-29T01:33
+</span></code></pre>
+<h3 id="otsutstvuiushchie-metki-novykh-snimkov-v-grub"><a class="anchor" href="#otsutstvuiushchie-metki-novykh-snimkov-v-grub">#</a>&nbsp;
+Отсутствующие метки новых снимков в grub</h3>
+<p>Иногда после выполнения отката используя команды <code>snapper-rollback</code> могут не показываться созданные метки снимков в меню grub которые делает grub-btrfs</p>
+<p>Исправляется это переустановкой grub, выполнением grub-install в тоже самое место и grub-mkconfig (если у вас есть хук <code>grub-upgrade.hook</code> тогда он сам за вас всё сделает)</p>
+<p>И он будет удалён из списка</p>
+<h2 id="chto-ispol-zovat-systemd-servis-grub-btrfsd-ili-snap-pac-grub-i-v-chiom-raznitsa"><a class="anchor" href="#chto-ispol-zovat-systemd-servis-grub-btrfsd-ili-snap-pac-grub-i-v-chiom-raznitsa">#</a>&nbsp;
+Что использовать systemd сервис grub-btrfsd или snap-pac-grub и в чём разница?</h2>
+<blockquote>
+<p>Разница заключается в том что сервис grub-btrfsd обновляет записи в фоне при любом изменении или добавлении снимков в /.snapshots<br />
+а пакет <a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/snap-pac-grub">snap-pac-grub</a> добавляет записи только для pre и post транзакциях pacman и обновляет записи сразу (однако крайний post не включает)</p>
+</blockquote>
+<p>Включается сервис grub-btrfsd командой</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#f9f9f9;">systemctl</span><span style="color:#ffee80;"> enable grub-btrfsd.service
+</span></code></pre>
+<h2 id="nastroika-snapper-dlia-snimkov-home-kataloga"><a class="anchor" href="#nastroika-snapper-dlia-snimkov-home-kataloga">#</a>&nbsp;
+Настройка snapper для снимков /home каталога</h2>
+<p>Здесь подготовка и настройка практически такая же как и с корневым каталогом / но с мелкими отличиями<br />
+Однако снимки и их восстановление и откат будет происходить по другому</p>
+<p>Создаём подтом с названием <code>@home.snapshots</code> нужно чтобы он был также toplevel</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> btrfs su cr @home.snapshots
+</span><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> mkdir /home/.snapshots
+</span></code></pre>
+<pre data-lang="conf" style="background-color:#2b303b;color:#ffffff;" class="language-conf "><code class="language-conf" data-lang="conf"><span style="font-style:italic;color:#0088ff;"># /dev/vda2 LABEL=ArchLinux
+</span><span style="color:#eb939a;">UUID</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">870f5b9d</span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">1b03</span><span style="color:#ff9d00;">-</span><span style="color:#ff628c;">4251</span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">b3aa</span><span style="color:#ff9d00;">-</span><span style="color:#f9f9f9;">780df552a5ec  </span><span style="color:#ff9d00;">/</span><span style="color:#f9f9f9;">home</span><span style="color:#ff9d00;">/.</span><span style="color:#f9f9f9;">snapshots  btrfs       rw</span><span style="color:#ff9d00;">,</span><span style="color:#f9f9f9;">noatime</span><span style="color:#ff9d00;">,</span><span style="color:#f9f9f9;">compress</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">zstd</span><span style="color:#ff9d00;">:</span><span style="color:#ff628c;">2</span><span style="color:#ff9d00;">,</span><span style="color:#f9f9f9;">discard</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">async</span><span style="color:#ff9d00;">,</span><span style="color:#f9f9f9;">space_cache</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">v2</span><span style="color:#ff9d00;">,</span><span style="color:#f9f9f9;">subvolid</span><span style="color:#ff9d00;">=</span><span style="color:#ff628c;">300</span><span style="color:#ff9d00;">,</span><span style="color:#f9f9f9;">subvol</span><span style="color:#ff9d00;">=/</span><span style="color:#ffc600;">@home</span><span style="color:#ff9d00;">.</span><span style="color:#f9f9f9;">snapshots  </span><span style="color:#ff628c;">0 0
+</span></code></pre>
+<p>Перезагружаем демонов и монтируем</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> systemctl daemon-reload
+</span><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> mount</span><span style="color:#f9f9f9;"> -va
+</span></code></pre>
+<p>Размонтируем и удаляем /home/.snapshots</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">umount -v</span><span style="color:#ffee80;"> /home/.snapshots
+</span><span style="color:#f9f9f9;">rm -rfv</span><span style="color:#ffee80;"> /home/.snapshots
+</span></code></pre>
+<p>Создаю конфигурацию Snapper для /home<br />
+Snapper отслеживая этот путь будет создавать снимки всех пользователей (если они присутствуют)</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">snapper -c</span><span style="color:#ffee80;"> home create-config /home
+</span></code></pre>
+<p>Удаляем подтом /home/.snapshots Snapper'а</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">btrfs</span><span style="color:#ffee80;"> subvolume delete /.snapshots /home/.snapshots
+</span></code></pre>
+<p>Пересоздаём и переподключаем /home/.snapshots</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">mkdir -v</span><span style="color:#ffee80;"> /home/.snapshots
+</span><span style="color:#f9f9f9;">mount -v -a
+</span></code></pre>
+<p>Меняем права доступа для легкой замены снимка @ в любое время без потери снимков snapper.</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">chmod -v</span><span style="color:#ffee80;"> 750 /home/.snapshots
+</span></code></pre>
+<p>Доступ к снимкам для non-root пользователям</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">chown -vR</span><span style="color:#ffee80;"> :wheel /home/.snapshots
+</span></code></pre>
+<p>Настройка Snapper</p>
+<p>Не создавать timeline-снимки для <code>/home</code></p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sed -i &quot;</span><span style="color:#9eff80;">s|^TIMELINE_CREATE=.*|TIMELINE_CREATE=</span><span style="color:#80ff82;">\&quot;</span><span style="color:#9eff80;">no</span><span style="color:#80ff82;">\&quot;</span><span style="color:#9eff80;">|g</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#ffee80;"> /etc/snapper/configs/home
+</span></code></pre>
+<p>ОБЯЗАТЕЛЬНО добавьте в конфиг файле <code>/etc/updatedb.conf</code> внутри <strong>PRUNEPATHS</strong> путь снимков <code>/home/.snapshots</code> от предотвращения индексирования программой "updatedb" т.к это будет замедлять работу системы</p>
+<p>Готово, теперь как вернуть home до момента чистой установки (TTY) [делал после отката root]\</p>
+<p>Смотрим список снимков home командой</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> 0 - это текущее состояние системы, 1 - это созданный снимок свежей установки
+</span><span style="color:#f9f9f9;">snapper -c</span><span style="color:#ffee80;"> home ls
+</span></code></pre>
+<p>И откатываем командой и на выходе получится</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">snapper -c</span><span style="color:#ffee80;"> home undochange 1..0
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Выхлоп:
+</span><span style="color:#f9f9f9;">создать:0</span><span style="color:#ffee80;"> изменить:1 удалить:21322
+</span></code></pre>
+<p>Работает прекрасно, теперь $HOME чист от KDE конфиг файлов</p>
+<h3 id="iskliuchit-katalogi-ot-snimkov-v-home"><a class="anchor" href="#iskliuchit-katalogi-ot-snimkov-v-home">#</a>&nbsp;
+Исключить каталоги от снимков в $HOME</h3>
+<p>Для этого надо просто добавить подтом (subvolume) как путь, НО перед этим, каталоги с этим путём надо создать</p>
+<p>В качестве примера я буду использовать flatpak виртуальную машину gnome-boxes</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">mkdir -p </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.var/app/org.gnome.Boxes/data/gnome-boxes/
+</span></code></pre>
+<p>Создаём подтом images командой от пользователя (non-root)</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">btrfs</span><span style="color:#ffee80;"> su cr </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.var/app/org.gnome.Boxes/data/gnome-boxes/images
+</span></code></pre>
+<p>Теперь образы (qcow) которых не будут присутствовать в снимках и собственно не будут занимать место и раздувать его</p>
+<p>Также я дополнительно добавил <code>~/.local</code> и <code>~/.cache</code>, так как они уже содержат файлы мне необходимо их переместить во временную папку, потом сразу создать подтом и обратно переместить из временной папки в <code>~/.local</code> и <code>~/.cache</code></p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">mkdir -v </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/temp_local
+</span><span style="color:#f9f9f9;">mkdir -v </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/temp_cache
+</span><span style="color:#f9f9f9;">mv -v </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.local/</span><span style="color:#ff9d00;">* </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/temp_local
+</span><span style="color:#f9f9f9;">mv -v </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.cache/</span><span style="color:#ff9d00;">* </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/temp_cache
+</span><span style="color:#f9f9f9;">btrfs</span><span style="color:#ffee80;"> su cr </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.local
+</span><span style="color:#f9f9f9;">btrfs</span><span style="color:#ffee80;"> su cr </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.cache
+</span><span style="color:#f9f9f9;">mv -v </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/temp_local/</span><span style="color:#ff9d00;">* </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.local/
+</span><span style="color:#f9f9f9;">mv -v </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/temp_cache/</span><span style="color:#ff9d00;">* </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/.cache/
+</span><span style="color:#f9f9f9;">rm -rv </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/temp_cache/ </span><span style="color:#ff80e1;">~</span><span style="color:#ffee80;">/temp_local/
+</span></code></pre>
+<p>Смотрим как это выглядит</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;"># btrfs su li /
+</span><span style="color:#f9f9f9;">ID 370 gen 937 top level 257 path @home/user/.var/app/org.gnome.Boxes/data/gnome-boxes/images
+</span><span style="color:#f9f9f9;">ID 371 gen 941 top level 257 path @home/user/.local
+</span><span style="color:#f9f9f9;">ID 372 gen 941 top level 257 path @home/user/.cache
+</span></code></pre>
+<p>Теперь снапшотим $HOME используя snapper команду</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">snapper -c</span><span style="color:#ffee80;"> home create
+</span></code></pre>
+<p>И после обзора этого снимка видно что файлов внутри <code>~/.local</code> и <code>~/.cache</code> нету</p>
+<h2 id="sovety-i-triuki"><a class="anchor" href="#sovety-i-triuki">#</a>&nbsp;
+Советы и трюки</h2>
+<p>Ручные одиночные снимки</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">snapper -c</span><span style="color:#ffee80;"> root create</span><span style="color:#f9f9f9;"> -c</span><span style="color:#ffee80;"> number
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> или
+</span><span style="color:#f9f9f9;">snapper -c</span><span style="color:#ffee80;"> root create</span><span style="color:#f9f9f9;"> -c</span><span style="color:#ffee80;"> timeline
+</span></code></pre>
+<p>(Не проверено) Сравнить снапшот файл</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Пример
+</span><span style="color:#f9f9f9;">snapper -c</span><span style="color:#ffee80;"> root diff id..0 filename
+</span></code></pre>
+<p>Восстановление удаленного файла</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Пример
+</span><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> snapper</span><span style="color:#f9f9f9;"> -c</span><span style="color:#ffee80;"> root undochange 1152..0 /etc/X11/xorg.conf
+</span></code></pre>
+<p>(Не проверено) Восстановить предыдущую версию файла из снимка</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Примеры:
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Вернуть состояние файла из post(5) в pre(2)
+</span><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> snapper</span><span style="color:#f9f9f9;"> -v</span><span style="color:#ffee80;"> undochange 2..5 /etc/sysconfig/apache2
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;">sudo snapper -c root -v undochange id..0 FILENAME1 FILENAME2
+</span></code></pre>
+<p>Удалить снимок</p>
+<blockquote>
+<p>Примечание: При удалении pre-снимка всегда следует удалять соответствующий ему post-снимок, и наоборот.</p>
+</blockquote>
+<p>Чтобы удалить снимок с номером N, выполните:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">snapper -c</span><span style="color:#ffee80;"> config delete N
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Примеры
+</span><span style="color:#f9f9f9;">snapper -c</span><span style="color:#ffee80;"> root delete 65 70
+</span><span style="color:#f9f9f9;">snapper -c</span><span style="color:#ffee80;"> root delete 65-70
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Чтобы немедленно освободить пространство, используемое снимками, используйте --sync:
+</span><span style="color:#f9f9f9;">snapper -c</span><span style="color:#ffee80;"> root delete</span><span style="color:#f9f9f9;"> --sync</span><span style="color:#ffee80;"> 65
+</span></code></pre>
+<p>Как узнать занимаемое место снимков?</p>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.youtube.com/watch?v=KahWNBx9TG8">Видео инструкция другой метод</a></li>
+</ul>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Для отдельного снимка укажите номер
+</span><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> btrfs filesystem du</span><span style="color:#f9f9f9;"> -s</span><span style="color:#ffee80;"> /.snapshots/N
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Для всех снимков (долго)
+</span><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> btrfs filesystem du</span><span style="color:#f9f9f9;"> -s</span><span style="color:#ffee80;"> /.snapshots/</span><span style="color:#ff9d00;">*
+</span></code></pre>
+<p>Покажу на примере моего древнего снимка 2737 которому 7 месяцев и он всё это время не удалялся,<br />
+в то время сейчас у меня текущий по дате снимок является 6402.</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">     Total   Exclusive  Set shared  Filename
+</span><span style="color:#f9f9f9;">  20.88GiB    18.66GiB     1.86GiB  /.snapshots/2737
+</span></code></pre>
+<p>При удалении этого снимка он освободил у меня около 10-11гб.<br />
+Поэтому следует обращать внимание на <strong>Exclusive</strong></p>
+<h2 id="kak-otkatitsia-v-read-write-snapshot-posle-slomannoi-sistemy-arch-way"><a class="anchor" href="#kak-otkatitsia-v-read-write-snapshot-posle-slomannoi-sistemy-arch-way">#</a>&nbsp;
+Как откатится в read-write снапшот после сломанной системы (Arch way)</h2>
+<blockquote>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://wiki.archlinux.org/title/Snapper#Suggested_filesystem_layout">Как указано из Arch Wiki</a> команда <code>snapper rollback</code> <a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/jrabinow/snapper-rollback/issues/16#issuecomment-1679407121">не предназначена для текущей разметки Arch Linux</a>, когда я тестировал её, после выполнения ранее удалённый рекурсивно /etc не восстановила и из-за этого я не смог загрузится в систему. Поэтому необходимо использовать другой метод для отката системы.</p>
+</blockquote>
+<p>Для самого простого и не затруднительного метода есть AUR пакет <a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/snapper-rollback/">snapper-rollback</a> который соответствует схеме разметки Arch Linux</p>
+<p>При его установке необходимо отредактировать конфиг <code>/etc/snapper-rollback.conf</code> и в самом конце раскоментировать строку <strong>dev</strong> и указать ваш <strong>/dev/sda[номер]</strong> раздел на который смонтирован как /</p>
+<p>Если у вас есть записи снапшотов grub при установке grub-btrfs и в вашей системе что-то сломалось, загружаемся в рабочий снимок и для отката вводим команду</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> snapper-rollback </span><span style="color:#ff9d00;">[</span><span style="color:#ffee80;">номер снапшота из snapper ls</span><span style="color:#ff9d00;">]
+</span></code></pre>
+<p>И после перезагрузки у вас будет восстановленная система</p>
+<h3 id="ne-poluchaetsia-otkatitsia-iz-za-malogo-obioma-diska"><a class="anchor" href="#ne-poluchaetsia-otkatitsia-iz-za-malogo-obioma-diska">#</a>&nbsp;
+Не получается откатится из-за малого объёма диска</h3>
+<p>Если например случилась проблема при обновлении Arch Linux и у вас нету места в разделе / тогда команда <code>sudo snapper-rollback</code> не сможет сделать откат выдав ошибку о том что недостаточно места</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">...
+</span><span style="color:#f9f9f9;">OSError: [Errno 28] No space left on device: &#39;/btrfsroot/@&#39; -&gt; &#39;/btrfsroot/@2023-11-03T19:25&#39;
+</span></code></pre>
+<p>Именно поэтому <strong>не рекомендуется</strong> не заполнять в край / раздел если пользуетесь файловой системой Btrfs</p>
+<p>Однако если боитесь столкнутся с таким попробуйте вот что рекомендуется делать:</p>
+<ol>
+<li>Удалить старые снимки</li>
+</ol>
+<ul>
+<li>Воспользовавшись snapper</li>
+</ul>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Смотрим id каких ненужных снимков необходимо удалить
+</span><span style="color:#f9f9f9;">snapper -c</span><span style="color:#ffee80;"> root ls </span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Или `snapper ls`
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Удаляем снимок с немедленным очищением пространства
+</span><span style="color:#f9f9f9;">snapper</span><span style="color:#ffee80;"> delete</span><span style="color:#f9f9f9;"> --sync </span><span style="color:#ff9d00;">[</span><span style="color:#ffee80;">id</span><span style="color:#ff9d00;">]
+</span></code></pre>
+<ul>
+<li>Можно это сделать ручным методом</li>
+</ul>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> btrfs subvolume delete /.snapshots/№/snapshot
+</span></code></pre>
+<ol start="2">
+<li>Ограничить кол-во снимков</li>
+</ol>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">snapper -c</span><span style="color:#ffee80;"> root set-config </span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">NUMBER_LIMIT=2</span><span style="color:#f9f9f9;">&quot;
+</span><span style="color:#f9f9f9;">snapper -c</span><span style="color:#ffee80;"> root set-config </span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">NUMBER_LIMIT_IMPORTANT=2</span><span style="color:#f9f9f9;">&quot;
+</span></code></pre>
+<h3 id="mozhno-oboitis-bez-snapper-rollback-ot-sdelat-eto-vruchnuiu"><a class="anchor" href="#mozhno-oboitis-bez-snapper-rollback-ot-sdelat-eto-vruchnuiu">#</a>&nbsp;
+Можно обойтись без snapper-rollback от сделать это вручную?</h3>
+<p>Ответ - да, можно. Вот как это сделать находясь в выбранный через меню grub read-only снимок:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Переходим в root оболочку
+</span><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> su
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Откидываем сломанный текущий подтом
+</span><span style="color:#f9f9f9;">mv</span><span style="color:#ffee80;"> /btrfsroot/@ /btrfsroot/@</span><span style="color:#f9f9f9;">$(date</span><span style="color:#ffee80;"> +</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">%Y-%m-%dT%H:%M</span><span style="color:#f9f9f9;">&quot;)
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Теперь заменяем сломанный на тот номер снимка на котором находитесь
+</span><span style="color:#f9f9f9;">btrfs</span><span style="color:#ffee80;"> subvolume snapshot /btrfsroot/@snapshots/</span><span style="color:#ff9d00;">&lt;</span><span style="color:#ffee80;">номер</span><span style="color:#ff9d00;">&gt;</span><span style="color:#ffee80;">/snapshot /btrfsroot/@
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Делаем его основным для загрузки
+</span><span style="color:#f9f9f9;">btrfs</span><span style="color:#ffee80;"> subvolume set-default /btrfsroot/@
+</span></code></pre>
+<p>Готово</p>
+<h3 id="problema-ne-dobavliaiutsia-novye-zapisi-snimkov-v-grub-pri-ispol-zovanii-grub-btrfsd"><a class="anchor" href="#problema-ne-dobavliaiutsia-novye-zapisi-snimkov-v-grub-pri-ispol-zovanii-grub-btrfsd">#</a>&nbsp;
+Проблема: Не добавляются новые записи снимков в grub при использовании grub-btrfsd</h3>
+<p>Я сталкивался с этим после отката в окружении Gnome на VM когда пытался удалить /etc директорию.<br />
+После отката новые снимки почему-то не добавлялись в grub меню</p>
+<p>Решением было переустановка пакета grub с командой <code>grub install ...</code> и дальнейшим пересозданием конфига <code>grub-mkconfig ...</code></p>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
