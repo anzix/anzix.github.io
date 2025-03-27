@@ -1,6 +1,6 @@
 +++
 title = "SPFlashTool (Версия 5) на Arch Linux (софт на работу не проверен)"
-date = 2023-03-02T19:00:29+05:00
+date = 2023-03-02
 draft = false
 [taxonomies]
 categories = []
@@ -9,7 +9,7 @@ tags = ["linux"]
 
 При подключении телефона с процессором mediatek
 
-```sh
+```txt
 ...
 [ +13,240631] usb 1-1.1: new high-speed USB device number 10 using ehci-pci
 [  +0,078864] usb 1-1.1: New USB device found, idVendor=0e8d, idProduct=2000, bcdDevice= 1.00
@@ -23,18 +23,25 @@ tags = ["linux"]
 ...
 ```
 
-Добавляем своего пользователя в группу uucp, для того чтобы были права на запись в виртуальный COM-порт
+Добавляем своего пользователя в группу uucp, для того чтобы были права на запись
+в виртуальный COM-порт
 
 ```bash
 sudo usermod -aG uucp $(whoami)
 ```
 
-В новой версии SPFlashTool 6 [spflashtool-bin](https://aur.archlinux.org/packages/spflashtool-bin) не могу найти поле с "Scatter-loading File"
-и "Download-Agent File". Окей, прожал комбинацию клавиш <kbd><kbd>CTRL</kbd>+<kbd>ALT</kbd>+<kbd>v</kbd></kbd> открылись доп-ные поля и появился "Download-Agent File" НО "Scatter-loading File" **нету**
+В новой версии SPFlashTool 6 [spflashtool-bin](https://aur.archlinux.org/packages/spflashtool-bin)
+не могу найти поле с "Scatter-loading File" и "Download-Agent File". Окей, прожал
+комбинацию клавиш CTRL+ALT+v открылись доп-ные поля и появился "Download-Agent
+File" НО "Scatter-loading File" **нету**
 
-Для скачивания <span style="color:green">НОРМАЛЬНОЙ</span> версии с наличием заливки scatter файла вот что мне пришлось сделать
+Для скачивания нормальной версии с наличием заливки scatter файла вот что мне
+пришлось сделать
 
-Дабы не пришлось собирать [qtwebkit](https://aur.archlinux.org/packages/qtwebkit) (который подтягивает очень много зависимостей для сборки) просто соберите бинарник [qtwebkit-bin](https://aur.archlinux.org/packages/qtwebkit-bin) и ваше время и нервы будут сохранены :)
+Дабы не пришлось собирать [qtwebkit](https://aur.archlinux.org/packages/qtwebkit)
+(который подтягивает очень много зависимостей для сборки) просто устанавливаем
+бинарник [qtwebkit-bin](https://aur.archlinux.org/packages/qtwebkit-bin) и ваше
+время и нервы будут сохранены :)
 
 ![image](/images/SPFlashTool-ArchLinux/swappy-20221118-151453.png)
 
@@ -42,11 +49,20 @@ sudo usermod -aG uucp $(whoami)
 yay -S qtwebkit-bin
 ```
 
-Далее просто собираем 5 версию бинарника [spflashtool5-bin](https://aur.archlinux.org/packages/spflashtool5-bin) с наличием заливки scatter файла
+Далее просто собираем 5 версию бинарника [spflashtool5-bin](https://aur.archlinux.org/packages/spflashtool5-bin)
+с наличием заливки scatter файла
 
 ```bash
 yay -S spflashtool5-bin
 ```
 
 Вуаля, это заняло мне 5 минут
+
 ![image](/images/SPFlashTool-ArchLinux/1668766134.png)
+
+## Разные полезности
+
+1. Как открыть Write Memory в таскбаре Window?
+
+   Жмёте комбинацию клавиш `Ctrl + Alt + v`, после этого у вас будет открыт\
+   раздел Write Memory. Плюс также будет доступен "Firmware Upgrade"

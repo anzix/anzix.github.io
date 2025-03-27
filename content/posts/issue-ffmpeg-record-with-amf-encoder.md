@@ -1,6 +1,6 @@
 +++
 title = "Проблема с записью FFmpeg в связке с AMF кодировщиком"
-date = 2023-10-08T23:22:00+05:00
+date = 2023-10-08
 draft = false
 [taxonomies]
 categories = ["troubleshooting"]
@@ -19,7 +19,8 @@ ffmpeg -vaapi_device /dev/dri/renderD128 -f x11grab -video_size 1920x1080 -frame
 zsh: segmentation fault (core dumped)  ffmpeg -vaapi_device /dev/dri/renderD128 -f x11grab -video_size 1920x1080  60
 ```
 
-Решением было экспортировать переменную проприетарных драйверов AMDGPU-PRO командой vk_pro (из AUR пакета [amd-vulkan-prefixes](https://aur.archlinux.org/packages/amd-vulkan-prefixes/))
+Решением было экспортировать переменную проприетарных драйверов AMDGPU-PRO
+командой vk_pro (из AUR пакета [amd-vulkan-prefixes](https://aur.archlinux.org/packages/amd-vulkan-prefixes/))
 
 ```sh
 vk_pro ffmpeg -vaapi_device /dev/dri/renderD128 -f x11grab -video_size 1920x1080 -framerate 60 -i :0 -c:v h264_amf output.mp4

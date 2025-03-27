@@ -1,6 +1,6 @@
 +++
 title = "!Dfu-util - установка & обновление прошивки Ralim на купленный с Китая Pinecil"
-date = 2023-03-04T20:49:54+05:00
+date = 2023-03-04
 draft = false
 [taxonomies]
 categories = []
@@ -9,7 +9,10 @@ tags = ["linux", "pinecil"]
 
 Источники:
 
-- [Офф инструкция установки RalimOS (Linux)](https://ralim.github.io/IronOS/Flashing/Pinecil%20V1/) Ориентировался по ней
+- [Офф инструкция установки RalimOS (Linux)](https://ralim.github.io/IronOS/Flashing/Pinecil%20V1/)
+
+  Ориентировался по ней
+
 - [Сурс по установке через dfu-util](https://gist.github.com/Dids/2aa950d075bcf58fca98eb975a42d72b)
 
 ![image](/images/flash-pinecil-on-archlinux/old-firmware.png)
@@ -24,13 +27,15 @@ sudo pacman -S dfu-util
 
 ## Процесс установки прошивки через dfu-util
 
-Скачиваем [последнюю версию RalimOS](https://github.com/Ralim/IronOS/releases), в данный момент версия 2.20
+Скачиваем [последнюю версию RalimOS](https://github.com/Ralim/IronOS/releases)
+в данный момент версия 2.20
 
 Выбираем `Pinecil.zip`, распаковываем и ищем `Pinecil_RU.dfu` он нам и нужен
 
 Включаем режим DFU на Pinecil
 
-Для этого зажимаем кнопку - (минус) и подключаем Pinecil в ПК (дисплей на программаторе будет тёмным)
+Для этого зажимаем кнопку - (минус) и подключаем Pinecil в ПК (дисплей на
+программаторе будет тёмным)
 
 Для проверки вводим
 
@@ -44,7 +49,9 @@ Found DFU: [28e9:0189] ver=0100, devnum=43, cfg=1, intf=0, path="1-1.1", alt=1, 
 Found DFU: [28e9:0189] ver=0100, devnum=43, cfg=1, intf=0, path="1-1.1", alt=0, name="@Internal Flash  /0x08000000/128*001Kg", serial="3TBJ"
 ```
 
-Если у вас также как и у меня есть два DFU девайса, значит необходимо указать какой именно необходимо прошить а именно **_Internal Flash_** с цифровым указанием **_alt=0_**
+Если у вас также как и у меня есть два DFU девайса, значит необходимо указать
+какой именно необходимо прошить а именно **_Internal Flash_** с цифровым
+указанием **_alt=0_**
 
 Из мануала dfu-util:
 
@@ -54,7 +61,8 @@ Found DFU: [28e9:0189] ver=0100, devnum=43, cfg=1, intf=0, path="1-1.1", alt=0, 
         ber.
 ```
 
-Перевод: `-a` **Указывает альтернативную настройку интерфейса DFU по имени или по номеру**
+Перевод: `-a` **Указывает альтернативную настройку интерфейса DFU по имени или
+по номеру**
 
 Внутри распакованной папки с локализациями Pinecil открываем терминале и вводим
 
@@ -88,9 +96,9 @@ Target name: ST...
 Image for alternate setting 0, (1 elements, total size = 54300)
 Setting Alternate Interface #0 ...
 Parsing element 1, address = 0x08000000, size = 54292
-Erase   	[=========================] 100%        54292 bytes
+Erase       [=========================] 100%        54292 bytes
 Erase    done.
-Download	[=========================] 100%        54292 bytes
+Download    [=========================] 100%        54292 bytes
 Download done.
 Done parsing DfuSe file
 ```
@@ -100,13 +108,3 @@ Done parsing DfuSe file
 ![image](/images/flash-pinecil-on-archlinux/new-firmware.png)
 
 Как видим прошивка обновилась до 2.19 и работает замечательно
-
-## (Не проверял) Альтернативный процесс установки/обновления прошивки через [старую версию PINE64 Updater](https://aur.archlinux.org/packages/pinecil-firmware-updater-git)
-
-![image](/images/flash-pinecil-on-archlinux/Old-PINE64-Updater.png)
-
-Это старая QT версия ранее разработанная для Linux
-
-```bash
-yay -S pinecil-firmware-updater-git
-```

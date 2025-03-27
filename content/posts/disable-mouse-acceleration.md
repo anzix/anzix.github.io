@@ -1,6 +1,6 @@
 +++
 title = "Ручное отключение акселерации мыши (Xorg)"
-date = 2023-03-21T20:11:44+05:00
+date = 2023-03-21
 draft = false
 [taxonomies]
 categories = []
@@ -23,13 +23,13 @@ nvim /etc/X11/xorg.conf.d/50-mouse-acceleration.conf
 
 И вставляем это всё, сохраняем и перезагружаемся или выходим из сессии
 
-```
+```txt
 Section "InputClass"
- 	Identifier "Logitech G102 Prodigy"
- 	Driver "libinput"
- 	MatchIsPointer "yes"
- 	Option "AccelProfile" "Flat"
- 	Option "AccelSpeed" "0"
+    Identifier "Logitech G102 Prodigy"
+    Driver "libinput"
+    MatchIsPointer "yes"
+    Option "AccelProfile" "Flat"
+    Option "AccelSpeed" "0"
 EndSection
 ```
 

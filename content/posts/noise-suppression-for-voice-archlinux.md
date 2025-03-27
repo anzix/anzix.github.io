@@ -1,10 +1,10 @@
 +++
 title = "Плагин подавления шума микрофона в реальном времени noise-suppression-for-voice"
-date = 2023-03-07T00:59:13+05:00
+date = 2023-03-07
 draft = false
 [taxonomies]
 categories = []
-tags = ["linux"]
+tags = ["linux", "obs"]
 +++
 
 - [Github страница проекта](https://github.com/werman/noise-suppression-for-voice)
@@ -12,9 +12,11 @@ tags = ["linux"]
 
 В моём примере всё будет делаться на pipewire
 
-Требование:
+## Требование
 
-1. Ваш микрофон должен иметь поддержку частоту дискретизации в 48000 Hz. Pipewire по умолчанию переводит частоту дискретизации на 48000. Однако на всякий проверить это можно данной командой
+Ваш микрофон должен иметь поддержку частоту дискретизации в 48000 Hz. Pipewire
+по умолчанию переводит частоту дискретизации на 48000. Однако на всякий
+проверить это можно данной командой
 
 ```bash
 cat /proc/asound/card3/stream0
@@ -41,6 +43,8 @@ Playback:
 
 Как видно из `Momentary freq` мне ничего менять не нужно
 
+## Установка и настройка
+
 Качаем плагин
 
 ```bash
@@ -53,7 +57,8 @@ sudo pacman -S noise-suppression-for-voice
 mkdir -p ~/.config/pipewire/pipewire.conf.d/
 ```
 
-Вставляем [это всё](https://github.com/werman/noise-suppression-for-voice#:~:text=context.modules%20%3D%20%5B%0A%7B%20%20%20name%20%3D%20libpipewire,Source%0A%20%20%20%20%20%20%20%20%20%20%20%20audio.rate%20%3D%2048000%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%7D%0A%5D) но меняем на то что показано ниже
+Вставляем [это всё](https://github.com/werman/noise-suppression-for-voice/blob/9c4e5c28d8950e2cef837d8a0abd36c2fd9b5c2d/README.md?plain=1#L72-L104)
+но меняем на то что показано ниже
 
 ```bash
 nvim ~/.config/pipewire/pipewire.conf.d/99-input-denoising.conf
@@ -61,16 +66,16 @@ nvim ~/.config/pipewire/pipewire.conf.d/99-input-denoising.conf
 
 ```bash
 ...........
-			.........
-			# Название
-			node.description = "Noise Canceling source" -->> "Шумодав микро"
-			media.name = "Noise Canceling source" -->> "Шумодав микро"
-			........
-					........
-					# Указываем путь библиотеки из скачанного пакета noise-suppression-for-voice
-					plugin = /path/to/librnnoise_ladspa.so -->> plugin = /usr/lib/ladspa/librnnoise_ladspa.so
-					......
-		..........
+            .........
+            # Название
+            node.description = "Noise Canceling source" -->> "Шумодав микро"
+            media.name = "Noise Canceling source" -->> "Шумодав микро"
+            ........
+                    ........
+                    # Указываем путь библиотеки из скачанного пакета noise-suppression-for-voice
+                    plugin = /path/to/librnnoise_ladspa.so -->> plugin = /usr/lib/ladspa/librnnoise_ladspa.so
+                    ......
+        ..........
 
 .........
 ```
@@ -81,8 +86,10 @@ nvim ~/.config/pipewire/pipewire.conf.d/99-input-denoising.conf
 systemctl --user restart pipewire
 ```
 
-Открываем obs, и в Mic/Aur жмём на шестерёнку и выбираем "Свойства"
-В выпадающем списке выбираем "Шумодав микро"
+## Настройка в OBS
+
+Открываем obs, и в Mic/Aur жмём на шестерёнку и выбираем "Свойства". В выпадающем
+списке выбираем "Шумодав микро"
 
 ![image](/images/noise-suppression-for-voice-archlinux/obs.png)
 

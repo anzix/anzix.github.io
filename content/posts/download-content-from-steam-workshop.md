@@ -1,6 +1,6 @@
 +++
 title = "Как отдельно скачать контент/моды из Steam Workshop на Arch Linux"
-date = 2023-03-07T11:00:37+05:00
+date = 2023-03-07
 draft = false
 [taxonomies]
 categories = []
@@ -17,12 +17,13 @@ steam -console
 
 После чего у вас появится соответствующий раздел, переходим в Console
 
-Для скачивания контента из Steam Workshop необходимо наличие купленной игры в Стиме
+Для скачивания контента из Steam Workshop необходимо наличие купленной игры в
+Стиме
 
 Применение:
 
 ```bash
-workshop_download_item [id app] [id контента]
+workshop_download_item [id_app] [id_контента]
 ```
 
 Вводим на примере скачивания [живых обоев из Wallpaper Engine](https://steamcommunity.com/sharedfiles/filedetails/?id=2884223898)
@@ -36,7 +37,7 @@ workshop_download_item 431960 2884223898
 После скачивания он будет сохранён по данному пути
 
 ```bash
-$HOME/.steam/steam/steamapps/workshop/content/[id app]/[id контента]
+$HOME/.steam/steam/steamapps/workshop/content/[id_app]/[id_контента]
 ```
 
 То есть
@@ -47,7 +48,9 @@ $HOME/.steam/steam/steamapps/workshop/content/431960/2884223898
 
 ## Используя Steamcmd
 
-[Инструмент в виде сайта](https://steamworkshopdownloader.io/) (позволяет скачивать контент только с анонимной сессией, а остальное предоставляет инструкцию по установке steamcmd)
+[Инструмент в виде сайта](https://steamworkshopdownloader.io/) (позволяет
+скачивать контент только с анонимной сессией, а остальное предоставляет
+инструкцию по установке steamcmd)
 
 - [Офф вики по steamcmd](https://developer.valvesoftware.com/wiki/SteamCMD#Downloading_SteamCMD)
 
@@ -76,10 +79,10 @@ login "username"
 Применение
 
 ```bash
-workshop_download_item [id app] [id контента]
+workshop_download_item [id_app] [id_контента]
 ```
 
-После скачивания он будет сохранён $HOME/.local/share/Steam/steamapps/workshop/content/[id_game]/[id_content]
+После скачивания он будет сохранён `$HOME/.local/share/Steam/steamapps/workshop/content/[id_game]/[id_content]`
 
 Пример
 

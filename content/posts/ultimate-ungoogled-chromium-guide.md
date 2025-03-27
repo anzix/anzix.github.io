@@ -1,6 +1,6 @@
 +++
 title = "!Ультимативный Ungoogled Chromium гайд для Arch Linux"
-date = 2023-03-12T01:07:49+05:00
+date = 2023-03-12
 draft = false
 [taxonomies]
 categories = []

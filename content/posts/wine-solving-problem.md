@@ -1,6 +1,6 @@
 +++
 title = "Решение проблем с Wine/Proton"
-date = 2023-12-11T17:30:00+05:00
+date = 2023-12-11
 draft = false
 [taxonomies]
 categories = ["troubleshooting"]
@@ -33,11 +33,12 @@ WINEPREFIX="$HOME/.local/share/wineprefixes/Worms" wine /run/media/anix/worms2/a
 
 Мне помог данный [видео гайд на отметке 11:12](https://youtu.be/J_L9LB3o5SQ?t=672)
 
-На примере Battle Engine Aquila репак от Механиков\
-Необходимо было переустановить игру и в установщике отметить создание ярлыка игры на раб столе
+На примере Battle Engine Aquila репак от Механиков. Необходимо было переустановить
+игру и в установщике отметить создание ярлыка игры на раб столе
 
-Решение:\
-Нужно было запускать .lnk (Win) файл (находящийся внутри префикса игры ``<префикс_игры>/drive_c/users/Public/Desktop/<ярлык_игры>.lnk`` а не .exe внутри установленной игры и тогда игра запуститься
+Решение: Нужно было запускать .lnk (Win) файл (находящийся внутри префикса игры
+``<префикс_игры>/drive_c/users/Public/Desktop/<ярлык_игры>.lnk`` а не .exe
+внутри установленной игры и тогда игра запуститься
 
 ```sh
 WINEPREFIX="$HOME/.local/share/wineprefixes/BEAquila" wine $HOME/Desktop/Battle\ Engine\ Aquila.lnk
@@ -45,7 +46,8 @@ WINEPREFIX="$HOME/.local/share/wineprefixes/BEAquila" wine $HOME/Desktop/Battle\
 
 ## Артефакты используя Wine в старой игре
 
-При переключении раб. стола в оконном менеджере i3wm в запущенным ОБЫЧНОМ wine'ом игре Freedom Fighters появляются артефакты
+При переключении раб. стола в оконном менеджере i3wm в запущенным ОБЫЧНОМ
+wine'ом игре Freedom Fighters появляются артефакты
 
 ![image](/images/wine-solving-problem/normal-texture.png)
 
@@ -53,7 +55,9 @@ WINEPREFIX="$HOME/.local/share/wineprefixes/BEAquila" wine $HOME/Desktop/Battle\
 
 Полноценное решение - это использовать связку DgVoodoo+DXVK
 
-[Скачать последнюю версию DgVoodoo](http://dege.freeweb.hu/dgVoodoo2/dgVoodoo2/) и при распаковки закинуть все dll'ки из **/dgVoodoo2_79_3/MS/x86/** в папку с игрой
+[Скачать последнюю версию DgVoodoo](http://dege.freeweb.hu/dgVoodoo2/dgVoodoo2/)
+и при распаковки закинуть все dll'ки из **/dgVoodoo2_79_3/MS/x86/** в папку с
+игрой
 
 Что бы DgVoodoo заработал необходим DXVK, качаем AUR пакет dxvk-bin
 
@@ -143,8 +147,12 @@ lib32-gst-plugins-good (1.20.4-1)
 
 ![image](/images/wine-solving-problem/unarc_error.png)
 
-Решение [собрать wine-tkg](https://github.com/Frogging-Family/wine-tkg-git) (заменится wine-staging) и использовать его\
-Или использовать [wine-7.18-staging-tkg-amd64](https://github.com/Kron4ek/Wine-Builds/releases) от [Kron4ek](https://github.com/Kron4ek) в из репо [Wine-Builds](https://github.com/Kron4ek/Wine-Builds)
+2 Решения:
+
+1. [собрать wine-tkg](https://github.com/Frogging-Family/wine-tkg-git) (заменится
+   wine-staging) и использовать его
+2. Или использовать [wine-7.18-staging-tkg-amd64](https://github.com/Kron4ek/Wine-Builds/releases)
+   от [Kron4ek](https://github.com/Kron4ek) в из репо [Wine-Builds](https://github.com/Kron4ek/Wine-Builds)
 
 Необходимо распаковать архив и добавить в запуск бинарника wine по такому пути
 
@@ -169,7 +177,8 @@ WINEPREFIX="$HOME/.local/share/wineprefixes/BEAquila" ~/Downloads/wine-7.18-stag
 cd ${WINEPREFIX:-~/.local/share/wineprefixes/hexedit}/drive_c/windows/Fonts && for i in /usr/share/fonts/**/*.{ttf,otf}; do ln -s "$i" ; done
 ```
 
-Данный метод описанный [первым в Arch Wiki](https://wiki.archlinux.org/title/Wine#Fonts) не работает, видимо нужно скачать шрифты винды
+Данный метод описанный [первым в Arch Wiki](https://wiki.archlinux.org/title/Wine#Fonts)
+не работает, видимо нужно скачать шрифты винды
 
 Решил благодаря данной переменной
 

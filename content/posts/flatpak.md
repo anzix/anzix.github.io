@@ -1,6 +1,6 @@
 +++
 title = "!Flatpak"
-date = 2023-03-06T21:25:07+05:00
+date = 2023-03-06
 draft = false
 [taxonomies]
 categories = []
@@ -38,7 +38,8 @@ sudo flatpak override --filesystem=xdg-config/gtk-3.0:ro
 sudo flatpak override --filesystem=xdg-config/gtk-4.0:ro
 ```
 
-Включите курсоры и значки мыши в Flatpak (таким образом курсор мыши будет отображаться правильно).
+Включите курсоры и значки мыши в Flatpak (таким образом курсор мыши будет
+отображаться правильно).
 
 ```bash
 flatpak --user override --filesystem=/home/$USER/.icons/:ro
@@ -82,43 +83,55 @@ flatpak install -y --noninteractive flathub-beta "${PKGS[@]}"
 
 ## Удобства / полезное
 
-Для WM (оконных менеджеров) использующих rofi dmenu, и также для тех кто не хочет постоянно перезапускать сессию для появления ярлыков. Создаёт символическую ссылку чтобы ярлыки Flatpak'ов были в /usr/share/applications, и показывались в меню пуск
+1. Для WM (оконных менеджеров) использующих rofi dmenu, и также для тех кто не
+   хочет постоянно перезапускать сессию для появления ярлыков. Создаёт символическую
+   ссылку чтобы ярлыки Flatpak'ов были в /usr/share/applications, и показывались
+   в меню пуск
 
-```bash
-ln -s /var/lib/flatpak /usr/share/applications
-```
+   ```bash
+   ln -s /var/lib/flatpak /usr/share/applications
+   ```
 
-Alias для удобного запуска программ через flatpak, прописываем в `.bashrc` или `.zshrc`
+2. Alias для удобного запуска программ через flatpak, прописываем в `.bashrc`
+   или `.zshrc`
 
-```
-alias flat="flatpak run"
-```
+    ```sh
+    alias flat="flatpak run"
+    ```
 
-```
-flat [название программы]
-```
+    ```sh
+    flat [название программы]
+    ```
 
-[Взято из поста Reddit](https://www.reddit.com/r/linux/comments/u3wcm7/easy_flatpak_apps_backupinstallation/)
+3. Экспорт/Импорт пакетов Flatpak
 
-Экспорт пакетов Flatpak
+   Экспорт
 
-```bash
-flatpak list --columns=application --app > flatpaks.txt
-```
+   ```bash
+   flatpak list --columns=application --app > flatpaks.txt
+   ```
 
-Импорт пакетов Flatpak
+    Импорт
 
-```bash
-xargs flatpak install -y < flatpaks.txt
-```
+    ```bash
+    xargs flatpak install -y < flatpaks.txt
+    ```
 
-Очистить осиротевшие Flatpak runtimes
+    [11.06.2023] Во flatpak скоро будет своя собственная реализация синхронизации
+    пакетов т.е импорт и экспорт называется [flatsync](https://gitlab.gnome.org/Cogitri/flatsync).
+    [Новость в The Linux Experiment](https://youtu.be/n3gMicC8gU0?t=276)
 
-```sh
-flatpak uninstall --unused --noninteractive
-```
+4. Очистить осиротевшие Flatpak runtimes
 
-[11.06.2023] Во flatpak скоро будет своя собственная реализация синхронизации пакетов т.е импорт и экспорт называется [flatsync](https://gitlab.gnome.org/Cogitri/flatsync). [Новость в The Linux Experiment](https://youtu.be/n3gMicC8gU0?t=276)
+   ```sh
+   flatpak uninstall --unused --noninteractive
+   ```
+
+5. Показать manifest файл Flatpak программы (который необходим для сборки в `flatpak-builder`)
+
+   ```sh
+   flatpak run --command=cat org.gnome.TextEditor /app/manifest.json
+   ```
 
 ## Как вернуться к предыдущей коммиту Flatpak
 
@@ -127,6 +140,8 @@ flatpak uninstall --unused --noninteractive
 flatpak remote-info --log flathub org.godotengine.Godot
 
 # Откатить до специфичной версии
+# HASH берём любой из этой команды
+# flatpak remote-info --log flathub org.godotengine.Godot
 sudo flatpak update --commit=${HASH} org.godotengine.Godot
 
 # Закрепить версию

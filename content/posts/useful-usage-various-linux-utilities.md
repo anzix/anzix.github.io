@@ -1,6 +1,6 @@
 +++
 title = "Полезное применение различных утилит Linux"
-date = 2023-10-21T15:40:00+05:00
+date = 2023-10-21
 draft = false
 [taxonomies]
 categories = []
@@ -21,7 +21,8 @@ sudo -E systemctl edit reflector.timer
 
 - [Частично позаимствовано из данного видео гайда](https://www.youtube.com/watch?v=AbdkZZZ7-qA)
 
-Сдампить все шестнадцатеричные числа и вывести в терминал убрав все точкии найти одинаковые паттерны байтов
+Сдампить все шестнадцатеричные числа и вывести в терминал убрав все точкии
+найти одинаковые паттерны байтов
 
 Пример:
 
@@ -35,20 +36,23 @@ $ hexdump bea.exe -C | sed 's/\.//g' | grep 'AB AA AA 3F'
 
 - [Источник](https://superuser.com/questions/125376/how-do-i-compare-binary-files-in-linux)
 
-Конвертируем бинарники в читабельный формат, записывая в выходной файл которые будут удобны в сравнивании
+Конвертируем бинарники в читабельный формат, записывая в выходной файл которые
+будут удобны в сравнивании
 
 ```sh
 xxd bea_mod.exe > bea_mod.hex
 xxd bea.exe > bea.hex
 ```
 
-Сравниваем с помощью neovim используя опцию -d (diff) и заодно редактируем тот который будет использоваться
+Сравниваем с помощью neovim используя опцию -d (diff) и заодно редактируем тот
+который будет использоваться
 
 ```sh
 nvim -d bea.hex bea_mod.hex
 ```
 
-Как только сохранили .hex файл конвертируем его обратно в .exe используя в xxd опцию -r
+Как только сохранили .hex файл конвертируем его обратно в .exe используя в
+xxd опцию -r
 
 ```sh
 xxd -r TMNT2.hex TMNT2.exe
@@ -82,7 +86,8 @@ nvim -d bea.txt bea_mod.txt
 
 Проводим манипуляции только с одним файлом (bea.txt)
 
-После редактирование и его сохранение, обратно преобразуем этот модифицируемый текстовый файл в исполняемый .exe
+После редактирование и его сохранение, обратно преобразуем этот модифицируемый
+текстовый файл в исполняемый .exe
 
 ```sh
 xxd -r -p bea.txt bea.exe
@@ -94,63 +99,6 @@ xxd -r -p bea.txt bea.exe
 
 ```sh
 hexdump TMNT2.exe -C | grep '00246450'
-```
-
-## vim/neovim
-
-- [Видос по search and replace через vim](https://youtu.be/AZmEK1cjTgA?t=189)
-
-Таймкод: 3:03-5:20
-
-### Как добавить в конце всех строк обратную косую черту
-
-- [Источник](https://stackoverflow.com/questions/594448/how-can-i-add-a-string-to-the-end-of-each-line-in-vim)
-
-```txt
-y desktop-file-utils
-faudio
-fontconfig
-freetype2
-gcc-libs
-gettext
-glu
-lcms2
-lib32-faudio
-lib32-fontconfig
-lib32-freetype2
-lib32-gcc-libs
-.....
-```
-
-Данная команда
-
-```txt
-:%norm A \
-```
-
-```txt
-y desktop-file-utils \
-faudio \
-fontconfig \
-freetype2 \
-gcc-libs \
-gettext \
-glu \
-lcms2 \
-lib32-faudio \
-lib32-fontconfig \
-lib32-freetype2 \
-.....
-```
-
-### Как слить строки блоком сниз в одну строку?
-
-- [Источник](https://stackoverflow.com/questions/6577508/how-can-i-merge-multiple-lines-into-one-line-in-vim)
-
-Команда
-
-```txt
-:%j
 ```
 
 ## wget

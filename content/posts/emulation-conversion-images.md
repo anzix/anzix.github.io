@@ -1,14 +1,14 @@
 +++
 title = "Конвертирование образов для эмуляторов на Linux (не завершён)"
-date = 2023-03-02T18:56:44+05:00
+date = 2023-03-02
 draft = false
 [taxonomies]
 categories = []
 tags = ["linux"]
 +++
 
-[Видео гайд по chd конвертеру](https://www.youtube.com/watch?v=DGKTCox6SyY)
-[Видео гайд по всем конвертерам для эмуляторов](https://www.youtube.com/watch?v=LehvqHycejc)
+- [Видео гайд по chd конвертеру](https://www.youtube.com/watch?v=DGKTCox6SyY)
+- [Видео гайд по всем конвертерам для эмуляторов](https://www.youtube.com/watch?v=LehvqHycejc)
 
 ```bash
 sudo pacman -S mame-tools

@@ -1,13 +1,13 @@
 +++
 title = "Greenclip - Минималистичный Rofi/dmenu clipboard менеджер с поддержкой картинок и исключениями"
-date = 2023-03-23T22:22:51+05:00
+date = 2023-03-23
 draft = false
 [taxonomies]
 categories = []
-tags = ["linux"]
+tags = ["linux", "xorg"]
 +++
 
-- https://github.com/erebe/greenclip
+- [greenclip](https://github.com/erebe/greenclip)
 
 Для тех кому не нравится GUI менеджеры буфера обмена
 

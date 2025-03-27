@@ -1,6 +1,6 @@
 +++
 title = "!Минималистичный менеджер плагинов zsh своими руками"
-date = 2023-03-29T22:57:48+05:00
+date = 2023-03-29
 draft = false
 [taxonomies]
 categories = []
@@ -8,7 +8,9 @@ tags = ["linux"]
 +++
 
 - Вопрос: Есть oh-my-zsh, чем он не устраивает?
-- Ответ: Потому-что всё то что делает omz можно добится 4-мя функциями. И это без навязывания обновлений и рекламой их мерча.
+- Ответ: Потому-что всё то что делает omz можно добится 4-мя функциями. И это
+  без навязывания обновлений, раздутым функционалам что оболочка тормозит и
+  рекламой их мерча.
 
 Создаём zsh конфиг файл и вставляем данные функции
 
@@ -50,7 +52,7 @@ function git_omz_plugins() (
   echo "Функция git_omz_plugins завершена"
 )
 
-# Вытягивает плагин из репо omz
+# Вытягивает плагин из репозитория omz
 # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins
 function omz_plug() {
     PLUGIN_NAME=$(echo $1 )
@@ -118,3 +120,16 @@ source $ZPLUGDIR/zsh-you-should-use/you-should-use.plugin.zsh
 source $ZPLUGDIR/zsh-auto-notify/auto-notify.plugin.zsh
 source $ZPLUGDIR/powerlevel10k/powerlevel10k.zsh-theme
 ```
+
+## Обновление плагинов
+
+Добиться обновления всех плагинов можно одной командой, всё её длину можно сократить
+используя псевдоним (alias)
+
+Выглядит это так
+
+```sh
+alias zpu="find "$ZDOTDIR/plugins" -type d -exec test -e '{}/.git' ';' -print0 | xargs -P$(nproc) -I {} -0 git -C {} pull" `# Обновление плагинов zsh
+```
+
+И выполняем команду `zpu` в терминале

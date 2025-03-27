@@ -1,6 +1,6 @@
 +++
 title = "Окрашиваем GTK тему к root приложениям"
-date = 2023-03-23T23:50:37+05:00
+date = 2023-03-23
 draft = false
 [taxonomies]
 categories = []
@@ -35,7 +35,8 @@ sudo rm -r /usr/share/gtk-3.0/settings.ini
 sudo ln -s ~/.config/gtk-3.0/settings.ini /usr/share/gtk-3.0/settings.ini
 ```
 
-- Проверено на примере редактора изображений CD ([isomaster](https://aur.archlinux.org/packages/isomaster)), написанный в GTK2 темой [materia dark](https://archlinux.org/packages/extra/any/materia-gtk-theme/)
+- Проверено на примере редактора изображений CD ([isomaster](https://aur.archlinux.org/packages/isomaster))
+  написанный в GTK2 темой [materia dark](https://archlinux.org/packages/extra/any/materia-gtk-theme/)
 
 ![image](/images/gtk-theme-to-root-application/isomaster_gtk2.png)
 

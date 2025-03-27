@@ -1,6 +1,6 @@
 +++
 title = "Самый простой тест микрофона"
-date = 2023-03-08T19:25:28+05:00
+date = 2023-03-08
 draft = false
 [taxonomies]
 categories = []

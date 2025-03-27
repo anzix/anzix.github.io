@@ -1,6 +1,6 @@
 +++
 title = "!Геймпад 8BitDo Pro 2 на Arch Linux"
-date = 2023-03-24T16:46:25+05:00
+date = 2023-03-24
 draft = false
 [taxonomies]
 categories = []
@@ -9,13 +9,19 @@ tags = ["linux-gaming"]
 
 Firmware 3.0
 
-Чтобы геймпад появился в списке Blueman, Bluedevil (KDE) или `bluetoothctl` необходимо перевести в режим сопряжения на секунду удерживать эту кнопку. 4 индикатора должны мигать по очереди, и после этого геймпад должен появится в списке подключения к нему можно соединится.
+Чтобы геймпад появился в списке Blueman, Bluedevil (KDE) или `bluetoothctl`
+необходимо перевести в режим сопряжения на секунду удерживать эту кнопку. 4
+индикатора должны мигать по очереди, и после этого геймпад должен появится в
+списке подключения к нему можно соединится.
 
 ![image](/images/8bitdo-pro2-on-archlinux/button-8bitdo-pro2.jpg)
 
-Если вы уже ранее подключались и не можете снова подключится, попробуйте удалить из списка Blueman или Bluedevil геймпад и тогда он в списке должен появится и подключится номрмально.
+Если вы уже ранее подключались и не можете снова подключится, попробуйте удалить
+из списка Blueman или Bluedevil геймпад и тогда он в списке должен появится и
+подключится номрмально.
 
-Данный геймпад работает хорошо со всеми типами подключения и режимами (кроме Switch, об этом позже).
+Данный геймпад работает хорошо со всеми типами подключения и режимами (кроме
+Switch, об этом позже).
 
 ## Работа в Wine
 
@@ -34,7 +40,8 @@ wine control joy.cpl
 
 Режим Switch
 
-- По проводу и по Bluetooth работают хорошо, триггеры нажимаются как кнопки, только ось круга квадратит
+- По проводу и по Bluetooth работают хорошо, триггеры нажимаются как кнопки, только
+  ось круга квадратит
 
 ![image](/images/8bitdo-pro2-on-archlinux/8bitdo-pro2-wine.png)
 
@@ -43,15 +50,19 @@ wine control joy.cpl
 - [Joycond-Cemuhook Wiki](https://github.com/joaorb64/joycond-cemuhook/wiki)
 - [Видео инструкция](https://www.youtube.com/watch?v=aOAKbAoxP9w)
 
-В некоторых из эмуляторов таких как dolphin (Wii), cemu (Wii U), citra (3DS), yuzu (Switch) стандартно невозможно использовать гироскоп. [Joycond-Cemuhook](https://github.com/joaorb64/joycond-cemuhook/) решает эту проблему путём использования UDP протокола
+В некоторых из эмуляторов таких как dolphin (Wii), cemu (Wii U), citra (3DS), yuzu
+(Switch) стандартно невозможно использовать гироскоп. [Joycond-Cemuhook](https://github.com/joaorb64/joycond-cemuhook/)
+решает эту проблему путём использования UDP протокола
 
-> Если у вас версия ядра Linux меньше 5.16 значит устанавливаем дополнительно [hid-nintendo-dkms](https://aur.archlinux.org/packages/hid-nintendo-dkms)
+> Если у вас версия ядра Linux меньше 5.16 значит устанавливаем дополнительно
+> [hid-nintendo-dkms](https://aur.archlinux.org/packages/hid-nintendo-dkms)
 >
 > ```sh
 > yay -S hid-nintendo-dkms
 > ```
 
-Устанавливаем необходимые AUR пакеты [joycond-git](https://aur.archlinux.org/packages/joycond-git) и [joycond-cemuhook-git](https://aur.archlinux.org/packages/joycond-cemuhook-git)
+Устанавливаем необходимые AUR пакеты [joycond-git](https://aur.archlinux.org/packages/joycond-git)
+и [joycond-cemuhook-git](https://aur.archlinux.org/packages/joycond-cemuhook-git)
 
 ```sh
 yay -S joycond-git joycond-cemuhook-git
@@ -59,7 +70,8 @@ yay -S joycond-git joycond-cemuhook-git
 
 Конектим по проводу 8BitDo Pro 2 (режим Switch)
 
-> Ранее в прошлых версиях AUR пакета cemuhook можно было его запускать от пользователя, сайчас же его необходимо запускать от рута (sudo)
+> Ранее в прошлых версиях AUR пакета cemuhook можно было его запускать от
+> пользователя, сайчас же его необходимо запускать от рута (sudo)
 
 Запускаем в консоли данной командой
 
@@ -73,9 +85,13 @@ sudo joycond-cemuhook
 
 ## !Switch режим в Steam
 
-В Steam сейчас пока невозможно использовать драйвер hid-nintendo которое встроили в mainline ядра Linux с версии 5.16 т.к Steam использует свой драйвер. Поэтому мой геймпад при подключении не определяется вообще.
+В Steam сейчас пока невозможно использовать драйвер hid-nintendo которое встроили
+в mainline ядра Linux с версии 5.16 т.к Steam использует свой драйвер. Поэтому
+мой геймпад при подключении не определяется вообще.
 
-Это известная проблема которую пока не исправили но есть [обходняки расписаные на Arch Wiki](https://wiki.archlinux.org/title/Gamepad#Nintendo_Switch_Pro_Controller_and_Joy-Cons), единственное что мне частично помогло это использовать [joycond](https://github.com/DanielOgorchock/joycond)
+Это известная проблема которую пока не исправили но есть [обходняки расписаные
+на Arch Wiki](https://wiki.archlinux.org/title/Gamepad#Nintendo_Switch_Pro_Controller_and_Joy-Cons).
+Единственное что мне частично помогло это использовать [joycond](https://github.com/DanielOgorchock/joycond)
 
 Устанавливаем [данный AUR пакет](https://aur.archlinux.org/packages/joycond-git)
 
@@ -89,13 +105,19 @@ yay -S joycond-git
 sudo systemctl enable --now joycond.service
 ```
 
-После чего подключаем геймпад (по bluetooth или по проводу) с предварительно включённым режимом (S)witch
+После чего подключаем геймпад (по bluetooth или по проводу) с предварительно
+включённым режимом (S)witch
 
-Далее переходим к обходняку который описан в Arch Wiki, чтобы Steam начал распознавать наш геймпад как Switch контроллер необходимо его перевести в виртуальный Pro контроллер (virtual Pro Controller). Без включённого joycond.service у вас не получится его активировать.
+Далее переходим к обходняку который описан в Arch Wiki, чтобы Steam начал
+распознавать наш геймпад как Switch контроллер необходимо его перевести в
+виртуальный Pro контроллер (virtual Pro Controller). Без включённого `joycond.service`
+у вас не получится его активировать.
 
 > Данный обходняк пока не имеет поддержки гироскопа для стима
 
-Когда все 4 индикатора начнут мигать жмём обе кнопки `+` и `-` и после на геймпаде начнёт мигать только один индикатор а стим выведет уведомление что были подключены joycon'ы (да, стим будет отображать мой контроллер как joycon'ы)
+Когда все 4 индикатора начнут мигать жмём обе кнопки `+` и `-` и после на геймпаде
+начнёт мигать только один индикатор а стим выведет уведомление что были подключены
+joycon'ы (да, стим будет отображать мой контроллер как joycon'ы)
 
 {{< rawhtml >}}
 
@@ -110,9 +132,10 @@ sudo systemctl enable --now joycond.service
 
 ![image](/images/8bitdo-pro2-on-archlinux/Screenshot_20230319_001215.png)
 
-Так же в статусе joycond.service будет добавлена информация что включён виртуальный Pro контроллер
+Так же в статусе joycond.service будет добавлена информация что включён виртуальный
+Pro контроллер
 
-```
+```txt
 $ systemctl status joycond.service
 .....
 мар 19 00:40:45 arch joycond[1482774]: driver_name: Nintendo Switch Pro Controller
@@ -124,4 +147,5 @@ $ systemctl status joycond.service
 
 Именуется виртуальный Pro контроллер: `Nintendo Switch Virtual Pro Controller (/dev/input/js2)`
 
-И теперь можно играть в Steam игры на режиме Switch, правда как было указано выше что метод не поддерживает гироскоп
+И теперь можно играть в Steam игры на режиме Switch, правда как было указано выше
+что метод не поддерживает гироскоп

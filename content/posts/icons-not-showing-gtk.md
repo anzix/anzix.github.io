@@ -1,6 +1,6 @@
 +++
 title = "Иконки контекстного меню не отображаются GTK2/3"
-date = 2023-03-24T14:37:28+05:00
+date = 2023-03-24
 draft = false
 [taxonomies]
 categories = ["troubleshooting"]

@@ -1,6 +1,6 @@
 +++
 title = "!Принтер KYOCERA FS-1060DN на Arch Linux"
-date = 2023-03-06T20:40:11+05:00
+date = 2023-03-06
 draft = false
 [taxonomies]
 categories = []
@@ -40,9 +40,11 @@ sudo pacman -S cups cups-pdf
 sudo systemctl enable --now cups.service
 ```
 
-После активации вы можете посетить локально созданный веб интерфейс для управления задачами принтера (необходимы реквизиты хост машины) `http://localhost:631/`
+После активации вы можете посетить локально созданный веб интерфейс для управления
+задачами принтера (необходимы реквизиты хост машины) `http://localhost:631/`
 
-Далее нам нужен Aur пакет драйвер для нашего принтера, [kyocera-cups](https://aur.archlinux.org/packages/kyocera-cups) мне не удалось установить
+Далее нам нужен Aur пакет драйвер для нашего принтера, [kyocera-cups](https://aur.archlinux.org/packages/kyocera-cups)
+мне не удалось установить
 
 ```txt
 curl: (22) The requested URL returned error: 404
@@ -51,7 +53,8 @@ curl: (22) The requested URL returned error: 404
  -> ошибка сборки: kyocera-cups
 ```
 
-Поэтому я решил установить aur пакет [kyocera-print-driver](https://aur.archlinux.org/packages/kyocera-print-driver) который установился успешно
+Поэтому я решил установить aur пакет [kyocera-print-driver](https://aur.archlinux.org/packages/kyocera-print-driver)
+который установился успешно
 
 ```bash
 yay -S kyocera-print-driver
@@ -73,7 +76,7 @@ sudo pacman -S system-config-printer
 
 После успешного добавления принтера пробую распечатать 1 пробную страницу
 
-<span style="color:red">Произошла ошибка при печати</span>
+Произошла ошибка при печати
 
 Вывод в dmesg с segmentation fault
 
@@ -83,6 +86,10 @@ sudo pacman -S system-config-printer
 [  +0,000011] Code: 75 0d eb 79 41 ff cc eb 03 45 89 ec 45 31 f6 47 8d 2c 26 b9 02 00 00 00 48 89 df 44 89 e8 99 f7 f9 41 89 c5 48 98 48 c1 e0 04 <48> 8b 74 05 00 e8 1d 91 00 00 83 f8 00 74 44 45 0f 4c e5 45 0f 4d
 ....
 ```
+
+UPD 28.11.2024: Странно, в Plasma 6 с принтером Kyocera FS-1040 нет такой ошибки.
+И пакет [rastertokpsl-re](https://github.com/Fe-Ti/rastertokpsl-re/) не нужен был.
+Всё и так работает
 
 С ошибкой в веб интерфейсе Cups статус **Остановлено "Filter failed"**
 
@@ -98,8 +105,10 @@ PID 1079969 (/usr/lib/cups/filter/rastertokpsl) crashed on signal 11.
 ....
 ```
 
-<span style="color:green">РЕШЕНИЕМ для меня</span> было скачать репо [rastertokpsl-re](https://github.com/Fe-Ti/rastertokpsl-re/) и произвести установку
-[Сурс решения](https://bbs.archlinux.org/viewtopic.php?id=272961)
+Решением для меня было скачать репо [rastertokpsl-re](https://github.com/Fe-Ti/rastertokpsl-re/)
+и произвести установку
+
+[Источник решения](https://bbs.archlinux.org/viewtopic.php?id=272961)
 
 ```bash
 git clone https://github.com/Fe-Ti/rastertokpsl-re

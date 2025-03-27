@@ -1,6 +1,6 @@
 +++
 title = "!Мини инструкция по bubblewrap и изолированию wine"
-date = 2023-05-25T21:19:09+05:00
+date = 2023-05-25
 draft = false
 [taxonomies]
 categories = []
@@ -47,7 +47,8 @@ bwrap --unshare-net --ro-bind / / --bind /home /home wine ...
 
 Делится `/usr/share/` и `/etc` - опасно!
 
-Также нельзя делится `/var` т.к там содержатся данные такие как `/var/log` которые чрезвычайно чувствительные
+Также нельзя делится `/var` т.к там содержатся данные такие как `/var/log`
+которые чрезвычайно чувствительные
 
 ```txt
 В: Что делает `--dev-bind`?
@@ -65,45 +66,41 @@ bwrap --unshare-net --ro-bind / / --bind /home /home wine ...
 
 bwrap опции:
 
-- `--ro-bind / /` - Сделать весь root только для чтения (каталоги не создаются в /home)
+- `--ro-bind / /` - Сделать весь root только для чтения (каталоги не создаются
+  в /home)
 - `--unshare-net` - не будет доступа в инет
 - `--unshare-pid` - скрывает все процессы pid
-- `--die-with-parent` - при закрытии bwrap все (дочерний т.е child) процессы будут убиты
-- `--tmpfs /tmp` - необходимо чтобы избежать "wineserver: mkdir /tmp/.wine-1000: Read-only file system" (на хосте tmp у меня смонтирован как tmpfs)
-- ` --proc /proc` - необходим чтобы избежать "wine: could not load ntdll.so: (null)". Отвечает за связь программ с ядром. Проще говоря, она работает с процессами.
-- `--dev-bind /dev/snd /dev/snd` - необходимо для поддержки звука ALSA в wine (`winecfg` для тестирования звука)
-- `--tmpfs /run --bind "/run/user/$UID/bus" "/run/user/$UID/bus"` - чтобы работал dbus, архиватор ark ругается без него. Включает drag-n-drop
+- `--die-with-parent` - при закрытии bwrap все (дочерний т.е child) процессы
+  будут убиты
+- `--tmpfs /tmp` - необходимо чтобы избежать "wineserver: mkdir /tmp/.wine-1000:
+  Read-only file system" (на хосте tmp у меня смонтирован как tmpfs)
+- `--proc /proc` - необходим чтобы избежать "wine: could not load ntdll.so: (null)".
+  Отвечает за связь программ с ядром. Проще говоря, она работает с процессами.
+- `--dev-bind /dev/snd /dev/snd` - необходимо для поддержки звука ALSA в wine
+  (`winecfg` для тестирования звука)
+- `--tmpfs /run --bind "/run/user/$UID/bus" "/run/user/$UID/bus"` - чтобы
+  работал dbus, архиватор ark ругается без него. Включает drag-n-drop
+- `--ro-bind /sys/dev /sys/dev`, `--ro-bind /sys/devices /sys/devices` - Необходимы
+  для аппаратного ускорения (не проверено)
+- `--ro-bind /etc/fonts /etc/fonts` - Необходимо чтобы шрифты подхватывались и
+  чтобы избежать "Fontconfig error: Cannot load default config file: No such
+  file: (null)"
+- `--bind /tmp/.X11-unix/X0 /tmp/.X11-unix/X0`, `--setenv DISPLAY :0` - Для X11
+  сессии, без этих двух доп опций wine не будет выводить графические
+  приложения, и они не запустятся. Будет выводить данный лог
 
-Необходимы для аппаратного ускорения (не проверено)
+  ```txt
+  010c:err:winediag:nodrv_CreateWindow Application tried to create a window, but no driver could be loaded.
+  010c:err:winediag:nodrv_CreateWindow L"Make sure that your X server is running and that $DISPLAY is set correctly."
+  ```
 
-- `--ro-bind /sys/dev /sys/dev`
-- `--ro-bind /sys/devices /sys/devices`
+  [Источник Arch Wiki](https://wiki.archlinux.org/title/Bubblewrap#Using_X11)
 
-Необходимо чтобы шрифты подхватывались и чтобы избежать "Fontconfig error: Cannot load default config file: No such file: (null)"
+- Если Wayland, то необходимо смонтировать сокет Wayland, чтобы выводить графические
+  приложения (TODO: как это сделать?)
 
-- `--ro-bind /etc/fonts /etc/fonts`
-
-[Arch Wiki](https://wiki.archlinux.org/title/Bubblewrap#Using_X11) (Для X11 сессии) Без этих двух доп опций wine не будет выводить графические приложения, и они не запустятся. Будет выводить данный лог
-
-```txt
-010c:err:winediag:nodrv_CreateWindow Application tried to create a window, but no driver could be loaded.
-010c:err:winediag:nodrv_CreateWindow L"Make sure that your X server is running and that $DISPLAY is set correctly."
-```
-
-- `--bind /tmp/.X11-unix/X0 /tmp/.X11-unix/X0`
-- `--setenv DISPLAY :0`
-
-(если Wayland) необходимо смонтировать сокет Wayland, чтобы выводить графические приложения
-
-Для использования bubblewrap в AppImage, его необходимо распаковать данной командой
-
-```sh
-./*.AppImage --appimage-extract
-```
-
-Перемонтирую /home в виде tmpfs, чтобы игра не увидела реальный /home (не проверено)
-
-- `--tmpfs /home --bind $HOME/new_home $HOME`
+- `--tmpfs /home --bind $HOME/new_home $HOME` - Перемонтирую /home в виде
+  tmpfs, чтобы игра не увидела реальный /home (TODO: не проверено)
 
 Конечный миниамалистичный изолятор wine `cat sandbox`
 
@@ -155,3 +152,76 @@ exec bwrap \
 Вместо wine я на скриншоте смог запустить pcmanfm
 
 ![image](/images/isolation-wine/Screenshot_20230519_162447.png)
+
+## Использование для AppImage
+
+Для использования bubblewrap в AppImage, его необходимо распаковать данной командой
+
+```sh
+./*.AppImage --appimage-extract
+```
+
+## Скрипт для изоляции wine
+
+TODO: Проверить
+
+101796281:
+Myself i just made shell scripts which launch games using the system install of
+wine through bubblewrap (sandbox, the one flatpaks use). Naturally this isn't
+as "nice" as lutris, but it uses minimal resources, and all i need is a desktop
+icon to run the game. Bubblewrap uses about a meg, wine about 180M (being the
+system wine it will use less, as it's using shared system libraries and not a
+runtime like lutris or steam), then the game uses what it normally uses
+
+101806508:
+you may need to adjust it a bit for your distro, like the lib symlinks
+
+```sh
+#!/bin/env sh
+if [ "$(which mangohud)" != "" ]; then mangohud="mangohud"; fi
+#if [ "$(which gamescope)" != "" ]; then gamescope="gamescope -w 1920 -h 1080 -r 72 -F fsr -f --"; fi
+bwrap   --ro-bind /usr /usr \
+        --tmpfs /usr/local/bin \
+        --symlink usr/lib64 /lib64 \
+        --symlink usr/lib /lib \
+        --symlink usr/bin /bin \
+        --proc /proc \
+        --ro-bind-try /sys/dev/char /sys/dev/char \
+        --ro-bind-try /sys/devices /sys/devices \
+        --ro-bind-try /sys/class /sys/class \
+        --dev /dev \
+        --dev-bind-try /dev/snd /dev/snd \
+        --dev-bind-try /dev/dri /dev/dri \
+        --dev-bind-try /dev/input /dev/input \
+        --dev-bind-try /dev/shm /dev/shm \
+        --ro-bind /etc /etc \
+        --tmpfs /tmp \
+        --ro-bind-try /tmp/cdrom /tmp/cdrom \
+        --bind-try /tmp/store/Games/Executable /tmp/store/Games/Executable \
+        --bind /tmp/.X11-unix /tmp/.X11-unix \
+        --bind . $HOME \
+        --dir $HOME/install \
+        --ro-bind $HOME/.themes $HOME/.themes \
+        --ro-bind $HOME/.gtkrc-2.0 $HOME/.gtkrc-2.0 \
+        --dir $HOME/.config \
+        --ro-bind $HOME/.config/fontconfig $HOME/.config/fontconfig \
+        --ro-bind $HOME/.fonts $HOME/.fonts \
+        --ro-bind $XAUTHORITY $XAUTHORITY \
+        --ro-bind /run/user/$(id -u)/pulse /run/user/$(id -u)/pulse \
+        --ro-bind /run/user/$(id -u)/pipewire-0 /run/user/$(id -u)/pipewire-0 \
+        --cap-drop all \
+        --cap-add CAP_SYS_NICE \
+        --unshare-all \
+        --die-with-parent \
+        --setenv WINEDEBUG "" \
+        --setenv WINEARCH win64 \
+        --setenv WINEDLLOVERRIDES "" \
+        --setenv WINE_FULLSCREEN_FSR 1 \
+        --chdir "$HOME/A Hat in Time/Binaries/Win64" \
+        sh -c " \
+            echo fish; \
+            echo wine control; \
+            $gamescope $mangohud wine HatinTimeGame.exe; \
+            wineserver -k; \
+        "
+```

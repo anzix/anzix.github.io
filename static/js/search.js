@@ -143,7 +143,7 @@ function initSearch() {
   };
   var currentTerm = "";
   var index;
-  
+
   var initIndex = async function () {
     if (index === undefined) {
       index = fetch("/search_index.en.json")

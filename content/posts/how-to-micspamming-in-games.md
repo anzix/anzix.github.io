@@ -1,6 +1,6 @@
 +++
 title = "!Как спамить звуками используя микрофон в играх (не проверено)"
-date = 2023-03-22T19:43:05+05:00
+date = 2023-03-22
 draft = false
 [taxonomies]
 categories = []
@@ -18,10 +18,15 @@ tags = ["linux-gaming"]
 pactl load-module module-null-sink
 ```
 
-Открываете `pavucontrol` и меняете источник в **Проигрывание** на **null-sink Audio/Sink sink**
+Открываете `pavucontrol` и меняете источник в **Проигрывание** на **null-sink
+Audio/Sink sink**
 
 Чтобы убрать модуль null-sink
 
 ```sh
 pactl unload-module module-null-sink
 ```
+
+> Ещё обычно используют программу [soundux](https://soundux.rocks/), он есть в
+> [AUR](https://aur.archlinux.org/packages/soundux).
+> TODO: однако данную программу я не пробовал

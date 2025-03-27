@@ -1,6 +1,6 @@
 +++
 title = "!DxWrapper OpenSource альтернатива DgVoodoo (установка ручным способом)"
-date = 2023-03-04T00:27:06+05:00
+date = 2023-03-04
 draft = false
 [taxonomies]
 categories = []

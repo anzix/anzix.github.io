@@ -1,6 +1,6 @@
 +++
 title = "!Мои заметки при создании сайта используя zola"
-date = 2023-06-13T20:34:00+05:00
+date = 2023-06-13
 draft = false
 [taxonomies]
 categories = []
@@ -21,26 +21,32 @@ stow -vt ~ git
 1. Создать пустое репо github `git init`
 2. Вводим команды для добавления удалённого репозитория
 
-```sh
-git remote add origin [url]
-git branch -M main
-git push -u origin main
-```
+   ```sh
+   git remote add origin [url]
+   git branch -M main
+   git push -u origin main
+   ```
 
-3. Создание токена\
-Переходим по [ссылке для создания токена](https://github.com/settings/tokens/new?scopes=public_repo)\
-После создания копируем его
+3. Создание токена, переходим по [ссылке для создания токена](https://github.com/settings/tokens/new?scopes=public_repo)
 
-Заходим в настройки репозитория **Settings** - **Secrets and variables** - **Actions** - жмём на **New repository secret**\
-И вставляем скопированный токен
+   После создания копируем его
 
-4. На главной странице репозитория сайта жмём на **Action** - и на "**set up a workflow yourself**"
+   Заходим в настройки репозитория **Settings** - **Secrets and
+   variables** - **Actions** - жмём на **New repository secret**
 
-Вставляем то что предлагает zola в документации по [ссылке](https://www.getzola.org/documentation/deployment/github-pages/) и стартуем
+   И вставляем скопированный токен
 
-> Если ветка не **main** а **master** тогда редактируем этот параметр в yml файле (не проверено)
+4. На главной странице репозитория сайта жмём на **Action** - и на "**set
+   up a workflow yourself**"
 
-Финальный шаг: После в репо **website** в **Settings** - **Pages** - выставляем ветку вместо **main** на **gh-pages**, и сайт готов.
+   Вставляем то что предлагает zola в документации по [ссылке](https://www.getzola.org/documentation/deployment/github-pages/)
+   и стартуем
+
+> Если ветка не **main** а **master** тогда редактируем этот параметр в yml файле
+> (не проверено)
+
+Финальный шаг: После в репо **website** в **Settings** - **Pages** - выставляем
+ветку вместо **main** на **gh-pages**, и сайт готов.
 
 ## Как использовать свою собственную тему для синтаксиса кода?
 
@@ -135,7 +141,8 @@ copy_code = true
 
 ## !Как добавить поиск на веб странице в zola? (Работает)
 
-Редактируем `config.toml` и меняем язык на `en` т.к я пока не знаю как сделать разделение на два языка, и чтобы это всё работало
+Редактируем `config.toml` и меняем язык на `en` т.к я пока не знаю как сделать
+разделение на два языка, и чтобы это всё работало
 
 ```toml
 defualt_language = "en"
@@ -217,7 +224,8 @@ nvim site/template/search.html
 
 ## Как добавить нумерацию страниц?
 
-Указываем в `_index.md` число страниц которые будут появляться в нумерации, без этого у нас будет просто пустой список страниц
+Указываем в `_index.md` число страниц которые будут появляться в нумерации, без
+этого у нас будет просто пустой список страниц
 
 ```md
 ...
@@ -226,7 +234,8 @@ paginate_by = 30
 
 Далее редактируем `posts.html` (или `blogs.html`) добавляя саму нумерацию
 
-В функции **for** вместо **section** меняем на **paginate**. И добавляем навигационный тег **nav**
+В функции **for** вместо **section** меняем на **paginate**. И добавляем
+навигационный тег **nav**
 
 ```html
 {% for page in paginate.pages %} ...

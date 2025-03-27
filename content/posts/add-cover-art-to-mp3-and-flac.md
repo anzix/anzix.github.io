@@ -1,6 +1,6 @@
 +++
 title = "Добавление обложки в трек (Mp3/FLAC)"
-date = 2023-03-08T19:43:02+05:00
+date = 2023-03-08
 draft = false
 [taxonomies]
 categories = []

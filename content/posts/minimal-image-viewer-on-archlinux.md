@@ -1,6 +1,6 @@
 +++
 title = "Минималистичные просмотрщики изображений"
-date = 2023-03-24T00:48:14+05:00
+date = 2023-03-24
 draft = false
 [taxonomies]
 categories = []

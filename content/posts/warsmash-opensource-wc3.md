@@ -1,6 +1,6 @@
 +++
 title = "!Warsmash (OpenSource WarCraft 3) на Linux"
-date = 2023-09-01T14:10:00+05:00
+date = 2023-09-01
 draft = false
 [taxonomies]
 categories = []
@@ -29,7 +29,8 @@ archlinux-java status
 sudo archlinux-java set java-17-temurin
 ```
 
-Если использовать java-17-openjdk и собрать проект, при запуске собранного файла  будет ошибка
+Если использовать java-17-openjdk и собрать проект, при запуске собранного
+файла будет ошибка
 
 ```sh
 $ ./bin/warsmash

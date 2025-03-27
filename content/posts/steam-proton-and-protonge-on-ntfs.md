@@ -1,6 +1,6 @@
 +++
 title = "Работа Steam игр с использованием Proton и Proton GE на NTFS разделе"
-date = 2023-03-17T16:05:06+05:00
+date = 2023-03-17
 draft = false
 [taxonomies]
 categories = []
@@ -27,7 +27,9 @@ UUID=30C4C35EC4C32546 /media/Games ntfs-3g rw,nofail,errors=remount-ro,noatime,p
 - `gid=984`
 - `windows_names`
 
-Затем сделал символьную ссылку папки **compatdata**, которая используется для префиксов proton/wine в которых есть имена файлов с : двоеточием, файловая система NTFS которая не понимает
+Затем сделал символьную ссылку папки **compatdata**, которая используется для
+префиксов proton/wine в которых есть имена файлов с : двоеточием, файловая
+система NTFS которая не понимает
 
 ```sh
 mkdir -p ~/.steam/steam/steamapps/compatdata

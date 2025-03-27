@@ -1,11 +1,16 @@
 +++
 title = "Сканер Epson Perfection 1270 на Arch Linux"
-date = 2023-03-04T22:30:20+05:00
+date = 2023-03-04
 draft = false
 [taxonomies]
 categories = []
 tags = ["linux"]
 +++
+
+В этой статье будет показана настройка и работа сканера Epson Perfection 1270 на
+дитрибутиве Arch Linux
+
+## Настройка
 
 При подключении сканера:
 
@@ -13,11 +18,11 @@ tags = ["linux"]
 
 ```txt
 ....
-[дек23 20:40] usb 1-1.1: new high-speed USB device number 3 using ehci-pci
-[  +0,081864] usb 1-1.1: New USB device found, idVendor=04b8, idProduct=0120, bcdDevice= 1.10
-[  +0,000010] usb 1-1.1: New USB device strings: Mfr=1, Product=2, SerialNumber=0
-[  +0,000005] usb 1-1.1: Product: EPSON Scanner
-[  +0,000004] usb 1-1.1: Manufacturer: EPSON
+usb 1-1.1: new high-speed USB device number 3 using ehci-pci
+usb 1-1.1: New USB device found, idVendor=04b8, idProduct=0120, bcdDevice= 1.10
+usb 1-1.1: New USB device strings: Mfr=1, Product=2, SerialNumber=0
+usb 1-1.1: Product: EPSON Scanner
+usb 1-1.1: Manufacturer: EPSON
 ....
 ```
 
@@ -52,7 +57,9 @@ found USB scanner (vendor=0x04b8 [EPSON], product=0x0120 [EPSON Scanner]) at lib
   # necessary.
 ```
 
-Присваиваем группу scanner для доступа к sane non-root пользователю, также присваиваем группу lp для избежания проблем с вводом/выводом и пропаданием сканера (лично я сталкивался с этим)
+Присваиваем группу `scanner` для доступа к sane non-root пользователю, также
+присваиваем группу `lp` для избежания проблем с вводом/выводом и пропаданием
+сканера (лично я сталкивался с этим)
 
 ```bash
 sudo usermod -aG scanner,lp $(whoami)
@@ -75,12 +82,16 @@ sudo pacman -S sane sane-airscan ipp-usb xsane
 sudo systemctl enable --now ipp-usb.service
 ```
 
-Однако данный сканер не работает "из коробки" об этом свидетельствует выхлоп из команды `scanimage -L`, который был пуст
+Однако данный сканер не работает "из коробки" об этом свидетельствует выхлоп
+из команды `scanimage -L`, который был пуст
 
 <span style="color:green">РЕШЕНИЕ</span>: Из [Arch Wiki (Scanner-specific problem)](https://wiki.archlinux.org/title/SANE/Scanner-specific_problems#Epson_Perfection_1270), [Rosa Wiki (Настройка для работы сканера Epson Perfection 1270)](http://wiki.rosalab.ru/ru/index.php/%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0_%D0%B4%D0%BB%D1%8F_%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B_%D1%81%D0%BA%D0%B0%D0%BD%D0%B5%D1%80%D0%B0_Epson_Perfection_1270) и на [офф сайте Sane в списке поддерживаемых устройств (Current Stable SANE Version)](http://www.sane-project.org/sane-backends#:~:text=Requires%20firmware%20esfw3e.bin.%0Aoverseas%20version%20of%20the%20GT%2D7400U) указано что что для данного сканера необходима прошивка Esfw3e.bin взятый из:
 
-1. Из распакованных драйверов [Epson](https://epson.com/Support/Scanners/Perfection-Series/Epson-Perfection-1270/s/SPT_B11B166081), а именно разархивировав **ModUsd.cab** при помощи `cabextract` внутри которого будет данный файл прошивки
-2. Вытащить данный файл из установленного Windows раздела находящийся по пути C:\Windows\System32
+1. Из распакованных драйверов [Epson](https://epson.com/Support/Scanners/Perfection-Series/Epson-Perfection-1270/s/SPT_B11B166081),
+   а именно разархивировав **ModUsd.cab** при помощи `cabextract` внутри которого
+   будет данный файл прошивки
+2. Вытащить данный файл из установленного Windows раздела находящийся по пути
+   `C:\Windows\System32`
 
 Вытащив данный файл прошивки я копирую его в данный путь
 
@@ -109,7 +120,8 @@ usb 0x04b8 0x0120
 ...
 ```
 
-> Примечание: информацию о коде (usb 0x04b8 0x0120) можно получить с помощью команды `sane-find-scanner`
+> Примечание: информацию о коде (`usb 0x04b8 0x0120`) можно получить с помощью
+> команды `sane-find-scanner`
 
 Также добавляем данные строки чтобы настроить свои привилегии
 
@@ -123,7 +135,8 @@ sudo -e /etc/hotplug/usb/libsane.usermap
 libusbscanner 0x0003 0x04b8 0x0120 0x0000 0x0000 0x00 0x00 0x00 0x00 0x00 0x00 0x00000000
 ```
 
-После переподключения сканера при выполнении сканирования используя команду `scanimage -L` определился
+После переподключения сканера при выполнении сканирования используя команду
+`scanimage -L` определился
 
 ```bash
 ...
@@ -131,7 +144,9 @@ device snapscan:libusb:001:007 is a EPSON EPSON Scanner flatbed scanner
 ...
 ```
 
-> Примечание: Чтобы сканер работал правильно необходимо отключать калибровку качества, с калибровкой при сканировании появляются неправильные цвета. Ниже приведены примеры как отключить данную калибровку.
+> Примечание: Чтобы сканер работал правильно необходимо отключать калибровку
+> качества, с калибровкой при сканировании появляются неправильные цвета.
+> Ниже приведены примеры как отключить данную калибровку.
 
 `scanimage` (сканирование через терминал):
 
@@ -147,13 +162,23 @@ xsane:
 
 - в окне "Стандартные параметры" снять галочку "Калибровка качества"
 
-# Проблема
+В текущий момент сканер работает стабильно
 
-В текущий момент сканер работает стабильно, однако на отсканированном справа появляется толстый белый горизонтальный прямоугольник с разноцветными линиями внутри. Это происходит на `scanimage` и xsane. С [данной проблемой сталкиваюсь не один я](https://eugeneap.livejournal.com/3630.html#:~:text=%D0%9E%D1%81%D1%82%D0%B0%D0%BB%D0%B0%D1%81%D1%8C%20%D0%BF%D1%80%D0%BE%D0%B1%D0%BB%D0%B5%D0%BC%D0%B0%20%2D%20%D1%80%D0%B0%D0%B7%D0%BD%D0%BE%D1%86%D0%B2%D0%B5%D1%82%D0%BD%D0%B0%D1%8F%20%D0%BF%D0%BE%D0%BB%D0%BE%D1%81%D0%B0%20%D1%81%D0%BF%D1%80%D0%B0%D0%B2%D0%B0%20%D0%BF%D1%80%D0%B8%20%D1%81%D0%BA%D0%B0%D0%BD%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B8%20%D1%88%D0%B8%D1%80%D0%B8%D0%BD%D0%BE%D0%B9%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D0%BD%D0%BE%20%D1%82%D1%80%D0%B5%D1%82%D1%8C%20%D0%BB%D0%B8%D1%81%D1%82%D0%B0.%20%D0%9A%D0%B0%D0%BA%20%D0%B1%D0%BE%D1%80%D0%BE%D1%82%D1%8C%20%2D%20%D1%84%D0%B8%D0%B3%20%D0%B5%D0%B3%D0%BE%20%D0%B7%D0%BD%D0%B0%D0%B5%D1%82). Полноценного решения как это исправить я пока не нашёл, только временные решения.
+## Проблемы и способы их решения
 
-<span style="color:green">Временные решения</span>:
+1. На отсканированном справа появляется толстый белый горизонтальный прямоугольник
+   с разноцветными линиями внутри. Это происходит на `scanimage` и xsane.
+   С [данной проблемой сталкиваюсь не один я](https://eugeneap.livejournal.com/3630.html#:~:text=%D0%9E%D1%81%D1%82%D0%B0%D0%BB%D0%B0%D1%81%D1%8C%20%D0%BF%D1%80%D0%BE%D0%B1%D0%BB%D0%B5%D0%BC%D0%B0%20%2D%20%D1%80%D0%B0%D0%B7%D0%BD%D0%BE%D1%86%D0%B2%D0%B5%D1%82%D0%BD%D0%B0%D1%8F%20%D0%BF%D0%BE%D0%BB%D0%BE%D1%81%D0%B0%20%D1%81%D0%BF%D1%80%D0%B0%D0%B2%D0%B0%20%D0%BF%D1%80%D0%B8%20%D1%81%D0%BA%D0%B0%D0%BD%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B8%20%D1%88%D0%B8%D1%80%D0%B8%D0%BD%D0%BE%D0%B9%20%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D0%BD%D0%BE%20%D1%82%D1%80%D0%B5%D1%82%D1%8C%20%D0%BB%D0%B8%D1%81%D1%82%D0%B0.%20%D0%9A%D0%B0%D0%BA%20%D0%B1%D0%BE%D1%80%D0%BE%D1%82%D1%8C%20%2D%20%D1%84%D0%B8%D0%B3%20%D0%B5%D0%B3%D0%BE%20%D0%B7%D0%BD%D0%B0%D0%B5%D1%82).
+   Полноценного решения как это исправить я пока не нашёл, только временные решения.
 
-Для xsane: обойти это можно просто выделить участок на предварительном сканировании и на отсканированном файле будет без линий.
+   ![image](/images/scanner-epson-perfection-1270-on-archlinux/test3.png)
 
-Для scanimage: обойти это можно при помощи опций `-y` (число высоты) `-x` (число ширины) обрезав ширину размера документа:
-`-x 165 -y 297`
+   - Временное решение:
+
+   Для xsane: обойти это можно просто выделить участок на предварительном
+   сканировании и на отсканированном файле будет без линий.
+
+   Для scanimage: обойти это можно при помощи опций `-y` (число высоты) `-x`
+   (число ширины) обрезав ширину размера документа:
+
+   `-x 165 -y 297`

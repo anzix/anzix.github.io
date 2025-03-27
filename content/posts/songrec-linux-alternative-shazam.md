@@ -1,6 +1,6 @@
 +++
 title = "Songrec - Linux альтернатива Shazam"
-date = 2023-03-22T01:40:27+05:00
+date = 2023-03-22
 draft = false
 [taxonomies]
 categories = []
@@ -19,7 +19,10 @@ sudo pacman -S songrec
 
 Стандартно идёт запись с микрофона
 
-Для распознавания со внутреннего звука ПК нужно запустить pavucontrol и во вкладке Запись (не забываем включить распознавание в songrec) выставить откуда output звука исходит (в моём случае через мониторный выход jack микрофона samson c10u pro на наушники).
+Для распознавания со внутреннего звука ПК нужно запустить pavucontrol и во
+вкладке Запись (не забываем включить распознавание в songrec) выставить откуда
+output звука исходит (в моём случае через мониторный выход jack микрофона
+samson c10u pro на наушники).
 
 ![image](/images/songrec-linux-alternative-shazam/songrec-changing-source.png)
 

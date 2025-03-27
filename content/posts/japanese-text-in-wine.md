@@ -1,11 +1,14 @@
 +++
 title = "Японский текст в wine"
-date = 2023-02-23T20:30:00+05:00
+date = 2023-02-23
 draft = false
 [taxonomies]
 categories = []
 tags = ["linux-gaming"]
 +++
+
+Необходимо добавленная `ja_JP.UTF-8` локаль, нужно раскоментировать данную
+строку в `/etc/locale.gen`
 
 Можно использовать на выбор две переменные для смены на Японский
 
@@ -15,24 +18,25 @@ LC_ALL="ja_JP.UTF-8"
 LC_ALL="ja_JP.Shift_JIS"
 ```
 
-НО японский появился только на 10%, весь остальной текст в чёрных прямоугольниках\
+НО японский появился только на 10%, весь остальной текст в чёрных прямоугольниках
+
 Исправить это можно двумя способами:
 
 1. Если у вас есть копия шрифтов Windows 10 их можно перенести в данный каталог ``/usr/share/fonts/WindowsFonts``
 
-```sh
-sudo mkdir /usr/share/fonts/WindowsFonts
-sudo cp /windows/Windows/Fonts/* /usr/share/fonts/WindowsFonts/
-sudo chmod 644 /usr/share/fonts/WindowsFonts/*
-```
+   ```sh
+   sudo mkdir /usr/share/fonts/WindowsFonts
+   sudo cp /windows/Windows/Fonts/* /usr/share/fonts/WindowsFonts/
+   sudo chmod 644 /usr/share/fonts/WindowsFonts/*
+   ```
 
 2. Или скачать AUR пакет [ttf-ms-win11-auto](https://aur.archlinux.org/packages/ttf-ms-win11-auto)
 
-И после установки шрифтов выполнив команду
+   И после установки шрифтов выполнив команду
 
-```sh
-sudo fc-cache --force
-```
+   ```sh
+   sudo fc-cache --force
+   ```
 
 После чего язык будет отображаться на 100%
 

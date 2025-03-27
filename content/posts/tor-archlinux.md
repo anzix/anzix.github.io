@@ -1,6 +1,6 @@
 +++
 title = "Tor Archlinux"
-date = 2023-03-08T00:42:54+05:00
+date = 2023-03-08
 draft = false
 [taxonomies]
 categories = []
@@ -47,7 +47,9 @@ ClientTransportPlugin obfs4 exec /usr/bin/obfs4proxy
 Bridge [!данные из bridges@torproject.org]
 ```
 
-> ! Заводим доп. акк гугл и пишем в gmail на этот ящик bridges@torproject.org оставив пустой тему а в сообщении вводим "get transport obfs4" (данные из которых у меня заработал tor)"
+> ! Заводим доп. акк гугл и пишем в gmail на этот ящик `bridges@torproject.org`
+> оставив пустой тему а в сообщении вводим "get transport obfs4" (данные из
+> которых у меня заработал tor)"
 
 Перезапускаем tor
 
@@ -55,7 +57,7 @@ Bridge [!данные из bridges@torproject.org]
 sudo systemctl restart tor
 ```
 
-Если в статусе видите данную строку значить пробуйте другие даные из bridges@torproject.org
+Если в статусе видите данную строку значить пробуйте другие даные из `bridges@torproject.org`
 
 ```txt
 Proxy Client: unable to connect OR connection (handshaking (proxy))
@@ -63,7 +65,7 @@ Proxy Client: unable to connect OR connection (handshaking (proxy))
 
 Если до сих пор не работает tor, тогда производим данные манипуляции описанные в
 
-- https://wiki.archlinux.org/title/Tor#Problem_with_user_value
+- [Arch Wiki](https://wiki.archlinux.org/title/Tor#Problem_with_user_value)
 
 ```sh
 sudo nano /usr/lib/systemd/system/tor.service
@@ -86,23 +88,28 @@ sudo chmod -R 700 /var/lib/tor
 
 После чего перезапускаем tor
 
-```
+```sh
 sudo systemctl daemon-reload
 sudo systemctl restart tor
 ```
 
-Вы должны увидеть в статусе загрузку (bootstrapped) до 100%. Это значит что узел тор запущен
+Вы должны увидеть в статусе загрузку (bootstrapped) до 100%. Это значит что узел
+тор запущен
+
 ![image](/images/tor-archlinux/tor-works.png)
 
 ## Работа Tor вместе с Обход блокировок Рунета проксировать домены .onion
 
-Если данное расширение у вас уже установлено, необходимо только активировать чекбокс "**Использовать СВОЙ локальный Tor**" также (<span style="color:green">РЕКОМЕНДУЕТСЯ для безопасности</span>) во вкладке "Модификаторы" поставить чекбокс "**Проксировать только HTTPS-сайты**"
+Если данное расширение у вас уже установлено, необходимо только активировать
+чекбокс "**Использовать СВОЙ локальный Tor**" также (рекомендуется для
+безопасности) во вкладке "Модификаторы" поставить чекбокс "**Проксировать только
+HTTPS-сайты**"
 
 ![image](/images/tor-archlinux/anticensority.png)
 
 ## Proxy SwitchyOmega + Tor
 
-- [Proxy SwitchyOmega](https://chrome.google.com/webstore/detail/proxy-switchyomega/padekgcemlokbadohgkifijomclgjgif)
+- [Proxy SwitchyOmega 3 (ZeroOmega)](https://chromewebstore.google.com/detail/proxy-switchyomega-3-zero/pfnededegaaopdmhkdmcofjmoldfiped)
 
 Запускаем тор
 
@@ -110,7 +117,8 @@ sudo systemctl restart tor
 sudo systemctl start tor
 ```
 
-Открываем настройки расширения и редактируем профиль proxy. Переименовываем его в "Tor"
+Открываем настройки расширения и редактируем профиль proxy. Переименовываем
+его в "Tor"
 
 - Protocol - SOCKS5
 - Server - 127.0.0.1
@@ -120,13 +128,14 @@ sudo systemctl start tor
 
 После чего применяем изменения и пробуем протестировать на https://check.torproject.org/
 
-В быстром меню расширения жмём на уже настроенный прокси и теперь браузер перенаправляет на трафик тор
+В быстром меню расширения жмём на уже настроенный прокси и теперь браузер
+перенаправляет на трафик тор
 
 ![image](/images/tor-archlinux/switchyomega-menu.png)
 
 Можно использовать вместе с Torrent Search
 
-### Открывать сайты только \*.onion сайты данными проксями
+### Открывать сайты только `*.onion` сайты данными проксями
 
 Для этого открываем настройки расширения, создаём новый профиль "New profile"
 
@@ -155,7 +164,7 @@ sudo systemctl start tor
 
 ## FoxyProxy Standard + Tor
 
-- https://addons.mozilla.org/ru/firefox/addon/foxyproxy-standard
+- [FoxyProxy](https://addons.mozilla.org/ru/firefox/addon/foxyproxy-standard)
 
 Для Firefox
 
@@ -169,9 +178,11 @@ sudo systemctl start tor
 Жмём Сохранить и редактировать шаблоны
 
 - Название - onion
-- Шаблон - \*.onion
+- Шаблон - `*.onion`
 - Тип - Wildcard
-- HTTP/s - all (Для большей безопасности <span style="color:green">РЕКОМЕНДУЕТСЯ</span> проксировать только HTTPS запросы, HTTP сайты <span style="color:red">могут читаться и изменяться конечными участниками сети Tor!</span>)
+- HTTP/s - all (Для большей безопасности рекомендуется проксировать только
+  HTTPS запросы, HTTP сайты могут читаться и изменяться конечными участниками
+  сети Tor!)
 
 ![image](/images/tor-archlinux/foxyproxy-https.png)
 
@@ -179,4 +190,6 @@ sudo systemctl start tor
 
 ![image](/images/tor-archlinux/foxyproxy-setup.png)
 
-Теперь это расширение будет в обычном режиме обрабатывать обычные запросы (без прокси), а когда вы будете открывать сайты .onion расширение автоматически будет включать данные прокси Tor
+Теперь это расширение будет в обычном режиме обрабатывать обычные запросы (без
+прокси), а когда вы будете открывать сайты .onion расширение автоматически
+будет включать данные прокси Tor

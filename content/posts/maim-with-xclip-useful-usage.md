@@ -1,13 +1,14 @@
 +++
 title = "Минималистичный скриншотер (связка) maim+xclip"
-date = 2023-03-22T19:03:32+05:00
+date = 2023-03-22
 draft = false
 [taxonomies]
 categories = []
-tags = ["linux"]
+tags = ["linux", "xorg"]
 +++
 
-Если вам не очень понравился flameshot то связка из 2 мелких пакетов может сделать ваш день с Linux лучше
+Если вам не очень понравился flameshot то связка из 2 мелких пакетов может
+сделать ваш день с Linux лучше
 
 Можно скринить игры при помощи опции `-o`
 
@@ -17,9 +18,10 @@ tags = ["linux"]
 sudo pacman -S xclip maim
 ```
 
-**Цвет выделения**
+Цвет выделения
 
-<font color="red">Не рекомендуется</font> вместе с юзать с опцией `-o` (Disable graphics acceleration), да и вообще если делаете скрин игры
+Не рекомендуется вместе с юзать с опцией `-o` (Disable graphics acceleration), да
+и вообще если делаете скрин игры
 
 Светло синее
 
@@ -41,9 +43,13 @@ maim -lc 1,1,1,0.3
 
 И добавляем в бинды [sxhkd](https://github.com/baskerville/sxhkd) ниже описанное
 
-> Если сохраняете скриншоты в HDD NTFS диск, тогда советую не ставить date по типу $(date +%F-%T).png (Имя файла будет 2022-04-15-22:56:12.png) т.к файловая система ntfs не позволяет создавать файлы в которых содержат ” \* / : < > ? \ | а на шинде вы не сможете просмотреть эти скрины
+> Если сохраняете скриншоты в HDD NTFS диск, тогда советую не ставить date по
+> типу `$(date +%F-%T).png` (Имя файла будет `2022-04-15-22:56:12.png`) т.к
+> файловая система ntfs не позволяет создавать файлы в которых содержат `:` (и
+> дополнительно `”` `*` `/` `<` `>` `?` `\` `|`) а на шинде вы не сможете
+> просмотреть эти скрины
 >
-> Ставьте $(date +%s) и тогда проблем с файловой системой ntfs не возникнут
+> Ставьте `$(date +%s)` и тогда проблем с файловой системой ntfs не возникнут
 
 ```sh
 # Скрин всего экрана, без clipboard
@@ -132,11 +138,16 @@ bindsym $mod+shift+d exec notify-send "Color Picker" "Выберите цвет"
 sudo pacman -S tesseract tesseract-data-rus tesseract-data-eng tesseract-data-jpn
 ```
 
-[Скачиваем скрипт](https://github.com/demo2k20/dots/blob/c391251f9f00fc2ce3414508c485c3af309dc6fb/.local/bin/ocr) делаем его исполняемым (`chmod +x ocr`) и закидываем его в $PATH переменную (т.е в `~/.local/bin`)
+[Скачиваем скрипт](https://github.com/demo2k20/dots/blob/c391251f9f00fc2ce3414508c485c3af309dc6fb/.local/bin/ocr)
+делаем его исполняемым (`chmod +x ocr`) и закидываем его в $PATH переменную (т.е
+в `~/.local/bin`)
 
-В скрипте **необходимо** выставить доп язык для более <font color="green">лучшего распознавания</font>. OCR сканер Tesseract умеет работать с нескольколькими языками, 3 языка вместе работают хорошо, поэтому дерзайте.
+В скрипте **необходимо** выставить доп язык для более лучшего распознавания.
+OCR сканер Tesseract умеет работать с нескольколькими языками, 3 языка вместе
+работают хорошо, поэтому дерзайте.
 
-Редактируя скрипт в 13 строке, плюсуем любой из скачанных языковых пакетов tesseract-data-[язык]
+Редактируя скрипт в 13 строке, плюсуем любой из скачанных языковых пакетов
+tesseract-data-[язык]
 
 ```sh
 tesseract -l [язык]+[язык]+[язык]
@@ -144,7 +155,8 @@ tesseract -l [язык]+[язык]+[язык]
 
 ![image](/images/maim-with-xclip-useful-usage/ocr.png)
 
-Не забываем что для доп распознавания необходимо скачать пакет с данным языком иначе результат будет неудовлетворительным
+Не забываем что для доп распознавания необходимо скачать пакет с данным языком
+иначе результат будет неудовлетворительным
 
 Список доступных языков Tesseract
 
@@ -170,9 +182,7 @@ bindsym $mod+shift+f exec ocr
 
 ## Делаем из maim сканер QR кодов ZBar + Xclip
 
-Исходник скрипта:
-
-- https://github.com/jayden-chan/dotfiles/blob/5b6d5b6ad820be4d491779cfdba4c68d90699882/scripts/screenshot.sh
+- [Исходник скрипта](https://github.com/jayden-chan/dotfiles/blob/master/scripts/screenshot.sh)
 
 Для сканирования необходим пакет zbar
 
@@ -180,7 +190,8 @@ bindsym $mod+shift+f exec ocr
 sudo pacman -S zbar
 ```
 
-Сохраняем мой модифицированный скрипт в $PATH переменную (т.е в `~/.local/bin`) для удобного запуска
+Сохраняем мой модифицированный скрипт в $PATH переменную (т.е в `~/.local/bin`)
+для удобного запуска
 
 И биндим на любую удобную клавишу
 
@@ -194,21 +205,23 @@ super + shift + Print
 
 ## !Делаем из maim переводчик текста с помощью Tesseract + Translate-Shell + Xclip
 
-Источник скрипта:
+[Источник скрипта](https://github.com/jkovacevic/dotfiles/blob/master/shared/bash/ocr.sh)
 
-- https://github.com/jkovacevic/dotfiles/blob/master/shared/bash/ocr.sh
+При выделении Японского или Английского текста translate-shell переведёт его на
+Русский скопирует в буфер обмена и выведет уведомление переведённого
 
-При выделении Японского или Английского текста translate-shell переведёт его на Русский скопирует в буфер обмена и выведет уведомление переведённого
+Можете отредактировать данный скрипт и добавить другие языки которые вы хотите
+перевести
 
-Можете отредактировать данный скрипт и добавить другие языки которые вы хотите перевести
-
-Для работы необходимо установить пакет translate-shell и база данных языков для tesseract
+Для работы необходимо установить пакет translate-shell и база данных языков для
+tesseract
 
 ```sh
 sudo pacman -S translate-shell tesseract-data-eng tesseract-data-jpn
 ```
 
-[Сохраняем мой модифицированный скрипт](https://gitlab.com/anzix/dotfiles/-/raw/master/local/.local/bin/scripts/ocr-translate) в $PATH переменную (т.е в `~/.local/bin`) для удобного запуска
+[Сохраняем мой модифицированный скрипт](https://gitlab.com/anzix/dotfiles/-/raw/master/local/.local/bin/scripts/ocr-translate)
+в $PATH переменную (т.е в `~/.local/bin`) для удобного запуска
 
 И биндим на любую удобную клавишу
 
@@ -217,5 +230,5 @@ sudo pacman -S translate-shell tesseract-data-eng tesseract-data-jpn
 ```sh
 # Быстрый перевод на Русский (tesseract + translate-shell + xclip)
 alt + r
- 	ocr-translate
+    ocr-translate
 ```

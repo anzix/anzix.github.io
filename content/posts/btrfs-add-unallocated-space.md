@@ -1,11 +1,36 @@
 +++
 title = "Как слить пустой неразмеченный раздел Btrfs в уже существующий точку монтирования root"
-date = 2023-03-08T19:37:24+05:00
+date = 2023-03-08
 draft = false
 [taxonomies]
 categories = []
 tags = ["linux"]
 +++
+
+## !Первый вариант (рекомендуемый)
+
+Если в списке разделов, / не последний (например, последним стоит swap) то у меня
+не получилось бы добавить пустое свободное пространство в / (расширив его)
+
+В данном случае всё нормально
+
+```txt
+/dev/sda1 -> /boot/efi
+/dev/sda2 -> /
+...
+```
+
+Используем `cfdisk /dev/sda` чтобы добавить **свободное пространство** к разделу
+`/dev/sda2`. Выделяем `/dev/sda2` и жмём **resize**, будет указано сколько можно
+максимум можно выделить и записываем **write** и **quit**
+
+После чего выполняем команду
+
+```sh
+sudo btrfs filesystem resize max /
+```
+
+## Второй вариант
 
 - [Первая инструкция](https://ask.fedoraproject.org/t/how-add-more-space-in-a-btrfs-filesystem-how-add-a-new-partition-how-add-a-new-disk-linux/14817)
 - [Вторая инструкция](https://stackoverflow.com/questions/71315723/resize-my-btrfs-filesystem-to-add-the-free-unallocated-space)
@@ -28,7 +53,8 @@ df
 sudo pacman -S gparted
 ```
 
-Сжимаем из того размера раздел который необходим, затем форматируем форматируем как "очищенный" (создался как /dev/sda8)
+Сжимаем из того размера раздел который необходим, затем форматируем форматируем
+как "очищенный" (создался как /dev/sda8)
 
 Далее открываем терминал и вводим
 
@@ -47,17 +73,17 @@ btrfs filesystem usage /home
 ```txt
 WARNING: cannot read detailed chunk info, per-device usage will not be shown, run as root
 Overall:
-    Device size:		 100.01GiB
-    Device allocated:		  17.56GiB
-    Device unallocated:		  82.45GiB
-    Device missing:		     0.00B
-    Used:			  16.56GiB
-    Free (estimated):		  83.02GiB	(min: 41.80GiB)
-    Free (statfs, df):		  83.02GiB
-    Data ratio:			      1.00
-    Metadata ratio:		      2.00
-    Global reserve:		  53.03MiB	(used: 0.00B)
-    Multiple profiles:		        no
+    Device size:         100.01GiB
+    Device allocated:         17.56GiB
+    Device unallocated:       82.45GiB
+    Device missing:          0.00B
+    Used:             16.56GiB
+    Free (estimated):         83.02GiB  (min: 41.80GiB)
+    Free (statfs, df):        83.02GiB
+    Data ratio:               1.00
+    Metadata ratio:           2.00
+    Global reserve:       53.03MiB  (used: 0.00B)
+    Multiple profiles:              no
 
 Data,single: Size:16.00GiB, Used:15.43GiB (96.41%)
 

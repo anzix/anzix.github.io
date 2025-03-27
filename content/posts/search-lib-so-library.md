@@ -1,6 +1,6 @@
 +++
 title = "Как найти пакет с недостающей lib...so.. библиотекой?"
-date = 2023-03-03T12:12:56+05:00
+date = 2023-03-03
 draft = false
 [taxonomies]
 categories = []

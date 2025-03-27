@@ -1,6 +1,6 @@
 +++
 title = "!WINE разное полезное"
-date = 2023-10-20T15:20:00+05:00
+date = 2023-10-20
 draft = false
 [taxonomies]
 categories = []
@@ -9,9 +9,9 @@ tags = ["linux-gaming"]
 
 ## Авто процесс создания архивированных резервных копий файлов сохранений игры
 
-Например я хочу упростить или сделать автоматическим процесс создания\
-архивированных резервных копий файлов сохранений одиночной игры.\
-Я бы хотел, чтобы у них была временная метка, чтобы они не перезаписывали друг друга.
+Например я хочу упростить или сделать автоматическим процесс создания
+архивированных резервных копий файлов сохранений одиночной игры. Я бы хотел,
+чтобы у них была временная метка, чтобы они не перезаписывали друг друга.
 
 Вероятно, лучше всего запустить процесс архивации после завершения вашей игры. Напр.
 
@@ -34,6 +34,12 @@ wine thegame.exe && zip -r "saves-$(date +%s).zip" /путь_до_saves/
 Exec=env LUTRIS_SKIP_INIT=1 lutris lutris:rungameid/1 && zip -r "saves-$(date +%s).zip" "/home/user/Games/gog/lego-harry-potter-years-1-4/drive_c/users/anix/AppData/Roaming/WB Games/LEGO® Harry Potter™/SavedGames"
 ...
 ```
+
+## !Использование Gallium Nine в Wine
+
+Gallium Nine как альтернатива Vulkan, [но Proton это не поддерживает](https://github.com/ValveSoftware/Proton/issues/66):
+
+Однако Wine делает это, если оно собрано с его поддержкой.
 
 ## (X11 Xorg) Ручное восстановление гаммы при выходе из игры wine
 
@@ -58,13 +64,13 @@ xgamma -gamma 1
 
 1. Пример запуска script.bat:
 
-```sh
-WINEPREFIX="/home/$USER/.wine" wine start /unix "/home/$USER/.wine/drive_c/script.bat"
-```
+   ```sh
+   WINEPREFIX="/home/$USER/.wine" wine start /unix "/home/$USER/.wine/drive_c/script.bat"
+   ```
 
 2. Открыть *.bat файл ``wineconsole cmd`` или `wine cmd`
 
-И в нём уже ввести ``script.bat``
+   И в нём уже ввести ``script.bat``
 
 ## Удаление конкретной программы без использования GUI
 
@@ -95,7 +101,8 @@ update-desktop-database ~/.local/share/applications
 WINEDEBUG=-all,+err,+warn WINEPREFIX="/home/$USER/.wine" wine "C:/games/my_game/game.exe" &> wine-log.txt
 ```
 
-Вывести в файл wine-dll-log.txt список Windows-библиотек (dll), используемых в процессе запуска программы:
+Вывести в файл wine-dll-log.txt список Windows-библиотек (dll), используемых в
+процессе запуска программы:
 
 ```sh
 WINEDEBUG=+loaddll WINEPREFIX="/home/$USER/.wine" wine notepad &> wine-dll-log.txt
@@ -149,13 +156,15 @@ WINEPREFIX="prefix" wine UbisoftConnect.exe uplay://launch/273/0
 
 ## (Не проверено) Слишком быстрые или медленные старые игры под wine
 
-Решение использовать утилиту cpulimit чтобы ограничить процент использования процессора. Например:
+Решение использовать утилиту cpulimit чтобы ограничить процент использования
+процессора. Например:
 
 ```sh
 cpulimit -l 50 wine game.exe
 ```
 
-Доступные значения от 0 до (количество ядер * 100). То есть если у тебя два ядра, то максимальное значение - 200.
+Доступные значения от 0 до (количество ядер * 100). То есть если у тебя два
+ядра, то максимальное значение - 200.
 
 ## Лёгкий способ вызвать AUTORUN.exe из смонтированного образа используя wine
 
@@ -165,5 +174,6 @@ cpulimit -l 50 wine game.exe
 WINEPREFIX="$HOME/.local/share/wineprefixes/[ПРЕФИКС_ИГРЫ] wine uninstaller
 ```
 
-Жмёте "Установить" - указываете путь к смонтированному образу и запускаете AutoRun.exe
+Жмёте "Установить" - указываете путь к смонтированному образу и запускаете
+AutoRun.exe
 

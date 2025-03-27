@@ -1,13 +1,16 @@
 +++
 title = "Конвертирование iso в god для взломанной xbox360 утилитой iso2god-rs"
-date = 2023-03-03T11:00:14+05:00
+date = 2023-03-03
 draft = false
 [taxonomies]
 categories = []
 tags = ["linux"]
 +++
 
-Т.к нигде даже в AUR не нашёл подобного софта я покопавшись в github'е наткнулся на форк [iso2god репо написанный на Rust](https://github.com/iliazeus/iso2god-rs) и вместе с [PKGBUILD'ом для Arch Linux](https://github.com/iliazeus/aur/blob/master/iso2god/PKGBUILD) написанный от автора софта
+Т.к нигде даже в AUR не нашёл подобного софта я покопавшись в github'е наткнулся
+на форк [iso2god репо написанный на Rust](https://github.com/iliazeus/iso2god-rs)
+и вместе с [PKGBUILD'ом для Arch Linux](https://github.com/iliazeus/aur/blob/master/iso2god/PKGBUILD)
+написанный от автора софта
 
 Вводим для скачивания
 
@@ -73,9 +76,11 @@ writing con header
 done
 ```
 
-После успешной конвертации в папке где находится образ будет находится папка с title id игры 45410915
+После успешной конвертации в папке где находится образ будет находится папка
+с title id игры 45410915
 
-Некоторые iso файлы не могут быть сконвертированы по причине отсутствия default.xex
+Некоторые iso файлы не могут быть сконвертированы по причине отсутствия
+default.xex
 
 ```sh
 extracting ISO metadata

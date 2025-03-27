@@ -1,6 +1,6 @@
 +++
-title = "!Mpd + ncmpcpp"
-date = 2023-03-22T01:47:28+05:00
+title = "Музыкальный сервер mpd и TUI плеер ncmpcpp"
+date = 2023-03-22
 draft = false
 [taxonomies]
 categories = []
@@ -24,21 +24,19 @@ cp /usr/share/doc/mpd/mpdconf.example ~/.config/mpd/mpd.conf
 nvim ~/.config/mpd/mpd.conf
 ```
 
-<!-- Либо используем [мой пользовательский конфиг файл]() -->
-
 Запуск демона MPD
 
 1. Прописываем в `.xprofile` (для DM) или `.xinitrc` (запуск с TTY) для автозапуска
 
-```sh
-echo "mpd &" >> ~/.xinitrc
-```
+   ```sh
+   mpd &
+   ```
 
 2. Или запускаем systemd сервис
 
-```sh
-systemctl --user enable --now mpd
-```
+   ```sh
+   systemctl --user enable --now mpd
+   ```
 
 Для проверки запустите status сервиса
 
@@ -46,7 +44,8 @@ systemctl --user enable --now mpd
 systemctl --user status mpd
 ```
 
-Также скачиваем mpc, он необходим для уведомления о текущим треке и для обновления базу данных о треке
+Также скачиваем mpc, он необходим для уведомления о текущим треке и для
+обновления базу данных о треке
 
 ```sh
 sudo pacman -S mpc
@@ -56,7 +55,7 @@ sudo pacman -S mpc
 
 ## ncmpcpp
 
-Это TUI музыкальный клиент
+Устанавливаем ncmpcpp
 
 ```sh
 sudo pacman -S ncmpcpp
@@ -75,7 +74,7 @@ cp /usr/share/doc/ncmpcpp/config ~/.config/ncmpcpp
 
 Мини версия клавиш или то что я часто нажимаю на этом плеере
 
-```
+```txt
 # Перемещение по вкладкам с помощью цифр и равно(=)
 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | =
 
@@ -114,7 +113,7 @@ Ctrl+l
 
 # Смена интерфейс (рекомендую classic). В конфиге ncmpcpp определяется как
 # user_interface = "alternative"
-\
+
 
 # Информация о треке
 i
@@ -129,22 +128,23 @@ l
 q
 ```
 
-- [Страница по различным dot файлам ncmpcpp](http://dotshare.it/category/mpd/ncmpcpp/)
 - [Cheatsheet страница по ncmpcpp](https://pkgbuild.com/~jelle/ncmpcpp/)
 
-### !Разные полезные штуки
+### Разные полезности с ncmpcpp
 
-# Открыть ncmpcpp с визуализатором
+1. Открыть ncmpcpp с визуализатором
 
-Прописать в конфиге
+   Прописать в конфиге
 
-```sh
-startup_slave_screen = "visualizer"
-```
+   ```sh
+   startup_slave_screen = "visualizer"
+   ```
 
-```sh
-ncmpcpp -S visualizer
-```
+   Выполнить
+
+   ```sh
+   ncmpcpp -S visualizer
+   ```
 
 ## Playerctl + mpd-mpris
 
@@ -156,19 +156,17 @@ playerctl - это MPRIS Media Player контроллер для Spotify, VLC, 
 sudo pacman -S playerctl
 ```
 
-Playerctl не поддерживает mpd из коробки, поэтому при нажатии на FN+F6|7|8 никаких действий в mpd не происходит только в браузере
+Playerctl не поддерживает mpd из коробки, поэтому при нажатии на FN+F6|7|8 никаких
+действий в mpd не происходит только в браузере
 
-При проверке в терминале
+При проверке в терминале командой `playerctl next` получаю такой вывод
 
-```sh
-playerctl next
-```
-
-```
+```txt
 output: No players found
 ```
 
-Есть <font color="green">решение</font> реализации MPRIS протокола для mpd называется [mpd-mpris](https://github.com/natsukagami/mpd-mpris)\
+Есть решение реализации MPRIS протокола для mpd называется [mpd-mpris](https://github.com/natsukagami/mpd-mpris)
+
 На данный момент mpd-mpris предоставляет:
 
 1. Статус о проигрываемом треке (KDE)
@@ -184,7 +182,7 @@ output: No players found
 Установка
 
 ```sh
-yay -S mpd-mpris
+sudo pacman -S mpd-mpris
 ```
 
 Для автозапуска прописываем в `~/.xprofile` (для DM) или `~/.xinitrc` (запуск с TTY)

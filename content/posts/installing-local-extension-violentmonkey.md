@@ -1,6 +1,6 @@
 +++
 title = "Как в расширении violentmonkey добавить локальный скрипт"
-date = 2023-12-11T18:10:00+05:00
+date = 2023-12-11
 draft = false
 [taxonomies]
 categories = []
@@ -14,7 +14,8 @@ tags = ["other"]
 
 ![image](/images/installing-local-extension-violentmonkey/settings_browser.png)
 
-При создании rutracker-script.js внутри которого [сам код](https://rutracker.org/forum/viewtopic.php?p=77455960#77455960) перетаскиваем прямо в браузер и копируем URL
+При создании rutracker-script.js внутри которого [сам код](https://rutracker.org/forum/viewtopic.php?p=77455960#77455960)
+перетаскиваем прямо в браузер и копируем URL
 
 Внутри violentmonkey жмём + и "Установить по ссылке" вставляя скопированную ссылку
 
