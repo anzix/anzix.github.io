@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>Minecraft на Arch Linux</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  Minecraft на Arch Linux
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-03-16</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux-gaming/">linux-gaming</a>
+
+<br>
+
+
+	<aside id="toc-aside" class="toc">
+	    <details>
+			<summary>Оглавление</summary>
+	        <ol>
+	            <li>
+	                <a href="#java-launchery">Java лаунчеры</a>
+	                <ol>
+	                    <li>
+	                        <a href="#offlain-piratki">Оффлайн пиратки</a>
+	                    </li><li>
+	                        <a href="#litsenzionnye-akkaunty">Лицензионные аккаунты</a>
+	                    </li>
+	                </ol>
+	            </li><li>
+	                <a href="#servera-dlia-java-versii">Сервера для Java версии</a>
+	                
+	            </li><li>
+	                <a href="#zapusk-s-nativnym-wayland">Запуск с нативным Wayland</a>
+	                
+	            </li>
+	        </ol>
+		</details>
+	</aside>
+
+
+<p>Здесь будут показаны способы з</p>
+<h2 id="java-launchery"><a class="anchor" href="#java-launchery">#</a>&nbsp;
+Java лаунчеры</h2>
+<h3 id="offlain-piratki"><a class="anchor" href="#offlain-piratki">#</a>&nbsp;
+Оффлайн пиратки</h3>
+<p>Список доступных:</p>
+<ol>
+<li>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://llaun.ch/">Legacy Launcher</a></p>
+<p>Сайт <a rel="noopener nofollow noreferrer" target="_blank" href="https://llaun.ch/">llaun.ch</a> нужно заходить <strong>обязательно с RU ip адресса</strong>
+Так, не будет никаких ограничений из-за правообладателя Mojang AB</p>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://vk.link/tl_mc_launcher">VK</a></li>
+<li><del><a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/legacylauncher/">AUR</a>: <code>yay -S legacylauncher</code></del></li>
+</ul>
+<p>Есть два метода запуска:</p>
+<ol>
+<li>
+<p>Используя jar файл</p>
+<p>Legacy Launcher больше не работает на 22 версии Java. Скачав 21 версию и
+выставив её глобально лаунчер запуститься</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Скачиваем 21 версию Java
+</span><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> jre21-openjdk java-runtime-common
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Выставляем глобально для системы
+</span><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> archlinux-java set java-21-openjdk
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Запускаем
+</span><span style="color:#f9f9f9;">java -jar</span><span style="color:#ffee80;"> LegacyLauncher_legacy.jar
+</span></code></pre>
+</li>
+<li>
+<p>Flatpak</p>
+<p>Legacy Launcher есть также на <a rel="noopener nofollow noreferrer" target="_blank" href="https://flathub.org/apps/ch.tlaun.TL">Flathub</a>.
+Однако там отключена возможность создания оффлайн аккаунта</p>
+<p>Переопределить это поведение можно двумя способами</p>
+<ol>
+<li>
+<p>Использую данную команду:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">flatpak --user</span><span style="color:#ffee80;"> override ch.tlaun.TL</span><span style="color:#f9f9f9;"> --env</span><span style="color:#ff9d00;">=</span><span style="color:#ffee80;">TL_BOOTSTRAP_OPTIONS=</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">-Dtl.useForce</span><span style="color:#f9f9f9;">&quot;
+</span></code></pre>
+</li>
+<li>
+<p>Достать файл <code>profile.json</code> который содержит информацию аутентификации
+и заменить его текущим</p>
+<p>TODO: Не проверено</p>
+<p>В Java версии он называется <code>tlauncher_profile.json</code> (находится в
+<code>~/.minecraft/</code>) и он должен быть в каталоге Flatpak версии
+legacylauncher</p>
+<p>Его ещё можно достать из Windows, файл называется <code>profile.json</code></p>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/fn2006/PollyMC">PollyMC</a></p>
+<p>Это форк PolyMC с оффлайн аккаунтом</p>
+<p>UPD: больше не развивается</p>
+<p>Есть <a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/pollymc-bin">AUR</a> пакет который можно
+установить командой</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">yay -S</span><span style="color:#ffee80;"> pollymc-bin
+</span></code></pre>
+</li>
+<li>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://prismlauncher.org/">Prism Launcher</a></p>
+<p>Вот несколько относящихся к оффлайну Prism Launcher'а</p>
+<p>TODO: оба не проверены</p>
+<ol>
+<li>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/antunnitraj/Prism-Launcher-PolyMC-Offline-Bypass">Обход проверки PrismLauncher на наличии настоящего Microsoft MSA аккаунта</a></p>
+</li>
+<li>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/Octol1ttle/PrismLauncher-elyby">PrismLauncher форк с заменой учёток Mojang на Ely.by</a></p>
+</li>
+</ol>
+</li>
+<li>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/unmojang/FjordLauncher">Fjord Launcher</a></p>
+<p>Ещё один форк Prism Launcher (замена PollyMC)</p>
+</li>
+<li>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/Arian8j2/modrinth-offline">Modrinth Offline</a></p>
+<p>Форк Modrinth но с оффлайн возможностью логина</p>
+</li>
+</ol>
+<h3 id="litsenzionnye-akkaunty"><a class="anchor" href="#litsenzionnye-akkaunty">#</a>&nbsp;
+Лицензионные аккаунты</h3>
+<p>Некоторые из них обладают возможностью скачиванию и обновлением модов прямо в клиенте</p>
+<ol>
+<li>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://prismlauncher.org/">Prism Launcher</a></p>
+<p>Установка <a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/prismlauncher-bin">AUR</a> пакета
+пакет</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">yay -S</span><span style="color:#ffee80;"> prismlauncher-bin
+</span></code></pre>
+</li>
+<li>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://polymc.org/">PolyMC</a></p>
+<p>Установка <a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/polymc-bin">AUR</a> пакета</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">yay -S</span><span style="color:#ffee80;"> polymc-bin
+</span></code></pre>
+</li>
+<li>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/MultiMC/Launcher">MultiMC</a></p>
+<p>Установка <a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/multimc-bin">AUR</a> пакета</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">yay -S</span><span style="color:#ffee80;"> multimc-bin
+</span></code></pre>
+</li>
+<li>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://atlauncher.com/">ATLauncher</a></p>
+<p>Установка <a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/atlauncher-bin">AUR</a> пакета</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">yay -S</span><span style="color:#ffee80;"> atlauncher-bin
+</span></code></pre>
+</li>
+<li>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://gdevs.io/">GDLauncher</a></p>
+<p>Установка <a rel="noopener nofollow noreferrer" target="_blank" href="https://aur.archlinux.org/packages/gdlauncher-bin">AUR</a> пакета</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">yay -S</span><span style="color:#ffee80;"> gdlauncher-bin
+</span></code></pre>
+</li>
+</ol>
+<h2 id="servera-dlia-java-versii"><a class="anchor" href="#servera-dlia-java-versii">#</a>&nbsp;
+Сервера для Java версии</h2>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.minecraft.net/en-us/download/server">Для самой последней версии</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://gist.github.com/cliffano/77a982a7503669c3e1acb0a0cf6127e9">Для всех остальных старых версий</a></li>
+</ul>
+<h2 id="zapusk-s-nativnym-wayland"><a class="anchor" href="#zapusk-s-nativnym-wayland">#</a>&nbsp;
+Запуск с нативным Wayland</h2>
+<p>На данный момент проверено на Legacy Launcher с "Рекомендуемой java-runtime-delta"</p>
+<p>В Legacy Launcher открываем "Настройки лаунчера и игры" далее в Java/JRE жмём
+"Настроить" в "Аргументы Java" вставляем</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">-Dorg.lwjgl.glfw.libname=/usr/lib64/libglfw.so
+</span></code></pre>
+<p>Сохраняем и теперь Minecraft будет запущен на нативном Wayland'е режиме</p>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

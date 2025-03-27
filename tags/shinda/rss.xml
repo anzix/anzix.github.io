@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+      <title>Блог AniX - шинда</title>
+      <link>https://anzix.github.io/</link>
+      <description>Инструкции и полезные разные статьи для GNU&#x2F;Linux</description>
+      <generator>Zola</generator>
+      <language>en</language>
+      <atom:link href="https://anzix.github.io/tags/shinda/rss.xml" rel="self" type="application/rss+xml"/>
+      <lastBuildDate>Thu, 05 Oct 2023 00:00:00 +0000</lastBuildDate>
+      <item>
+          <title>!Проброс одиночной AMDGPU в виртуалку Win10!</title>
+          <pubDate>Thu, 05 Oct 2023 00:00:00 +0000</pubDate>
+          <author>AniX</author>
+          <link>https://anzix.github.io/posts/my-single-gpu-passthrought/</link>
+          <guid>https://anzix.github.io/posts/my-single-gpu-passthrought/</guid>
+          <description xml:base="https://anzix.github.io/posts/my-single-gpu-passthrought/">&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;www.youtube.com&#x2F;watch?v=hQL5h5GteTY&amp;amp;t=1327s&quot;&gt;URL&lt;&#x2F;a&gt; RUS полу-гайд&lt;&#x2F;p&gt;
+&lt;p&gt;Работает. Однако из-за неполноценности видео-гайда при выключении гостя шинды
+экран не возвращает обратно на хост (черный экран). Также из-за того что
+ставил qcow2 образ на HDD всё очень медленное, поставив его на SSD дало
+значительный прирост.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;www.youtube.com&#x2F;watch?v=7zrRFX4UK_s&quot;&gt;URL&lt;&#x2F;a&gt; Для Gentoo&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;www.youtube.com&#x2F;watch?v=BUSrdUoedTo&amp;amp;t=664s&quot;&gt;URL&lt;&#x2F;a&gt; Muta&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;www.youtube.com&#x2F;watch?v=h7SG7ccjn-g&quot;&gt;URL&lt;&#x2F;a&gt; Muta&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;www.youtube.com&#x2F;watch?v=CwEVj00SwYM&quot;&gt;URL&lt;&#x2F;a&gt; На французском (видео
+немного устарело) актуальный от него же &lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;gitlab.com&#x2F;Mageas&#x2F;single-gup-passthrough&quot;&gt;гайд тут&lt;&#x2F;a&gt;
+Всё работает также с исправленным чёрным экраном. Данный гайд работает на
+все 100%&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;www.youtube.com&#x2F;watch?v=3BxAaaRDEEw&quot;&gt;URL&lt;&#x2F;a&gt; На дистре Fedora&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;p&gt;Другие полезные источники&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;www.reddit.com&#x2F;r&#x2F;VFIO&#x2F;&quot;&gt;Сабреддит Vfio&lt;&#x2F;a&gt; (ENG)&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;discord.com&#x2F;invite&#x2F;f63cXwH&quot;&gt;Дискорд сервер Vfio&lt;&#x2F;a&gt; (ENG)&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;trebovaniia&quot;&gt;&lt;a class=&quot;anchor&quot; href=&quot;#trebovaniia&quot;&gt;#&lt;&#x2F;a&gt;&amp;nbsp;
+Требования&lt;&#x2F;h2&gt;
+&lt;ul&gt;
+&lt;li&gt;В настройках virt-manager выставляем этот чекбокс &quot;Включить редактирование XML&quot;&lt;&#x2F;li&gt;
+&lt;li&gt;Вам необходимо &lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;github.com&#x2F;virtio-win&#x2F;virtio-win-pkg-scripts&quot;&gt;скачать драйвера virtio для W10&#x2F;W11&lt;&#x2F;a&gt;
+позже в процессе установки windows их необходимо будет у становить для доступа
+к виртуальному диску и доступ в интернет&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;Внутри Git репо выбираете &lt;strong&gt;Stable virtio-win ISO&lt;&#x2F;strong&gt; версию драйверов&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;sozdaiom-gostevuiu-vm-windows-10&quot;&gt;&lt;a class=&quot;anchor&quot; href=&quot;#sozdaiom-gostevuiu-vm-windows-10&quot;&gt;#&lt;&#x2F;a&gt;&amp;nbsp;
+Создаём гостевую VM Windows 10&lt;&#x2F;h3&gt;
+&lt;p&gt;Память выставляем на ваше усмотрение, если будете играть в триплA (AAA) игры и
+на хосте 16gb тогда выставляете около 12-14gb, чтобы было с запасом для хоста
+чтобы предостеречь от зависания виртуальной машины&lt;&#x2F;p&gt;
+&lt;p&gt;Процессоров дадим гостю 10 если проц 12 поточный, чтобы на хосте был запас&lt;&#x2F;p&gt;
+&lt;p&gt;В шаге 4 вам предложат где будет хранится ВМ т.е qcow2 образ и каков будет её
+размер, скажу сразу что &lt;strong&gt;не рекомендую&lt;&#x2F;strong&gt; хранить образ qcow2 на HDD разделе.
+Возможно из-за того что у меня файловая система на HDD ntfs но на виртуалке
+я сталкивался медленным интерфейсом в целом, переход на SSD (т.е закинув на
+пул default в котором будет расположен по пути &lt;code&gt;&#x2F;var&#x2F;lib&#x2F;libvirt&#x2F;images&lt;&#x2F;code&gt;)
+значительно улучшило производительность и отзывчивость системы.&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Примечание&lt;&#x2F;strong&gt;: Дополнительно увеличить производительность можно поставив
+формат образа не qcow2 а raw&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;Отличие в том что qcow2 динамически распределяет файлы т.е будет заполнятся и
+становится всё больше по мере поступления данных, он медленнее в чтении и
+записи но занимает меньше места. Raw этого нет т.е скорость в чтении и записи
+будет больше (заметно на примере перемещение файлов с одного устройство на
+другое) но будет сразу занимать столько места сколько вы ему назначите.
+Минус raw в том что вы не сможете делать снапшоты своей VM&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;techpiezo.com&#x2F;tech-insights&#x2F;raw-vs-qcow2-disk-images-in-qemu-kvm&#x2F;&quot;&gt;Сравнение Raw vs Qcow2&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Название VM: &quot;win10&quot;&lt;&#x2F;li&gt;
+&lt;li&gt;В оборудование VM добавляем CD-ROM и выбираем скачанный ISO драйвер и отметив
+его в списке меню загрузок.&lt;&#x2F;li&gt;
+&lt;li&gt;Во вкладке Обзор - Микропрограмму ставим UEFI (или UEFI secboot для Windows
+11)&lt;&#x2F;li&gt;
+&lt;li&gt;Во вкладке Процессоры выставляем галочку &quot;Копировать конфигурацию ЦП хоста
+(host-passthrough)&quot; и &quot;Установить топологию ЦП вручную&quot;, сокеты меняем на
+1, ядра 5, потоков 2&lt;&#x2F;li&gt;
+&lt;li&gt;Во вкладке Sata диск 1 выставляем Virtio для наилучшей производительности&lt;&#x2F;li&gt;
+&lt;li&gt;Во вкладке NIC выставляем модель устройства: Virtio для наилучшей производительности&lt;&#x2F;li&gt;
+&lt;li&gt;(Для Windows 11) Во вкладке TPM добавляем эмулируемый TPM версия 2.0&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;Начинаем обычную установку Windows&lt;&#x2F;p&gt;
+&lt;p&gt;Как только дойдёте до разметки диска вам необходимо загрузить драйвер для отображения
+разметки диска и указываете: &lt;code&gt;CD-дисковод (E:) virtio-win-xxx &amp;gt; amd64 &amp;gt; win10&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Жмём запустить&lt;&#x2F;p&gt;
+&lt;p&gt;Путь драйвера для показа диска разметки -
+Как появится в списке &quot;&lt;strong&gt;Red Hat  VirtIO SCSI controller&lt;&#x2F;strong&gt;&quot; жмём Далее&lt;&#x2F;p&gt;
+&lt;p&gt;После установки выключаю гостя&lt;&#x2F;p&gt;
+&lt;h4 id=&quot;nastroika-vm&quot;&gt;&lt;a class=&quot;anchor&quot; href=&quot;#nastroika-vm&quot;&gt;#&lt;&#x2F;a&gt;&amp;nbsp;
+Настройка VM&lt;&#x2F;h4&gt;
+&lt;p&gt;TODO: WIP&lt;&#x2F;p&gt;
+&lt;p&gt;В списке оборудования Virt-Manager&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Video меняю на none&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;Из оборудования удаляю:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Планшет&lt;&#x2F;li&gt;
+&lt;li&gt;Channel spice&lt;&#x2F;li&gt;
+&lt;li&gt;Sound ich*&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;В &quot;&lt;strong&gt;PCI-устройство&lt;&#x2F;strong&gt;&quot; добавляю устройства для проброса&lt;&#x2F;p&gt;
+&lt;p&gt;Проброс видюхи вместе с аудиоинтерфейсом&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;0000:03:00:0 Advanced Micro Devices, Inc. [AMD&#x2F;ATI] Ellesmere [Radeon RX 470&#x2F;480&#x2F;570&#x2F;570X&#x2F;580&#x2F;580X&#x2F;590]&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;0000:03:00:1 Advanced Micro Devices, Inc. [AMD&#x2F;ATI] Ellesmere HDMI Audio [Radeon RX 470&#x2F;480 &#x2F; 570&#x2F;580&#x2F;590]&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;Звук с колонок&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;0000:00:1B:0 Intel Corporation C600&#x2F;X79 series chipset High Definition Audio Controller&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;USB 2&#x2F;3 контроллер&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;0000:00:1D:0 Intel Corporation C600&#x2F;X79 series chipset USB2 Enhanced Host Controller #1&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;0000:00:1A:0 Intel Corporation C600&#x2F;X79 series chipset USB2 Enhanced Host Controller #2&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;0000:07:00:0 VIA Technologies, Inc. VL805&#x2F;806 xHCI USB 3.0 Controller&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;В разделе &quot;&lt;strong&gt;Хранилище&lt;&#x2F;strong&gt;&quot; ставим &quot;Выбрать или создать дополнительное пространство
+данных&quot;. И пробрасываем по отдельности наши разделы&lt;&#x2F;p&gt;
+&lt;p&gt;К примеру мой ntfs HDD&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;txt&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-txt &quot;&gt;&lt;code class=&quot;language-txt&quot; data-lang=&quot;txt&quot;&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&#x2F;dev&#x2F;sdb1
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&#x2F;dev&#x2F;sdb2
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&#x2F;dev&#x2F;sdb3
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&#x2F;dev&#x2F;sdb4
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Тип шины выбираем Virtio для наилучшей производительности.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;libvirt-hook-helper&quot;&gt;&lt;a class=&quot;anchor&quot; href=&quot;#libvirt-hook-helper&quot;&gt;#&lt;&#x2F;a&gt;&amp;nbsp;
+!!libvirt hook helper!!&lt;&#x2F;h2&gt;
+&lt;p&gt;Libvirt Hook Helper будет заставлять вашу систему (хост машину) выключать-запускать
+модули драйверов видеокарты, сервисы и ваш дисплей менеджер перед включением
+вм гостя win10 так и после выключения.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;sh&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;sudo&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt; mkdir &#x2F;etc&#x2F;libvirt&#x2F;hooks
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;sudo -e&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt; &#x2F;etc&#x2F;libvirt&#x2F;hooks&#x2F;qemu
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Вставляем в qemu &lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;gitlab.com&#x2F;Mageas&#x2F;single-gup-passthrough#libvirt-hook-helper&quot;&gt;этот libvirt hook helper&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;!-- Ниже это другое но схожее --&gt;
+&lt;!----&gt;
+&lt;!-- ```sh --&gt;
+&lt;!-- sudo mkdir &#x2F;etc&#x2F;libvirt&#x2F;hooks --&gt;
+&lt;!-- wget -qO- https:&#x2F;&#x2F;gitlab.com&#x2F;risingprismtv&#x2F;single-gpu-passthrough&#x2F;-&#x2F;raw&#x2F;master&#x2F;hooks&#x2F;qemu | sudo tee --append &#x2F;etc&#x2F;libvirt&#x2F;hooks&#x2F;qemu &gt;&#x2F;dev&#x2F;null --&gt;
+&lt;!-- sudo chmod +x &#x2F;etc&#x2F;libvirt&#x2F;hooks&#x2F;qemu --&gt;
+&lt;!----&gt;
+&lt;!-- wget -qO- https:&#x2F;&#x2F;gitlab.com&#x2F;risingprismtv&#x2F;single-gpu-passthrough&#x2F;-&#x2F;raw&#x2F;master&#x2F;hooks&#x2F;vfio-startup.sh | sudo tee --append &#x2F;etc&#x2F;libvirt&#x2F;hooks&#x2F;vfio-startup.sh &gt;&#x2F;dev&#x2F;null --&gt;
+&lt;!-- sudo chmod +x &#x2F;etc&#x2F;libvirt&#x2F;hooks&#x2F;vfio-startup.sh --&gt;
+&lt;!-- sudo ln -s &#x2F;etc&#x2F;libvirt&#x2F;hooks&#x2F;vfio-startup.sh &#x2F;bin&#x2F;vfio-startup.sh --&gt;
+&lt;!----&gt;
+&lt;!-- wget -qO- https:&#x2F;&#x2F;gitlab.com&#x2F;risingprismtv&#x2F;single-gpu-passthrough&#x2F;-&#x2F;raw&#x2F;master&#x2F;hooks&#x2F;vfio-teardown.sh | sudo tee --append &#x2F;etc&#x2F;libvirt&#x2F;hooks&#x2F;vfio-teardown.sh &gt;&#x2F;dev&#x2F;null --&gt;
+&lt;!-- sudo chmod +x &#x2F;etc&#x2F;libvirt&#x2F;hooks&#x2F;vfio-teardown.sh --&gt;
+&lt;!-- sudo ln -s &#x2F;etc&#x2F;libvirt&#x2F;hooks&#x2F;vfio-teardown.sh &#x2F;bin&#x2F;vfio-teardown.sh --&gt;
+&lt;!----&gt;
+&lt;!-- wget -qO- https:&#x2F;&#x2F;gitlab.com&#x2F;risingprismtv&#x2F;single-gpu-passthrough&#x2F;-&#x2F;raw&#x2F;master&#x2F;systemd-no-sleep&#x2F;libvirt-nosleep@.service | sudo tee --append &#x2F;etc&#x2F;systemd&#x2F;system&#x2F;libvirt-nosleep@.service &gt;&#x2F;dev&#x2F;null --&gt;
+&lt;!-- sudo chmod 644 -R &#x2F;etc&#x2F;systemd&#x2F;system&#x2F;libvirt-nosleep@.service --&gt;
+&lt;!-- sudo chown root:root &#x2F;etc&#x2F;systemd&#x2F;system&#x2F;libvirt-nosleep@.service --&gt;
+&lt;!-- ``` --&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;my-single-gpu-passthrought&#x2F;libvirt-hooks-qemu-config.png&quot; alt=&quot;image&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Делаем данный файл исполняемым &lt;code&gt;sudo chmod +x &#x2F;etc&#x2F;libvirt&#x2F;hooks&#x2F;qemu&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;gitlab.com&#x2F;Mageas&#x2F;single-gup-passthrough#config-libvirt-hooks&quot;&gt;Config Libvirt Hooks&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;sh&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;sudo -e&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt; &#x2F;etc&#x2F;libvirt&#x2F;hooks&#x2F;kvm.conf
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;VIRSH_GPU_VIDEO&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff9d00;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#3ad900;&quot;&gt;pci_0000_03_00_0
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;VIRSH_GPU_AUDIO&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff9d00;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#3ad900;&quot;&gt;pci_0000_03_00_1
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Start&#x2F;Stop Libvirt Hooks&lt;&#x2F;p&gt;
+&lt;p&gt;Вставляем данную переменную с добавлением вашего имя ВМ&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;sh&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;KVM_NAME&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff9d00;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9eff80;&quot;&gt;win10&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Создаём скрипт запуска хука&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;sh&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;sudo&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt; mkdir&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt; -p&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt; &#x2F;etc&#x2F;libvirt&#x2F;hooks&#x2F;qemu.d&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;${KVM_NAME}&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt;&#x2F;prepare&#x2F;begin
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;sudo -e&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt; &#x2F;etc&#x2F;libvirt&#x2F;hooks&#x2F;qemu.d&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;${KVM_NAME}&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt;&#x2F;prepare&#x2F;begin&#x2F;start.sh
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Содержимое файла &lt;code&gt;start.sh&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;my-single-gpu-passthrought&#x2F;libvirt-hooks-start-sh.png&quot; alt=&quot;image&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Тоже делаем данный файл исполняемым &lt;code&gt;sudo chmod +x start.sh&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Далее создаём скрипт остановку хука&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;sh&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-sh &quot;&gt;&lt;code class=&quot;language-sh&quot; data-lang=&quot;sh&quot;&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;sudo&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt; mkdir&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt; -p&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt; &#x2F;etc&#x2F;libvirt&#x2F;hooks&#x2F;qemu.d&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;${KVM_NAME}&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt;&#x2F;release&#x2F;end
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;sudo -e&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt; &#x2F;etc&#x2F;libvirt&#x2F;hooks&#x2F;qemu.d&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;${KVM_NAME}&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt;&#x2F;release&#x2F;end&#x2F;stop.sh
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Содержимое файла &lt;code&gt;stop.sh&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;my-single-gpu-passthrought&#x2F;libvirt-hooks-stop-sh.png&quot; alt=&quot;image&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Тоже делаем данный файл исполняемым &lt;code&gt;sudo chmod +x stop.sh&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Установил lightdm lightdm-gtk-greeter для того чтобы работал при выключении
+гостя &lt;strong&gt;вход&lt;&#x2F;strong&gt; обратно в хост машину без бесконечного чёрного экрана с
+которым я сталкивался.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;h2 id=&quot;dokachivaem-draivera-virtio-dlia-w10-11&quot;&gt;&lt;a class=&quot;anchor&quot; href=&quot;#dokachivaem-draivera-virtio-dlia-w10-11&quot;&gt;#&lt;&#x2F;a&gt;&amp;nbsp;
+Докачиваем драйвера Virtio для W10&#x2F;11&lt;&#x2F;h2&gt;
+&lt;p&gt;В &lt;strong&gt;Диспетчере устройств&lt;&#x2F;strong&gt; есть отсутствующие драйвера такие как&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Ethernet Controller&lt;&#x2F;li&gt;
+&lt;li&gt;PCI Device&lt;&#x2F;li&gt;
+&lt;li&gt;PCI Simple Communication Controller&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;Выбираем любой кликаем на &lt;strong&gt;Обновить драйвер&lt;&#x2F;strong&gt; - &lt;strong&gt;Поиск драйверов
+локально&lt;&#x2F;strong&gt; - жмём &lt;strong&gt;Обзор&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Добавляем оборудование CD-ROM в virt-manager&#x27;е выбирая iso &lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;fedorapeople.org&#x2F;groups&#x2F;virt&#x2F;virtio-win&#x2F;direct-downloads&#x2F;stable-virtio&#x2F;virtio-win.iso&quot;&gt;virtio-win-xxx&lt;&#x2F;a&gt; т.е &lt;code&gt;E:\&lt;&#x2F;code&gt; и жмём Ок - Next (&lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;github.com&#x2F;virtio-win&#x2F;virtio-win-pkg-scripts&quot;&gt;Github страница&lt;&#x2F;a&gt;)&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;my-single-gpu-passthrought&#x2F;adding-drivers.png&quot; alt=&quot;image&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;После загрузке первого драйвера, продолжаем и с последующими, повторяя тоже самое.&lt;&#x2F;p&gt;
+&lt;p&gt;Когда закончили, следует скачать и установить дрова для проброшенной видюхи дабы
+иметь возможность изменить разрешение и герцовку моника.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;vkliuchenie-hyper-v&quot;&gt;&lt;a class=&quot;anchor&quot; href=&quot;#vkliuchenie-hyper-v&quot;&gt;#&lt;&#x2F;a&gt;&amp;nbsp;
+Включение Hyper-V&lt;&#x2F;h2&gt;
+&lt;p&gt;Используя PowerShell и ввести:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;PowerShell&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-PowerShell &quot;&gt;&lt;code class=&quot;language-PowerShell&quot; data-lang=&quot;PowerShell&quot;&gt;&lt;span style=&quot;color:#ffb054;&quot;&gt;Enable-WindowsOptionalFeature &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff9d00;&quot;&gt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;Online &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff9d00;&quot;&gt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;FeatureName Microsoft&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff9d00;&quot;&gt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;Hyper&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff9d00;&quot;&gt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;V &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff9d00;&quot;&gt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;All
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Включение Hyper-V через настроки:&lt;&#x2F;p&gt;
+&lt;p&gt;Введите в поиске &quot;Включение и отключение компонентов&quot;, выбрав &lt;strong&gt;Hyper-V&lt;&#x2F;strong&gt; и
+нажать &lt;strong&gt;Ok&lt;&#x2F;strong&gt;.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;hyper-v-enlightenment-i-obshchie-optimizatsii-xml-faila-vm&quot;&gt;&lt;a class=&quot;anchor&quot; href=&quot;#hyper-v-enlightenment-i-obshchie-optimizatsii-xml-faila-vm&quot;&gt;#&lt;&#x2F;a&gt;&amp;nbsp;
+!!Hyper-V Enlightenment и общие оптимизации xml файла VM!!&lt;&#x2F;h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;www.qemu.org&#x2F;docs&#x2F;master&#x2F;system&#x2F;i386&#x2F;hyperv.html&quot;&gt;Все параметры hyper-v enlightenment&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;del&gt;&lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;docs.vrchat.com&#x2F;docs&#x2F;using-vrchat-in-a-virtual-machine&quot;&gt;VrChat (EAC) запуск на виртуальной машине&lt;&#x2F;a&gt;&lt;&#x2F;del&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;Что такое Hyper-V Enlightenment?&lt;&#x2F;p&gt;
+&lt;p&gt;Если коротко то это оптимизация гостя ОС при включённом Hyper-v чтобы справляться
+с виртуальными задачами т.е мы оптимизируем определённые задачи чтобы улучшить
+их взаимодействие между хостом и гостём что может снизить накладные расходы тем
+самым повысив производительность.&lt;&#x2F;p&gt;
+&lt;p&gt;*Enlightenment (просвещение) - так называемый &quot;пара-виртуализированное
+расширение&quot;. Интерфейсы которые ядро Linux или QEMU предоставляют Windows
+гостю, предназначенные для того чтобы повысить производительность или
+функциональность в виртуальных средах.&lt;&#x2F;p&gt;
+&lt;p&gt;Меняем верх строки c xml файла VM&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;xml&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-xml &quot;&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9effff;&quot;&gt;domain type&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;=&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9eff80;&quot;&gt;kvm&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;#39;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;lt;!--&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#0088ff;&quot;&gt; на &lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;--&amp;gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9effff;&quot;&gt;domain xmlns&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;:&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9effff;&quot;&gt;qemu&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;=&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9eff80;&quot;&gt;http:&#x2F;&#x2F;libvirt.org&#x2F;schemas&#x2F;domain&#x2F;qemu&#x2F;1.0&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;quot; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#9effff;&quot;&gt;type&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;=&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9eff80;&quot;&gt;kvm&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;quot;&amp;gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Всё что делает hyper-v vendor_id так это устанавливает значение (value) листка
+0x40000000 подменяя информацию &lt;strong&gt;cpuid&lt;&#x2F;strong&gt; в гостевой ОС на рандомно указанное
+вами, значения ограничены до 12 символов. По дефолту стоит &quot;Microsoft HV&quot;
+который является черным списком для EAC из-за чего вас не пускают в игру.
+Именно поэтому vendor_id необходимо изменить чтобы обойти это.&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Пример при использовании &lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;github.com&#x2F;a0rtega&#x2F;pafish&quot;&gt;pafish&lt;&#x2F;a&gt; (тест
+на обнаружение вм)&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;pre data-lang=&quot;txt&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-txt &quot;&gt;&lt;code class=&quot;language-txt&quot; data-lang=&quot;txt&quot;&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;[-] Windows version: 6.2 build 9200
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;[-] Running in WoW64: False
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;[-] CPU: GenuineIntel
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;    Hypervisor: buttplug &amp;lt;- подмена на значение из vendor_id
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;    CPU brand:        Intel(R) Xeon(R) CPU E5-1650 0 @ 3.20GHz
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;xml&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-xml &quot;&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;...
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9effff;&quot;&gt;features&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;  ...
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;  &amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9effff;&quot;&gt;hyperv&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;    ...
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;    &amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9effff;&quot;&gt;vendor_id state&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;=&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9eff80;&quot;&gt;on&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;#39; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#9effff;&quot;&gt;value&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;=&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9eff80;&quot;&gt;buttplug&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;#39;&#x2F;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;    ...
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;  &amp;lt;&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9effff;&quot;&gt;hyperv&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;  ...
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;lt;&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9effff;&quot;&gt;features&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;...
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Данная строка необходима для обладателей GPU от Nvidia, она необходима для того
+чтобы спрятать что мы используем KVM т.к  нашу гостевую предотвращения ошибки 43&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;xml&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-xml &quot;&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;...
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9effff;&quot;&gt;features&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;  ...
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;  &amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9effff;&quot;&gt;kvm&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;    &amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9effff;&quot;&gt;hidden state&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;=&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9eff80;&quot;&gt;on&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;#39;&#x2F;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;  &amp;lt;&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9effff;&quot;&gt;kvm&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;  ...
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;lt;&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9effff;&quot;&gt;features&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;...
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Начиная с QEMU 3.1, недавно введенный cpuid флаг Topoext отключен по умолчанию.
+Чтобы использовать гиперпоточность на процессорах AMD, вам необходимо вручную
+включить его и предоставить информацию о кэшировании:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;xml&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-xml &quot;&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;...
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;  &amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9effff;&quot;&gt;cpu mode&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;=&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9eff80;&quot;&gt;host-passthrough&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;quot; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#9effff;&quot;&gt;check&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;=&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9eff80;&quot;&gt;none&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;quot; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#9effff;&quot;&gt;migratable&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;=&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9eff80;&quot;&gt;on&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;quot;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;    &amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9effff;&quot;&gt;topology sockets&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;=&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9eff80;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;quot; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#9effff;&quot;&gt;dies&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;=&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9eff80;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;quot; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#9effff;&quot;&gt;cores&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;=&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9eff80;&quot;&gt;5&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;quot; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#9effff;&quot;&gt;threads&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;=&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9eff80;&quot;&gt;2&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;quot;&#x2F;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;    &amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9effff;&quot;&gt;cache mode&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;=&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9eff80;&quot;&gt;passthrough&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;quot;&#x2F;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;    &amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9effff;&quot;&gt;feature policy&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;=&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9eff80;&quot;&gt;require&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;quot; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#9effff;&quot;&gt;name&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;=&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9eff80;&quot;&gt;topoext&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;quot;&#x2F;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;  &amp;lt;&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9effff;&quot;&gt;cpu&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;  ...
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;lt;&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9effff;&quot;&gt;domain&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Отключаем memballoon, с ним может местами вызвать серьёзные проблемы с
+производительностью. Проблемы варьируются от незначительных заиканий до
+секундной задержки. Кроме того, memory ballooning на самом деле не работает
+с виртуальными машинами Vfio. Просто находим строчку &lt;code&gt;&amp;lt;memballoon model=&#x27;virtio&#x27;&amp;gt;&lt;&#x2F;code&gt;
+и меняем &lt;code&gt;virtio&lt;&#x2F;code&gt; на &lt;code&gt;none&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;xml&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-xml &quot;&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;   ...
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;    &amp;lt;&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9effff;&quot;&gt;hostdev&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;    &amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9effff;&quot;&gt;memballoon model&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;=&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9eff80;&quot;&gt;none&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;#39;&#x2F;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;  &amp;lt;&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9effff;&quot;&gt;devices&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt; ...
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;В самом конце где после &lt;code&gt;&amp;lt;&#x2F;devices&amp;gt;&lt;&#x2F;code&gt; прописываем аргументы которые могут
+повысить производительность и избавить от медленного интерфейса системы
+при включённом Hyper-V&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;xml&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-xml &quot;&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9effff;&quot;&gt;qemu&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;:&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9effff;&quot;&gt;commandline&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;    &amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9effff;&quot;&gt;qemu&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;:&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9effff;&quot;&gt;arg value&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;=&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9eff80;&quot;&gt;-rtc&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;quot;&#x2F;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;    &amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9effff;&quot;&gt;qemu&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;:&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9effff;&quot;&gt;arg value&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;=&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9eff80;&quot;&gt;base=localtime&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;quot;&#x2F;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;    &amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9effff;&quot;&gt;qemu&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;:&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9effff;&quot;&gt;arg value&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;=&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9eff80;&quot;&gt;-cpu&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;quot;&#x2F;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;    &amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9effff;&quot;&gt;qemu&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;:&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9effff;&quot;&gt;arg value&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;=&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9eff80;&quot;&gt;host,host-cache-info=on,kvm=off,l3-cache=on,kvm-hint-dedicated=on,migratable=no,hv_relaxed,hv_spinlocks=0x1fff,hv_vapic,hv_time,hv_vendor_id=buttplug,+invtsc,+topoext&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;quot;&#x2F;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;  &amp;lt;&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9effff;&quot;&gt;qemu&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;:&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9effff;&quot;&gt;commandline&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;cpu-pinning&quot;&gt;&lt;a class=&quot;anchor&quot; href=&quot;#cpu-pinning&quot;&gt;#&lt;&#x2F;a&gt;&amp;nbsp;
+!!CPU Pinning!!&lt;&#x2F;h2&gt;
+&lt;p&gt;&lt;a rel=&quot;noopener nofollow noreferrer&quot; target=&quot;_blank&quot; href=&quot;https:&#x2F;&#x2F;youtu.be&#x2F;WYrTajuYhCk?t=752&quot;&gt;Объяснение от SomeOrdinaryGamers&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Для игр которые интенсивно используют CPU могут возникать&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Примечание: Согласно Arch Wiki на ядре Zen при Cpu pinning могут возникать
+подтормаживание и короткие зависания.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;h2 id=&quot;huge-memory-pages&quot;&gt;&lt;a class=&quot;anchor&quot; href=&quot;#huge-memory-pages&quot;&gt;#&lt;&#x2F;a&gt;&amp;nbsp;
+!!Huge memory pages!!&lt;&#x2F;h2&gt;
+&lt;p&gt;Вставляем эти опции в параметры ядра&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;code&gt;default_hugepagesz=1G hugepagesz=1G hugepages=32&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;kak-oboiti-snizhenie-proizvoditel-nosti-pri-vkliuchionnom-hyper-v&quot;&gt;&lt;a class=&quot;anchor&quot; href=&quot;#kak-oboiti-snizhenie-proizvoditel-nosti-pri-vkliuchionnom-hyper-v&quot;&gt;#&lt;&#x2F;a&gt;&amp;nbsp;
+Как обойти снижение производительности при включённом Hyper-V&lt;&#x2F;h2&gt;
+&lt;p&gt;&lt;strong&gt;Решением&lt;&#x2F;strong&gt; для меня было добавление аргументов &lt;a href=&quot;qemu:commandline&quot;&gt;qemu:commandline&lt;&#x2F;a&gt; в xml файл win10&lt;&#x2F;p&gt;
+&lt;p&gt;Меняем верх строки c &lt;code&gt;&amp;lt;domain type=&#x27;kvm&#x27;&amp;gt;&lt;&#x2F;code&gt; на
+&lt;code&gt;&amp;lt;domain xmlns:qemu=&quot;http:&#x2F;&#x2F;libvirt.org&#x2F;schemas&#x2F;domain&#x2F;qemu&#x2F;1.0&quot; type=&quot;kvm&quot;&amp;gt;&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;В самом конце где после &lt;code&gt;&amp;lt;&#x2F;devices&amp;gt;&lt;&#x2F;code&gt; прописываем аргументы&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;xml&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-xml &quot;&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9effff;&quot;&gt;qemu&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;:&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9effff;&quot;&gt;commandline&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;    &amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9effff;&quot;&gt;qemu&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;:&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9effff;&quot;&gt;arg value&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;=&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9eff80;&quot;&gt;-rtc&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;quot;&#x2F;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;    &amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9effff;&quot;&gt;qemu&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;:&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9effff;&quot;&gt;arg value&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;=&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9eff80;&quot;&gt;base=localtime&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;quot;&#x2F;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;    &amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9effff;&quot;&gt;qemu&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;:&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9effff;&quot;&gt;arg value&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;=&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9eff80;&quot;&gt;-cpu&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;quot;&#x2F;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;    &amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9effff;&quot;&gt;qemu&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;:&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9effff;&quot;&gt;arg value&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;=&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9eff80;&quot;&gt;host,host-cache-info=on,kvm=off,l3-cache=on,kvm-hint-dedicated=on,migratable=no,hv_relaxed,hv_spinlocks=0x1fff,hv_vapic,hv_time,hv_vendor_id=buttplug,+invtsc,+topoext&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;quot;&#x2F;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;  &amp;lt;&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9effff;&quot;&gt;qemu&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;:&lt;&#x2F;span&gt;&lt;span style=&quot;color:#9effff;&quot;&gt;commandline&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;После чего у вас при включённом Hyper-V не будет сниженная производительность, в
+некоторых моментах это даже может повысить FPS в играх. К примеру PUBG ранее
+не превышал больше ~60 fps (с дропами до 40) и это на самых низких настройках
+графики. Теперь же FPS удвоился до 90 (может даже достигать до 100 fps т.е
+почти как нативно)&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;raznye-poleznosti&quot;&gt;&lt;a class=&quot;anchor&quot; href=&quot;#raznye-poleznosti&quot;&gt;#&lt;&#x2F;a&gt;&amp;nbsp;
+Разные полезности&lt;&#x2F;h2&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Включить вложенную виртуализацию (Nested Virtualization)&lt;&#x2F;p&gt;
+&lt;p&gt;TODO: Не проверено&lt;&#x2F;p&gt;
+&lt;p&gt;Вводим в терминал который открыт с правами администратора&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;powershell&quot; style=&quot;background-color:#2b303b;color:#ffffff;&quot; class=&quot;language-powershell &quot;&gt;&lt;code class=&quot;language-powershell&quot; data-lang=&quot;powershell&quot;&gt;&lt;span style=&quot;color:#ffb054;&quot;&gt;Set-VMProcessor &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff9d00;&quot;&gt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;VMName &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff9d00;&quot;&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;VMName&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff9d00;&quot;&gt;&amp;gt; -&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f9f9f9;&quot;&gt;ExposeVirtualizationExtensions $&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff628c;&quot;&gt;true
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+</description>
+      </item>
+    </channel>
+</rss>

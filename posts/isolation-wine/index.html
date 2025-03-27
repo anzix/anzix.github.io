@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<!--Это будет видно на вкладке браузера-->
+	<!--Наименования загаловков вкладок-->
+	
+    <title>!Мини инструкция по bubblewrap и изолированию wine</title>
+	
+	<!--Resize текста и постов для смартфонов-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--TODO: Иконка во вкладке браузера-->
+	<!--<link rel="icon" type="image/png" href="/favicon.ico"> -->
+	<!--RSS автообнаружение-->
+	
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://anzix.github.io/rss.xml">
+	
+	<!--Стилизация сайта-->
+	<link rel="stylesheet" href="/assets/css/style.css">
+	<!--Предзагрузка ассетов для оптимизации сайта-->
+	<link rel="preload" href="/assets/fonts/Cozette/CozetteVector.ttf" as="font" type="font/ttf"
+		crossorigin="anonymous">
+	<link rel="preload" href="/assets/css/comparison.css" as="style">
+	<!--Таблички-->
+	<link rel="stylesheet" href="/assets/css/comparison.css">
+</head>
+
+<body>
+	<div class="contents">
+		<div class="twocols">
+			<div class="navcol">
+				<nav>
+					<div class="fixedcol">
+						<h3>Навигация</h3>
+						<ul>
+							<li> <a href="/">Главная</a></li>
+							<li> <a href="/posts">Посты</a></li>
+							<li> <a href="/tags">Теги</a></li>
+							<li> <a href="/categories">Категории</a></li>
+							<li> <a href="/pages/search">Поиск</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="maincol">
+				
+
+<h1 class="title">
+  !Мини инструкция по bubblewrap и изолированию wine
+</h1>
+
+<!--Если в странице есть updated, показать её-->
+
+<p class="subtitle"><strong>2023-05-25</strong></p>
+
+
+    
+         <a href="https://anzix.github.io/tags/linux/">linux</a>
+
+<br>
+
+
+	<aside id="toc-aside" class="toc">
+	    <details>
+			<summary>Оглавление</summary>
+	        <ol>
+	            <li>
+	                <a href="#ispol-zovanie-dlia-appimage">Использование для AppImage</a>
+	                
+	            </li><li>
+	                <a href="#skript-dlia-izoliatsii-wine">Скрипт для изоляции wine</a>
+	                
+	            </li>
+	        </ol>
+		</details>
+	</aside>
+
+
+<p>Полезные статьи о использовании bubblewrap</p>
+<ul>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://wiki.archlinux.org/title/Bubblewrap">Arch Wiki Bubblewrap</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://wiki.archlinux.org/title/Bubblewrap/Examples">Arch Wiki Bubblewrap/Examples</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://regginator729.wordpress.com/2017/12/12/using-bubblewrap-as-sandbox/">Первый попавшийся</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://misile00.github.io/notes/Bubblewrap/">Более полезный, много примеров</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://www.linux.org.ru/forum/talks/17110355?cid=17110419">Полезный коментарий Kron4ek</a></li>
+<li><a rel="noopener nofollow noreferrer" target="_blank" href="https://github.com/IvanMalison/dotfiles-2/blob/master/.bin-bw/wine">Шаблон</a></li>
+</ul>
+<p>Пояснения по strace - мониторинг системных процессов:</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">sudo</span><span style="color:#ffee80;"> pacman</span><span style="color:#f9f9f9;"> -S</span><span style="color:#ffee80;"> strace
+</span></code></pre>
+<p>Использование: <code>strace bwrap ...</code></p>
+<p>Пояснение:</p>
+<ul>
+<li>fork - создаёт новый дочерний процесс</li>
+<li>read - попытается прочитать с файлового дескриптора</li>
+<li>write - попытается записать файловый дескриптор</li>
+<li>openat - открывает файл для чтения или записи</li>
+<li>close - закрывает файл после чтения или записи</li>
+<li>chdir - изменение текущей директории</li>
+<li>execve - выполняет исполняемый файл</li>
+<li>fstat - получает инфу о файле</li>
+<li>mknod - создаёт спец. файл (например файл устройства или сокета)</li>
+<li>mmap - запрос на выделение памяти</li>
+</ul>
+<p>Изоляция wine ???</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">bwrap --unshare-net --ro-bind</span><span style="color:#ffee80;"> / /</span><span style="color:#f9f9f9;"> --bind</span><span style="color:#ffee80;"> /home /home wine ...
+</span></code></pre>
+<p>ВАЖНО!!</p>
+<p>Делится <code>/usr/share/</code> и <code>/etc</code> - опасно!</p>
+<p>Также нельзя делится <code>/var</code> т.к там содержатся данные такие как <code>/var/log</code>
+которые чрезвычайно чувствительные</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">В: Что делает `--dev-bind`?
+</span><span style="color:#f9f9f9;">О:
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">В: Что делает `--bind`?
+</span><span style="color:#f9f9f9;">О: Монтирует заданный путь к цели в изолированной среде
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">В: Что делает `--ro-bind`?
+</span><span style="color:#f9f9f9;">О: Монтирует заданный путь к цели с доступом только для чтения в изолированной среде
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">В: Что делает `--dev /dev`?
+</span><span style="color:#f9f9f9;">О: Монтрует /dev но не целиком а только часть его т.е /dev/sda и /dev/ttyX не будет показыватся в изоляции. Однако нужно ли это в использовании wine??
+</span></code></pre>
+<p>bwrap опции:</p>
+<ul>
+<li>
+<p><code>--ro-bind / /</code> - Сделать весь root только для чтения (каталоги не создаются
+в /home)</p>
+</li>
+<li>
+<p><code>--unshare-net</code> - не будет доступа в инет</p>
+</li>
+<li>
+<p><code>--unshare-pid</code> - скрывает все процессы pid</p>
+</li>
+<li>
+<p><code>--die-with-parent</code> - при закрытии bwrap все (дочерний т.е child) процессы
+будут убиты</p>
+</li>
+<li>
+<p><code>--tmpfs /tmp</code> - необходимо чтобы избежать "wineserver: mkdir /tmp/.wine-1000:
+Read-only file system" (на хосте tmp у меня смонтирован как tmpfs)</p>
+</li>
+<li>
+<p><code>--proc /proc</code> - необходим чтобы избежать "wine: could not load ntdll.so: (null)".
+Отвечает за связь программ с ядром. Проще говоря, она работает с процессами.</p>
+</li>
+<li>
+<p><code>--dev-bind /dev/snd /dev/snd</code> - необходимо для поддержки звука ALSA в wine
+(<code>winecfg</code> для тестирования звука)</p>
+</li>
+<li>
+<p><code>--tmpfs /run --bind "/run/user/$UID/bus" "/run/user/$UID/bus"</code> - чтобы
+работал dbus, архиватор ark ругается без него. Включает drag-n-drop</p>
+</li>
+<li>
+<p><code>--ro-bind /sys/dev /sys/dev</code>, <code>--ro-bind /sys/devices /sys/devices</code> - Необходимы
+для аппаратного ускорения (не проверено)</p>
+</li>
+<li>
+<p><code>--ro-bind /etc/fonts /etc/fonts</code> - Необходимо чтобы шрифты подхватывались и
+чтобы избежать "Fontconfig error: Cannot load default config file: No such
+file: (null)"</p>
+</li>
+<li>
+<p><code>--bind /tmp/.X11-unix/X0 /tmp/.X11-unix/X0</code>, <code>--setenv DISPLAY :0</code> - Для X11
+сессии, без этих двух доп опций wine не будет выводить графические
+приложения, и они не запустятся. Будет выводить данный лог</p>
+<pre data-lang="txt" style="background-color:#2b303b;color:#ffffff;" class="language-txt "><code class="language-txt" data-lang="txt"><span style="color:#f9f9f9;">010c:err:winediag:nodrv_CreateWindow Application tried to create a window, but no driver could be loaded.
+</span><span style="color:#f9f9f9;">010c:err:winediag:nodrv_CreateWindow L&quot;Make sure that your X server is running and that $DISPLAY is set correctly.&quot;
+</span></code></pre>
+<p><a rel="noopener nofollow noreferrer" target="_blank" href="https://wiki.archlinux.org/title/Bubblewrap#Using_X11">Источник Arch Wiki</a></p>
+</li>
+<li>
+<p>Если Wayland, то необходимо смонтировать сокет Wayland, чтобы выводить графические
+приложения (TODO: как это сделать?)</p>
+</li>
+<li>
+<p><code>--tmpfs /home --bind $HOME/new_home $HOME</code> - Перемонтирую /home в виде
+tmpfs, чтобы игра не увидела реальный /home (TODO: не проверено)</p>
+</li>
+</ul>
+<p>Конечный миниамалистичный изолятор wine <code>cat sandbox</code></p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;">!/bin/bash
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">wine</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">&quot;$(</span><span style="color:#edef7d;">which</span><span style="color:#ffee80;"> wine</span><span style="color:#f9f9f9;">)&quot;
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> Ипользование с default префиксом
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> ./my-isolate-wine
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> С кастомным перфиксом
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> WINEPREFIX=$HOME/.local/share/wineprefixes/PREFIX_NAME ./my-isolate-wine
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#ffb054;">set</span><span style="color:#ffee80;"> -euETo pipefail
+</span><span style="color:#ffb054;">shopt</span><span style="color:#ffee80;"> -s inherit_errexit
+</span><span style="color:#ffb054;">set </span><span style="color:#f9f9f9;">-x
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> export WINEARCH=win64 # Архитектура префикса
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> export WINEDEBUG=-all,+err,+warn
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#f9f9f9;">mkdir -p &quot;$</span><span style="color:#edef7d;">WINEPREFIX</span><span style="color:#f9f9f9;">&quot; </span><span style="color:#ff628c;">2</span><span style="color:#ff9d00;">&gt;</span><span style="color:#ffee80;">/dev/null
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;"> mkdir -p &quot;$XDG_CACHE_HOME/winetricks&quot; 2&gt;/dev/null
+</span><span style="color:#f9f9f9;">
+</span><span style="color:#ffb054;">exec</span><span style="color:#ffee80;"> bwrap </span><span style="color:#f9f9f9;">\
+</span><span style="color:#ffee80;"> --unshare-net </span><span style="color:#f9f9f9;">`#</span><span style="color:#ffee80;"> нет инета</span><span style="color:#f9f9f9;">` \
+</span><span style="color:#ffee80;"> --ro-bind /usr /usr </span><span style="color:#f9f9f9;">`#</span><span style="color:#ffee80;"> находятся исполняемые файлы</span><span style="color:#f9f9f9;">` \
+</span><span style="color:#ffee80;"> --ro-bind /usr/lib /usr/lib </span><span style="color:#f9f9f9;">`#</span><span style="color:#ffee80;"> чтобы подхватывались бибилиотеки</span><span style="color:#f9f9f9;">` \
+</span><span style="color:#ffee80;"> --ro-bind /etc/fonts /etc/fonts </span><span style="color:#f9f9f9;">`#</span><span style="color:#ffee80;"> чтобы шрифты подхватывались</span><span style="color:#f9f9f9;">` \
+</span><span style="color:#ffee80;"> --symlink /usr/bin /bin </span><span style="color:#f9f9f9;">`#</span><span style="color:#ffee80;"> копия стандартной структуры фс linux</span><span style="color:#f9f9f9;">` \
+</span><span style="color:#ffee80;"> --symlink /usr/bin /sbin </span><span style="color:#f9f9f9;">`#</span><span style="color:#ffee80;"> копия стандартной структуры фс linux</span><span style="color:#f9f9f9;">` \
+</span><span style="color:#ffee80;"> --symlink /usr/lib /lib </span><span style="color:#f9f9f9;">`#</span><span style="color:#ffee80;"> копия стандартной структуры фс linux</span><span style="color:#f9f9f9;">` \
+</span><span style="color:#ffee80;"> --symlink /usr/lib /lib64 </span><span style="color:#f9f9f9;">`#</span><span style="color:#ffee80;"> копия стандартной структуры фс linux</span><span style="color:#f9f9f9;">` \
+</span><span style="color:#ffee80;"> --proc /proc </span><span style="color:#f9f9f9;">`#</span><span style="color:#ffee80;"> чтобы создавались процессы</span><span style="color:#f9f9f9;">` \
+</span><span style="color:#ffee80;"> --dev /dev </span><span style="color:#f9f9f9;">`#</span><span style="color:#ffee80;"> частичное монтирование /dev, без чувствительных данных по типу /dev/sda</span><span style="color:#f9f9f9;">` \
+</span><span style="color:#ffee80;"> --dev-bind /dev/dri /dev/dri </span><span style="color:#f9f9f9;">`#</span><span style="color:#ffee80;"> видеоадаптеры</span><span style="color:#f9f9f9;">` \
+</span><span style="color:#ffee80;"> --dev-bind /dev/snd /dev/snd </span><span style="color:#f9f9f9;">`#</span><span style="color:#ffee80;"> чтобы работал звук ALSA</span><span style="color:#f9f9f9;">` \
+</span><span style="color:#ffee80;"> --tmpfs /tmp </span><span style="color:#f9f9f9;">\
+</span><span style="color:#ffee80;"> --tmpfs /run --bind </span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">/run/user/</span><span style="color:#f9f9f9;">$</span><span style="color:#edef7d;">UID</span><span style="color:#9eff80;">/bus</span><span style="color:#f9f9f9;">&quot; &quot;</span><span style="color:#9eff80;">/run/user/</span><span style="color:#f9f9f9;">$</span><span style="color:#edef7d;">UID</span><span style="color:#9eff80;">/bus</span><span style="color:#f9f9f9;">&quot; `#</span><span style="color:#ffee80;"> чтобы работал dbus</span><span style="color:#f9f9f9;">` \
+</span><span style="color:#ffee80;"> --tmpfs </span><span style="color:#f9f9f9;">&quot;$</span><span style="color:#edef7d;">HOME</span><span style="color:#f9f9f9;">&quot; \
+</span><span style="color:#ffee80;"> --ro-bind </span><span style="color:#f9f9f9;">&quot;$</span><span style="color:#edef7d;">HOME</span><span style="color:#9eff80;">/Downloads</span><span style="color:#f9f9f9;">&quot; &quot;$</span><span style="color:#edef7d;">HOME</span><span style="color:#9eff80;">/Downloads</span><span style="color:#f9f9f9;">&quot; \
+</span><span style="color:#ffee80;"> --bind /tmp/.X11-unix /tmp/.X11-unix </span><span style="color:#f9f9f9;">`#</span><span style="color:#ffee80;"> чтобы показывались граф. программы</span><span style="color:#f9f9f9;">` \
+</span><span style="color:#ffee80;"> --bind </span><span style="color:#f9f9f9;">$XAUTHORITY $XAUTHORITY \
+</span><span style="color:#ffee80;"> --bind </span><span style="color:#f9f9f9;">&quot;$</span><span style="color:#edef7d;">WINEPREFIX</span><span style="color:#f9f9f9;">&quot; &quot;$</span><span style="color:#edef7d;">WINEPREFIX</span><span style="color:#f9f9f9;">&quot; `# ` \
+</span><span style="color:#ffee80;"> --die-with-parent </span><span style="color:#f9f9f9;">`#</span><span style="color:#ffee80;"> при закрытии bwrap все процессы будут убиты</span><span style="color:#f9f9f9;">` \
+</span><span style="color:#ffee80;"> wine </span><span style="color:#f9f9f9;">&quot;$</span><span style="color:#ff80e1;">@</span><span style="color:#f9f9f9;">&quot;
+</span><span style="color:#f9f9f9;"> #</span><span style="font-style:italic;color:#0088ff;">pcmanfm
+</span></code></pre>
+<p>Вместо wine я на скриншоте смог запустить pcmanfm</p>
+<p><img src="/images/isolation-wine/Screenshot_20230519_162447.png" alt="image" /></p>
+<h2 id="ispol-zovanie-dlia-appimage"><a class="anchor" href="#ispol-zovanie-dlia-appimage">#</a>&nbsp;
+Использование для AppImage</h2>
+<p>Для использования bubblewrap в AppImage, его необходимо распаковать данной командой</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">./*.AppImage --appimage-extract
+</span></code></pre>
+<h2 id="skript-dlia-izoliatsii-wine"><a class="anchor" href="#skript-dlia-izoliatsii-wine">#</a>&nbsp;
+Скрипт для изоляции wine</h2>
+<p>TODO: Проверить</p>
+<p>101796281:
+Myself i just made shell scripts which launch games using the system install of
+wine through bubblewrap (sandbox, the one flatpaks use). Naturally this isn't
+as "nice" as lutris, but it uses minimal resources, and all i need is a desktop
+icon to run the game. Bubblewrap uses about a meg, wine about 180M (being the
+system wine it will use less, as it's using shared system libraries and not a
+runtime like lutris or steam), then the game uses what it normally uses</p>
+<p>101806508:
+you may need to adjust it a bit for your distro, like the lib symlinks</p>
+<pre data-lang="sh" style="background-color:#2b303b;color:#ffffff;" class="language-sh "><code class="language-sh" data-lang="sh"><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;">!/bin/env sh
+</span><span style="color:#ff9d00;">if </span><span style="color:#ffb054;">[ </span><span style="color:#f9f9f9;">&quot;$(</span><span style="color:#edef7d;">which</span><span style="color:#ffee80;"> mangohud</span><span style="color:#f9f9f9;">)&quot; </span><span style="color:#ff9d00;">!= </span><span style="color:#f9f9f9;">&quot;&quot; </span><span style="color:#ffb054;">]</span><span style="color:#ff9d00;">; then </span><span style="color:#f9f9f9;">mangohud</span><span style="color:#ff9d00;">=</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#9eff80;">mangohud</span><span style="color:#f9f9f9;">&quot;</span><span style="color:#ff9d00;">; fi
+</span><span style="color:#f9f9f9;">#</span><span style="font-style:italic;color:#0088ff;">if [ &quot;$(which gamescope)&quot; != &quot;&quot; ]; then gamescope=&quot;gamescope -w 1920 -h 1080 -r 72 -F fsr -f --&quot;; fi
+</span><span style="color:#f9f9f9;">bwrap   --ro-bind</span><span style="color:#ffee80;"> /usr /usr </span><span style="color:#f9f9f9;">\
+</span><span style="color:#f9f9f9;">        --tmpfs</span><span style="color:#ffee80;"> /usr/local/bin </span><span style="color:#f9f9f9;">\
+</span><span style="color:#f9f9f9;">        --symlink</span><span style="color:#ffee80;"> usr/lib64 /lib64 </span><span style="color:#f9f9f9;">\
+</span><span style="color:#f9f9f9;">        --symlink</span><span style="color:#ffee80;"> usr/lib /lib </span><span style="color:#f9f9f9;">\
+</span><span style="color:#f9f9f9;">        --symlink</span><span style="color:#ffee80;"> usr/bin /bin </span><span style="color:#f9f9f9;">\
+</span><span style="color:#f9f9f9;">        --proc</span><span style="color:#ffee80;"> /proc </span><span style="color:#f9f9f9;">\
+</span><span style="color:#f9f9f9;">        --ro-bind-try</span><span style="color:#ffee80;"> /sys/dev/char /sys/dev/char </span><span style="color:#f9f9f9;">\
+</span><span style="color:#f9f9f9;">        --ro-bind-try</span><span style="color:#ffee80;"> /sys/devices /sys/devices </span><span style="color:#f9f9f9;">\
+</span><span style="color:#f9f9f9;">        --ro-bind-try</span><span style="color:#ffee80;"> /sys/class /sys/class </span><span style="color:#f9f9f9;">\
+</span><span style="color:#f9f9f9;">        --dev</span><span style="color:#ffee80;"> /dev </span><span style="color:#f9f9f9;">\
+</span><span style="color:#f9f9f9;">        --dev-bind-try</span><span style="color:#ffee80;"> /dev/snd /dev/snd </span><span style="color:#f9f9f9;">\
+</span><span style="color:#f9f9f9;">        --dev-bind-try</span><span style="color:#ffee80;"> /dev/dri /dev/dri </span><span style="color:#f9f9f9;">\
+</span><span style="color:#f9f9f9;">        --dev-bind-try</span><span style="color:#ffee80;"> /dev/input /dev/input </span><span style="color:#f9f9f9;">\
+</span><span style="color:#f9f9f9;">        --dev-bind-try</span><span style="color:#ffee80;"> /dev/shm /dev/shm </span><span style="color:#f9f9f9;">\
+</span><span style="color:#f9f9f9;">        --ro-bind</span><span style="color:#ffee80;"> /etc /etc </span><span style="color:#f9f9f9;">\
+</span><span style="color:#f9f9f9;">        --tmpfs</span><span style="color:#ffee80;"> /tmp </span><span style="color:#f9f9f9;">\
+</span><span style="color:#f9f9f9;">        --ro-bind-try</span><span style="color:#ffee80;"> /tmp/cdrom /tmp/cdrom </span><span style="color:#f9f9f9;">\
+</span><span style="color:#f9f9f9;">        --bind-try</span><span style="color:#ffee80;"> /tmp/store/Games/Executable /tmp/store/Games/Executable </span><span style="color:#f9f9f9;">\
+</span><span style="color:#f9f9f9;">        --bind</span><span style="color:#ffee80;"> /tmp/.X11-unix /tmp/.X11-unix </span><span style="color:#f9f9f9;">\
+</span><span style="color:#f9f9f9;">        --bind</span><span style="color:#ffee80;"> . </span><span style="color:#f9f9f9;">$HOME \
+</span><span style="color:#f9f9f9;">        --dir $HOME</span><span style="color:#ffee80;">/install </span><span style="color:#f9f9f9;">\
+</span><span style="color:#f9f9f9;">        --ro-bind $HOME</span><span style="color:#ffee80;">/.themes </span><span style="color:#f9f9f9;">$HOME</span><span style="color:#ffee80;">/.themes </span><span style="color:#f9f9f9;">\
+</span><span style="color:#f9f9f9;">        --ro-bind $HOME</span><span style="color:#ffee80;">/.gtkrc-2.0 </span><span style="color:#f9f9f9;">$HOME</span><span style="color:#ffee80;">/.gtkrc-2.0 </span><span style="color:#f9f9f9;">\
+</span><span style="color:#f9f9f9;">        --dir $HOME</span><span style="color:#ffee80;">/.config </span><span style="color:#f9f9f9;">\
+</span><span style="color:#f9f9f9;">        --ro-bind $HOME</span><span style="color:#ffee80;">/.config/fontconfig </span><span style="color:#f9f9f9;">$HOME</span><span style="color:#ffee80;">/.config/fontconfig </span><span style="color:#f9f9f9;">\
+</span><span style="color:#f9f9f9;">        --ro-bind $HOME</span><span style="color:#ffee80;">/.fonts </span><span style="color:#f9f9f9;">$HOME</span><span style="color:#ffee80;">/.fonts </span><span style="color:#f9f9f9;">\
+</span><span style="color:#f9f9f9;">        --ro-bind $XAUTHORITY $XAUTHORITY \
+</span><span style="color:#f9f9f9;">        --ro-bind</span><span style="color:#ffee80;"> /run/user/</span><span style="color:#f9f9f9;">$(id -u)</span><span style="color:#ffee80;">/pulse /run/user/</span><span style="color:#f9f9f9;">$(id -u)</span><span style="color:#ffee80;">/pulse </span><span style="color:#f9f9f9;">\
+</span><span style="color:#f9f9f9;">        --ro-bind</span><span style="color:#ffee80;"> /run/user/</span><span style="color:#f9f9f9;">$(id -u)</span><span style="color:#ffee80;">/pipewire-0 /run/user/</span><span style="color:#f9f9f9;">$(id -u)</span><span style="color:#ffee80;">/pipewire-0 </span><span style="color:#f9f9f9;">\
+</span><span style="color:#f9f9f9;">        --cap-drop</span><span style="color:#ffee80;"> all </span><span style="color:#f9f9f9;">\
+</span><span style="color:#f9f9f9;">        --cap-add</span><span style="color:#ffee80;"> CAP_SYS_NICE </span><span style="color:#f9f9f9;">\
+</span><span style="color:#f9f9f9;">        --unshare-all \
+</span><span style="color:#f9f9f9;">        --die-with-parent \
+</span><span style="color:#f9f9f9;">        --setenv</span><span style="color:#ffee80;"> WINEDEBUG </span><span style="color:#f9f9f9;">&quot;&quot; \
+</span><span style="color:#f9f9f9;">        --setenv</span><span style="color:#ffee80;"> WINEARCH win64 </span><span style="color:#f9f9f9;">\
+</span><span style="color:#f9f9f9;">        --setenv</span><span style="color:#ffee80;"> WINEDLLOVERRIDES </span><span style="color:#f9f9f9;">&quot;&quot; \
+</span><span style="color:#f9f9f9;">        --setenv</span><span style="color:#ffee80;"> WINE_FULLSCREEN_FSR 1 </span><span style="color:#f9f9f9;">\
+</span><span style="color:#f9f9f9;">        --chdir &quot;$</span><span style="color:#edef7d;">HOME</span><span style="color:#9eff80;">/A Hat in Time/Binaries/Win64</span><span style="color:#f9f9f9;">&quot; \
+</span><span style="color:#ffee80;">        sh</span><span style="color:#f9f9f9;"> -c &quot; </span><span style="color:#80ff82;">\
+</span><span style="color:#9eff80;">            echo fish; </span><span style="color:#80ff82;">\
+</span><span style="color:#9eff80;">            echo wine control; </span><span style="color:#80ff82;">\
+</span><span style="color:#9eff80;">            </span><span style="color:#f9f9f9;">$</span><span style="color:#edef7d;">gamescope </span><span style="color:#f9f9f9;">$</span><span style="color:#edef7d;">mangohud</span><span style="color:#9eff80;"> wine HatinTimeGame.exe; </span><span style="color:#80ff82;">\
+</span><span style="color:#9eff80;">            wineserver -k; </span><span style="color:#80ff82;">\
+</span><span style="color:#9eff80;">        </span><span style="color:#f9f9f9;">&quot;
+</span></code></pre>
+
+
+				<footer class="center">
+					<hr>
+					<div class="sociallinks">
+						<!--TODO: добавить EMAIL-->
+						<a title="Boosty (Поддержать меня)" href="https://boosty.to/an1x" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Boosty_Logo.png" alt="Boosty"></a>
+						<a title="Я в Steam" href="https://steamcommunity.com/id/An_iX" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/steam-icon.png" alt="Steam"></a>
+						<a title="Мои отчёты в ProtonDB" href="https://www.protondb.com/users/210885854" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/Proton-logo.svg.png" alt="ProtonDB"></a>
+						<a title="Я на GitHub" href="https://github.com/anzix" target="_blank"
+							rel="noopener nofollow noreferrer" class="eachsociallinks"><img
+								src="/assets/images/social-icons/github.png" alt="GitHub"></a>
+						<a href="/rss.xml" target="_blank" rel="noopener nofollow noreferrer" class="eachsociallinks"
+							title="Мой RSS фид"><img src="/assets/images/social-icons/rssfeed.png" alt="RSS Фид"></a>
+					</div>
+					<!-- TODO: Добавить URL лицензии -->
+					<p><span class="copyleft">&copy;</span> Авторское право <a href="/">AniX</a>, <a href="!TODO!"
+							target="_blank" rel="noopener nofollow noreferrer">AGPL-3.0</a> лицензированный.</p>
+					<p>Работает на <a href="https://www.getzola.org/" target="_blank"
+							rel="noopener nofollow noreferrer">zola</a>.</p>
+				</footer>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
